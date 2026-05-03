@@ -1,0 +1,13 @@
+# Environment — never commit your API keys
+.env
+
+# Generated files — rebuilt on each run
+output/
+models/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/

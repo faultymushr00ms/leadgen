@@ -1,0 +1,83 @@
+# Ohio Lead Gen Bot - Agent Configuration
+# Edit these values to tune how the agents behave.
+# No coding required — just change the numbers and text.
+
+# ─────────────────────────────────────────
+# RCE THRESHOLDS
+# RCE = Residential Commercial Equivalent
+# 1 RCE ≈ the energy usage of one average home
+# ─────────────────────────────────────────
+qualification:
+  min_rce: 5              # Below this = auto-rejected, not worth calling
+  sweet_spot_min: 50      # Sweet spot starts here
+  sweet_spot_max: 100     # Sweet spot ends here — these are your best leads
+  max_rce: 500            # Above this = large account, flag for special handling
+
+# ─────────────────────────────────────────
+# URGENCY SCORING WEIGHTS (Agent 3)
+# These control how leads get ranked on your daily call sheet.
+# Higher number = more influence on the final rank.
+# All weights are relative to each other.
+# ─────────────────────────────────────────
+urgency:
+  rce_weight: 40            # Bigger opportunity = higher rank
+  followup_overdue_weight: 30  # Overdue follow-ups jump the queue
+  seasonal_weight: 15       # Winter = gas urgency, summer = electric urgency
+  lead_freshness_weight: 15 # Fresh leads get a small boost
+
+  followup_days_threshold: 21  # Days before a lead is considered overdue for follow-up
+
+# ─────────────────────────────────────────
+# SEASONAL SETTINGS
+# Adjusts which energy type gets prioritized by month
+# ─────────────────────────────────────────
+seasons:
+  gas_peak_months: [11, 12, 1, 2, 3]      # Nov–Mar: push gas leads harder
+  electric_peak_months: [6, 7, 8, 9]      # Jun–Sep: push electric leads harder
+  neutral_months: [4, 5, 10]              # Apr, May, Oct: no seasonal boost
+
+# ─────────────────────────────────────────
+# CONVERSATION RULES (used in Agent 2 system prompt)
+# What the qualifier keeps in mind when assessing a lead
+# ─────────────────────────────────────────
+conversation_rules:
+  - "Ask about number of locations — multiple sites multiply the RCE"
+  - "Identify the decision maker early — don't waste time on non-owners"
+  - "Ask about current provider and contract end date"
+  - "Listen for mentions of expansion or new equipment — growth signals"
+  - "Manufacturing, warehouses, restaurants, and laundromats are high-usage industries"
+
+# ─────────────────────────────────────────
+# REJECTION TRIGGERS (used in Agent 2)
+# These signal a lead is not worth pursuing
+# ─────────────────────────────────────────
+rejection_triggers:
+  - "Single-family home or personal residence"
+  - "Confirmed under 5 RCE with no growth potential"
+  - "Already locked in a long-term contract (2+ years remaining)"
+  - "Out of Ohio service territory"
+  - "Explicitly asked not to be contacted again"
+
+# ─────────────────────────────────────────
+# HIGH-VALUE INDUSTRIES
+# Business types that statistically run 50-100 RCE
+# Agent 1 uses this to prioritize which businesses to scrape
+# ─────────────────────────────────────────
+target_industries:
+  tier_1:  # Almost always sweet spot — scrape these first
+    - Warehouse / Distribution
+    - Manufacturing (light to mid)
+    - Commercial Laundry / Laundromat
+    - Car Wash
+    - Cold Storage / Refrigeration
+    - Large Restaurant / Food Service
+  tier_2:  # Often qualify — good to include
+    - Auto Repair / Body Shop
+    - Gym / Fitness Center
+    - Hotel / Motel (small to mid)
+    - Retail Chain (multi-location)
+    - Medical / Dental Office (multi-room)
+  tier_3:  # Hit or miss — lower scrape priority
+    - Small Restaurant
+    - Retail (single location)
+    - Office Building (small)

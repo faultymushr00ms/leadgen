@@ -31,8 +31,9 @@ def run_scraper() -> List[RawLead]:
         GoogleMapsSource(),  # silent no-op if no API key
     ]
 
+    # index maps dedup_key → position in all_leads for fast merge lookups
     all_leads: List[RawLead] = []
-    seen: set[str] = set()
+    index: dict[str, int] = {}
 
     print("\n=== Agent 1: Ohio Scraper ===")
     print(f"Running {len(sources)} sources...\n")
@@ -41,13 +42,24 @@ def run_scraper() -> List[RawLead]:
         try:
             leads = source.fetch()
             new_count = 0
+            merged_count = 0
+
             for lead in leads:
+                # Tag which source this record came from
+                lead.confirmed_by = [lead.source]
                 key = lead.dedup_key()
-                if key not in seen:
-                    seen.add(key)
+
+                if key not in index:
+                    # First time seeing this business — add it
+                    index[key] = len(all_leads)
                     all_leads.append(lead)
                     new_count += 1
-            print(f"  [{source.name}] Added {new_count} new unique leads.\n")
+                else:
+                    # Already have this business from another source — merge data in
+                    all_leads[index[key]].merge(lead)
+                    merged_count += 1
+
+            print(f"  [{source.name}] {new_count} new | {merged_count} cross-referenced.\n")
         except Exception as e:
             print(f"  [{source.name}] Unexpected error: {e}\n")
 
@@ -75,10 +87,17 @@ def print_summary(leads: List[RawLead]):
     from collections import Counter
     sources = Counter(lead.source for lead in leads)
     industries = Counter(lead.industry for lead in leads)
+    confidence = Counter(lead.confidence for lead in leads)
 
     print("=" * 50)
     print(f"SCRAPE COMPLETE — {len(leads)} total unique leads")
     print("=" * 50)
+
+    print("\nConfidence breakdown (cross-reference check):")
+    for level in ["HIGH", "MEDIUM", "LOW"]:
+        count = confidence.get(level, 0)
+        bar = "█" * (count // 5)
+        print(f"  {level:<8} {count:>4}  {bar}")
 
     print("\nBy source:")
     for source, count in sources.most_common():

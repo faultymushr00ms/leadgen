@@ -53,17 +53,21 @@ INDUSTRY_RCE_TABLE = {
     "medical":                      (8,  20, "both"),
     "clinic":                       (8,  20, "both"),
 
+    # Tier 2 — warehouses: look bigger than they are, but ~5 RCE is the target
+    # Others willing to skip these — that's our edge
+    "warehouse":                    (4,  8,  "both"),   # active ops: ~5 RCE, sweet spot
+    "distribution":                 (5,  10, "both"),
+    "industrial":                   (5,  15, "both"),
+
     # Tier 3 — variable
     "retail":                       (4,  15, "electric"),
     "office":                       (4,  12, "both"),
     "light manufacturing":          (10, 40, "both"),
+    "manufacturing":                (10, 60, "both"),   # wide range — flag large ones
 
-    # Skip — not our market
-    "warehouse":                    (3,  12, "electric"),  # usually storage-only
-    "storage":                      (2,   8, "electric"),
-    "manufacturing":                (20, 200, "both"),     # too variable, could be corp
-    "steel":                        (100, 500, "both"),    # big corp
-    "industrial":                   (15, 200, "both"),     # too variable
+    # Low — storage only or inactive (not the same as active warehouse)
+    "storage":                      (2,   5, "electric"),  # storage-only = minimal use
+    "steel":                        (80, 400, "both"),     # usually big corp — flag
 }
 
 
@@ -139,15 +143,14 @@ def _check_red_flags(known_info: str, config: dict) -> str | None:
 
 
 def _is_skip_industry(industry: str, config: dict) -> bool:
-    """Returns True if this industry is in the skip list."""
+    """
+    Returns True only for truly dead leads — vacant/empty/storage-only.
+    Active warehouses are NOT skipped even though they look big.
+    Large corporate accounts are flagged, not skipped.
+    """
     industry_lower = industry.lower()
-    skip_list = config.get("target_industries", {}).get("skip", [])
-    for skip in skip_list:
-        skip_lower = skip.lower().split("(")[0].strip()  # ignore parenthetical notes
-        if skip_lower in industry_lower or industry_lower in skip_lower:
-            return True
-    # Large corporations by RCE are handled in qualify_lead
-    return False
+    hard_skip_keywords = ["vacant", "empty", "storage only", "inactive"]
+    return any(k in industry_lower for k in hard_skip_keywords)
 
 
 def qualify_lead(prospect_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -209,13 +212,15 @@ def qualify_lead(prospect_data: Dict[str, Any]) -> Dict[str, Any]:
         }
 
     if rce_adjusted > max_rce:
+        # Don't hard reject — flag for corporate approach
+        # Willing to play the corporate game others won't
         return {
-            "is_qualified": False,
+            "is_qualified": True,
             "rce_estimate": round(rce_adjusted, 1),
-            "confidence": 50,
-            "reasoning": f"Estimated {rce_adjusted:.0f} RCE — likely large corporation, not our market",
-            "next_action": "reject",
-            "estimated_value": "",
+            "confidence": 40,
+            "reasoning": f"Large account (~{rce_adjusted:.0f} RCE) — requires corporate approach",
+            "next_action": "corporate_approach",
+            "estimated_value": f"~${round(rce_adjusted * 4)}/month if won",
         }
 
     # It qualifies — determine how good it is

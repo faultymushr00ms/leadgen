@@ -6,14 +6,15 @@
 # RCE THRESHOLDS
 # RCE = Residential Commercial Equivalent
 # 1 RCE ≈ the energy usage of one average home
-# Updated based on field experience: real sweet spot is 10-30, not 50-100
+# Updated based on field experience.
+# Volume model: 2 closes at 5 RCE/day = quota. Sweet spot is 5-30.
 # ─────────────────────────────────────────
 qualification:
   min_rce: 3              # Below this = not worth the call
-  sweet_spot_min: 10      # Sweet spot starts here — these are your bread and butter
-  sweet_spot_max: 30      # Sweet spot ends here — high volume, right size
-  large_account_min: 30   # Above this = qualified but needs different conversation
-  max_rce: 200            # Above this = big corporation, skip (not our market)
+  sweet_spot_min: 5       # Sweet spot starts here — volume play, 2/day hits quota
+  sweet_spot_max: 30      # Sweet spot ends here
+  large_account_min: 30   # Above this = corporate conversation, flag not reject
+  max_rce: 500            # No hard ceiling — willing to play corporate for a win
 
 # ─────────────────────────────────────────
 # URGENCY SCORING WEIGHTS (Agent 3)
@@ -80,6 +81,7 @@ target_industries:
     - Laundromat / Coin Laundry
 
   tier_2:  # Often qualify — worth including in every sweep
+    - Warehouse / Distribution (active operations) # Looks big, runs ~5 RCE — that's the target
     - Fast Food (independent or small chain)
     - Auto Repair / Body Shop
     - Gym / Fitness Center
@@ -92,12 +94,12 @@ target_industries:
     - Retail (single location)
     - Office Building (small)
     - Light Manufacturing (verify size)
+    - Large Corporate Account            # Flag for special handling — willing to play the game
 
-  skip:  # Not our market — large corporations or near-zero usage
-    - Large Warehouse (storage only)    # Big building, no energy use
-    - Steel Mill / Large Manufacturing  # Big corporation territory
-    - Corporate Campus
-    - Empty / Vacant Property
+  skip:  # Truly not worth it — no active energy use
+    - Storage Only (empty / inactive)   # No operations = no energy = no deal
+    - Vacant Property
+    - Empty Building
 
 # ─────────────────────────────────────────
 # BUSINESS NUANCE RULES (Rule-based qualifier)

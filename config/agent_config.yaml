@@ -3,18 +3,60 @@
 # No coding required — just change the numbers and text.
 
 # ─────────────────────────────────────────
+# QUOTA & GOALS
+# The goal engine uses these to coach you daily.
+# ─────────────────────────────────────────
+goals:
+  # Monthly baseline — must hit this to stay on track
+  rce_per_month: 100
+
+  # Bonus tier — company trips + higher pay
+  # 600 RCE over 4 months, weighted. Aim for 150/month to land it.
+  bonus_rce_per_4_months: 600
+  bonus_rce_per_month_target: 150   # 600 / 4
+
+  # Working days per month (adjust for your schedule)
+  working_days_per_month: 20
+
+  # Derived targets (calculated from above — don't edit these)
+  # Baseline: 100 RCE / 20 days = 5 RCE/day, ~1 close/day at avg 5 RCE
+  # Bonus:    150 RCE / 20 days = 7.5 RCE/day, ~1.5 closes/day
+  baseline_rce_per_day: 5
+  bonus_rce_per_day: 7.5
+
+# ─────────────────────────────────────────
 # RCE THRESHOLDS
 # RCE = Residential Commercial Equivalent
 # 1 RCE ≈ the energy usage of one average home
-# Updated based on field experience.
-# Volume model: 2 closes at 5 RCE/day = quota. Sweet spot is 5-30.
+# Volume model: 2 closes at 5 RCE/day hits bonus pace.
 # ─────────────────────────────────────────
 qualification:
   min_rce: 3              # Below this = not worth the call
-  sweet_spot_min: 5       # Sweet spot starts here — volume play, 2/day hits quota
+  sweet_spot_min: 5       # Sweet spot starts here — volume play
   sweet_spot_max: 30      # Sweet spot ends here
   large_account_min: 30   # Above this = corporate conversation, flag not reject
   max_rce: 500            # No hard ceiling — willing to play corporate for a win
+
+# ─────────────────────────────────────────
+# CONTRACT RULES
+# Governs when existing customers are eligible for renewal
+# and when competitors' customers can be re-signed.
+# ─────────────────────────────────────────
+contracts:
+  target_length_years: 5     # What we aim to sign them on
+
+  # Re-sign rules by territory and energy type
+  # A business is eligible if they have LESS than X years remaining
+  ohio:
+    electric_max_remaining_years: 2   # Can sign if under 2 years left
+    gas_max_remaining_years: 0        # No restriction noted — always eligible
+  texas:
+    electric_max_remaining_years: 3   # Under 3 years left
+    gas_max_remaining_years: 0
+    priority: low                     # Texas is background — Ohio first
+
+  # When to start re-engaging our own customers for renewal
+  renewal_outreach_months_before_expiry: 12  # Start talking 1 year before contract ends
 
 # ─────────────────────────────────────────
 # URGENCY SCORING WEIGHTS (Agent 3)

@@ -17,6 +17,9 @@ from .sources.base import RawLead
 from .sources.overpass import OverpassSource
 from .sources.epa_echo import EPAEchoSource
 from .sources.google_maps import GoogleMapsSource
+from .sources.csv_import import CSVImportSource
+
+CSV_IMPORT_PATH = "data/raw_import.csv"  # drop your Map Builder export here
 
 load_dotenv()
 
@@ -28,7 +31,8 @@ def run_scraper() -> List[RawLead]:
     sources = [
         OverpassSource(),
         EPAEchoSource(),
-        GoogleMapsSource(),  # silent no-op if no API key
+        GoogleMapsSource(),                    # silent no-op if no API key
+        CSVImportSource(CSV_IMPORT_PATH),      # silent no-op if file not present
     ]
 
     # index maps dedup_key → position in all_leads for fast merge lookups

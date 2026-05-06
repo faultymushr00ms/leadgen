@@ -103,15 +103,19 @@ def _score_lead(lead: dict, config: dict, season: str) -> ScoredLead:
     # Extra boost per additional confirming source
     confidence_score = min(100, confidence_score + (source_count - 1) * 10)
 
+    # ── Action code score (0–100) — strongest urgency signal ──────────────
+    # Live appointments and returns always float to the top regardless of RCE.
+    from scraper.sources.csv_import import ACTION_PRIORITY, CORPORATE_FLAGS
+    action = lead.get("next_action", lead.get("action", "new"))
+    action_score = float(ACTION_PRIORITY.get(action, 40))
+    is_corporate = action in CORPORATE_FLAGS or "corporate" in (lead.get("known_info", "")).lower()
+
     # ── Follow-up timing score (0–100) ─────────────────────────────────────
     if days_since is None:
-        # Never contacted — treat as fresh cold lead
         followup_score = 50.0
     elif days_since >= followup_threshold:
-        # Overdue — max urgency
         followup_score = 100.0
     elif days_since == 0:
-        # Just contacted today — don't call again yet
         followup_score = 0.0
     else:
         followup_score = (days_since / followup_threshold) * 100
@@ -138,21 +142,41 @@ def _score_lead(lead: dict, config: dict, season: str) -> ScoredLead:
         freshness_score = max(0.0, 100.0 - (days_since * 2))
 
     # ── Weighted total ─────────────────────────────────────────────────────
+    # Action score gets its own weight — it's the strongest single signal.
+    # An "ap" (live appointment) should always beat a cold lead regardless of RCE.
+    action_weight = 35
     total_weight = (
         weights["rce_weight"]
         + weights["followup_overdue_weight"]
         + weights["seasonal_weight"]
         + weights["lead_freshness_weight"]
+        + action_weight
     )
     urgency_score = (
-        rce_score          * weights["rce_weight"]
+        rce_score     * weights["rce_weight"]
         + confidence_score * weights["followup_overdue_weight"]
         + seasonal_score   * weights["seasonal_weight"]
         + freshness_score  * weights["lead_freshness_weight"]
+        + action_score     * action_weight
     ) / total_weight
 
     # ── Human-readable reasoning ───────────────────────────────────────────
     reasons = []
+    # Action status is always shown first — it's the most actionable info
+    action_labels = {
+        "appointment":        "LIVE APPOINTMENT",
+        "appointment_return": "RETURN VISIT",
+        "email_sent":         "Email sent — call to follow up",
+        "extra_large_volume": "XLV account",
+        "large_volume":       "LV account",
+        "call_head_office":   "CORPORATE — call head office",
+        "callback":           "Has owner data",
+        "walk_in":            "Scouted in person",
+    }
+    if action in action_labels:
+        reasons.append(action_labels[action])
+    if is_corporate:
+        reasons.append("Email-first approach")
     if sweet_min <= rce <= sweet_max:
         reasons.append(f"Sweet spot RCE (~{rce:.0f})")
     elif rce > sweet_max:

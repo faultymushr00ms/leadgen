@@ -25,13 +25,56 @@ from .base import BaseSource, RawLead
 
 # ── Action code decoder ────────────────────────────────────────────────────────
 ACTION_CODES = {
-    "cb":   "call_back",
-    "dnq":  "did_not_qualify",
-    "ni":   "not_interested",
-    "lv":   "left_voicemail",
-    "wi":   "working_it",
-    "noor": "assigned_noor",
-    "":     "new",
+    "cb":        "callback",           # Has owner name / some data — worth calling
+    "wi":        "walk_in",            # Rep visited without appointment — scouted
+    "cho":       "call_head_office",   # Corporate chain — escalate, don't call location
+    "ap rb":     "appointment_return", # Had appointment, need to go back — high value
+    "ap":        "appointment",        # Live appointment — top priority
+    "lv":        "large_volume",       # Large volume marker — corporate lane
+    "xlv":       "extra_large_volume", # Extra large — highest value corporate
+    "ni":        "not_interested",     # Not interested — skip
+    "apoa":      "appt_other_agent",   # Another agent booked — reference only
+    "apoa sold": "customer_other_agent", # Closed by another agent — already customer
+    "dnq":       "did_not_qualify",    # Does not qualify — skip
+    "nis":       "not_in_service",     # Number not in service — skip
+    "cx":        "customer",           # Already our customer — exclude from calls
+    "mail":      "email_sent",         # Email sent — follow up with call
+    "spawn":     "territory_marker",   # Territory/admin marker — not a real lead
+    "noor":      "noor_leads",         # Leads from agent Noor — treat as regular
+    "dnc":       "do_not_call",        # LEGAL — never appears on call sheet
+    "2026":      "call_2026",          # Schedule for 2026
+    "2027":      "call_2027",          # Schedule for 2027
+    "2028":      "call_2028",          # Schedule for 2028
+    "":          "new",                # No status — fresh unworked lead
+}
+
+# Leads with these statuses are excluded entirely — never reach the call sheet
+HARD_EXCLUDE = {"do_not_call", "customer", "customer_other_agent", "territory_marker"}
+
+# Leads with these statuses are skipped as unqualified
+SOFT_SKIP = {"not_interested", "did_not_qualify", "not_in_service", "appt_other_agent"}
+
+# These route into the corporate/large-volume lane in Agent 3
+CORPORATE_FLAGS = {"call_head_office", "large_volume", "extra_large_volume"}
+
+# Urgency priority order for Agent 3 (higher = more urgent)
+ACTION_PRIORITY = {
+    "appointment":        100,
+    "appointment_return":  90,
+    "email_sent":          80,  # email sent, call to follow up
+    "extra_large_volume":  75,
+    "large_volume":        70,
+    "callback":            65,
+    "walk_in":             60,
+    "noor_leads":          50,
+    "call_2026":           45,
+    "new":                 40,
+    "call_head_office":    35,  # worth it but longer play
+    "call_2027":           20,
+    "call_2028":           10,
+    "not_interested":       5,  # revisit eventually
+    "did_not_qualify":      0,
+    "not_in_service":       0,
 }
 
 # ── Territory detection from GPS coordinates ───────────────────────────────────
@@ -223,7 +266,15 @@ def _row_to_lead(row: dict, fieldnames: List[str]) -> Optional[RawLead]:
     rce_from_notes = _extract_rce_from_notes(raw_notes)
 
     # Action code
-    action = _decode_action(row.get("Action", ""))
+    raw_action = (row.get("Action") or "").strip().lower()
+    action = ACTION_CODES.get(raw_action, raw_action or "new")
+
+    # Hard excludes — these never reach the pipeline
+    if action in HARD_EXCLUDE:
+        return None
+
+    # Soft skips — unqualified, mark but still pass through for training data
+    is_skipped = action in SOFT_SKIP
 
     # Dates — store for Agent 3 follow-up timing
     last_contact_date = (
@@ -247,8 +298,17 @@ def _row_to_lead(row: dict, fieldnames: List[str]) -> Optional[RawLead]:
         known_info_parts.append(f"Last contact: {last_contact_date}")
     if rce_from_notes:
         known_info_parts.append(f"RCE noted in field: {rce_from_notes}")
+    if action in CORPORATE_FLAGS:
+        known_info_parts.append("CORPORATE: email-first approach required")
     if notes:
         known_info_parts.append(notes)
+
+    # Action priority score — passed through to Agent 3
+    priority = ACTION_PRIORITY.get(action, 40)
+
+    # Skipped leads get zeroed priority but stay in data for training purposes
+    if is_skipped:
+        priority = 0
 
     return RawLead(
         company_name=name,
@@ -262,7 +322,7 @@ def _row_to_lead(row: dict, fieldnames: List[str]) -> Optional[RawLead]:
         notes=" | ".join(known_info_parts),
         latitude=lat,
         longitude=lon,
-        state=territory,      # repurposed to store territory for multi-territory support
+        state=territory,      # stores territory for multi-territory support
         source_count=1,
         confirmed_by=[f"CSV Import ({territory})"],
     )

@@ -6,78 +6,139 @@
 # RCE THRESHOLDS
 # RCE = Residential Commercial Equivalent
 # 1 RCE ≈ the energy usage of one average home
+# Updated based on field experience: real sweet spot is 10-30, not 50-100
 # ─────────────────────────────────────────
 qualification:
-  min_rce: 5              # Below this = auto-rejected, not worth calling
-  sweet_spot_min: 50      # Sweet spot starts here
-  sweet_spot_max: 100     # Sweet spot ends here — these are your best leads
-  max_rce: 500            # Above this = large account, flag for special handling
+  min_rce: 3              # Below this = not worth the call
+  sweet_spot_min: 10      # Sweet spot starts here — these are your bread and butter
+  sweet_spot_max: 30      # Sweet spot ends here — high volume, right size
+  large_account_min: 30   # Above this = qualified but needs different conversation
+  max_rce: 200            # Above this = big corporation, skip (not our market)
 
 # ─────────────────────────────────────────
 # URGENCY SCORING WEIGHTS (Agent 3)
-# These control how leads get ranked on your daily call sheet.
 # Higher number = more influence on the final rank.
 # All weights are relative to each other.
 # ─────────────────────────────────────────
 urgency:
-  rce_weight: 40            # Bigger opportunity = higher rank
+  rce_weight: 40               # Sweet spot (10-30) scores highest
   followup_overdue_weight: 30  # Overdue follow-ups jump the queue
-  seasonal_weight: 15       # Winter = gas urgency, summer = electric urgency
-  lead_freshness_weight: 15 # Fresh leads get a small boost
+  seasonal_weight: 15          # Winter = gas urgency, summer = electric urgency
+  lead_freshness_weight: 15    # Fresh leads get a small boost
 
-  followup_days_threshold: 21  # Days before a lead is considered overdue for follow-up
+  followup_days_threshold: 21  # Days before a lead is considered overdue
 
 # ─────────────────────────────────────────
 # SEASONAL SETTINGS
-# Adjusts which energy type gets prioritized by month
 # ─────────────────────────────────────────
 seasons:
   gas_peak_months: [11, 12, 1, 2, 3]      # Nov–Mar: push gas leads harder
   electric_peak_months: [6, 7, 8, 9]      # Jun–Sep: push electric leads harder
-  neutral_months: [4, 5, 10]              # Apr, May, Oct: no seasonal boost
+  neutral_months: [4, 5, 10]
 
 # ─────────────────────────────────────────
-# CONVERSATION RULES (used in Agent 2 system prompt)
-# What the qualifier keeps in mind when assessing a lead
+# CONVERSATION RULES (Agent 2 — AI qualifier)
 # ─────────────────────────────────────────
 conversation_rules:
-  - "Ask about number of locations — multiple sites multiply the RCE"
+  - "Ask about number of locations — multiple sites, aggregate the bills for total usage"
   - "Identify the decision maker early — don't waste time on non-owners"
   - "Ask about current provider and contract end date"
+  - "For electricity: if contract is over 2 years remaining, move on immediately"
+  - "For restaurants: ask about cooking equipment — hot pot and pho use significantly more gas"
+  - "For gas stations: ask if there's a car wash attached — changes usage significantly"
   - "Listen for mentions of expansion or new equipment — growth signals"
-  - "Manufacturing, warehouses, restaurants, and laundromats are high-usage industries"
 
 # ─────────────────────────────────────────
-# REJECTION TRIGGERS (used in Agent 2)
-# These signal a lead is not worth pursuing
+# REJECTION TRIGGERS (Agent 2 — AI qualifier)
 # ─────────────────────────────────────────
 rejection_triggers:
   - "Single-family home or personal residence"
-  - "Confirmed under 5 RCE with no growth potential"
-  - "Already locked in a long-term contract (2+ years remaining)"
+  - "Confirmed under 3 RCE"
+  - "Electricity contract with more than 2 years remaining"
+  - "Large corporation or enterprise account (over 200 RCE)"
+  - "Empty or storage-only warehouse with no active operations"
   - "Out of Ohio service territory"
   - "Explicitly asked not to be contacted again"
 
 # ─────────────────────────────────────────
-# HIGH-VALUE INDUSTRIES
-# Business types that statistically run 50-100 RCE
-# Agent 1 uses this to prioritize which businesses to scrape
+# INDUSTRY TIERS
+# Based on real field experience — governs scrape priority and rule scoring.
+# Tier 1 = almost always in sweet spot, call first.
+# Tier 2 = often qualify, good to work.
+# Tier 3 = hit or miss, lower priority.
+# SKIP = not our market.
 # ─────────────────────────────────────────
 target_industries:
-  tier_1:  # Almost always sweet spot — scrape these first
-    - Warehouse / Distribution
-    - Manufacturing (light to mid)
-    - Commercial Laundry / Laundromat
-    - Car Wash
-    - Cold Storage / Refrigeration
-    - Large Restaurant / Food Service
-  tier_2:  # Often qualify — good to include
+
+  tier_1:  # Bread and butter — almost always 10-30 RCE, call these first
+    - Gas Station / Convenience Store
+    - Gas Station with Car Wash         # Car wash adds significant usage
+    - Small Restaurant / Diner
+    - Asian Restaurant                  # Hot pot and pho use more gas than expected
+    - Hotel / Motel (small to mid)
+    - Car Wash (standalone)
+    - Laundromat / Coin Laundry
+
+  tier_2:  # Often qualify — worth including in every sweep
+    - Fast Food (independent or small chain)
     - Auto Repair / Body Shop
     - Gym / Fitness Center
-    - Hotel / Motel (small to mid)
-    - Retail Chain (multi-location)
-    - Medical / Dental Office (multi-room)
-  tier_3:  # Hit or miss — lower scrape priority
-    - Small Restaurant
+    - Grocery / Convenience (small chain)
+    - Medical / Dental Office
+    - Bakery / Cafe
+    - Bar / Tavern
+
+  tier_3:  # Variable — check before calling
     - Retail (single location)
     - Office Building (small)
+    - Light Manufacturing (verify size)
+
+  skip:  # Not our market — large corporations or near-zero usage
+    - Large Warehouse (storage only)    # Big building, no energy use
+    - Steel Mill / Large Manufacturing  # Big corporation territory
+    - Corporate Campus
+    - Empty / Vacant Property
+
+# ─────────────────────────────────────────
+# BUSINESS NUANCE RULES (Rule-based qualifier)
+# Signals that adjust RCE estimates up or down.
+# These get smarter as you add more from field experience.
+# ─────────────────────────────────────────
+nuance_rules:
+
+  rce_boosters:  # Keywords that suggest higher usage than average
+    - keyword: "hot pot"
+      boost: 8
+      reason: "Hot pot cooking uses significantly more gas"
+    - keyword: "pho"
+      boost: 6
+      reason: "Pho broth requires extended high-heat cooking"
+    - keyword: "buffet"
+      boost: 5
+      reason: "Buffet-style keeps food hot continuously"
+    - keyword: "24 hour"
+      boost: 4
+      reason: "24/7 operations never cycle down"
+    - keyword: "car wash"
+      boost: 10
+      reason: "Car wash adds major gas and electric load"
+    - keyword: "laundry"
+      boost: 8
+      reason: "Laundry equipment runs hot and constant"
+    - keyword: "multiple location"
+      boost: 15
+      reason: "Aggregate billing multiplies total usage"
+
+  rce_reducers:  # Keywords that suggest lower usage than average
+    - keyword: "storage"
+      reduce: 12
+      reason: "Storage-only means minimal active energy use"
+    - keyword: "carry out"
+      reduce: 4
+      reason: "Carry-out only means no dine-in heating load"
+    - keyword: "seasonal"
+      reduce: 5
+      reason: "Seasonal business means partial-year usage"
+    - keyword: "vacant"
+      reduce: 20
+      reason: "Vacant = no usage"

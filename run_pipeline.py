@@ -51,23 +51,27 @@ def _save_json(data: dict, path: str):
 
 def _tier_rank(industry: str) -> int:
     """
-    Returns 1, 2, or 3 based on industry energy tier from config.
-    Tier 1 = highest energy users = qualify first.
-    Unknown industries default to tier 2 so they still get a chance.
+    Returns 1, 2, or 3 based on field-tested industry tiers.
+    Tier 1 = bread and butter sweet spot leads — qualify first.
     """
     industry_lower = industry.lower()
     tier1_keywords = [
-        "warehouse", "distribution", "manufactur", "laundry", "car wash",
-        "cold storage", "refriger", "food service", "steel", "metal",
+        "gas station", "convenience", "restaurant", "diner", "asian",
+        "hotel", "motel", "car wash", "laundromat", "laundry",
     ]
     tier3_keywords = [
-        "small restaurant", "retail (single", "office (small",
+        "retail", "office", "storage", "vacant",
     ]
     if any(k in industry_lower for k in tier1_keywords):
         return 1
     if any(k in industry_lower for k in tier3_keywords):
         return 3
     return 2
+
+
+def _use_ai_qualifier() -> bool:
+    """Returns True if the AI (Claude) qualifier should be used."""
+    return bool(os.getenv("ANTHROPIC_API_KEY", "").strip())
 
 
 # ── Agent 1: Scrape ────────────────────────────────────────────────────────────
@@ -90,64 +94,82 @@ def run_agent1(skip: bool) -> list:
 
 # ── Agent 2: Qualify ───────────────────────────────────────────────────────────
 
-def run_agent2(raw_leads: list, limit: int) -> list:
+def _build_prospect(raw: dict) -> dict:
+    return {
+        "company_name":  raw.get("company_name", "Unknown"),
+        "industry":      raw.get("industry", ""),
+        "estimated_rce": raw.get("estimated_rce", 0),
+        "location":      raw.get("location", f"{raw.get('city', '')}, OH"),
+        "phone":         raw.get("phone", ""),
+        "source_count":  raw.get("source_count", 1),
+        "confidence":    raw.get("confidence", "LOW"),
+        "known_info":    raw.get("known_info", ""),
+        "last_contacted": raw.get("last_contacted", ""),
+    }
+
+
+def run_agent2_rules(raw_leads: list, limit: int) -> list:
+    """Free qualifier — uses field-tested rules, no API required."""
+    from training.rule_qualifier import batch_qualify
+
+    sorted_leads = sorted(raw_leads, key=lambda l: _tier_rank(l.get("industry", "")))
+    candidates = sorted_leads[:limit] if limit else sorted_leads
+    prospects = [_build_prospect(r) for r in candidates]
+
+    print(f"\n[Agent 2 — Rules] Qualifying {len(prospects)} leads...")
+    qualified, rejected = batch_qualify(prospects)
+    print(f"[Agent 2 — Rules] {len(qualified)} qualified | {rejected} rejected.\n")
+    return qualified
+
+
+def run_agent2_ai(raw_leads: list, limit: int) -> list:
+    """
+    ★ SUPERSTAR MODE ★
+    AI qualifier powered by Claude — sharper reasoning, learns from your
+    call history. Activates automatically when ANTHROPIC_API_KEY is in .env.
+    """
     from training.training_harness import AgentTrainingHarness
 
-    print(f"\n[Agent 2] Qualifying leads with Claude...")
     harness = AgentTrainingHarness()
-
-    # Sort by industry tier so the best candidates go first
     sorted_leads = sorted(raw_leads, key=lambda l: _tier_rank(l.get("industry", "")))
-
-    # Apply limit after sorting so we always test on the best candidates
     candidates = sorted_leads[:limit] if limit else sorted_leads
-    print(f"[Agent 2] Processing {len(candidates)} leads "
-          f"({'limited' if limit else 'full run'})...\n")
 
+    print(f"\n[Agent 2 — ★ AI] Qualifying {len(candidates)} leads with Claude...")
     qualified = []
     rejected_count = 0
 
     for i, raw in enumerate(candidates, start=1):
-        prospect = {
-            "company_name": raw.get("company_name", "Unknown"),
-            "industry":     raw.get("industry", ""),
-            "estimated_rce": raw.get("estimated_rce", 0),
-            "location":     raw.get("location", f"{raw.get('city', '')}, OH"),
-            "known_info":   raw.get("known_info", f"Source confidence: {raw.get('confidence', 'LOW')}"),
-        }
-
-        print(f"  [{i}/{len(candidates)}] {prospect['company_name'][:40]}...", end=" ", flush=True)
-
+        prospect = _build_prospect(raw)
+        print(f"  [{i}/{len(candidates)}] {prospect['company_name'][:40]}...",
+              end=" ", flush=True)
         try:
             result = harness.qualify_lead(prospect, conversation_history=[])
         except Exception as e:
             print(f"ERROR: {e}")
             continue
 
-        is_qualified = result.get("is_qualified", False)
-
-        if is_qualified:
-            qualified.append({
-                **prospect,
-                "rce_estimate":   result.get("rce_estimate", 0),
-                "confidence":     raw.get("confidence", "LOW"),
-                "source_count":   raw.get("source_count", 1),
-                "phone":          raw.get("phone", ""),
-                "reasoning":      result.get("reasoning", ""),
-                "next_action":    result.get("next_action", "call"),
-                "estimated_value": result.get("estimated_value", ""),
-                "last_contacted": raw.get("last_contacted", ""),
-            })
-            rce = result.get("rce_estimate", "?")
-            print(f"QUALIFIED (~{rce} RCE)")
+        if result.get("is_qualified"):
+            qualified.append({**prospect, **result})
+            print(f"QUALIFIED (~{result.get('rce_estimate', '?')} RCE)")
         else:
             rejected_count += 1
             print("rejected")
 
-        # Polite pause — avoids hammering the API and triggering rate limits
         time.sleep(0.5)
 
-    print(f"\n[Agent 2] Done. {len(qualified)} qualified | {rejected_count} rejected.\n")
+    print(f"\n[Agent 2 — ★ AI] {len(qualified)} qualified | {rejected_count} rejected.\n")
+    return qualified
+
+
+def run_agent2(raw_leads: list, limit: int) -> list:
+    """Routes to AI or rule-based qualifier depending on what's available."""
+    if _use_ai_qualifier():
+        print("[Agent 2] ANTHROPIC_API_KEY detected — using ★ AI qualifier.")
+        qualified = run_agent2_ai(raw_leads, limit)
+    else:
+        print("[Agent 2] No API key — using rule-based qualifier (free).")
+        print("          To upgrade: add ANTHROPIC_API_KEY to your .env file.\n")
+        qualified = run_agent2_rules(raw_leads, limit)
 
     _save_json({
         "qualified_at": datetime.now().isoformat(),
@@ -155,7 +177,6 @@ def run_agent2(raw_leads: list, limit: int) -> list:
         "leads": qualified,
     }, QUALIFIED_LEADS_FILE)
     print(f"[Agent 2] Saved to {QUALIFIED_LEADS_FILE}\n")
-
     return qualified
 
 
@@ -188,8 +209,6 @@ def main():
         help="How many leads to show in the printed call sheet (default: 20).",
     )
     args = parser.parse_args()
-
-    _check_api_key()
 
     start = datetime.now()
     print("\n" + "=" * 60)

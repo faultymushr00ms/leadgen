@@ -48,25 +48,35 @@ ACTION_CODES = {
     "":          "new",                # No status — fresh unworked lead
 }
 
-# Leads with these statuses are excluded entirely — never reach the call sheet
-HARD_EXCLUDE = {"do_not_call", "customer", "customer_other_agent", "territory_marker"}
+# Leads with these statuses are excluded entirely — never reach the pipeline
+# Only true legal/admin exclusions. Customers are NOT excluded.
+HARD_EXCLUDE = {"do_not_call"}
+
+# Territory markers are not leads but contain training signal — kept separately
+TERRITORY_MARKERS = {"territory_marker"}
 
 # Leads with these statuses are skipped as unqualified
 SOFT_SKIP = {"not_interested", "did_not_qualify", "not_in_service", "appt_other_agent"}
+
+# Existing customers — managed for contract renewal, not excluded
+CUSTOMER_FLAGS = {"customer", "customer_other_agent"}
 
 # These route into the corporate/large-volume lane in Agent 3
 CORPORATE_FLAGS = {"call_head_office", "large_volume", "extra_large_volume"}
 
 # Urgency priority order for Agent 3 (higher = more urgent)
+# Customers up for renewal score highest — they're a guaranteed conversation
 ACTION_PRIORITY = {
-    "appointment":        100,
-    "appointment_return":  90,
-    "email_sent":          80,  # email sent, call to follow up
-    "extra_large_volume":  75,
-    "large_volume":        70,
-    "callback":            65,
-    "walk_in":             60,
-    "noor_leads":          50,
+    "appointment":          100,
+    "appointment_return":    90,
+    "customer":              85,  # renewal candidate — known relationship
+    "customer_other_agent":  80,  # another agent's customer — renewal opportunity
+    "email_sent":            78,
+    "extra_large_volume":    75,
+    "large_volume":          70,
+    "callback":              65,
+    "walk_in":               60,
+    "noor_leads":            50,
     "call_2026":           45,
     "new":                 40,
     "call_head_office":    35,  # worth it but longer play
@@ -269,12 +279,18 @@ def _row_to_lead(row: dict, fieldnames: List[str]) -> Optional[RawLead]:
     raw_action = (row.get("Action") or "").strip().lower()
     action = ACTION_CODES.get(raw_action, raw_action or "new")
 
-    # Hard excludes — these never reach the pipeline
+    # Hard excludes — only DNC. Legal. No exceptions.
     if action in HARD_EXCLUDE:
         return None
 
-    # Soft skips — unqualified, mark but still pass through for training data
-    is_skipped = action in SOFT_SKIP
+    # Territory markers — not real leads, but kept as training signal
+    is_territory_marker = action in TERRITORY_MARKERS
+
+    # Existing customers — flag for renewal management, not excluded
+    is_customer = action in CUSTOMER_FLAGS
+
+    # Soft skips — unqualified leads, zero priority but kept for training data
+    is_skipped = action in SOFT_SKIP and not is_customer
 
     # Dates — store for Agent 3 follow-up timing
     last_contact_date = (
@@ -300,13 +316,15 @@ def _row_to_lead(row: dict, fieldnames: List[str]) -> Optional[RawLead]:
         known_info_parts.append(f"RCE noted in field: {rce_from_notes}")
     if action in CORPORATE_FLAGS:
         known_info_parts.append("CORPORATE: email-first approach required")
+    if is_customer:
+        known_info_parts.append("EXISTING CUSTOMER: manage for contract renewal")
+    if is_territory_marker:
+        known_info_parts.append("TERRITORY MARKER: training signal only")
     if notes:
         known_info_parts.append(notes)
 
     # Action priority score — passed through to Agent 3
     priority = ACTION_PRIORITY.get(action, 40)
-
-    # Skipped leads get zeroed priority but stay in data for training purposes
     if is_skipped:
         priority = 0
 

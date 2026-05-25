@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}— {{ lead.company_name }}{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+  <a href="/" style="color:var(--forge-muted); text-decoration:none">
+    <i class="bi bi-arrow-left me-1"></i>Back to Call Sheet
+  </a>
+</div>
+
+<div class="row g-4">
+  <!-- Main lead card -->
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header py-3 d-flex justify-content-between align-items-start">
+        <div>
+          <h4 class="mb-1" style="color:var(--forge-orange)">{{ lead.company_name }}</h4>
+          <span class="text-muted">{{ lead.industry }}</span>
+        </div>
+        <div class="text-end">
+          {% if lead.confidence == 'HIGH' %}
+            <span class="badge badge-high mb-1 d-block">HIGH CONFIDENCE</span>
+          {% elif lead.confidence == 'MEDIUM' %}
+            <span class="badge badge-medium mb-1 d-block">MED CONFIDENCE</span>
+          {% else %}
+            <span class="badge badge-low mb-1 d-block">LOW CONFIDENCE</span>
+          {% endif %}
+          <small class="text-muted">Rank #{{ rank }}</small>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row g-3 mb-4">
+          <div class="col-sm-4">
+            <div class="stat-label">Est. RCE</div>
+            <div class="stat-number">~{{ lead.rce_estimate }}</div>
+          </div>
+          <div class="col-sm-4">
+            <div class="stat-label">Urgency Score</div>
+            <div class="stat-number">{{ lead.urgency_score }}</div>
+          </div>
+          <div class="col-sm-4">
+            <div class="stat-label">Next Action</div>
+            <div class="mt-1">
+              <span style="color:var(--forge-orange); font-weight:600; text-transform:uppercase; font-size:0.9rem">
+                {{ lead.next_action.replace('_', ' ') }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <hr style="border-color:var(--forge-border)">
+
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="stat-label mb-1">Phone</div>
+            {% if lead.phone %}
+              <a class="phone-link fs-5" href="tel:{{ lead.phone }}">
+                <i class="bi bi-telephone me-1"></i>{{ lead.phone }}
+              </a>
+            {% else %}
+              <span class="text-muted">No phone on file</span>
+            {% endif %}
+          </div>
+          <div class="col-sm-6">
+            <div class="stat-label mb-1">Location</div>
+            <span>{{ lead.location }}</span>
+          </div>
+          <div class="col-12">
+            <div class="stat-label mb-1">Why Call Now</div>
+            <p style="color:#e0e0e0">{{ lead.reasoning }}</p>
+          </div>
+          {% if lead.known_info %}
+          <div class="col-12">
+            <div class="stat-label mb-1">Field Notes</div>
+            <p class="text-muted small">{{ lead.known_info }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action sidebar -->
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-check2-square me-2"></i>Log Outcome</h6>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2">
+          <button class="btn btn-forge">Appointment Booked</button>
+          <button class="btn btn-outline-forge">Left Voicemail</button>
+          <button class="btn btn-outline-forge">Callback Scheduled</button>
+          <button class="btn btn-outline-secondary">Not Interested</button>
+          <button class="btn btn-outline-secondary">Does Not Qualify</button>
+        </div>
+        <hr style="border-color:var(--forge-border)">
+        <textarea class="form-control bg-dark text-light border-secondary" rows="3"
+          placeholder="Notes from the call..." style="border-color:var(--forge-border)!important"></textarea>
+        <button class="btn btn-forge w-100 mt-2">Save</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Activity</h6>
+      </div>
+      <div class="card-body">
+        <p class="text-muted small text-center py-2">No activity logged yet.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

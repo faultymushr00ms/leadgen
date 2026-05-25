@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORGE {% block title %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --forge-orange: #e8611a;
+      --forge-dark:   #0f1117;
+      --forge-panel:  #1a1d27;
+      --forge-border: #2a2d3a;
+      --forge-muted:  #6c757d;
+    }
+    body { background: var(--forge-dark); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
+    .navbar { background: var(--forge-panel); border-bottom: 1px solid var(--forge-border); }
+    .forge-logo { color: var(--forge-orange); font-weight: 800; font-size: 1.4rem; letter-spacing: 3px; }
+    .forge-logo span { color: #e0e0e0; font-weight: 300; }
+    .card { background: var(--forge-panel); border: 1px solid var(--forge-border); }
+    .card-header { background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--forge-border); }
+    .stat-card { border-left: 3px solid var(--forge-orange); }
+    .stat-number { font-size: 2rem; font-weight: 700; color: var(--forge-orange); }
+    .stat-label { font-size: 0.75rem; color: var(--forge-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .table { color: #e0e0e0; }
+    .table thead th { color: var(--forge-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-color: var(--forge-border); }
+    .table tbody td { border-color: var(--forge-border); vertical-align: middle; }
+    .table tbody tr:hover { background: rgba(232,97,26,0.07); cursor: pointer; }
+    .badge-high    { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; }
+    .badge-medium  { background: #3a2d1a; color: #ff9800; border: 1px solid #5a421a; }
+    .badge-low     { background: #2a2d3a; color: #90a4ae; border: 1px solid var(--forge-border); }
+    .score-bar { height: 4px; border-radius: 2px; background: var(--forge-border); }
+    .score-fill { height: 4px; border-radius: 2px; background: var(--forge-orange); }
+    .rank-num { color: var(--forge-orange); font-weight: 700; font-size: 1.1rem; }
+    .phone-link { color: #4fc3f7; text-decoration: none; font-family: monospace; }
+    .phone-link:hover { color: var(--forge-orange); }
+    .progress { background: var(--forge-border); height: 8px; }
+    .progress-bar { background: var(--forge-orange); }
+    .btn-forge { background: var(--forge-orange); color: white; border: none; }
+    .btn-forge:hover { background: #c4511a; color: white; }
+    .btn-outline-forge { border: 1px solid var(--forge-orange); color: var(--forge-orange); background: transparent; }
+    .btn-outline-forge:hover { background: var(--forge-orange); color: white; }
+    .nav-link { color: var(--forge-muted) !important; }
+    .nav-link:hover, .nav-link.active { color: var(--forge-orange) !important; }
+    .territory-badge { font-size: 0.7rem; padding: 2px 7px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg px-4 py-3 mb-4">
+  <a class="navbar-brand forge-logo" href="/">FORGE <span>CRM</span></a>
+  <div class="navbar-nav ms-auto">
+    <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="/"><i class="bi bi-lightning-charge me-1"></i>Call Sheet</a>
+    <a class="nav-link {% if request.endpoint == 'leads' %}active{% endif %}" href="/leads"><i class="bi bi-people me-1"></i>All Leads</a>
+    <a class="nav-link {% if request.endpoint == 'goals' %}active{% endif %}" href="/goals"><i class="bi bi-bullseye me-1"></i>Goals</a>
+  </div>
+</nav>
+<div class="container-fluid px-4">
+  {% block content %}{% endblock %}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

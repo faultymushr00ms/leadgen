@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}— Call Sheet{% endblock %}
+
+{% block content %}
+
+<!-- Goal progress bar -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card p-3">
+      <div class="stat-number">{{ stats.qualified }}</div>
+      <div class="stat-label">Leads Ready to Call</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card p-3">
+      <div class="stat-number">{{ stats.high_confidence }}</div>
+      <div class="stat-label">High Confidence</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card p-3">
+      <div class="stat-number">{{ stats.sweet_spot }}</div>
+      <div class="stat-label">Sweet Spot (5–30 RCE)</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <div class="stat-label mb-1">Monthly Quota Progress</div>
+      <div class="d-flex justify-content-between mb-1">
+        <small>{{ stats.rce_logged }} RCE logged</small>
+        <small style="color:var(--forge-orange)">100 RCE goal</small>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" style="width: {{ stats.quota_pct }}%"></div>
+      </div>
+      <small class="text-muted mt-1 d-block">{{ stats.quota_pct }}% of baseline quota</small>
+    </div>
+  </div>
+</div>
+
+<!-- Call sheet table -->
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center py-3">
+    <div>
+      <h5 class="mb-0" style="color:var(--forge-orange)"><i class="bi bi-lightning-charge me-2"></i>Today's Call Sheet</h5>
+      <small class="text-muted">{{ today }} — sorted by urgency score</small>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="/run" class="btn btn-forge btn-sm"><i class="bi bi-play-fill me-1"></i>Run Pipeline</a>
+      <a href="/export" class="btn btn-outline-forge btn-sm"><i class="bi bi-download me-1"></i>Export CSV</a>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    {% if leads %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th style="width:50px">#</th>
+            <th>Company</th>
+            <th>Phone</th>
+            <th>RCE</th>
+            <th>Confidence</th>
+            <th>Score</th>
+            <th>Why Call Now</th>
+            <th>Territory</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lead in leads %}
+          <tr onclick="window.location='/lead/{{ loop.index0 }}'">
+            <td><span class="rank-num">{{ loop.index }}</span></td>
+            <td>
+              <div class="fw-semibold">{{ lead.company_name }}</div>
+              <small class="text-muted">{{ lead.industry }}</small>
+            </td>
+            <td>
+              {% if lead.phone %}
+                <a class="phone-link" href="tel:{{ lead.phone }}" onclick="event.stopPropagation()">
+                  <i class="bi bi-telephone me-1"></i>{{ lead.phone }}
+                </a>
+              {% else %}
+                <span class="text-muted">—</span>
+              {% endif %}
+            </td>
+            <td>
+              <span style="color:var(--forge-orange); font-weight:600">~{{ lead.rce_estimate }}</span>
+            </td>
+            <td>
+              {% if lead.confidence == 'HIGH' %}
+                <span class="badge badge-high">HIGH</span>
+              {% elif lead.confidence == 'MEDIUM' %}
+                <span class="badge badge-medium">MED</span>
+              {% else %}
+                <span class="badge badge-low">LOW</span>
+              {% endif %}
+            </td>
+            <td style="width:100px">
+              <div class="score-bar">
+                <div class="score-fill" style="width:{{ lead.urgency_score }}%"></div>
+              </div>
+              <small class="text-muted">{{ lead.urgency_score }}</small>
+            </td>
+            <td><small>{{ lead.reasoning }}</small></td>
+            <td>
+              <span class="territory-badge" style="background:var(--forge-border); color:var(--forge-muted)">
+                {{ lead.location.split(',')[-1].strip() if ',' in lead.location else 'OH' }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-inbox" style="font-size:3rem; color:var(--forge-muted)"></i>
+      <p class="text-muted mt-3">No leads yet. Click <strong>Run Pipeline</strong> to generate your call sheet.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

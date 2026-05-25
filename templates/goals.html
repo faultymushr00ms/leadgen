@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}— Goals{% endblock %}
+
+{% block content %}
+<h5 class="mb-4" style="color:var(--forge-orange)"><i class="bi bi-bullseye me-2"></i>Goal Tracker</h5>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Monthly Baseline — 100 RCE</h6></div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Progress</span>
+          <span style="color:var(--forge-orange)">{{ goals.rce_this_month }} / 100 RCE</span>
+        </div>
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width:{{ goals.baseline_pct }}%"></div>
+        </div>
+        <div class="row text-center g-2">
+          <div class="col-4">
+            <div class="stat-label">Daily Target</div>
+            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">5 RCE</div>
+          </div>
+          <div class="col-4">
+            <div class="stat-label">Days Left</div>
+            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">{{ goals.days_left }}</div>
+          </div>
+          <div class="col-4">
+            <div class="stat-label">Needed/Day</div>
+            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">{{ goals.rce_per_day_needed }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Bonus Tier — 600 RCE / 4 months</h6></div>
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Progress</span>
+          <span style="color:var(--forge-orange)">{{ goals.rce_period }} / 600 RCE</span>
+        </div>
+        <div class="progress mb-3">
+          <div class="progress-bar" style="width:{{ goals.bonus_pct }}%"></div>
+        </div>
+        <p class="text-muted small mb-0">
+          Hit 150 RCE/month to land company trips and higher pay.
+          You need <strong style="color:var(--forge-orange)">{{ goals.rce_per_day_bonus }} RCE/day</strong> to stay on bonus pace.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header py-3"><h6 class="mb-0">Log a Close</h6></div>
+      <div class="card-body">
+        <form method="POST" action="/log_close" class="row g-3">
+          <div class="col-md-4">
+            <label class="stat-label mb-1">Company Name</label>
+            <input type="text" name="company" class="form-control bg-dark text-light" style="border-color:var(--forge-border)" placeholder="Business name">
+          </div>
+          <div class="col-md-2">
+            <label class="stat-label mb-1">RCE Closed</label>
+            <input type="number" name="rce" class="form-control bg-dark text-light" style="border-color:var(--forge-border)" placeholder="e.g. 7">
+          </div>
+          <div class="col-md-3">
+            <label class="stat-label mb-1">Contract Length</label>
+            <select name="contract_years" class="form-control bg-dark text-light" style="border-color:var(--forge-border)">
+              <option value="5">5 years</option>
+              <option value="3">3 years</option>
+              <option value="2">2 years</option>
+              <option value="1">1 year</option>
+            </select>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-forge w-100">Log Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

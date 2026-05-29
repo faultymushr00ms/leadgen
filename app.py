@@ -8,7 +8,7 @@ import csv
 import json
 import os
 from datetime import datetime, date
-from flask import Flask, render_template, redirect, request
+from flask import Flask, jsonify, render_template, redirect, request
 
 app = Flask(__name__)
 OUTPUT_DIR = "output"
@@ -23,8 +23,12 @@ def _load_zones() -> list:
         return zones
     for fname in sorted(os.listdir(REGIONS_DIR)):
         if fname.endswith(".json"):
+            region_key = fname[:-5]  # strip .json
             with open(os.path.join(REGIONS_DIR, fname)) as f:
-                zones.extend(json.load(f))
+                file_zones = json.load(f)
+            for z in file_zones:
+                z["_source_file"] = region_key
+            zones.extend(file_zones)
     zones.sort(key=lambda z: (
         STATUS_SORT.get(z.get("status", "verify"), 9),
         -(z.get("rateChange") or 0),
@@ -193,6 +197,64 @@ def export():
 def run_pipeline():
     os.system("python run_pipeline.py --skip-scrape &")
     return redirect("/")
+
+
+@app.route("/api/zones", methods=["GET"])
+def api_zones_list():
+    zones = _load_zones()
+    return jsonify(zones)
+
+@app.route("/api/regions", methods=["GET"])
+def api_regions_list():
+    if not os.path.exists(REGIONS_DIR):
+        return jsonify([])
+    files = sorted(f.replace(".json","") for f in os.listdir(REGIONS_DIR) if f.endswith(".json"))
+    return jsonify(files)
+
+@app.route("/api/zones/<region_file>/<path:zone_name>", methods=["PUT"])
+def api_update_zone(region_file, zone_name):
+    path = os.path.join(REGIONS_DIR, region_file + ".json")
+    if not os.path.exists(path):
+        return jsonify({"error": "region not found"}), 404
+    with open(path) as f:
+        zones = json.load(f)
+    data = request.get_json()
+    # Remove internal field before saving
+    data.pop("_source_file", None)
+    idx = next((i for i, z in enumerate(zones) if z["name"] == zone_name), None)
+    if idx is None:
+        return jsonify({"error": "zone not found"}), 404
+    zones[idx] = data
+    with open(path, "w") as f:
+        json.dump(zones, f, indent=2)
+    return jsonify({"ok": True})
+
+@app.route("/api/zones/<region_file>", methods=["POST"])
+def api_add_zone(region_file):
+    path = os.path.join(REGIONS_DIR, region_file + ".json")
+    data = request.get_json()
+    data.pop("_source_file", None)
+    if os.path.exists(path):
+        with open(path) as f:
+            zones = json.load(f)
+    else:
+        zones = []
+    zones.append(data)
+    with open(path, "w") as f:
+        json.dump(zones, f, indent=2)
+    return jsonify({"ok": True})
+
+@app.route("/api/zones/<region_file>/<path:zone_name>", methods=["DELETE"])
+def api_delete_zone(region_file, zone_name):
+    path = os.path.join(REGIONS_DIR, region_file + ".json")
+    if not os.path.exists(path):
+        return jsonify({"error": "region not found"}), 404
+    with open(path) as f:
+        zones = json.load(f)
+    zones = [z for z in zones if z["name"] != zone_name]
+    with open(path, "w") as f:
+        json.dump(zones, f, indent=2)
+    return jsonify({"ok": True})
 
 
 if __name__ == "__main__":

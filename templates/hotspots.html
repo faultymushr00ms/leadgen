@@ -116,6 +116,7 @@
   .agg-municipal  { background: rgba(229,57,53,0.18);  color: #ef9a9a; border: 1px solid rgba(229,57,53,0.35); }
   .agg-none       { background: rgba(84,110,122,0.18); color: #90a4ae; border: 1px solid rgba(84,110,122,0.3); }
   .agg-address    { background: rgba(123,31,162,0.18); color: #ce93d8; border: 1px solid rgba(123,31,162,0.35); }
+  .agg-coop       { background: rgba(255,143,0,0.15);  color: #ffcc80; border: 1px solid rgba(255,143,0,0.3); }
 
   /* ── Status badges ── */
   .status-pain_hit     { background: rgba(229,57,53,0.18);  color: var(--heat-hot);  border: 1px solid rgba(229,57,53,0.3); }
@@ -155,6 +156,7 @@
       <option value="">All Agg Status</option>
       <option value="confirmed_active_aggregation">Confirmed Active</option>
       <option value="municipal_utility">Municipal Utility</option>
+      <option value="electric_cooperative">Electric Co-op</option>
       <option value="no_aggregation_verified">No Aggregation</option>
       <option value="address_dependent">Address Dependent</option>
     </select>
@@ -290,6 +292,7 @@
               <select name="aggregationStatus" class="dark-input">
                 <option value="confirmed_active_aggregation">Confirmed Active Aggregation</option>
                 <option value="municipal_utility">Municipal Utility</option>
+                <option value="electric_cooperative">Electric Co-op</option>
                 <option value="no_aggregation_verified">No Aggregation Verified</option>
                 <option value="address_dependent">Address Dependent</option>
               </select>
@@ -395,19 +398,21 @@ let selectedZone = null;
 
 // ── Status / agg sort priority ──────────────────────────────────────────────
 const STATUS_ORDER  = { pain_hit:0, pain_coming:1, transition:2, verify:3, stable:4 };
-const AGG_ORDER     = { confirmed_active_aggregation:0, address_dependent:1, no_aggregation_verified:2, municipal_utility:3 };
+const AGG_ORDER     = { confirmed_active_aggregation:0, address_dependent:1, no_aggregation_verified:2, municipal_utility:3, electric_cooperative:4 };
 const CONF_ORDER    = { high:0, medium:1, low:2 };
 
 // ── Labels / display strings ─────────────────────────────────────────────────
 const AGG_LABELS = {
   confirmed_active_aggregation: 'Confirmed Active',
   municipal_utility:            'Municipal Utility',
+  electric_cooperative:         'Electric Co-op',
   no_aggregation_verified:      'No Aggregation',
   address_dependent:            'Address Dependent',
 };
 const AGG_CSS = {
   confirmed_active_aggregation: 'agg-confirmed',
   municipal_utility:            'agg-municipal',
+  electric_cooperative:         'agg-coop',
   no_aggregation_verified:      'agg-none',
   address_dependent:            'agg-address',
 };

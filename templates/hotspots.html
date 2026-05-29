@@ -1,355 +1,539 @@
 {% extends "base.html" %}
 {% block title %}— Hotspots{% endblock %}
 
-{% set active = 'hotspots' %}
-
 {% block topbar_title %}HOTSPOTS{% endblock %}
-{% block topbar_sub %}Ohio PJM — Territory Intelligence{% endblock %}
+{% block topbar_sub %}Ohio Energy Market Intelligence{% endblock %}
 
 {% block topbar_actions %}
-<select id="territory-select" class="dark-input" style="width:140px" onchange="switchTerritory(this.value)">
-  <option value="ohio" selected>Ohio</option>
-  <option value="texas" disabled>Texas (soon)</option>
-  <option value="newyork" disabled>New York (soon)</option>
-</select>
-<button class="btn btn-forge btn-sm" onclick="refreshZones()">
-  <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+<span id="match-count" style="font-size:0.75rem; color:var(--forge-muted);">{{ zones|length }} zones</span>
+<button class="btn btn-ghost btn-sm" onclick="clearFilters()">
+  <i class="bi bi-x-circle me-1"></i>Clear Filters
 </button>
 {% endblock %}
 
+{% block head %}
+<style>
+  /* ── Filter bar ── */
+  #filter-bar {
+    flex-shrink: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--forge-panel);
+    border-bottom: 1px solid var(--forge-border);
+    flex-wrap: wrap;
+  }
+  #filter-bar .dark-input { width: auto; flex: 1; min-width: 120px; max-width: 200px; }
+  #search-input { min-width: 180px !important; max-width: 240px !important; }
+
+  /* ── Zone split ── */
+  #zone-split { display: flex; flex: 1; overflow: hidden; }
+
+  /* ── Table pane ── */
+  #zone-table-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  #zone-table-wrap { flex: 1; overflow-y: auto; }
+  #zone-table-wrap::-webkit-scrollbar { width: 4px; }
+  #zone-table-wrap::-webkit-scrollbar-track { background: transparent; }
+  #zone-table-wrap::-webkit-scrollbar-thumb { background: var(--forge-border); border-radius: 2px; }
+
+  /* ── Zone table ── */
+  #zone-table { color: #e0e0e0; width: 100%; border-collapse: collapse; table-layout: fixed; }
+  #zone-table thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--forge-dark);
+    color: var(--forge-muted); font-size: 0.67rem; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 8px 10px; border-bottom: 1px solid var(--forge-border);
+    font-weight: 500; white-space: nowrap; cursor: pointer; user-select: none;
+  }
+  #zone-table thead th:hover { color: #e0e0e0; }
+  #zone-table thead th .sort-icon { opacity: 0.4; margin-left: 3px; font-size: 0.6rem; }
+  #zone-table thead th.sorted .sort-icon { opacity: 1; color: var(--forge-orange); }
+  #zone-table tbody td { padding: 8px 10px; border-bottom: 1px solid rgba(42,45,58,0.5); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #zone-table tbody tr { cursor: pointer; transition: background 0.1s; }
+  #zone-table tbody tr:hover { background: rgba(232,97,26,0.07); }
+  #zone-table tbody tr.active { background: rgba(232,97,26,0.14); }
+  .no-zones-row td { text-align: center; padding: 40px; color: var(--forge-muted); font-size: 0.85rem; }
+
+  /* ── Battlecard pane ── */
+  #battlecard-pane {
+    width: 360px; flex-shrink: 0;
+    border-left: 1px solid var(--forge-border);
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+  #battlecard-pane::-webkit-scrollbar { width: 4px; }
+  #battlecard-pane::-webkit-scrollbar-track { background: transparent; }
+  #battlecard-pane::-webkit-scrollbar-thumb { background: var(--forge-border); border-radius: 2px; }
+  #battlecard-empty {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--forge-muted); padding: 30px; text-align: center;
+  }
+  #battlecard-content { display: none; flex-direction: column; }
+
+  .bc-header { padding: 16px; border-bottom: 1px solid var(--forge-border); }
+  .bc-zone-name { font-size: 1.2rem; font-weight: 700; color: var(--forge-orange); line-height: 1.2; margin-bottom: 3px; }
+  .bc-region { font-size: 0.75rem; color: var(--forge-muted); margin-bottom: 10px; }
+  .bc-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .bc-section { padding: 12px 16px; border-bottom: 1px solid var(--forge-border); }
+  .bc-section-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--forge-muted); margin-bottom: 8px; }
+
+  .rate-story { display: flex; align-items: center; gap: 8px; }
+  .rate-box { text-align: center; }
+  .rate-val { font-size: 1.3rem; font-weight: 700; line-height: 1; }
+  .rate-sub { font-size: 0.65rem; color: var(--forge-muted); margin-top: 2px; }
+  .rate-arrow { font-size: 1.2rem; color: var(--forge-muted); }
+  .rate-change-badge {
+    font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;
+  }
+  .rate-up   { color: var(--heat-hot);  background: rgba(229,57,53,0.15); }
+  .rate-down { color: #64b5f6;          background: rgba(21,101,192,0.15); }
+  .rate-flat { color: var(--forge-muted); background: var(--forge-border); }
+
+  .bc-takeaway {
+    background: rgba(232,97,26,0.08); border: 1px solid rgba(232,97,26,0.2);
+    border-radius: 6px; padding: 10px 12px;
+    font-size: 0.82rem; color: #e0e0e0; line-height: 1.5;
+  }
+  .bc-hook {
+    background: rgba(255,179,0,0.07); border: 1px solid rgba(255,179,0,0.18);
+    border-radius: 6px; padding: 10px 12px;
+    font-size: 0.82rem; color: #ffe082; line-height: 1.5; font-style: italic;
+  }
+  .bc-hook::before { content: '"'; }
+  .bc-hook::after  { content: '"'; }
+
+  .bc-kv { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .bc-kv-item .kv-label { font-size: 0.67rem; color: var(--forge-muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 3px; }
+  .bc-kv-item .kv-val   { font-size: 0.82rem; color: #e0e0e0; }
+
+  .bc-notes { font-size: 0.78rem; color: var(--forge-muted); line-height: 1.5; }
+
+  /* ── Agg Status badges ── */
+  .agg-confirmed  { background: rgba(46,125,50,0.18);  color: #81c784; border: 1px solid rgba(46,125,50,0.35); }
+  .agg-municipal  { background: rgba(229,57,53,0.18);  color: #ef9a9a; border: 1px solid rgba(229,57,53,0.35); }
+  .agg-none       { background: rgba(84,110,122,0.18); color: #90a4ae; border: 1px solid rgba(84,110,122,0.3); }
+  .agg-address    { background: rgba(123,31,162,0.18); color: #ce93d8; border: 1px solid rgba(123,31,162,0.35); }
+
+  /* ── Status badges ── */
+  .status-pain_hit     { background: rgba(229,57,53,0.18);  color: var(--heat-hot);  border: 1px solid rgba(229,57,53,0.3); }
+  .status-pain_coming  { background: rgba(255,111,0,0.18);  color: var(--heat-pain); border: 1px solid rgba(255,111,0,0.3); }
+  .status-stable       { background: rgba(46,125,50,0.18);  color: #81c784;          border: 1px solid rgba(46,125,50,0.3); }
+  .status-transition   { background: rgba(21,101,192,0.18); color: #64b5f6;          border: 1px solid rgba(21,101,192,0.3); }
+  .status-verify       { background: rgba(123,31,162,0.15); color: #ce93d8;          border: 1px solid rgba(123,31,162,0.3); }
+
+  /* ── Confidence ── */
+  .conf-high   { background: rgba(46,125,50,0.15);  color: #a5d6a7; border: 1px solid rgba(46,125,50,0.3); }
+  .conf-medium { background: rgba(255,179,0,0.12);  color: var(--forge-gold); border: 1px solid rgba(255,179,0,0.25); }
+  .conf-low    { background: rgba(84,110,122,0.15); color: #90a4ae; border: 1px solid rgba(84,110,122,0.3); }
+
+  /* ── FutureUse ── */
+  .fu-aggregation         { background: rgba(46,125,50,0.15);  color: #a5d6a7; border: 1px solid rgba(46,125,50,0.3); }
+  .fu-municipal_blacklist { background: rgba(229,57,53,0.15);  color: #ef9a9a; border: 1px solid rgba(229,57,53,0.3); }
+  .fu-price_to_compare    { background: rgba(21,101,192,0.15); color: #64b5f6; border: 1px solid rgba(21,101,192,0.3); }
+  .fu-address_check       { background: rgba(123,31,162,0.15); color: #ce93d8; border: 1px solid rgba(123,31,162,0.3); }
+
+  /* Rate change colors in table */
+  .chg-up   { color: var(--heat-hot); font-weight: 600; }
+  .chg-down { color: #64b5f6; font-weight: 600; }
+</style>
+{% endblock %}
+
 {% block content %}
-<div style="display:flex; height:100%; overflow:hidden;">
+<div style="display:flex; flex-direction:column; height:100%; overflow:hidden;">
 
-  <!-- ── Left panel: Zone Rankings ── -->
-  <div style="width:320px; flex-shrink:0; display:flex; flex-direction:column; border-right:1px solid var(--forge-border);">
-
-    <!-- Filter bar -->
-    <div style="padding:10px 12px; border-bottom:1px solid var(--forge-border); display:flex; gap:6px; flex-wrap:wrap;">
-      <button class="btn-ghost btn btn-sm heat-filter active" data-heat="all" onclick="filterHeat('all',this)">All</button>
-      <button class="btn-ghost btn btn-sm heat-filter" data-heat="hot" onclick="filterHeat('hot',this)">
-        <span class="heat-badge heat-hot" style="padding:1px 6px">Hot</span>
-      </button>
-      <button class="btn-ghost btn btn-sm heat-filter" data-heat="pain" onclick="filterHeat('pain',this)">
-        <span class="heat-badge heat-pain" style="padding:1px 6px">Pain</span>
-      </button>
-      <button class="btn-ghost btn btn-sm heat-filter" data-heat="warm" onclick="filterHeat('warm',this)">
-        <span class="heat-badge heat-warm" style="padding:1px 6px">Warm</span>
-      </button>
-      <button class="btn-ghost btn btn-sm heat-filter" data-heat="normal" onclick="filterHeat('normal',this)">
-        <span class="heat-badge heat-normal" style="padding:1px 6px">Normal</span>
-      </button>
-    </div>
-
-    <!-- Stats strip -->
-    <div style="display:flex; border-bottom:1px solid var(--forge-border);">
-      {% set hot_count = zones | selectattr('heat','in',['hot','pain']) | list | length %}
-      <div style="flex:1; padding:8px 12px; text-align:center; border-right:1px solid var(--forge-border);">
-        <div style="font-size:1.4rem; font-weight:700; color:var(--heat-hot)">{{ zones | selectattr('heat','equalto','hot') | list | length }}</div>
-        <div class="stat-label">Hot Zones</div>
-      </div>
-      <div style="flex:1; padding:8px 12px; text-align:center; border-right:1px solid var(--forge-border);">
-        <div style="font-size:1.4rem; font-weight:700; color:var(--heat-pain)">{{ zones | selectattr('heat','equalto','pain') | list | length }}</div>
-        <div class="stat-label">Pain Zones</div>
-      </div>
-      <div style="flex:1; padding:8px 12px; text-align:center;">
-        <div style="font-size:1.4rem; font-weight:700; color:var(--forge-orange)">{{ zones | length }}</div>
-        <div class="stat-label">Total Zones</div>
-      </div>
-    </div>
-
-    <!-- Zone list -->
-    <div class="scrollable" style="flex:1;" id="zone-list">
-      {% for zone in zones %}
-      <div class="zone-row heat-item" data-heat="{{ zone.heat }}" data-lat="{{ zone.lat }}" data-lng="{{ zone.lng }}" data-id="{{ zone.id }}"
-           onclick="selectZone(this)" style="padding:10px 14px; border-bottom:1px solid rgba(42,45,58,0.5); cursor:pointer; transition:background 0.1s;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
-          <div>
-            <span style="font-weight:600; font-size:0.88rem; color:#e0e0e0">{{ zone.county }}</span>
-            <span style="font-size:0.72rem; color:var(--forge-muted); margin-left:6px">{{ zone.city }}</span>
-          </div>
-          <span class="heat-badge heat-{{ zone.heat }}">
-            {% if zone.heat == 'hot' %}🔥 HOT
-            {% elif zone.heat == 'pain' %}⚡ PAIN
-            {% elif zone.heat == 'warm' %}● WARM
-            {% elif zone.heat == 'normal' %}● NORMAL
-            {% else %}● COOL{% endif %}
-          </span>
-        </div>
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <span style="font-size:0.72rem; color:var(--forge-muted)">
-            <i class="bi bi-lightning-charge" style="color:var(--forge-gold)"></i> {{ zone.utility }}
-          </span>
-          {% if zone.rate_change_pct > 0 %}
-          <span style="font-size:0.72rem; color:var(--heat-hot)">
-            <i class="bi bi-arrow-up-short"></i>+{{ zone.rate_change_pct }}% {{ zone.rate_change_date }}
-          </span>
-          {% elif zone.rate_change_pct < 0 %}
-          <span style="font-size:0.72rem; color:#64b5f6">
-            <i class="bi bi-arrow-down-short"></i>{{ zone.rate_change_pct }}% {{ zone.rate_change_date }}
-          </span>
-          {% endif %}
-          <span style="font-size:0.72rem; color:var(--forge-muted)">
-            ~{{ zone.opportunity_count }} leads
-          </span>
-        </div>
-        {% if zone.trigger %}
-        <div style="margin-top:4px; font-size:0.7rem; color:var(--forge-gold); font-style:italic">{{ zone.trigger }}</div>
-        {% endif %}
-      </div>
-      {% endfor %}
-    </div>
+  <!-- Filter bar -->
+  <div id="filter-bar">
+    <input id="search-input" type="text" class="dark-input"
+           placeholder="&#xF52A;  Search zone, region, notes…"
+           oninput="applyFilters()">
+    <select id="filter-region"  class="dark-input" onchange="applyFilters()"><option value="">All Regions</option></select>
+    <select id="filter-utility" class="dark-input" onchange="applyFilters()"><option value="">All Utilities</option></select>
+    <select id="filter-agg"     class="dark-input" onchange="applyFilters()">
+      <option value="">All Agg Status</option>
+      <option value="confirmed_active_aggregation">Confirmed Active</option>
+      <option value="municipal_utility">Municipal Utility</option>
+      <option value="no_aggregation_verified">No Aggregation</option>
+      <option value="address_dependent">Address Dependent</option>
+    </select>
+    <select id="filter-status"  class="dark-input" onchange="applyFilters()">
+      <option value="">All Status</option>
+      <option value="pain_hit">Pain Hit</option>
+      <option value="pain_coming">Pain Coming</option>
+      <option value="stable">Stable</option>
+      <option value="transition">Transition</option>
+      <option value="verify">Verify</option>
+    </select>
+    <select id="filter-future"  class="dark-input" onchange="applyFilters()">
+      <option value="">All Future Use</option>
+      <option value="aggregation">Aggregation</option>
+      <option value="municipal_blacklist">Municipal Blacklist</option>
+      <option value="price_to_compare_analysis">Price to Compare</option>
+      <option value="address_check">Address Check</option>
+    </select>
   </div>
 
-  <!-- ── Right: Map ── -->
-  <div style="flex:1; position:relative;">
-    <div id="map" style="height:100%; width:100%;"></div>
+  <!-- Main split -->
+  <div id="zone-split">
 
-    <!-- Layer toggles -->
-    <div class="map-controls">
-      <div class="layer-toggle">
-        <input type="checkbox" id="layer-heat" checked onchange="toggleLayer('heat')">
-        <label for="layer-heat" style="cursor:pointer; margin:0">Heat Zones</label>
-      </div>
-      <div class="layer-toggle">
-        <input type="checkbox" id="layer-utility" checked onchange="toggleLayer('utility')">
-        <label for="layer-utility" style="cursor:pointer; margin:0">Utility Territory</label>
-      </div>
-      <div class="layer-toggle">
-        <input type="checkbox" id="layer-rates" checked onchange="toggleLayer('rates')">
-        <label for="layer-rates" style="cursor:pointer; margin:0">Rate Changes</label>
-      </div>
-      <div class="layer-toggle">
-        <input type="checkbox" id="layer-leads" onchange="toggleLayer('leads')">
-        <label for="layer-leads" style="cursor:pointer; margin:0">Lead Pins</label>
+    <!-- Table pane -->
+    <div id="zone-table-pane">
+      <div id="zone-table-wrap">
+        <table id="zone-table">
+          <thead>
+            <tr>
+              <th style="width:140px" onclick="sortBy('name')">Name <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:170px" onclick="sortBy('region')">Region <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:160px" onclick="sortBy('utility')">Utility <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:130px" onclick="sortBy('aggregationStatus')">Agg Status <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:72px; text-align:right" onclick="sortBy('currentRate')">Current <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:72px; text-align:right" onclick="sortBy('previousRate')">Prev <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:64px; text-align:right" onclick="sortBy('rateChange')">Δ% <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:170px" onclick="sortBy('supplier')">Supplier <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:88px" onclick="sortBy('termEnd')">Term End <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:110px" onclick="sortBy('status')">Status <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:70px" onclick="sortBy('confidence')">Conf <span class="sort-icon bi bi-chevron-expand"></span></th>
+            </tr>
+          </thead>
+          <tbody id="zone-tbody"></tbody>
+        </table>
       </div>
     </div>
 
-    <!-- Zone detail card (shown on click) -->
-    <div id="zone-detail" style="display:none; position:absolute; bottom:20px; left:20px; z-index:1000;
-         background:var(--forge-panel); border:1px solid var(--forge-border); border-radius:8px;
-         padding:14px 18px; min-width:280px; max-width:340px;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-        <div>
-          <div id="detail-county" style="font-weight:700; font-size:1rem; color:#e0e0e0"></div>
-          <div id="detail-city" style="font-size:0.78rem; color:var(--forge-muted)"></div>
-        </div>
-        <div style="display:flex; gap:6px; align-items:center;">
-          <span id="detail-heat" class="heat-badge"></span>
-          <button onclick="document.getElementById('zone-detail').style.display='none'"
-                  style="background:none; border:none; color:var(--forge-muted); cursor:pointer; padding:0; line-height:1">
-            <i class="bi bi-x-lg"></i>
-          </button>
+    <!-- Battlecard pane -->
+    <div id="battlecard-pane">
+      <div id="battlecard-empty">
+        <i class="bi bi-map" style="font-size:2.5rem; margin-bottom:12px; color:var(--forge-border);"></i>
+        <div style="font-size:0.85rem; font-weight:600; color:var(--forge-muted);">Select a zone</div>
+        <div style="font-size:0.75rem; color:var(--forge-border); margin-top:6px; line-height:1.5;">
+          Click any row to open<br>the zone battlecard
         </div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-bottom:10px;">
-        <div>
-          <div class="stat-label">Utility</div>
-          <div id="detail-utility" style="font-size:0.82rem; color:#e0e0e0; margin-top:2px"></div>
+      <div id="battlecard-content">
+
+        <div class="bc-header">
+          <div class="bc-zone-name" id="bc-name"></div>
+          <div class="bc-region" id="bc-region"></div>
+          <div class="bc-badges" id="bc-badges"></div>
         </div>
-        <div>
-          <div class="stat-label">Rate Change</div>
-          <div id="detail-rate" style="font-size:0.82rem; margin-top:2px"></div>
+
+        <div class="bc-section" id="bc-rate-section">
+          <div class="bc-section-label">Rate Story</div>
+          <div class="rate-story" id="bc-rate-story"></div>
         </div>
-        <div>
-          <div class="stat-label">Est. Opportunities</div>
-          <div id="detail-opps" style="font-size:0.82rem; color:var(--forge-orange); font-weight:600; margin-top:2px"></div>
+
+        <div class="bc-section">
+          <div class="bc-section-label">Supplier & Term</div>
+          <div class="bc-kv" id="bc-term-kv"></div>
         </div>
-        <div>
-          <div class="stat-label">Energy Type</div>
-          <div id="detail-energy" style="font-size:0.82rem; color:#e0e0e0; margin-top:2px"></div>
+
+        <div class="bc-section">
+          <div class="bc-section-label">Takeaway</div>
+          <div class="bc-takeaway" id="bc-takeaway"></div>
         </div>
+
+        <div class="bc-section" id="bc-hook-section">
+          <div class="bc-section-label">Field Opener</div>
+          <div class="bc-hook" id="bc-hook"></div>
+        </div>
+
+        <div class="bc-section" id="bc-notes-section">
+          <div class="bc-section-label">Notes</div>
+          <div class="bc-notes" id="bc-notes"></div>
+        </div>
+
       </div>
-      <div id="detail-trigger" style="font-size:0.75rem; color:var(--forge-gold); border-top:1px solid var(--forge-border); padding-top:8px; font-style:italic"></div>
-      <button class="btn btn-forge btn-sm w-100 mt-2" onclick="filterToZone()">
-        <i class="bi bi-lightning-charge me-1"></i>Show Leads in This Zone
-      </button>
     </div>
+
   </div>
-
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-const ZONES = {{ zones_json | safe }};
-let map, heatLayer, utilityLayer, rateLayer, leadLayer;
-let selectedZoneId = null;
+const ALL_ZONES = {{ zones_json | safe }};
+let filteredZones = [...ALL_ZONES];
+let sortKey = 'status';
+let sortAsc = true;
+let selectedZone = null;
 
-const HEAT_COLORS = {
-  hot:     { fill: '#e53935', stroke: '#ff6b6b', opacity: 0.45 },
-  pain:    { fill: '#ff6f00', stroke: '#ffa040', opacity: 0.40 },
-  warm:    { fill: '#fdd835', stroke: '#ffe57f', opacity: 0.30 },
-  normal:  { fill: '#1565C0', stroke: '#64b5f6', opacity: 0.22 },
-  cooling: { fill: '#546e7a', stroke: '#90a4ae', opacity: 0.18 },
+// ── Status / agg sort priority ──────────────────────────────────────────────
+const STATUS_ORDER  = { pain_hit:0, pain_coming:1, transition:2, verify:3, stable:4 };
+const AGG_ORDER     = { confirmed_active_aggregation:0, address_dependent:1, no_aggregation_verified:2, municipal_utility:3 };
+const CONF_ORDER    = { high:0, medium:1, low:2 };
+
+// ── Labels / display strings ─────────────────────────────────────────────────
+const AGG_LABELS = {
+  confirmed_active_aggregation: 'Confirmed Active',
+  municipal_utility:            'Municipal Utility',
+  no_aggregation_verified:      'No Aggregation',
+  address_dependent:            'Address Dependent',
+};
+const AGG_CSS = {
+  confirmed_active_aggregation: 'agg-confirmed',
+  municipal_utility:            'agg-municipal',
+  no_aggregation_verified:      'agg-none',
+  address_dependent:            'agg-address',
+};
+const STATUS_LABELS = {
+  pain_hit: 'Pain Hit', pain_coming: 'Pain Coming',
+  stable: 'Stable', transition: 'Transition', verify: 'Verify',
+};
+const FU_LABELS = {
+  aggregation:              'Aggregation',
+  municipal_blacklist:      'Municipal Blacklist',
+  price_to_compare_analysis:'Price to Compare',
+  address_check:            'Address Check',
+};
+const FU_CSS = {
+  aggregation:              'fu-aggregation',
+  municipal_blacklist:      'fu-municipal_blacklist',
+  price_to_compare_analysis:'fu-price_to_compare',
+  address_check:            'fu-address_check',
 };
 
-function initMap() {
-  map = L.map('map', { zoomControl: false }).setView([41.15, -80.9], 9);
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '©OpenStreetMap ©CartoDB',
-    subdomains: 'abcd', maxZoom: 19
-  }).addTo(map);
-
-  L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-  heatLayer   = L.layerGroup().addTo(map);
-  utilityLayer = L.layerGroup().addTo(map);
-  rateLayer   = L.layerGroup().addTo(map);
-  leadLayer   = L.layerGroup(); // off by default
-
-  renderZones();
+// ── Init dropdowns ────────────────────────────────────────────────────────────
+function initDropdowns() {
+  const regions   = [...new Set(ALL_ZONES.map(z => z.region))].sort();
+  const utilities = [...new Set(ALL_ZONES.map(z => z.utility))].sort();
+  const regionSel  = document.getElementById('filter-region');
+  const utilSel    = document.getElementById('filter-utility');
+  regions.forEach(r => { const o = document.createElement('option'); o.value = r; o.textContent = r; regionSel.appendChild(o); });
+  utilities.forEach(u => { const o = document.createElement('option'); o.value = u; o.textContent = u; utilSel.appendChild(o); });
 }
 
-function renderZones() {
-  heatLayer.clearLayers();
-  rateLayer.clearLayers();
+// ── Filters ───────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const q      = document.getElementById('search-input').value.toLowerCase().trim();
+  const region  = document.getElementById('filter-region').value;
+  const utility = document.getElementById('filter-utility').value;
+  const agg     = document.getElementById('filter-agg').value;
+  const status  = document.getElementById('filter-status').value;
+  const future  = document.getElementById('filter-future').value;
 
-  ZONES.forEach(z => {
-    const c = HEAT_COLORS[z.heat] || HEAT_COLORS.normal;
-    const radius = 6000 + (z.opportunity_count * 80);
+  filteredZones = ALL_ZONES.filter(z => {
+    if (q && !matchSearch(z, q)) return false;
+    if (region  && z.region  !== region)  return false;
+    if (utility && z.utility !== utility) return false;
+    if (agg     && z.aggregationStatus !== agg)   return false;
+    if (status  && z.status  !== status)  return false;
+    if (future  && z.futureUse !== future) return false;
+    return true;
+  });
 
-    const circle = L.circle([z.lat, z.lng], {
-      radius: radius,
-      color: c.stroke,
-      fillColor: c.fill,
-      fillOpacity: c.opacity,
-      weight: z.id === selectedZoneId ? 3 : 1.5,
-      opacity: z.id === selectedZoneId ? 1 : 0.7,
-    }).addTo(heatLayer);
+  sortZones();
+  renderTable();
+  document.getElementById('match-count').textContent =
+    filteredZones.length + ' / ' + ALL_ZONES.length + ' zones';
+}
 
-    circle.on('click', () => showDetail(z));
-    circle.bindTooltip(`<strong>${z.county}</strong><br>${z.city}<br>${heatLabel(z.heat)}`, {
-      className: 'forge-tooltip', sticky: true
-    });
+function matchSearch(z, q) {
+  return (z.name    || '').toLowerCase().includes(q) ||
+         (z.region  || '').toLowerCase().includes(q) ||
+         (z.utility || '').toLowerCase().includes(q) ||
+         (z.supplier|| '').toLowerCase().includes(q) ||
+         (z.notes   || '').toLowerCase().includes(q) ||
+         (z.takeaway|| '').toLowerCase().includes(q);
+}
 
-    // Rate change marker
-    if (z.rate_change_pct !== 0) {
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="background:${z.rate_change_pct>0?'var(--heat-hot)':'#1565C0'};
-                   color:white; border-radius:4px; padding:2px 5px; font-size:0.65rem;
-                   font-weight:700; white-space:nowrap; border:1px solid rgba(255,255,255,0.3)">
-                 ${z.rate_change_pct>0?'▲':'▼'}${Math.abs(z.rate_change_pct)}%
-               </div>`,
-        iconAnchor: [20, 10]
-      });
-      L.marker([z.lat + 0.04, z.lng + 0.06], { icon }).addTo(rateLayer);
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  ['filter-region','filter-utility','filter-agg','filter-status','filter-future']
+    .forEach(id => document.getElementById(id).value = '');
+  applyFilters();
+}
+
+// ── Sort ─────────────────────────────────────────────────────────────────────
+function sortBy(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = true; }
+  document.querySelectorAll('#zone-table thead th').forEach(th => th.classList.remove('sorted'));
+  event.currentTarget.classList.add('sorted');
+  const icon = event.currentTarget.querySelector('.sort-icon');
+  icon.className = 'sort-icon bi bi-chevron-' + (sortAsc ? 'up' : 'down');
+  sortZones();
+  renderTable();
+}
+
+function sortZones() {
+  filteredZones.sort((a, b) => {
+    let av = sortVal(a, sortKey), bv = sortVal(b, sortKey);
+    if (av === bv) return 0;
+    if (av === null || av === undefined) return 1;
+    if (bv === null || bv === undefined) return -1;
+    return sortAsc ? (av < bv ? -1 : 1) : (av > bv ? -1 : 1);
+  });
+}
+
+function sortVal(z, key) {
+  if (key === 'status')            return STATUS_ORDER[z.status] ?? 9;
+  if (key === 'aggregationStatus') return AGG_ORDER[z.aggregationStatus] ?? 9;
+  if (key === 'confidence')        return CONF_ORDER[z.confidence] ?? 9;
+  return z[key];
+}
+
+// ── Table render ──────────────────────────────────────────────────────────────
+function renderTable() {
+  const tbody = document.getElementById('zone-tbody');
+  if (filteredZones.length === 0) {
+    tbody.innerHTML = `<tr class="no-zones-row"><td colspan="11">
+      <i class="bi bi-search" style="font-size:1.5rem; display:block; margin-bottom:8px;"></i>
+      No zones match the current filters
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filteredZones.map(z => `
+    <tr data-name="${esc(z.name)}" onclick="selectZone('${esc(z.name)}')"
+        class="${selectedZone && selectedZone.name === z.name ? 'active' : ''}">
+      <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.utility)}</td>
+      <td>${aggBadge(z.aggregationStatus, true)}</td>
+      <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${fmtRate(z.currentRate)}</td>
+      <td style="text-align:right; color:var(--forge-muted);">${fmtRate(z.previousRate)}</td>
+      <td style="text-align:right;">${fmtChg(z.rateChange)}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.supplier || '—')}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${fmtDate(z.termEnd)}</td>
+      <td>${statusBadge(z.status)}</td>
+      <td>${confBadge(z.confidence)}</td>
+    </tr>
+  `).join('');
+}
+
+// ── Battlecard ────────────────────────────────────────────────────────────────
+function selectZone(name) {
+  selectedZone = ALL_ZONES.find(z => z.name === name);
+  if (!selectedZone) return;
+
+  // Highlight row
+  document.querySelectorAll('#zone-tbody tr').forEach(tr => {
+    tr.classList.toggle('active', tr.dataset.name === name);
+  });
+
+  // Populate battlecard
+  document.getElementById('bc-name').textContent = selectedZone.name;
+  document.getElementById('bc-region').textContent = selectedZone.region;
+  document.getElementById('bc-badges').innerHTML =
+    aggBadge(selectedZone.aggregationStatus) + ' ' +
+    statusBadge(selectedZone.status) + ' ' +
+    confBadge(selectedZone.confidence);
+
+  // Rate story
+  const rateSection = document.getElementById('bc-rate-section');
+  if (selectedZone.currentRate !== null || selectedZone.previousRate !== null) {
+    rateSection.style.display = '';
+    let html = '';
+    if (selectedZone.previousRate !== null) {
+      html += `<div class="rate-box">
+        <div class="rate-val" style="color:var(--forge-muted);">${fmtRate(selectedZone.previousRate)}</div>
+        <div class="rate-sub">Previous</div>
+      </div>
+      <div class="rate-arrow">→</div>`;
     }
-  });
-
-  // Utility territory labels
-  utilityLayer.clearLayers();
-  const seen = {};
-  ZONES.forEach(z => {
-    if (!seen[z.utility]) {
-      seen[z.utility] = true;
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="font-size:0.62rem; color:rgba(255,179,0,0.7);
-                   font-weight:600; letter-spacing:0.5px; text-transform:uppercase;
-                   text-shadow:0 1px 3px rgba(0,0,0,0.8);">${z.utility}</div>`,
-        iconAnchor: [30, 8]
-      });
-      L.marker([z.lat - 0.05, z.lng], { icon }).addTo(utilityLayer);
+    if (selectedZone.currentRate !== null) {
+      html += `<div class="rate-box">
+        <div class="rate-val" style="color:var(--forge-orange);">${fmtRate(selectedZone.currentRate)}</div>
+        <div class="rate-sub">Current</div>
+      </div>`;
     }
-  });
-}
-
-function heatLabel(h) {
-  const labels = { hot:'🔥 HOT', pain:'⚡ PAIN HIT', warm:'● WARM', normal:'● NORMAL', cooling:'● COOLING' };
-  return labels[h] || h;
-}
-
-function showDetail(z) {
-  selectedZoneId = z.id;
-  renderZones();
-
-  document.getElementById('detail-county').textContent = z.county + ' County';
-  document.getElementById('detail-city').textContent = z.city + ', OH';
-  document.getElementById('detail-utility').textContent = z.utility;
-  document.getElementById('detail-opps').textContent = z.opportunity_count + ' businesses';
-  document.getElementById('detail-energy').textContent = z.energy_type;
-
-  const heatEl = document.getElementById('detail-heat');
-  heatEl.textContent = heatLabel(z.heat).replace(/[🔥⚡●] /, '');
-  heatEl.className = 'heat-badge heat-' + z.heat;
-
-  const rateEl = document.getElementById('detail-rate');
-  if (z.rate_change_pct > 0) {
-    rateEl.innerHTML = `<span style="color:var(--heat-hot)">▲ +${z.rate_change_pct}% ${z.rate_change_date}</span>`;
-  } else if (z.rate_change_pct < 0) {
-    rateEl.innerHTML = `<span style="color:#64b5f6">▼ ${z.rate_change_pct}% ${z.rate_change_date}</span>`;
+    if (selectedZone.rateChange !== null) {
+      html += `<div class="rate-change-badge ${selectedZone.rateChange > 0 ? 'rate-up' : selectedZone.rateChange < 0 ? 'rate-down' : 'rate-flat'}">
+        ${selectedZone.rateChange > 0 ? '▲' : selectedZone.rateChange < 0 ? '▼' : '='} ${Math.abs(selectedZone.rateChange)}%
+      </div>`;
+    }
+    document.getElementById('bc-rate-story').innerHTML = html;
   } else {
-    rateEl.innerHTML = `<span style="color:var(--forge-muted)">No recent change</span>`;
+    rateSection.style.display = 'none';
   }
 
-  const trigEl = document.getElementById('detail-trigger');
-  trigEl.textContent = z.trigger || '';
-  trigEl.style.display = z.trigger ? 'block' : 'none';
+  // Term / supplier
+  document.getElementById('bc-term-kv').innerHTML = `
+    <div class="bc-kv-item">
+      <div class="kv-label">Supplier</div>
+      <div class="kv-val">${esc(selectedZone.supplier || '—')}</div>
+    </div>
+    <div class="bc-kv-item">
+      <div class="kv-label">Future Use</div>
+      <div class="kv-val">${fuBadge(selectedZone.futureUse)}</div>
+    </div>
+    <div class="bc-kv-item">
+      <div class="kv-label">Term Start</div>
+      <div class="kv-val">${fmtDate(selectedZone.termStart)}</div>
+    </div>
+    <div class="bc-kv-item">
+      <div class="kv-label">Term End</div>
+      <div class="kv-val">${fmtDate(selectedZone.termEnd)}</div>
+    </div>
+  `;
 
-  document.getElementById('zone-detail').style.display = 'block';
+  document.getElementById('bc-takeaway').textContent = selectedZone.takeaway || '—';
 
-  // Highlight in list
-  document.querySelectorAll('.zone-row').forEach(el => {
-    el.style.background = el.dataset.id == z.id ? 'rgba(232,97,26,0.13)' : '';
-  });
-}
-
-function selectZone(el) {
-  const zoneId = parseInt(el.dataset.id);
-  const z = ZONES.find(z => z.id === zoneId);
-  if (z) {
-    map.setView([z.lat, z.lng], 11, { animate: true });
-    showDetail(z);
-  }
-}
-
-function toggleLayer(name) {
-  const layers = { heat: heatLayer, utility: utilityLayer, rates: rateLayer, leads: leadLayer };
-  const el = document.getElementById('layer-' + name);
-  if (el.checked) {
-    layers[name].addTo(map);
+  const hookSection = document.getElementById('bc-hook-section');
+  if (selectedZone.hook) {
+    hookSection.style.display = '';
+    document.getElementById('bc-hook').textContent = selectedZone.hook;
   } else {
-    map.removeLayer(layers[name]);
+    hookSection.style.display = 'none';
   }
-}
 
-function filterHeat(heat, btn) {
-  document.querySelectorAll('.heat-filter').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.heat-item').forEach(el => {
-    el.style.display = (heat === 'all' || el.dataset.heat === heat) ? '' : 'none';
-  });
-}
-
-function filterToZone() {
-  if (selectedZoneId) {
-    const z = ZONES.find(z => z.id === selectedZoneId);
-    if (z) window.location.href = '/?zone=' + encodeURIComponent(z.county);
+  const notesSection = document.getElementById('bc-notes-section');
+  if (selectedZone.notes) {
+    notesSection.style.display = '';
+    document.getElementById('bc-notes').textContent = selectedZone.notes;
+  } else {
+    notesSection.style.display = 'none';
   }
+
+  document.getElementById('battlecard-empty').style.display   = 'none';
+  document.getElementById('battlecard-content').style.display = 'flex';
+
+  // Scroll battlecard to top
+  document.getElementById('battlecard-pane').scrollTop = 0;
 }
 
-function refreshZones() {
-  const btn = event.target.closest('button');
-  btn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Loading...';
-  setTimeout(() => {
-    btn.innerHTML = '<i class="bi bi-arrow-clockwise me-1"></i>Refresh';
-  }, 1200);
+// ── Badge helpers ─────────────────────────────────────────────────────────────
+function aggBadge(val, compact) {
+  const label = compact ? (AGG_LABELS[val] || val).split(' ')[0] : (AGG_LABELS[val] || val);
+  return `<span class="heat-badge ${AGG_CSS[val] || 'agg-none'}" style="font-size:0.65rem;">${label}</span>`;
+}
+function statusBadge(val) {
+  return `<span class="heat-badge status-${val}" style="font-size:0.65rem;">${STATUS_LABELS[val] || val}</span>`;
+}
+function confBadge(val) {
+  return `<span class="heat-badge conf-${val}" style="font-size:0.65rem; text-transform:uppercase;">${val}</span>`;
+}
+function fuBadge(val) {
+  return `<span class="heat-badge ${FU_CSS[val] || ''}" style="font-size:0.65rem;">${FU_LABELS[val] || val}</span>`;
 }
 
-function switchTerritory(val) { /* future: load different zone set */ }
+// ── Format helpers ─────────────────────────────────────────────────────────────
+function fmtRate(r) {
+  return r !== null && r !== undefined ? r.toFixed(2) + '¢' : '<span style="color:var(--forge-border)">—</span>';
+}
+function fmtChg(p) {
+  if (p === null || p === undefined) return '<span style="color:var(--forge-border)">—</span>';
+  const cls = p > 0 ? 'chg-up' : p < 0 ? 'chg-down' : '';
+  const sym = p > 0 ? '+' : '';
+  return `<span class="${cls}">${sym}${p}%</span>`;
+}
+function fmtDate(d) {
+  if (!d) return '<span style="color:var(--forge-border)">—</span>';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-// Tooltip style injection
-const style = document.createElement('style');
-style.textContent = `
-  .forge-tooltip { background:var(--forge-panel)!important; border:1px solid var(--forge-border)!important;
-    color:#e0e0e0!important; font-size:0.78rem!important; }
-  .forge-tooltip::before { display:none!important; }
-  .zone-row:hover { background: rgba(232,97,26,0.07)!important; }
-`;
-document.head.appendChild(style);
-
-document.addEventListener('DOMContentLoaded', initMap);
+// ── Boot ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initDropdowns();
+  sortZones();
+  renderTable();
+  document.getElementById('match-count').textContent = ALL_ZONES.length + ' zones';
+});
 </script>
 {% endblock %}

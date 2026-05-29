@@ -1,109 +1,105 @@
 {% extends "base.html" %}
 {% block title %}— Call Sheet{% endblock %}
 
+{% set active = 'leads' %}
+
+{% block topbar_title %}LEADS{% endblock %}
+{% block topbar_sub %}Call Sheet — sorted by urgency{% endblock %}
+
+{% block topbar_actions %}
+<a href="/run" class="btn btn-forge btn-sm"><i class="bi bi-play-fill me-1"></i>Run Pipeline</a>
+<a href="/export" class="btn btn-ghost btn-sm"><i class="bi bi-download me-1"></i>Export</a>
+{% endblock %}
+
 {% block content %}
+<div style="display:flex; flex-direction:column; height:100%; overflow:hidden; padding:14px; gap:12px;">
 
-<!-- Goal progress bar -->
-<div class="row g-3 mb-4">
-  <div class="col-md-3">
-    <div class="card stat-card p-3">
+  <!-- Stat strip -->
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <div class="panel" style="flex:1; padding:12px 16px;">
+      <div class="stat-label">Leads Ready</div>
       <div class="stat-number">{{ stats.qualified }}</div>
-      <div class="stat-label">Leads Ready to Call</div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card stat-card p-3">
-      <div class="stat-number">{{ stats.high_confidence }}</div>
+    <div class="panel" style="flex:1; padding:12px 16px;">
       <div class="stat-label">High Confidence</div>
+      <div class="stat-number">{{ stats.high_confidence }}</div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card stat-card p-3">
-      <div class="stat-number">{{ stats.sweet_spot }}</div>
+    <div class="panel" style="flex:1; padding:12px 16px;">
       <div class="stat-label">Sweet Spot (5–30 RCE)</div>
+      <div class="stat-number">{{ stats.sweet_spot }}</div>
+    </div>
+    <div class="panel" style="flex:2; padding:12px 16px;">
+      <div class="stat-label mb-2">Monthly Quota — {{ stats.rce_logged }} / 100 RCE</div>
+      <div class="progress" style="height:6px;">
+        <div class="progress-bar" style="width:{{ stats.quota_pct }}%"></div>
+      </div>
+      <div style="font-size:0.7rem; color:var(--forge-muted); margin-top:4px;">{{ stats.quota_pct }}% of baseline</div>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="card p-3">
-      <div class="stat-label mb-1">Monthly Quota Progress</div>
-      <div class="d-flex justify-content-between mb-1">
-        <small>{{ stats.rce_logged }} RCE logged</small>
-        <small style="color:var(--forge-orange)">100 RCE goal</small>
-      </div>
-      <div class="progress">
-        <div class="progress-bar" style="width: {{ stats.quota_pct }}%"></div>
-      </div>
-      <small class="text-muted mt-1 d-block">{{ stats.quota_pct }}% of baseline quota</small>
-    </div>
-  </div>
-</div>
 
-<!-- Call sheet table -->
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center py-3">
-    <div>
-      <h5 class="mb-0" style="color:var(--forge-orange)"><i class="bi bi-lightning-charge me-2"></i>Today's Call Sheet</h5>
-      <small class="text-muted">{{ today }} — sorted by urgency score</small>
+  <!-- Call sheet -->
+  <div class="panel" style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+    <div class="panel-header">
+      <span><i class="bi bi-lightning-charge me-2" style="color:var(--forge-orange)"></i>
+        Today's Call Sheet &nbsp;<span style="color:var(--forge-muted); font-weight:400">{{ today }}</span>
+      </span>
     </div>
-    <div class="d-flex gap-2">
-      <a href="/run" class="btn btn-forge btn-sm"><i class="bi bi-play-fill me-1"></i>Run Pipeline</a>
-      <a href="/export" class="btn btn-outline-forge btn-sm"><i class="bi bi-download me-1"></i>Export CSV</a>
-    </div>
-  </div>
-  <div class="card-body p-0">
+
     {% if leads %}
-    <div class="table-responsive">
-      <table class="table table-hover mb-0">
+    <div class="scrollable" style="flex:1;">
+      <table class="forge-table">
         <thead>
           <tr>
-            <th style="width:50px">#</th>
+            <th style="width:38px">#</th>
             <th>Company</th>
             <th>Phone</th>
             <th>RCE</th>
-            <th>Confidence</th>
-            <th>Score</th>
+            <th>Conf</th>
+            <th style="width:120px">Urgency</th>
             <th>Why Call Now</th>
-            <th>Territory</th>
+            <th>Terr.</th>
           </tr>
         </thead>
         <tbody>
           {% for lead in leads %}
           <tr onclick="window.location='/lead/{{ loop.index0 }}'">
-            <td><span class="rank-num">{{ loop.index }}</span></td>
+            <td style="color:var(--forge-muted); font-size:0.75rem;">{{ loop.index }}</td>
             <td>
-              <div class="fw-semibold">{{ lead.company_name }}</div>
-              <small class="text-muted">{{ lead.industry }}</small>
+              <div style="font-weight:600; color:#e0e0e0;">{{ lead.company_name }}</div>
+              <div style="font-size:0.72rem; color:var(--forge-muted);">{{ lead.industry }}</div>
             </td>
             <td>
               {% if lead.phone %}
                 <a class="phone-link" href="tel:{{ lead.phone }}" onclick="event.stopPropagation()">
-                  <i class="bi bi-telephone me-1"></i>{{ lead.phone }}
+                  {{ lead.phone }}
                 </a>
               {% else %}
-                <span class="text-muted">—</span>
+                <span style="color:var(--forge-muted)">—</span>
               {% endif %}
             </td>
             <td>
-              <span style="color:var(--forge-orange); font-weight:600">~{{ lead.rce_estimate }}</span>
+              <span style="color:var(--forge-orange); font-weight:700;">~{{ lead.rce_estimate }}</span>
             </td>
             <td>
               {% if lead.confidence == 'HIGH' %}
-                <span class="badge badge-high">HIGH</span>
+                <span class="heat-badge heat-hot">HIGH</span>
               {% elif lead.confidence == 'MEDIUM' %}
-                <span class="badge badge-medium">MED</span>
+                <span class="heat-badge heat-warm">MED</span>
               {% else %}
-                <span class="badge badge-low">LOW</span>
+                <span class="heat-badge heat-cooling">LOW</span>
               {% endif %}
             </td>
-            <td style="width:100px">
-              <div class="score-bar">
-                <div class="score-fill" style="width:{{ lead.urgency_score }}%"></div>
-              </div>
-              <small class="text-muted">{{ lead.urgency_score }}</small>
-            </td>
-            <td><small>{{ lead.reasoning }}</small></td>
             <td>
-              <span class="territory-badge" style="background:var(--forge-border); color:var(--forge-muted)">
+              <div style="background:var(--forge-border); border-radius:3px; height:5px; width:100%; margin-bottom:3px;">
+                <div style="background:var(--forge-orange); border-radius:3px; height:5px; width:{{ lead.urgency_score }}%;"></div>
+              </div>
+              <span style="font-size:0.7rem; color:var(--forge-muted);">{{ lead.urgency_score }}</span>
+            </td>
+            <td style="max-width:260px;">
+              <span style="font-size:0.78rem; color:#b0b0b0;">{{ lead.reasoning }}</span>
+            </td>
+            <td>
+              <span style="font-size:0.7rem; padding:2px 6px; border-radius:4px; background:var(--forge-border); color:var(--forge-muted);">
                 {{ lead.location.split(',')[-1].strip() if ',' in lead.location else 'OH' }}
               </span>
             </td>
@@ -113,12 +109,13 @@
       </table>
     </div>
     {% else %}
-    <div class="text-center py-5">
-      <i class="bi bi-inbox" style="font-size:3rem; color:var(--forge-muted)"></i>
-      <p class="text-muted mt-3">No leads yet. Click <strong>Run Pipeline</strong> to generate your call sheet.</p>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--forge-muted);">
+      <i class="bi bi-inbox" style="font-size:3rem; margin-bottom:12px;"></i>
+      <div style="font-size:0.88rem;">No leads yet.</div>
+      <div style="font-size:0.78rem; margin-top:4px;">Click <strong style="color:var(--forge-orange)">Run Pipeline</strong> to generate your call sheet.</div>
     </div>
     {% endif %}
   </div>
-</div>
 
+</div>
 {% endblock %}

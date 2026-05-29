@@ -1,86 +1,109 @@
 {% extends "base.html" %}
 {% block title %}— Goals{% endblock %}
 
+{% set active = 'goals' %}
+
+{% block topbar_title %}GOALS{% endblock %}
+{% block topbar_sub %}Monthly & Period Tracking{% endblock %}
+
 {% block content %}
-<h5 class="mb-4" style="color:var(--forge-orange)"><i class="bi bi-bullseye me-2"></i>Goal Tracker</h5>
+<div style="padding:16px; overflow-y:auto; height:100%;">
+  <div style="max-width:900px;">
 
-<div class="row g-4">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header py-3"><h6 class="mb-0">Monthly Baseline — 100 RCE</h6></div>
-      <div class="card-body">
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-muted">Progress</span>
-          <span style="color:var(--forge-orange)">{{ goals.rce_this_month }} / 100 RCE</span>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+
+      <!-- Baseline -->
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-bullseye me-2"></i>Monthly Baseline — 100 RCE</span>
         </div>
-        <div class="progress mb-3">
-          <div class="progress-bar" style="width:{{ goals.baseline_pct }}%"></div>
-        </div>
-        <div class="row text-center g-2">
-          <div class="col-4">
-            <div class="stat-label">Daily Target</div>
-            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">5 RCE</div>
+        <div style="padding:16px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:0.8rem; color:var(--forge-muted);">Progress</span>
+            <span style="color:var(--forge-orange); font-size:0.8rem; font-weight:600;">{{ goals.rce_this_month }} / 100 RCE</span>
           </div>
-          <div class="col-4">
-            <div class="stat-label">Days Left</div>
-            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">{{ goals.days_left }}</div>
+          <div class="progress" style="height:8px; margin-bottom:14px;">
+            <div class="progress-bar" style="width:{{ goals.baseline_pct }}%"></div>
           </div>
-          <div class="col-4">
-            <div class="stat-label">Needed/Day</div>
-            <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700">{{ goals.rce_per_day_needed }}</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; text-align:center;">
+            <div>
+              <div class="stat-label">Daily Target</div>
+              <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700; line-height:1.2; margin-top:4px;">5 RCE</div>
+            </div>
+            <div>
+              <div class="stat-label">Days Left</div>
+              <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700; line-height:1.2; margin-top:4px;">{{ goals.days_left }}</div>
+            </div>
+            <div>
+              <div class="stat-label">Needed/Day</div>
+              <div style="color:var(--forge-orange); font-size:1.3rem; font-weight:700; line-height:1.2; margin-top:4px;">{{ goals.rce_per_day_needed }}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header py-3"><h6 class="mb-0">Bonus Tier — 600 RCE / 4 months</h6></div>
-      <div class="card-body">
-        <div class="d-flex justify-content-between mb-2">
-          <span class="text-muted">Progress</span>
-          <span style="color:var(--forge-orange)">{{ goals.rce_period }} / 600 RCE</span>
+      <!-- Bonus -->
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-trophy me-2" style="color:var(--forge-gold)"></i>Bonus Tier — 600 RCE / 4 months</span>
         </div>
-        <div class="progress mb-3">
-          <div class="progress-bar" style="width:{{ goals.bonus_pct }}%"></div>
+        <div style="padding:16px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:0.8rem; color:var(--forge-muted);">Progress</span>
+            <span style="color:var(--forge-orange); font-size:0.8rem; font-weight:600;">{{ goals.rce_period }} / 600 RCE</span>
+          </div>
+          <div class="progress" style="height:8px; margin-bottom:14px;">
+            <div class="progress-bar" style="background:var(--forge-gold); width:{{ goals.bonus_pct }}%"></div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; text-align:center;">
+            <div>
+              <div class="stat-label">Monthly for Bonus</div>
+              <div style="color:var(--forge-gold); font-size:1.3rem; font-weight:700; line-height:1.2; margin-top:4px;">150 RCE</div>
+            </div>
+            <div>
+              <div class="stat-label">Pace Needed/Day</div>
+              <div style="color:var(--forge-gold); font-size:1.3rem; font-weight:700; line-height:1.2; margin-top:4px;">{{ goals.rce_per_day_bonus }}</div>
+            </div>
+          </div>
+          <div style="font-size:0.72rem; color:var(--forge-muted); margin-top:12px; text-align:center;">
+            Company trips + higher pay at 600 RCE / 4-month period
+          </div>
         </div>
-        <p class="text-muted small mb-0">
-          Hit 150 RCE/month to land company trips and higher pay.
-          You need <strong style="color:var(--forge-orange)">{{ goals.rce_per_day_bonus }} RCE/day</strong> to stay on bonus pace.
-        </p>
       </div>
-    </div>
-  </div>
 
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header py-3"><h6 class="mb-0">Log a Close</h6></div>
-      <div class="card-body">
-        <form method="POST" action="/log_close" class="row g-3">
-          <div class="col-md-4">
-            <label class="stat-label mb-1">Company Name</label>
-            <input type="text" name="company" class="form-control bg-dark text-light" style="border-color:var(--forge-border)" placeholder="Business name">
+    </div>
+
+    <!-- Log a close -->
+    <div class="panel">
+      <div class="panel-header">
+        <span><i class="bi bi-check2-circle me-2"></i>Log a Close</span>
+      </div>
+      <div style="padding:16px;">
+        <form method="POST" action="/log_close" style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:12px; align-items:end;">
+          <div>
+            <label class="stat-label" style="display:block; margin-bottom:6px;">Company Name</label>
+            <input type="text" name="company" class="dark-input" placeholder="Business name">
           </div>
-          <div class="col-md-2">
-            <label class="stat-label mb-1">RCE Closed</label>
-            <input type="number" name="rce" class="form-control bg-dark text-light" style="border-color:var(--forge-border)" placeholder="e.g. 7">
+          <div>
+            <label class="stat-label" style="display:block; margin-bottom:6px;">RCE Closed</label>
+            <input type="number" name="rce" class="dark-input" placeholder="e.g. 7">
           </div>
-          <div class="col-md-3">
-            <label class="stat-label mb-1">Contract Length</label>
-            <select name="contract_years" class="form-control bg-dark text-light" style="border-color:var(--forge-border)">
+          <div>
+            <label class="stat-label" style="display:block; margin-bottom:6px;">Contract Length</label>
+            <select name="contract_years" class="dark-input">
               <option value="5">5 years</option>
               <option value="3">3 years</option>
               <option value="2">2 years</option>
               <option value="1">1 year</option>
             </select>
           </div>
-          <div class="col-md-3 d-flex align-items-end">
+          <div>
             <button type="submit" class="btn btn-forge w-100">Log Close</button>
           </div>
         </form>
       </div>
     </div>
+
   </div>
 </div>
 {% endblock %}

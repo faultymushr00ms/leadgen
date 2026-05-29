@@ -6,59 +6,217 @@
   <title>FORGE {% block title %}{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
     :root {
-      --forge-orange: #e8611a;
-      --forge-dark:   #0f1117;
-      --forge-panel:  #1a1d27;
-      --forge-border: #2a2d3a;
-      --forge-muted:  #6c757d;
+      --forge-orange:  #e8611a;
+      --forge-gold:    #FFB300;
+      --forge-navy:    #0A1628;
+      --forge-dark:    #0f1117;
+      --forge-panel:   #1a1d27;
+      --forge-border:  #2a2d3a;
+      --forge-muted:   #6c757d;
+      --heat-hot:      #e53935;
+      --heat-pain:     #ff6f00;
+      --heat-warm:     #fdd835;
+      --heat-normal:   #1565C0;
+      --heat-cooling:  #546e7a;
     }
-    body { background: var(--forge-dark); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
-    .navbar { background: var(--forge-panel); border-bottom: 1px solid var(--forge-border); }
-    .forge-logo { color: var(--forge-orange); font-weight: 800; font-size: 1.4rem; letter-spacing: 3px; }
-    .forge-logo span { color: #e0e0e0; font-weight: 300; }
-    .card { background: var(--forge-panel); border: 1px solid var(--forge-border); }
-    .card-header { background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--forge-border); }
-    .stat-card { border-left: 3px solid var(--forge-orange); }
-    .stat-number { font-size: 2rem; font-weight: 700; color: var(--forge-orange); }
-    .stat-label { font-size: 0.75rem; color: var(--forge-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .table { color: #e0e0e0; }
-    .table thead th { color: var(--forge-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; border-color: var(--forge-border); }
-    .table tbody td { border-color: var(--forge-border); vertical-align: middle; }
-    .table tbody tr:hover { background: rgba(232,97,26,0.07); cursor: pointer; }
-    .badge-high    { background: #1a3a1a; color: #4caf50; border: 1px solid #2d5a2d; }
-    .badge-medium  { background: #3a2d1a; color: #ff9800; border: 1px solid #5a421a; }
-    .badge-low     { background: #2a2d3a; color: #90a4ae; border: 1px solid var(--forge-border); }
-    .score-bar { height: 4px; border-radius: 2px; background: var(--forge-border); }
-    .score-fill { height: 4px; border-radius: 2px; background: var(--forge-orange); }
-    .rank-num { color: var(--forge-orange); font-weight: 700; font-size: 1.1rem; }
-    .phone-link { color: #4fc3f7; text-decoration: none; font-family: monospace; }
-    .phone-link:hover { color: var(--forge-orange); }
-    .progress { background: var(--forge-border); height: 8px; }
-    .progress-bar { background: var(--forge-orange); }
-    .btn-forge { background: var(--forge-orange); color: white; border: none; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    body { background: var(--forge-dark); color: #e0e0e0; font-family: 'Segoe UI', sans-serif; display: flex; }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 64px;
+      background: var(--forge-navy);
+      border-right: 1px solid var(--forge-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 0;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      color: var(--forge-orange);
+      font-weight: 900;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--forge-border);
+      width: 100%;
+      text-align: center;
+    }
+    .nav-items { flex: 1; display: flex; flex-direction: column; gap: 4px; width: 100%; padding: 0 8px; }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 10px 4px; border-radius: 8px; cursor: pointer; transition: all 0.15s;
+      font-size: 0.6rem; color: var(--forge-muted); text-decoration: none; gap: 4px;
+    }
+    .nav-item i { font-size: 1.3rem; }
+    .nav-item:hover { background: rgba(232,97,26,0.12); color: #e0e0e0; }
+    .nav-item.active { background: rgba(232,97,26,0.18); color: var(--forge-orange); }
+    .nav-item span { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .sidebar-bottom { padding: 0 8px; width: 100%; }
+    .settings-btn {
+      display: flex; flex-direction: column; align-items: center; padding: 10px 4px;
+      border-radius: 8px; cursor: pointer; color: var(--forge-muted); font-size: 0.6rem;
+      gap: 4px; text-decoration: none; transition: all 0.15s;
+    }
+    .settings-btn i { font-size: 1.3rem; }
+    .settings-btn:hover { color: #e0e0e0; }
+
+    /* ── Main content ── */
+    #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* ── Top bar ── */
+    #topbar {
+      background: var(--forge-panel);
+      border-bottom: 1px solid var(--forge-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .topbar-title { font-weight: 700; font-size: 1rem; color: var(--forge-orange); letter-spacing: 1px; }
+    .topbar-sub { font-size: 0.75rem; color: var(--forge-muted); margin-left: 12px; }
+
+    /* ── Page content ── */
+    #content { flex: 1; overflow: hidden; display: flex; }
+
+    /* ── Cards & panels ── */
+    .panel { background: var(--forge-panel); border: 1px solid var(--forge-border); border-radius: 8px; }
+    .panel-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--forge-border);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--forge-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-label { font-size: 0.7rem; color: var(--forge-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--forge-orange); line-height: 1; }
+
+    /* ── Heat badges ── */
+    .heat-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;
+    }
+    .heat-hot      { background: rgba(229,57,53,0.18);  color: var(--heat-hot);     border: 1px solid rgba(229,57,53,0.3); }
+    .heat-pain     { background: rgba(255,111,0,0.18);  color: var(--heat-pain);    border: 1px solid rgba(255,111,0,0.3); }
+    .heat-warm     { background: rgba(253,216,53,0.15); color: var(--heat-warm);    border: 1px solid rgba(253,216,53,0.25); }
+    .heat-normal   { background: rgba(21,101,192,0.18); color: #64b5f6;             border: 1px solid rgba(21,101,192,0.3); }
+    .heat-cooling  { background: rgba(84,110,122,0.18); color: #90a4ae;             border: 1px solid rgba(84,110,122,0.3); }
+
+    /* ── Tables ── */
+    .forge-table { color: #e0e0e0; width: 100%; border-collapse: collapse; }
+    .forge-table thead th {
+      color: var(--forge-muted); font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.8px; padding: 8px 12px; border-bottom: 1px solid var(--forge-border);
+      font-weight: 500;
+    }
+    .forge-table tbody td { padding: 9px 12px; border-bottom: 1px solid rgba(42,45,58,0.5); font-size: 0.85rem; }
+    .forge-table tbody tr { cursor: pointer; transition: background 0.1s; }
+    .forge-table tbody tr:hover { background: rgba(232,97,26,0.07); }
+    .forge-table tbody tr.selected { background: rgba(232,97,26,0.13); }
+
+    /* ── Buttons ── */
+    .btn-forge { background: var(--forge-orange); color: white; border: none; font-size: 0.8rem; }
     .btn-forge:hover { background: #c4511a; color: white; }
-    .btn-outline-forge { border: 1px solid var(--forge-orange); color: var(--forge-orange); background: transparent; }
-    .btn-outline-forge:hover { background: var(--forge-orange); color: white; }
-    .nav-link { color: var(--forge-muted) !important; }
-    .nav-link:hover, .nav-link.active { color: var(--forge-orange) !important; }
-    .territory-badge { font-size: 0.7rem; padding: 2px 7px; border-radius: 10px; }
+    .btn-ghost { background: transparent; border: 1px solid var(--forge-border); color: var(--forge-muted); font-size: 0.8rem; }
+    .btn-ghost:hover { border-color: var(--forge-orange); color: var(--forge-orange); }
+    .btn-ghost.active { border-color: var(--forge-orange); color: var(--forge-orange); background: rgba(232,97,26,0.1); }
+
+    /* ── Progress ── */
+    .progress { background: var(--forge-border); }
+    .progress-bar { background: var(--forge-orange); }
+
+    /* ── Scrollable ── */
+    .scrollable { overflow-y: auto; }
+    .scrollable::-webkit-scrollbar { width: 4px; }
+    .scrollable::-webkit-scrollbar-track { background: transparent; }
+    .scrollable::-webkit-scrollbar-thumb { background: var(--forge-border); border-radius: 2px; }
+
+    /* ── Map ── */
+    #map { background: #1a1d27; }
+    .leaflet-container { background: #1a1d27 !important; }
+    .map-controls {
+      position: absolute; top: 12px; right: 12px; z-index: 1000;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .layer-toggle {
+      background: var(--forge-panel); border: 1px solid var(--forge-border);
+      border-radius: 6px; padding: 6px 10px; font-size: 0.72rem;
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      color: #e0e0e0; white-space: nowrap;
+    }
+    .layer-toggle input[type=checkbox] { accent-color: var(--forge-orange); }
+
+    /* ── Phone links ── */
+    .phone-link { color: #4fc3f7; text-decoration: none; font-family: monospace; font-size: 0.85rem; }
+    .phone-link:hover { color: var(--forge-orange); }
+
+    /* ── Form controls dark ── */
+    .dark-input {
+      background: var(--forge-dark); border: 1px solid var(--forge-border);
+      color: #e0e0e0; border-radius: 6px; padding: 6px 10px; font-size: 0.85rem;
+      width: 100%;
+    }
+    .dark-input:focus { outline: none; border-color: var(--forge-orange); }
+    select.dark-input option { background: var(--forge-dark); }
   </style>
+  {% block head %}{% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg px-4 py-3 mb-4">
-  <a class="navbar-brand forge-logo" href="/">FORGE <span>CRM</span></a>
-  <div class="navbar-nav ms-auto">
-    <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="/"><i class="bi bi-lightning-charge me-1"></i>Call Sheet</a>
-    <a class="nav-link {% if request.endpoint == 'leads' %}active{% endif %}" href="/leads"><i class="bi bi-people me-1"></i>All Leads</a>
-    <a class="nav-link {% if request.endpoint == 'goals' %}active{% endif %}" href="/goals"><i class="bi bi-bullseye me-1"></i>Goals</a>
+
+<!-- ── Sidebar ── -->
+<div id="sidebar">
+  <div class="sidebar-logo">FORGE</div>
+  <div class="nav-items">
+    <a class="nav-item {% if active == 'hotspots' %}active{% endif %}" href="/hotspots">
+      <i class="bi bi-fire"></i><span>Hotspots</span>
+    </a>
+    <a class="nav-item {% if active == 'leads' %}active{% endif %}" href="/">
+      <i class="bi bi-lightning-charge"></i><span>Leads</span>
+    </a>
+    <a class="nav-item {% if active == 'goals' %}active{% endif %}" href="/goals">
+      <i class="bi bi-bullseye"></i><span>Goals</span>
+    </a>
   </div>
-</nav>
-<div class="container-fluid px-4">
-  {% block content %}{% endblock %}
+  <div class="sidebar-bottom">
+    <a class="settings-btn {% if active == 'settings' %}active{% endif %}" href="/settings">
+      <i class="bi bi-gear"></i><span>Settings</span>
+    </a>
+  </div>
 </div>
+
+<!-- ── Main ── -->
+<div id="main">
+  <div id="topbar">
+    <div class="d-flex align-items-center">
+      <span class="topbar-title">{% block topbar_title %}FORGE{% endblock %}</span>
+      <span class="topbar-sub">{% block topbar_sub %}{% endblock %}</span>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <small style="color:var(--forge-muted)">{{ now }}</small>
+      {% block topbar_actions %}{% endblock %}
+    </div>
+  </div>
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

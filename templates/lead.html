@@ -1,114 +1,129 @@
 {% extends "base.html" %}
 {% block title %}— {{ lead.company_name }}{% endblock %}
 
-{% block content %}
-<div class="mb-3">
-  <a href="/" style="color:var(--forge-muted); text-decoration:none">
-    <i class="bi bi-arrow-left me-1"></i>Back to Call Sheet
-  </a>
-</div>
+{% set active = 'leads' %}
 
-<div class="row g-4">
-  <!-- Main lead card -->
-  <div class="col-md-8">
-    <div class="card">
-      <div class="card-header py-3 d-flex justify-content-between align-items-start">
+{% block topbar_title %}LEAD DETAIL{% endblock %}
+{% block topbar_sub %}Rank #{{ rank }}{% endblock %}
+
+{% block topbar_actions %}
+<a href="/" class="btn btn-ghost btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Call Sheet</a>
+{% endblock %}
+
+{% block content %}
+<div style="padding:14px; overflow-y:auto; height:100%;">
+  <div style="display:grid; grid-template-columns:1fr 320px; gap:14px; max-width:1100px;">
+
+    <!-- Main card -->
+    <div class="panel">
+      <div class="panel-header">
         <div>
-          <h4 class="mb-1" style="color:var(--forge-orange)">{{ lead.company_name }}</h4>
-          <span class="text-muted">{{ lead.industry }}</span>
+          <span style="font-size:1rem; font-weight:700; color:var(--forge-orange); text-transform:none; letter-spacing:0;">
+            {{ lead.company_name }}
+          </span>
+          <span style="color:var(--forge-muted); font-size:0.78rem; margin-left:10px; text-transform:none; letter-spacing:0;">
+            {{ lead.industry }}
+          </span>
         </div>
-        <div class="text-end">
+        <div style="display:flex; gap:8px; align-items:center;">
           {% if lead.confidence == 'HIGH' %}
-            <span class="badge badge-high mb-1 d-block">HIGH CONFIDENCE</span>
+            <span class="heat-badge heat-hot">HIGH CONF</span>
           {% elif lead.confidence == 'MEDIUM' %}
-            <span class="badge badge-medium mb-1 d-block">MED CONFIDENCE</span>
+            <span class="heat-badge heat-warm">MED CONF</span>
           {% else %}
-            <span class="badge badge-low mb-1 d-block">LOW CONFIDENCE</span>
+            <span class="heat-badge heat-cooling">LOW CONF</span>
           {% endif %}
-          <small class="text-muted">Rank #{{ rank }}</small>
         </div>
       </div>
-      <div class="card-body">
-        <div class="row g-3 mb-4">
-          <div class="col-sm-4">
+
+      <div style="padding:16px;">
+        <!-- Key metrics -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:18px;">
+          <div>
             <div class="stat-label">Est. RCE</div>
-            <div class="stat-number">~{{ lead.rce_estimate }}</div>
+            <div class="stat-number" style="font-size:2rem;">~{{ lead.rce_estimate }}</div>
           </div>
-          <div class="col-sm-4">
+          <div>
             <div class="stat-label">Urgency Score</div>
-            <div class="stat-number">{{ lead.urgency_score }}</div>
+            <div class="stat-number" style="font-size:2rem;">{{ lead.urgency_score }}</div>
           </div>
-          <div class="col-sm-4">
+          <div>
             <div class="stat-label">Next Action</div>
-            <div class="mt-1">
-              <span style="color:var(--forge-orange); font-weight:600; text-transform:uppercase; font-size:0.9rem">
-                {{ lead.next_action.replace('_', ' ') }}
-              </span>
+            <div style="color:var(--forge-orange); font-weight:700; font-size:0.95rem; text-transform:uppercase; margin-top:8px;">
+              {{ lead.next_action.replace('_', ' ') if lead.next_action else '—' }}
             </div>
           </div>
         </div>
 
-        <hr style="border-color:var(--forge-border)">
-
-        <div class="row g-3">
-          <div class="col-sm-6">
+        <div style="border-top:1px solid var(--forge-border); padding-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
             <div class="stat-label mb-1">Phone</div>
             {% if lead.phone %}
-              <a class="phone-link fs-5" href="tel:{{ lead.phone }}">
+              <a class="phone-link" href="tel:{{ lead.phone }}" style="font-size:1.05rem;">
                 <i class="bi bi-telephone me-1"></i>{{ lead.phone }}
               </a>
             {% else %}
-              <span class="text-muted">No phone on file</span>
+              <span style="color:var(--forge-muted)">No phone on file</span>
             {% endif %}
           </div>
-          <div class="col-sm-6">
+          <div>
             <div class="stat-label mb-1">Location</div>
-            <span>{{ lead.location }}</span>
+            <span style="font-size:0.88rem;">{{ lead.location }}</span>
           </div>
-          <div class="col-12">
+          <div style="grid-column:1/-1;">
             <div class="stat-label mb-1">Why Call Now</div>
-            <p style="color:#e0e0e0">{{ lead.reasoning }}</p>
+            <p style="color:#e0e0e0; font-size:0.88rem; line-height:1.5; margin:0;">{{ lead.reasoning }}</p>
           </div>
           {% if lead.known_info %}
-          <div class="col-12">
+          <div style="grid-column:1/-1;">
             <div class="stat-label mb-1">Field Notes</div>
-            <p class="text-muted small">{{ lead.known_info }}</p>
+            <p style="color:var(--forge-muted); font-size:0.8rem; line-height:1.5; margin:0;">{{ lead.known_info }}</p>
           </div>
           {% endif %}
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Action sidebar -->
-  <div class="col-md-4">
-    <div class="card mb-3">
-      <div class="card-header py-3">
-        <h6 class="mb-0"><i class="bi bi-check2-square me-2"></i>Log Outcome</h6>
-      </div>
-      <div class="card-body">
-        <div class="d-grid gap-2">
-          <button class="btn btn-forge">Appointment Booked</button>
-          <button class="btn btn-outline-forge">Left Voicemail</button>
-          <button class="btn btn-outline-forge">Callback Scheduled</button>
-          <button class="btn btn-outline-secondary">Not Interested</button>
-          <button class="btn btn-outline-secondary">Does Not Qualify</button>
+    <!-- Action sidebar -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-check2-square me-2"></i>Log Outcome</span>
         </div>
-        <hr style="border-color:var(--forge-border)">
-        <textarea class="form-control bg-dark text-light border-secondary" rows="3"
-          placeholder="Notes from the call..." style="border-color:var(--forge-border)!important"></textarea>
-        <button class="btn btn-forge w-100 mt-2">Save</button>
+        <div style="padding:12px; display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-forge" style="font-size:0.82rem;">
+            <i class="bi bi-calendar-check me-1"></i>Appointment Booked
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem;">
+            <i class="bi bi-voicemail me-1"></i>Left Voicemail
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem;">
+            <i class="bi bi-arrow-clockwise me-1"></i>Callback Scheduled
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem; color:var(--forge-muted);">
+            Not Interested
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem; color:var(--forge-muted);">
+            Does Not Qualify
+          </button>
+          <div style="border-top:1px solid var(--forge-border); padding-top:10px; margin-top:2px;">
+            <textarea class="dark-input" rows="3"
+              placeholder="Notes from the call..." style="resize:none;"></textarea>
+            <button class="btn btn-forge w-100 mt-2" style="font-size:0.82rem;">Save Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-clock-history me-2"></i>Activity</span>
+        </div>
+        <div style="padding:20px; text-align:center; color:var(--forge-muted); font-size:0.82rem;">
+          No activity logged yet.
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-header py-3">
-        <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Activity</h6>
-      </div>
-      <div class="card-body">
-        <p class="text-muted small text-center py-2">No activity logged yet.</p>
-      </div>
-    </div>
   </div>
 </div>
 {% endblock %}

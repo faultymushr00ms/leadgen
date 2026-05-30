@@ -149,6 +149,59 @@ def lead_detail(idx):
                            active="leads")
 
 
+def _compute_weekly(zones: list) -> dict:
+    from datetime import date, timedelta
+    today = date.today()
+    cutoff = today + timedelta(days=90)
+
+    pain_hit, pain_coming, timing_windows, avoid_list, verify_list = [], [], [], [], []
+    blacklisted = {"municipal_utility", "electric_cooperative"}
+
+    for z in zones:
+        agg = z.get("aggregationStatus", "")
+        status = z.get("status", "")
+        if agg in blacklisted:
+            avoid_list.append(z)
+            continue
+        term_end = z.get("termEnd")
+        near_expiry = False
+        if term_end:
+            try:
+                near_expiry = date.fromisoformat(term_end) <= cutoff
+            except ValueError:
+                pass
+        if status == "pain_hit":
+            pain_hit.append(z)
+        elif status == "pain_coming":
+            pain_coming.append(z)
+            if near_expiry:
+                timing_windows.append(z)
+        elif status == "transition":
+            if near_expiry:
+                timing_windows.append(z)
+        elif status == "verify":
+            verify_list.append(z)
+
+    targetable = len(pain_hit) + len(pain_coming) + len(timing_windows)
+    return {
+        "pain_hit": pain_hit,
+        "pain_coming": pain_coming,
+        "timing_windows": timing_windows,
+        "avoid_list": avoid_list,
+        "verify_list": verify_list,
+        "targetable_count": len(pain_hit) + len(pain_coming),
+        "blacklisted_count": len(avoid_list),
+        "timing_count": len(timing_windows),
+    }
+
+
+@app.route("/weekly")
+def weekly():
+    zones = _load_zones()
+    w = _compute_weekly(zones)
+    return render_template("weekly.html", active="weekly", **w)
+
+
 @app.route("/hotspots")
 def hotspots():
     zones = _load_zones()

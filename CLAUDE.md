@@ -77,6 +77,8 @@ Every zone JSON record:
   "name": "Zone Name",
   "region": "Region Label",
   "utility": "Utility Name",
+  "utilityParent": "FirstEnergy | AEP | AES | Duke Energy | Buckeye Power | null",
+  "utilityConfidence": "high | medium | low",
   "aggregationStatus": "confirmed_active_aggregation | municipal_utility | electric_cooperative | no_aggregation_verified | address_dependent",
   "currentRate": 10.01,
   "previousRate": 9.08,
@@ -96,6 +98,15 @@ Every zone JSON record:
 ```
 
 `_source_file` is injected at runtime by `_load_zones()` — never write it to the JSON files.
+
+### utilityParent / utilityConfidence
+
+Aggregation data (NOPEC/SOPEC/NOAC rosters) is city-level and reliable. Utility assignment is address-level and varies in reliability:
+
+- `utilityParent`: The IOU parent brand — always determinable from the aggregation program (e.g., NOPEC → "FirstEnergy"). Null for municipal utilities, co-ops, and genuinely mixed-territory zones.
+- `utilityConfidence: "high"` — unambiguous: AEP Ohio, AES Ohio, Duke Energy Ohio, Toledo Edison, municipal utilities, co-ops.
+- `utilityConfidence: "medium"` — reasonable geographic assignment, not verified against PUCO service territory maps.
+- `utilityConfidence: "low"` — flagged as likely wrong or address-dependent. These are the queue for the address-check module.
 
 ## API Routes
 

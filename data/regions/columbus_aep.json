@@ -12,10 +12,12 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Clean Energy Columbus moves from 9.08¢ to 10.01¢.",
-    "hook": "Columbus is moving from 9.08¢ into a 10.01¢ clean-energy term.",
+    "takeaway": "Clean Energy Columbus moves from 9.08\u00a2 to 10.01\u00a2.",
+    "hook": "Columbus is moving from 9.08\u00a2 into a 10.01\u00a2 clean-energy term.",
     "futureUse": "aggregation",
-    "notes": "Core AEP anchor."
+    "notes": "Core AEP anchor.",
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Gahanna",
@@ -30,10 +32,12 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves from 9.756¢ to 11.162¢; brown option is 10.927¢.",
-    "hook": "SOPEC green pricing is moving over 11¢ this cycle.",
+    "takeaway": "SOPEC green rate moves from 9.756\u00a2 to 11.162\u00a2; brown option is 10.927\u00a2.",
+    "hook": "SOPEC green pricing is moving over 11\u00a2 this cycle.",
     "futureUse": "aggregation",
-    "notes": "SOPEC archetype."
+    "notes": "SOPEC archetype.",
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Grove City",
@@ -48,10 +52,12 @@
     "termEnd": "2028-07-01",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "High clean-energy aggregation at 10.97¢ through July 2028.",
+    "takeaway": "High clean-energy aggregation at 10.97\u00a2 through July 2028.",
     "hook": "Grove City is locking into a high clean-energy term through 2028.",
     "futureUse": "aggregation",
-    "notes": "Good AEP clean-energy high-rate example."
+    "notes": "Good AEP clean-energy high-rate example.",
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Ontario",
@@ -69,7 +75,9 @@
     "takeaway": "Confirmed live aggregation, lower than many AEP-area resets.",
     "hook": "Ontario is a live aggregation area, but it is not as high as many Columbus-area resets.",
     "futureUse": "aggregation",
-    "notes": "Do not leave blank. Confirmed live area."
+    "notes": "Do not leave blank. Confirmed live area.",
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Westerville",
@@ -87,6 +95,8 @@
     "takeaway": "Municipal electric; do not treat as AEP aggregation unless address is outside municipal service.",
     "hook": "Verify whether the address is actually on Westerville municipal electric.",
     "futureUse": "municipal_blacklist",
-    "notes": "Municipal utility environment."
+    "notes": "Municipal utility environment.",
+    "utilityParent": null,
+    "utilityConfidence": "high"
   }
 ]

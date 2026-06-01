@@ -12,10 +12,12 @@
     "termEnd": "2026-11-01",
     "status": "pain_hit",
     "confidence": "high",
-    "takeaway": "Clean historical pain: 4.72¢ legacy, then 6.57¢, now 9.39¢.",
+    "takeaway": "Clean historical pain: 4.72\u00a2 legacy, then 6.57\u00a2, now 9.39\u00a2.",
     "hook": "Did you see where the city program landed after the old low-rate cycle?",
     "futureUse": "aggregation",
-    "notes": "Good example of Cincinnati/Duke repricing."
+    "notes": "Good example of Cincinnati/Duke repricing.",
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Reading",
@@ -30,10 +32,12 @@
     "termEnd": "2027-12-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Repriced into the low-10¢ Duke environment from older mid-6¢ baseline.",
-    "hook": "Reading is moving into the 10¢ range, so it is worth checking before the new term settles in.",
+    "takeaway": "Repriced into the low-10\u00a2 Duke environment from older mid-6\u00a2 baseline.",
+    "hook": "Reading is moving into the 10\u00a2 range, so it is worth checking before the new term settles in.",
     "futureUse": "aggregation",
-    "notes": "Prior local historical should be confirmed further, but Duke baseline is useful."
+    "notes": "Prior local historical should be confirmed further, but Duke baseline is useful.",
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Norwood",
@@ -48,10 +52,12 @@
     "termEnd": "2027-12-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Strong repricing story: prior program around 6.67¢/7.03¢ moves into 10.39¢.",
-    "hook": "Norwood is moving from the old 6–7¢ environment into 10.39¢.",
+    "takeaway": "Strong repricing story: prior program around 6.67\u00a2/7.03\u00a2 moves into 10.39\u00a2.",
+    "hook": "Norwood is moving from the old 6\u20137\u00a2 environment into 10.39\u00a2.",
     "futureUse": "aggregation",
-    "notes": "Use as a high-pain Duke-area comparison."
+    "notes": "Use as a high-pain Duke-area comparison.",
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Cincinnati",
@@ -66,9 +72,11 @@
     "termEnd": "2026-11-01",
     "status": "stable",
     "confidence": "high",
-    "takeaway": "Slight decrease from 10.73¢ to 10.44¢, but still high Duke-area pricing.",
-    "hook": "Even with a slight decrease, the city program is still in the high 10¢ range.",
+    "takeaway": "Slight decrease from 10.73\u00a2 to 10.44\u00a2, but still high Duke-area pricing.",
+    "hook": "Even with a slight decrease, the city program is still in the high 10\u00a2 range.",
     "futureUse": "aggregation",
-    "notes": "Short fixed window before later variable structure."
+    "notes": "Short fixed window before later variable structure.",
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   }
 ]

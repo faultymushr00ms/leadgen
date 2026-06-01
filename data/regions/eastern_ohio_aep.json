@@ -17,7 +17,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Muskingum County seat. I-70 corridor commercial and light industrial. No confirmed aggregation program.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Cambridge",
@@ -37,7 +39,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Guernsey County seat. Small market. I-70 corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Athens / Ohio University Area",
@@ -57,7 +61,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Athens County seat. Ohio University campus drives commercial density. No confirmed aggregation. Hospitality/food service/retail accounts near campus are worthwhile targets.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Chillicothe",
@@ -77,7 +83,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Ross County seat. Manufacturing heritage (paper industry). Commercial corridor on North Bridge Street. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Circleville",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Pickaway County seat. Route 23 commercial corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Logan",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Hocking County seat. Small commercial base along Route 33. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Gallipolis",
@@ -137,7 +149,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Gallia County seat on the Ohio River. Small commercial market. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Portsmouth",
@@ -157,7 +171,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Scioto County seat on the Ohio River. Light industrial base. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Ironton",
@@ -177,7 +193,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Lawrence County seat on the Ohio River. Small commercial market. Border with West Virginia/Kentucky. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Jackson",
@@ -197,6 +215,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Jackson County seat. Small market, but served by AEP and eligible for competitive supply. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   }
 ]

@@ -12,12 +12,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate hits 9.999¢ in June 2026. Westlake's dense commercial corridor (Crocker Park, Westlake Shopping Center) makes this a high-value target before the June increase.",
-    "hook": "Westlake is on NOPEC — that rate goes up to nearly 10¢ in June. Any tenants or locations in Crocker Park area we should look at?",
+    "takeaway": "NOPEC rate hits 9.999\u00a2 in June 2026. Westlake's dense commercial corridor (Crocker Park, Westlake Shopping Center) makes this a high-value target before the June increase.",
+    "hook": "Westlake is on NOPEC \u2014 that rate goes up to nearly 10\u00a2 in June. Any tenants or locations in Crocker Park area we should look at?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Strong retail and professional services corridor. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Strong retail and professional services corridor. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "North Olmsted",
@@ -32,12 +34,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. North Olmsted's Great Northern Mall area and industrial pockets are strong targets.",
-    "hook": "North Olmsted is on NOPEC — the June rate hike to 9.999¢ is less than two weeks away. Good time to review supply options.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. North Olmsted's Great Northern Mall area and industrial pockets are strong targets.",
+    "hook": "North Olmsted is on NOPEC \u2014 the June rate hike to 9.999\u00a2 is less than two weeks away. Good time to review supply options.",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Commercial and light industrial corridor near Great Northern Mall. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Middleburg Heights",
@@ -52,12 +56,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate to 9.999¢ June 2026. Middleburg Heights commercial strip along Bagley Road and significant light industrial — active territory.",
-    "hook": "Middleburg Heights is on NOPEC — they're going up another cent in June. Any of your accounts there on a fixed deal?",
+    "takeaway": "NOPEC rate to 9.999\u00a2 June 2026. Middleburg Heights commercial strip along Bagley Road and significant light industrial \u2014 active territory.",
+    "hook": "Middleburg Heights is on NOPEC \u2014 they're going up another cent in June. Any of your accounts there on a fixed deal?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Significant industrial/commercial presence near I-71. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Significant industrial/commercial presence near I-71. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Brook Park",
@@ -72,12 +78,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate climbs to 9.999¢ June 2026. Brook Park is airport-adjacent industrial — manufacturing and warehousing accounts are strong RCE targets.",
-    "hook": "Brook Park is on NOPEC — airport industrial area, rate going up to 9.999¢ next month. Good accounts to get in front of now.",
+    "takeaway": "NOPEC rate climbs to 9.999\u00a2 June 2026. Brook Park is airport-adjacent industrial \u2014 manufacturing and warehousing accounts are strong RCE targets.",
+    "hook": "Brook Park is on NOPEC \u2014 airport industrial area, rate going up to 9.999\u00a2 next month. Good accounts to get in front of now.",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Airport-adjacent industrial and manufacturing zone. High RCE potential. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Broadview Heights",
@@ -92,12 +100,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Broadview Heights commercial corridor along Broadview Road is active target territory.",
-    "hook": "Broadview Heights is on NOPEC — that rate is going up to nearly 10¢ in June. Worth getting in front of accounts before it hits.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Broadview Heights commercial corridor along Broadview Road is active target territory.",
+    "hook": "Broadview Heights is on NOPEC \u2014 that rate is going up to nearly 10\u00a2 in June. Worth getting in front of accounts before it hits.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Suburban commercial/residential mix. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Suburban commercial/residential mix. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Seven Hills",
@@ -112,12 +122,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Seven Hills commercial accounts on Broadview Road corridor are eligible.",
-    "hook": "Seven Hills is on NOPEC — the June rate increase applies here. Any commercial accounts on Broadview Road worth reviewing?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Seven Hills commercial accounts on Broadview Road corridor are eligible.",
+    "hook": "Seven Hills is on NOPEC \u2014 the June rate increase applies here. Any commercial accounts on Broadview Road worth reviewing?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Smaller commercial footprint; focus on industrial-class accounts along major corridors. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Garfield Heights",
@@ -132,12 +144,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate to 9.999¢ June 2026. Garfield Heights industrial corridor along Turney Road — significant manufacturing base still exposed to the rate hike.",
-    "hook": "Garfield Heights is NOPEC territory — that rate jumps to 9.999¢ next month. Manufacturing accounts on Turney Road are particularly exposed.",
+    "takeaway": "NOPEC rate to 9.999\u00a2 June 2026. Garfield Heights industrial corridor along Turney Road \u2014 significant manufacturing base still exposed to the rate hike.",
+    "hook": "Garfield Heights is NOPEC territory \u2014 that rate jumps to 9.999\u00a2 next month. Manufacturing accounts on Turney Road are particularly exposed.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Industrial and manufacturing accounts along Turney Road corridor. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Industrial and manufacturing accounts along Turney Road corridor. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Maple Heights",
@@ -152,12 +166,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Maple Heights light industrial and commercial accounts along Dunham Road are eligible.",
-    "hook": "Maple Heights is on NOPEC — the June rate hike to 9.999¢ is coming. Any accounts you want to review there?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Maple Heights light industrial and commercial accounts along Dunham Road are eligible.",
+    "hook": "Maple Heights is on NOPEC \u2014 the June rate hike to 9.999\u00a2 is coming. Any accounts you want to review there?",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Mayfield Heights",
@@ -172,12 +188,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Mayfield Heights is an active commercial office/retail cluster along Mayfield Road — strong commercial targets.",
-    "hook": "Mayfield Heights is on NOPEC — that goes to 9.999¢ next month. Office parks and retail on Mayfield Road are good targets right now.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Mayfield Heights is an active commercial office/retail cluster along Mayfield Road \u2014 strong commercial targets.",
+    "hook": "Mayfield Heights is on NOPEC \u2014 that goes to 9.999\u00a2 next month. Office parks and retail on Mayfield Road are good targets right now.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Significant professional services and commercial presence. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Significant professional services and commercial presence. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Highland Heights",
@@ -192,12 +210,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate to 9.999¢ June 2026. Highland Heights commercial accounts on Wilson Mills Road corridor are eligible.",
-    "hook": "Highland Heights is NOPEC — the June rate increase applies. Wilson Mills Road commercial accounts worth checking.",
+    "takeaway": "NOPEC rate to 9.999\u00a2 June 2026. Highland Heights commercial accounts on Wilson Mills Road corridor are eligible.",
+    "hook": "Highland Heights is NOPEC \u2014 the June rate increase applies. Wilson Mills Road commercial accounts worth checking.",
     "futureUse": "aggregation",
     "notes": "The Illuminating Company territory. Commercial/residential mix, eastern Cuyahoga County. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Richmond Heights",
@@ -212,12 +232,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Richmond Heights commercial strip near Richmond Mall area is eligible.",
-    "hook": "Richmond Heights is on NOPEC — that rate jumps to nearly 10¢ in June. Any accounts near the mall corridor?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Richmond Heights commercial strip near Richmond Mall area is eligible.",
+    "hook": "Richmond Heights is on NOPEC \u2014 that rate jumps to nearly 10\u00a2 in June. Any accounts near the mall corridor?",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Richmond Mall commercial area. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Richmond Mall commercial area. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Lyndhurst",
@@ -232,12 +254,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Lyndhurst commercial accounts along Mayfield Road corridor eligible.",
-    "hook": "Lyndhurst is NOPEC — the June rate hike to 9.999¢ applies here too. Any accounts you want me to pull a comparison for?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Lyndhurst commercial accounts along Mayfield Road corridor eligible.",
+    "hook": "Lyndhurst is NOPEC \u2014 the June rate hike to 9.999\u00a2 applies here too. Any accounts you want me to pull a comparison for?",
     "futureUse": "aggregation",
     "notes": "The Illuminating Company territory. Suburban residential/commercial mix, eastern Cuyahoga. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "South Euclid",
@@ -252,12 +276,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. South Euclid commercial accounts on Mayfield Road are eligible.",
-    "hook": "South Euclid is on NOPEC — they're going up another cent June 1st. Good time for a review.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. South Euclid commercial accounts on Mayfield Road are eligible.",
+    "hook": "South Euclid is on NOPEC \u2014 they're going up another cent June 1st. Good time for a review.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Commercial strip along Mayfield Road. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Commercial strip along Mayfield Road. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "University Heights",
@@ -272,12 +298,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. University Heights commercial accounts along Cedar Road eligible.",
-    "hook": "University Heights is on NOPEC — that June rate hike applies. Any accounts on Cedar Road worth reviewing?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. University Heights commercial accounts along Cedar Road eligible.",
+    "hook": "University Heights is on NOPEC \u2014 that June rate hike applies. Any accounts on Cedar Road worth reviewing?",
     "futureUse": "aggregation",
     "notes": "The Illuminating Company territory. Small commercial presence along Cedar Road. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Cleveland Heights",
@@ -292,12 +320,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Cleveland Heights is a substantial inner-ring suburb with commercial corridors on Cedar and Mayfield Roads.",
-    "hook": "Cleveland Heights is on NOPEC — the rate is going up to nearly 10¢ in June. Commercial accounts on Cedar Road should hear from us.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Cleveland Heights is a substantial inner-ring suburb with commercial corridors on Cedar and Mayfield Roads.",
+    "hook": "Cleveland Heights is on NOPEC \u2014 the rate is going up to nearly 10\u00a2 in June. Commercial accounts on Cedar Road should hear from us.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Inner-ring suburb east of Cleveland. Commercial strips along Cedar and Mayfield corridors. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Inner-ring suburb east of Cleveland. Commercial strips along Cedar and Mayfield corridors. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Shaker Heights",
@@ -312,12 +342,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Shaker Heights commercial accounts along Van Aken and Chagrin Boulevards are eligible.",
-    "hook": "Shaker Heights is on NOPEC — that rate goes up to nearly 10¢ June 1st. Any commercial tenants in Shaker Square or Van Aken District?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Shaker Heights commercial accounts along Van Aken and Chagrin Boulevards are eligible.",
+    "hook": "Shaker Heights is on NOPEC \u2014 that rate goes up to nearly 10\u00a2 June 1st. Any commercial tenants in Shaker Square or Van Aken District?",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Higher-income inner-ring suburb. Commercial concentration at Shaker Square and Van Aken area. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Higher-income inner-ring suburb. Commercial concentration at Shaker Square and Van Aken area. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Rocky River",
@@ -332,12 +364,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Rocky River commercial accounts along Detroit Road are eligible.",
-    "hook": "Rocky River is on NOPEC — they're going up to 9.999¢ in June. Any accounts on Detroit Road corridor?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Rocky River commercial accounts along Detroit Road are eligible.",
+    "hook": "Rocky River is on NOPEC \u2014 they're going up to 9.999\u00a2 in June. Any accounts on Detroit Road corridor?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Lakeside suburban community, commercial strip along Detroit Road. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Bay Village",
@@ -352,12 +386,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Bay Village commercial accounts along Wolf Road are eligible.",
-    "hook": "Bay Village is on NOPEC — the June rate increase applies. Any accounts there you want to review?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Bay Village commercial accounts along Wolf Road are eligible.",
+    "hook": "Bay Village is on NOPEC \u2014 the June rate increase applies. Any accounts there you want to review?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Lake Erie shoreline community. Small commercial footprint. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Lake Erie shoreline community. Small commercial footprint. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Fairview Park",
@@ -372,12 +408,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Fairview Park commercial accounts on Lorain Road are eligible.",
-    "hook": "Fairview Park is on NOPEC — that rate goes up another cent in June. Lorain Road accounts are worth a call.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Fairview Park commercial accounts on Lorain Road are eligible.",
+    "hook": "Fairview Park is on NOPEC \u2014 that rate goes up another cent in June. Lorain Road accounts are worth a call.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Commercial strip along Lorain Road. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Commercial strip along Lorain Road. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Olmsted Falls",
@@ -392,12 +430,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Olmsted Falls commercial and light industrial accounts are eligible.",
-    "hook": "Olmsted Falls is on NOPEC — the June rate hike applies. Any accounts in the area?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Olmsted Falls commercial and light industrial accounts are eligible.",
+    "hook": "Olmsted Falls is on NOPEC \u2014 the June rate hike applies. Any accounts in the area?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Western Cuyahoga County. Industrial and residential mix. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Bedford Heights",
@@ -412,12 +452,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Bedford Heights industrial/commercial corridor along Broadway Avenue is an active target zone.",
-    "hook": "Bedford Heights is on NOPEC — the rate goes up June 1st. Industrial accounts on Broadway are worth a call now.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Bedford Heights industrial/commercial corridor along Broadway Avenue is an active target zone.",
+    "hook": "Bedford Heights is on NOPEC \u2014 the rate goes up June 1st. Industrial accounts on Broadway are worth a call now.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Significant industrial presence along Broadway Avenue corridor. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Significant industrial presence along Broadway Avenue corridor. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Warrensville Heights",
@@ -432,12 +474,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Warrensville Heights commercial accounts along Chagrin Boulevard are eligible.",
-    "hook": "Warrensville Heights is on NOPEC — they're going up to nearly 10¢ in June. Any accounts on Chagrin?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Warrensville Heights commercial accounts along Chagrin Boulevard are eligible.",
+    "hook": "Warrensville Heights is on NOPEC \u2014 they're going up to nearly 10\u00a2 in June. Any accounts on Chagrin?",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory. Commercial cluster along Chagrin Boulevard. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory. Commercial cluster along Chagrin Boulevard. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Twinsburg",
@@ -452,11 +496,13 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Twinsburg has a major industrial park cluster — high RCE potential before the June hit.",
-    "hook": "Twinsburg is on NOPEC — rate goes to 9.999¢ in June. The Twinsburg Business Park has a lot of exposed accounts right now.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Twinsburg has a major industrial park cluster \u2014 high RCE potential before the June hit.",
+    "hook": "Twinsburg is on NOPEC \u2014 rate goes to 9.999\u00a2 in June. The Twinsburg Business Park has a lot of exposed accounts right now.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Summit/Cuyahoga border. Major industrial park. High commercial/industrial usage accounts. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Summit/Cuyahoga border. Major industrial park. High commercial/industrial usage accounts. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

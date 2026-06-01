@@ -12,12 +12,14 @@
     "termEnd": "2026-06-30",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Dayton's SOPEC rate explodes from 8.71¢ to 10.691¢ in June 2026 — a 22.7% increase. This is the single strongest pain play in Ohio right now. Any commercial account in Dayton should be contacted this week.",
-    "hook": "Dayton's SOPEC program is jumping from 8.71 to over 10.6 cents in June — that's nearly a quarter more on the electric bill. Have you talked to your customers about locking in something before it hits?",
+    "takeaway": "Dayton's SOPEC rate explodes from 8.71\u00a2 to 10.691\u00a2 in June 2026 \u2014 a 22.7% increase. This is the single strongest pain play in Ohio right now. Any commercial account in Dayton should be contacted this week.",
+    "hook": "Dayton's SOPEC program is jumping from 8.71 to over 10.6 cents in June \u2014 that's nearly a quarter more on the electric bill. Have you talked to your customers about locking in something before it hits?",
     "futureUse": "aggregation",
-    "notes": "SOPEC (Sustainable Ohio Public Energy Council) contract: 8.71¢/kWh through June 2026, repricing to 10.691¢/kWh. AES Ohio (formerly Dayton Power & Light) territory. Highest near-term rate pain in the state.",
+    "notes": "SOPEC (Sustainable Ohio Public Energy Council) contract: 8.71\u00a2/kWh through June 2026, repricing to 10.691\u00a2/kWh. AES Ohio (formerly Dayton Power & Light) territory. Highest near-term rate pain in the state.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Riverside",
@@ -32,12 +34,14 @@
     "termEnd": "2026-06-30",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Riverside is on SOPEC at 9.333¢ with term ending June 2026 — repricing is imminent. Hit this before the new rate locks in.",
-    "hook": "Riverside's SOPEC contract ends in June — do you know what rate they're repricing to?",
+    "takeaway": "Riverside is on SOPEC at 9.333\u00a2 with term ending June 2026 \u2014 repricing is imminent. Hit this before the new rate locks in.",
+    "hook": "Riverside's SOPEC contract ends in June \u2014 do you know what rate they're repricing to?",
     "futureUse": "aggregation",
-    "notes": "SOPEC rate 9.333¢/kWh through June 2026. AES Ohio territory. Adjacent to Dayton; same repricing exposure window.",
+    "notes": "SOPEC rate 9.333\u00a2/kWh through June 2026. AES Ohio territory. Adjacent to Dayton; same repricing exposure window.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Fairborn",
@@ -52,12 +56,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "medium",
-    "takeaway": "Fairborn locked in with Constellation at 9.04¢ from January 2026 — currently stable but term length unknown. Watch for upcoming renewal.",
-    "hook": "Fairborn went with Constellation at 9.04¢ earlier this year — do you know when their contract expires?",
+    "takeaway": "Fairborn locked in with Constellation at 9.04\u00a2 from January 2026 \u2014 currently stable but term length unknown. Watch for upcoming renewal.",
+    "hook": "Fairborn went with Constellation at 9.04\u00a2 earlier this year \u2014 do you know when their contract expires?",
     "futureUse": "aggregation",
-    "notes": "Constellation supplier, AES Ohio territory. Rate set January 2026. Term end date not confirmed — verify with city/aggregation program.",
+    "notes": "Constellation supplier, AES Ohio territory. Rate set January 2026. Term end date not confirmed \u2014 verify with city/aggregation program.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Troy",
@@ -72,12 +78,14 @@
     "termEnd": "2025-12-31",
     "status": "transition",
     "confidence": "low",
-    "takeaway": "Troy's prior aggregation rate was 6.57¢ through Dec 2025 — that term has expired. Current supply status unknown. High probability of pain or price-to-compare opportunity.",
-    "hook": "Troy's aggregation contract expired at the end of last year — do you know if they renewed, or are accounts rolling to utility default?",
+    "takeaway": "Troy's prior aggregation rate was 6.57\u00a2 through Dec 2025 \u2014 that term has expired. Current supply status unknown. High probability of pain or price-to-compare opportunity.",
+    "hook": "Troy's aggregation contract expired at the end of last year \u2014 do you know if they renewed, or are accounts rolling to utility default?",
     "futureUse": "price_to_compare_analysis",
-    "notes": "Previous rate: 6.57¢/kWh through December 2025. Contract expired — current supply status unverified. AES Ohio territory (Miami County). Likely reverted to standard offer or a new program — verify immediately.",
+    "notes": "Previous rate: 6.57\u00a2/kWh through December 2025. Contract expired \u2014 current supply status unverified. AES Ohio territory (Miami County). Likely reverted to standard offer or a new program \u2014 verify immediately.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Middletown",
@@ -92,12 +100,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Middletown has no aggregation program — accounts are on AES Ohio standard offer, which jumped from 8.71¢ to 10.691¢ in June 2026 (+22.7%). Butler/Warren County border market, underserved.",
+    "takeaway": "Middletown has no aggregation program \u2014 accounts are on AES Ohio standard offer, which jumped from 8.71\u00a2 to 10.691\u00a2 in June 2026 (+22.7%). Butler/Warren County border market, underserved.",
     "hook": "Middletown doesn't have a city aggregation program, so those accounts just got hit with the AES 22.7% rate hike in June. Are any of them on a supplier deal, or are they taking the full hit?",
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory (Butler/Warren County border). No confirmed aggregation program. Accounts on AES standard offer exposed to the June 2026 rate increase. Good candidate for direct outreach.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Kettering",
@@ -112,11 +122,13 @@
     "termEnd": null,
     "status": "verify",
     "confidence": "medium",
-    "takeaway": "Kettering has partial SOPEC enrollment — some addresses are in the program, others are not. Verify at the account level before assuming aggregation coverage.",
-    "hook": "Kettering is a mixed picture on SOPEC — some addresses are enrolled, some aren't. Do you know which program your accounts there are on?",
+    "takeaway": "Kettering has partial SOPEC enrollment \u2014 some addresses are in the program, others are not. Verify at the account level before assuming aggregation coverage.",
+    "hook": "Kettering is a mixed picture on SOPEC \u2014 some addresses are enrolled, some aren't. Do you know which program your accounts there are on?",
     "futureUse": "address_check",
-    "notes": "AES Ohio territory (Montgomery County). SOPEC enrollment is address-dependent in Kettering — not all areas of the city are covered. Verify individual service addresses against SOPEC enrollment roster. Note: Piqua (Miami County) is a municipal electric utility — not eligible for competitive electric supply.",
+    "notes": "AES Ohio territory (Montgomery County). SOPEC enrollment is address-dependent in Kettering \u2014 not all areas of the city are covered. Verify individual service addresses against SOPEC enrollment roster. Note: Piqua (Miami County) is a municipal electric utility \u2014 not eligible for competitive electric supply.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   }
 ]

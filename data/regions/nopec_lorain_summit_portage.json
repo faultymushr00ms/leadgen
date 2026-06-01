@@ -12,12 +12,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Avon is one of Ohio's fastest-growing commercial corridors — massive exposure on Detroit Road and Chester Road retail/industrial strip.",
-    "hook": "Avon is on NOPEC — that rate goes up to nearly 10¢ in June. A lot of the new commercial development on Detroit Road is still on the city program.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Avon is one of Ohio's fastest-growing commercial corridors \u2014 massive exposure on Detroit Road and Chester Road retail/industrial strip.",
+    "hook": "Avon is on NOPEC \u2014 that rate goes up to nearly 10\u00a2 in June. A lot of the new commercial development on Detroit Road is still on the city program.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Fastest-growing community in Lorain County. Heavy commercial development along Detroit/Chester corridors. High-value outreach target. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Fastest-growing community in Lorain County. Heavy commercial development along Detroit/Chester corridors. High-value outreach target. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Avon Lake",
@@ -32,17 +34,19 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Avon Lake's industrial lakefront (including large power plant-adjacent manufacturing) has significant usage accounts.",
-    "hook": "Avon Lake is on NOPEC — rate hits 9.999¢ in June. Lakefront industrial accounts on Electric Blvd are worth a look.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Avon Lake's industrial lakefront (including large power plant-adjacent manufacturing) has significant usage accounts.",
+    "hook": "Avon Lake is on NOPEC \u2014 rate hits 9.999\u00a2 in June. Lakefront industrial accounts on Electric Blvd are worth a look.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Heavy industrial and manufacturing presence on Lake Erie lakeshore. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Heavy industrial and manufacturing presence on Lake Erie lakeshore. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "North Ridgeville",
     "region": "Lorain County (NOPEC)",
-    "utility": "Ohio Edison",
+    "utility": "The Illuminating Company",
     "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": 8.999,
     "previousRate": 7.0,
@@ -52,12 +56,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. North Ridgeville is a growing commercial corridor — strong target before the June hit.",
-    "hook": "North Ridgeville is on NOPEC — that's going to 9.999¢ next month. A lot of the newer industrial development out there hasn't locked in rates.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. North Ridgeville is a growing commercial corridor \u2014 strong target before the June hit.",
+    "hook": "North Ridgeville is on NOPEC \u2014 that's going to 9.999\u00a2 next month. A lot of the newer industrial development out there hasn't locked in rates.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Growing commercial/industrial corridor off Lorain Road and Center Ridge Road. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Growing commercial/industrial corridor off Lorain Road and Center Ridge Road. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Amherst",
@@ -72,12 +78,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Amherst light industrial and commercial accounts are eligible.",
-    "hook": "Amherst is on NOPEC — the June rate increase applies. Any accounts there you'd like reviewed?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Amherst light industrial and commercial accounts are eligible.",
+    "hook": "Amherst is on NOPEC \u2014 the June rate increase applies. Any accounts there you'd like reviewed?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Lorain County community. Light industrial and commercial mix. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Sheffield Lake",
@@ -92,12 +100,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Sheffield Lake commercial accounts along Lake Road are eligible.",
-    "hook": "Sheffield Lake is on NOPEC — rate going up June 1st. Any accounts along Lake Road?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Sheffield Lake commercial accounts along Lake Road are eligible.",
+    "hook": "Sheffield Lake is on NOPEC \u2014 rate going up June 1st. Any accounts along Lake Road?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Lakefront Lorain County community. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Lakefront Lorain County community. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Sheffield Village",
@@ -112,12 +122,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Sheffield Village is a small community adjacent to Lorain with commercial activity on Route 254.",
-    "hook": "Sheffield Village is on NOPEC — they're going up to 9.999¢ in June. Any commercial accounts in the area?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Sheffield Village is a small community adjacent to Lorain with commercial activity on Route 254.",
+    "hook": "Sheffield Village is on NOPEC \u2014 they're going up to 9.999\u00a2 in June. Any commercial accounts in the area?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Adjacent to Lorain. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Adjacent to Lorain. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low"
   },
   {
     "name": "Grafton",
@@ -132,12 +144,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Grafton is a small community in southern Lorain County — primarily residential with some light commercial.",
-    "hook": "Grafton area is on NOPEC — the June rate hike applies. Any commercial or agricultural accounts in the area?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Grafton is a small community in southern Lorain County \u2014 primarily residential with some light commercial.",
+    "hook": "Grafton area is on NOPEC \u2014 the June rate hike applies. Any commercial or agricultural accounts in the area?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Southern Lorain County. Confirm individual community NOPEC enrollment on address lookup. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Stow",
@@ -152,12 +166,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Stow's commercial corridor on Graham Road and industrial parks near Kent are strong targets.",
-    "hook": "Stow is on NOPEC — rate goes up to nearly 10¢ June 1st. Graham Road commercial and industrial park accounts are worth a call now.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Stow's commercial corridor on Graham Road and industrial parks near Kent are strong targets.",
+    "hook": "Stow is on NOPEC \u2014 rate goes up to nearly 10\u00a2 June 1st. Graham Road commercial and industrial park accounts are worth a call now.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Summit County community adjacent to Akron. Active commercial and light industrial corridors. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Summit County community adjacent to Akron. Active commercial and light industrial corridors. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Tallmadge",
@@ -172,12 +188,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Tallmadge commercial accounts along Route 91 are eligible.",
-    "hook": "Tallmadge is on NOPEC — that rate is going up in June. Route 91 corridor accounts are good calls right now.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Tallmadge commercial accounts along Route 91 are eligible.",
+    "hook": "Tallmadge is on NOPEC \u2014 that rate is going up in June. Route 91 corridor accounts are good calls right now.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Summit County community northeast of Akron. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Summit County community northeast of Akron. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Barberton",
@@ -192,12 +210,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Barberton has a strong manufacturing legacy — industrial accounts along the Barberton corridor are high usage targets.",
-    "hook": "Barberton is on NOPEC — they're going up to 9.999¢ in June. A lot of the manufacturing accounts there haven't reviewed their supply situation.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Barberton has a strong manufacturing legacy \u2014 industrial accounts along the Barberton corridor are high usage targets.",
+    "hook": "Barberton is on NOPEC \u2014 they're going up to 9.999\u00a2 in June. A lot of the manufacturing accounts there haven't reviewed their supply situation.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Summit County community southwest of Akron. Manufacturing heritage — medium to large industrial accounts. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Summit County community southwest of Akron. Manufacturing heritage \u2014 medium to large industrial accounts. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Norton",
@@ -212,12 +232,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Norton commercial and light industrial accounts are eligible.",
-    "hook": "Norton is on NOPEC — the June rate hike applies. Any accounts in the area?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Norton commercial and light industrial accounts are eligible.",
+    "hook": "Norton is on NOPEC \u2014 the June rate hike applies. Any accounts in the area?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Summit County community. Light industrial and commercial mix. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Copley Township",
@@ -232,12 +254,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Copley Township commercial accounts along Route 18 corridor are eligible.",
-    "hook": "Copley Township is on NOPEC — rate going up June 1st. Route 18 commercial accounts are worth checking in on.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Copley Township commercial accounts along Route 18 corridor are eligible.",
+    "hook": "Copley Township is on NOPEC \u2014 rate going up June 1st. Route 18 commercial accounts are worth checking in on.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Summit County unincorporated township. Commercial corridor along Route 18. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Summit County unincorporated township. Commercial corridor along Route 18. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Aurora",
@@ -252,12 +276,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Aurora's commercial growth along Route 43 and proximity to Twinsburg industrial parks makes it a strong target.",
-    "hook": "Aurora is on NOPEC — that goes up to 9.999¢ in June. Commercial build-out on Route 43 has a lot of unreviewed accounts.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Aurora's commercial growth along Route 43 and proximity to Twinsburg industrial parks makes it a strong target.",
+    "hook": "Aurora is on NOPEC \u2014 that goes up to 9.999\u00a2 in June. Commercial build-out on Route 43 has a lot of unreviewed accounts.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Growing Portage County community. Commercial activity along Route 43. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Growing Portage County community. Commercial activity along Route 43. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Streetsboro",
@@ -272,12 +298,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Streetsboro has a major retail/industrial strip along Route 303 — strong outreach target before June.",
-    "hook": "Streetsboro is on NOPEC — the rate goes to 9.999¢ June 1st. Route 303 commercial strip has a lot of accounts still on the NOPEC program.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Streetsboro has a major retail/industrial strip along Route 303 \u2014 strong outreach target before June.",
+    "hook": "Streetsboro is on NOPEC \u2014 the rate goes to 9.999\u00a2 June 1st. Route 303 commercial strip has a lot of accounts still on the NOPEC program.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Portage County community on I-480 corridor. Heavy retail and warehouse/light industrial presence on Route 303. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Portage County community on I-480 corridor. Heavy retail and warehouse/light industrial presence on Route 303. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Ravenna",
@@ -292,12 +320,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Ravenna is the Portage County seat with a commercial and light industrial base — strong target for June outreach.",
-    "hook": "Ravenna is on NOPEC — they're going to 9.999¢ next month. County seat, good commercial accounts along the main corridors.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Ravenna is the Portage County seat with a commercial and light industrial base \u2014 strong target for June outreach.",
+    "hook": "Ravenna is on NOPEC \u2014 they're going to 9.999\u00a2 next month. County seat, good commercial accounts along the main corridors.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Portage County seat. Mixed commercial and light industrial. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Portage County seat. Mixed commercial and light industrial. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Painesville",
@@ -312,12 +342,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Painesville is the Lake County seat with commercial and light industrial accounts on Route 20 corridor.",
-    "hook": "Painesville is on NOPEC — that rate goes up to nearly 10¢ in June. Lake County seat, Route 20 corridor commercial accounts are worth a call.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Painesville is the Lake County seat with commercial and light industrial accounts on Route 20 corridor.",
+    "hook": "Painesville is on NOPEC \u2014 that rate goes up to nearly 10\u00a2 in June. Lake County seat, Route 20 corridor commercial accounts are worth a call.",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Lake County seat. Commercial and light industrial accounts along Route 20. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Lake County seat. Commercial and light industrial accounts along Route 20. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Willoughby Hills",
@@ -332,12 +364,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Willoughby Hills commercial accounts along SOM Center Road are eligible.",
-    "hook": "Willoughby Hills is on NOPEC — the June rate increase applies. SOM Center Road commercial accounts are worth a call.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Willoughby Hills commercial accounts along SOM Center Road are eligible.",
+    "hook": "Willoughby Hills is on NOPEC \u2014 the June rate increase applies. SOM Center Road commercial accounts are worth a call.",
     "futureUse": "aggregation",
-    "notes": "The Illuminating Company territory in western portion, Ohio Edison in eastern. Verify utility by address. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "The Illuminating Company territory in western portion, Ohio Edison in eastern. Verify utility by address. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Mentor-on-the-Lake",
@@ -352,12 +386,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Small lakefront community adjacent to Mentor — commercial accounts eligible.",
-    "hook": "Mentor-on-the-Lake is on NOPEC — same June rate increase as the rest of the area.",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Small lakefront community adjacent to Mentor \u2014 commercial accounts eligible.",
+    "hook": "Mentor-on-the-Lake is on NOPEC \u2014 same June rate increase as the rest of the area.",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Small lakefront community within Mentor service area. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Madison Township",
@@ -372,12 +408,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Madison Township commercial accounts along Route 20 in Lake County are eligible.",
-    "hook": "Madison Township out in Lake County is on NOPEC — the rate goes to 9.999¢ in June. Any accounts out that way?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Madison Township commercial accounts along Route 20 in Lake County are eligible.",
+    "hook": "Madison Township out in Lake County is on NOPEC \u2014 the rate goes to 9.999\u00a2 in June. Any accounts out that way?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Rural/suburban Lake County township. Route 20 commercial corridor. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Rural/suburban Lake County township. Route 20 commercial corridor. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Bainbridge Township",
@@ -392,12 +430,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Bainbridge Township Geauga County commercial accounts are eligible.",
-    "hook": "Bainbridge Township is on NOPEC — rate increase applies in June. Any commercial accounts out in Geauga County?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Bainbridge Township Geauga County commercial accounts are eligible.",
+    "hook": "Bainbridge Township is on NOPEC \u2014 rate increase applies in June. Any commercial accounts out in Geauga County?",
     "futureUse": "aggregation",
-    "notes": "Ohio Edison territory. Geauga County township with some commercial activity. Verify NOPEC enrollment by address. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Ohio Edison territory. Geauga County township with some commercial activity. Verify NOPEC enrollment by address. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Newbury Township",
@@ -412,11 +452,13 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "NOPEC rate increases to 9.999¢ June 2026. Newbury Township has a mix of enrolled and non-enrolled rural addresses — verify NOPEC participation by account.",
-    "hook": "Newbury Township area is mostly NOPEC but some rural addresses may not be enrolled — do you know if your Geauga accounts are on the aggregation program?",
+    "takeaway": "NOPEC rate increases to 9.999\u00a2 June 2026. Newbury Township has a mix of enrolled and non-enrolled rural addresses \u2014 verify NOPEC participation by account.",
+    "hook": "Newbury Township area is mostly NOPEC but some rural addresses may not be enrolled \u2014 do you know if your Geauga accounts are on the aggregation program?",
     "futureUse": "address_check",
     "notes": "Ohio Edison territory. Rural Geauga County. Some addresses enrolled in NOPEC, some in rural co-op territory. Verify by address before assuming NOPEC eligibility.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

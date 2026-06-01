@@ -17,7 +17,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Trumbull County. Industrial heritage, commercial corridor along Youngstown-Warren Road. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Girard",
@@ -37,7 +39,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Trumbull County, adjacent to Warren. Light industrial and commercial. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Boardman Township",
@@ -57,7 +61,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Mahoning County unincorporated township. Primary commercial hub for Youngstown MSA. Dense restaurant, retail, and commercial accounts along Market Street. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Canfield",
@@ -77,7 +83,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Mahoning County seat. Commercial corridor along Route 224. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Salem",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Columbiana County. Industrial and commercial base along Route 62. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Alliance",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Stark County. Industrial and commercial base. US-30 / Route 62 corridor. Note: Alliance is in the Stark County split territory (AEP/OE). Verify utility by address.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Ashtabula",
@@ -137,7 +149,9 @@
     "futureUse": "address_check",
     "notes": "Ohio Edison territory. Ashtabula County seat. Port city with manufacturing/commercial presence. NOPEC territory but verify address-level enrollment. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Geneva",
@@ -157,7 +171,9 @@
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Ashtabula County. NOPEC member. Small commercial base along Route 20. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Conneaut",
@@ -177,7 +193,9 @@
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Ashtabula County port city. Industrial and commercial presence. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Mansfield",
@@ -197,7 +215,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Richland County seat. Industrial manufacturing base. Commercial corridor on Lexington Avenue and Route 30. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Wooster",
@@ -217,7 +237,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Wayne County seat. Commercial and light industrial accounts. Route 30 corridor. No confirmed aggregation. Note: Orrville in Wayne County is a municipal utility.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "New Philadelphia / Tuscarawas County",
@@ -237,7 +259,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Tuscarawas County seat. Commercial corridor along Route 250. Note: Dover (same county) is a municipal utility \u2014 do not assume both cities are Ohio Edison eligible.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Coshocton",
@@ -257,6 +281,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Coshocton County seat. Small commercial market. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   }
 ]

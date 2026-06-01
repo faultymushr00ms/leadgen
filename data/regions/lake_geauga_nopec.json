@@ -12,12 +12,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Mentor is one of Lake County's largest commercial centers. NOPEC rate goes to 9.999¢ in June 2026 — prime outreach window right now.",
-    "hook": "Mentor is on NOPEC — their rate is going up to nearly 10¢ in June. Have you done a rate comparison recently?",
+    "takeaway": "Mentor is one of Lake County's largest commercial centers. NOPEC rate goes to 9.999\u00a2 in June 2026 \u2014 prime outreach window right now.",
+    "hook": "Mentor is on NOPEC \u2014 their rate is going up to nearly 10\u00a2 in June. Have you done a rate comparison recently?",
     "futureUse": "aggregation",
-    "notes": "Large commercial/retail corridors along Route 20 and Mentor Avenue. Ohio Edison territory. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Large commercial/retail corridors along Route 20 and Mentor Avenue. Ohio Edison territory. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Willoughby",
@@ -32,12 +34,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increase to 9.999¢ hits June 2026. Willoughby's active commercial strip makes this a strong call target this week.",
-    "hook": "Willoughby is on NOPEC — they're going up another cent in June. Worth checking in before the rate change.",
+    "takeaway": "NOPEC rate increase to 9.999\u00a2 hits June 2026. Willoughby's active commercial strip makes this a strong call target this week.",
+    "hook": "Willoughby is on NOPEC \u2014 they're going up another cent in June. Worth checking in before the rate change.",
     "futureUse": "aggregation",
     "notes": "Eastern Lake County, served by The Illuminating Company in some areas. NOPEC territory. Confirm utility service address by account if needed.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Eastlake",
@@ -52,12 +56,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate jumps to 9.999¢ June 2026. Eastlake's industrial lakeshore corridor has accounts that should be reviewed before the increase.",
-    "hook": "Eastlake's on NOPEC — that rate is going to 9.999¢ next month. Any large accounts you want to review?",
+    "takeaway": "NOPEC rate jumps to 9.999\u00a2 June 2026. Eastlake's industrial lakeshore corridor has accounts that should be reviewed before the increase.",
+    "hook": "Eastlake's on NOPEC \u2014 that rate is going to 9.999\u00a2 next month. Any large accounts you want to review?",
     "futureUse": "aggregation",
     "notes": "Lakeshore industrial area, Ohio Edison territory. NOPEC standard rate rising June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Wickliffe",
@@ -72,12 +78,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate rises to 9.999¢ in June 2026. Wickliffe has manufacturing and light industrial accounts along Euclid Avenue.",
-    "hook": "Wickliffe is on NOPEC — the June rate hike is coming. Good window to get in front of accounts before it hits.",
+    "takeaway": "NOPEC rate rises to 9.999\u00a2 in June 2026. Wickliffe has manufacturing and light industrial accounts along Euclid Avenue.",
+    "hook": "Wickliffe is on NOPEC \u2014 the June rate hike is coming. Good window to get in front of accounts before it hits.",
     "futureUse": "aggregation",
     "notes": "Served by The Illuminating Company. NOPEC territory. Light industrial/manufacturing presence.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Lake County (NOPEC Group)",
@@ -92,12 +100,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC covers the majority of Lake County communities. June 2026 rate increase to 9.999¢ applies county-wide — blanket opportunity for any account still on the aggregation program.",
-    "hook": "Most Lake County businesses are on NOPEC — that rate goes to nearly 10¢ next month. Worth a quick check on where your accounts stand.",
+    "takeaway": "NOPEC covers the majority of Lake County communities. June 2026 rate increase to 9.999\u00a2 applies county-wide \u2014 blanket opportunity for any account still on the aggregation program.",
+    "hook": "Most Lake County businesses are on NOPEC \u2014 that rate goes to nearly 10\u00a2 next month. Worth a quick check on where your accounts stand.",
     "futureUse": "aggregation",
     "notes": "Umbrella zone covering Lake County NOPEC participants broadly. Includes communities like Mentor, Willoughby, Eastlake, Wickliffe, Willowick, Kirtland, and others. Verify individual community enrollment if needed.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Chardon / Geauga County",
@@ -113,10 +123,12 @@
     "status": "pain_coming",
     "confidence": "medium",
     "takeaway": "Geauga County is largely NOPEC but has some rural township and municipal edges. Verify address-level enrollment before assuming NOPEC coverage.",
-    "hook": "Chardon area is mostly NOPEC, but some Geauga County addresses fall outside the aggregation zone — do you know which program your locations are on?",
+    "hook": "Chardon area is mostly NOPEC, but some Geauga County addresses fall outside the aggregation zone \u2014 do you know which program your locations are on?",
     "futureUse": "address_check",
     "notes": "NOPEC coverage in Geauga County includes Chardon and many townships, but some rural corners and villages are not enrolled. Confirm address against NOPEC community list. June 2026 rate increase applies to enrolled addresses.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

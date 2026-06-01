@@ -17,7 +17,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio (Dayton Power & Light) territory. Greene County. Major retail (Fairfield Commons) and commercial/professional presence along I-675 and Route 35 corridors. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Huber Heights",
@@ -37,7 +39,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Montgomery County. Significant warehouse and distribution presence along I-70 and Wagner Ford Road. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Miamisburg",
@@ -57,7 +61,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Montgomery County. Commercial development at Austin Landing, light industrial corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Springboro",
@@ -77,7 +83,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Warren County. Growing commercial and residential corridor along Route 741. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Xenia",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Greene County seat. Light industrial and commercial. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Franklin",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Warren County. Industrial and commercial presence along Route 4. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Springfield",
@@ -137,7 +149,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Clark County seat. Industrial heritage. Active commercial and manufacturing base. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Urbana",
@@ -157,7 +171,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Champaign County seat. Small commercial base. No confirmed aggregation. Low priority relative to larger Dayton suburbs.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Centerville",
@@ -177,7 +193,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Montgomery County. Affluent Dayton suburb. Commercial concentration on Far Hills Avenue. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   },
   {
     "name": "Vandalia",
@@ -197,6 +215,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AES Ohio territory. Montgomery County. Airport-adjacent industrial and warehouse cluster. High-usage account potential. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AES",
+    "utilityConfidence": "high"
   }
 ]

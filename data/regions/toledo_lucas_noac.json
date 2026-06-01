@@ -12,12 +12,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Toledo is on NOAC at 9.75¢ — repriced from a lower baseline. City is the anchor of a 13-community coalition with a captive rate. Competitive supply can improve on this.",
-    "hook": "Toledo is locked into the NOAC program at 9.75¢ — have you compared that against what's available in the open market right now?",
+    "takeaway": "Toledo is on NOAC at 9.75\u00a2 \u2014 repriced from a lower baseline. City is the anchor of a 13-community coalition with a captive rate. Competitive supply can improve on this.",
+    "hook": "Toledo is locked into the NOAC program at 9.75\u00a2 \u2014 have you compared that against what's available in the open market right now?",
     "futureUse": "aggregation",
-    "notes": "NOAC (Northwest Ohio Aggregation Coalition) serves 13 communities via Toledo Edison/FirstEnergy. Current supplier: Dynegy at 9.75¢/kWh. Gas: variable NYMEX+$0.2092/Ccf through Apr 2028.",
+    "notes": "NOAC (Northwest Ohio Aggregation Coalition) serves 13 communities via Toledo Edison/FirstEnergy. Current supplier: Dynegy at 9.75\u00a2/kWh. Gas: variable NYMEX+$0.2092/Ccf through Apr 2028.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Perrysburg",
@@ -32,12 +34,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Perrysburg is a fast-growing Wood County suburb on NOAC at 9.75¢. Commercial activity along I-75 corridor makes this high-value prospecting territory.",
-    "hook": "Perrysburg is part of the NOAC coalition — 9.75¢ right now. Worth seeing if we can do better for your commercial accounts.",
+    "takeaway": "Perrysburg is a fast-growing Wood County suburb on NOAC at 9.75\u00a2. Commercial activity along I-75 corridor makes this high-value prospecting territory.",
+    "hook": "Perrysburg is part of the NOAC coalition \u2014 9.75\u00a2 right now. Worth seeing if we can do better for your commercial accounts.",
     "futureUse": "aggregation",
     "notes": "NOAC member community. Strong commercial growth along US-20 and I-75. Toledo Edison service area.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Maumee",
@@ -52,12 +56,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Maumee is a dense commercial NOAC market at 9.75¢. Arrowhead Road and nearby retail/industrial accounts are active targets.",
-    "hook": "Maumee is on the NOAC program — 9.75¢. Some of those accounts along Arrowhead haven't looked at alternatives in a while.",
+    "takeaway": "Maumee is a dense commercial NOAC market at 9.75\u00a2. Arrowhead Road and nearby retail/industrial accounts are active targets.",
+    "hook": "Maumee is on the NOAC program \u2014 9.75\u00a2. Some of those accounts along Arrowhead haven't looked at alternatives in a while.",
     "futureUse": "aggregation",
     "notes": "NOAC member, Toledo Edison. Strong commercial/industrial base near Arrowhead Road corridor.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Sylvania",
@@ -72,12 +78,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Sylvania is an affluent northwest Toledo suburb in the NOAC program at 9.75¢. Good mix of medical, professional, and retail accounts.",
-    "hook": "Sylvania is on NOAC — 9.75¢. Are your clients there still on the aggregation program or have they opted out?",
+    "takeaway": "Sylvania is an affluent northwest Toledo suburb in the NOAC program at 9.75\u00a2. Good mix of medical, professional, and retail accounts.",
+    "hook": "Sylvania is on NOAC \u2014 9.75\u00a2. Are your clients there still on the aggregation program or have they opted out?",
     "futureUse": "aggregation",
     "notes": "NOAC member community, Toledo Edison. Affluent suburb with medical and professional office presence.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Oregon",
@@ -92,12 +100,14 @@
     "termEnd": null,
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Oregon (Lucas County) is a NOAC member at 9.75¢ with significant industrial and refinery-adjacent commercial presence near the Maumee River.",
-    "hook": "Oregon is on the NOAC coalition at 9.75¢ — do any of your industrial accounts in that area have supply expiring?",
+    "takeaway": "Oregon (Lucas County) is a NOAC member at 9.75\u00a2 with significant industrial and refinery-adjacent commercial presence near the Maumee River.",
+    "hook": "Oregon is on the NOAC coalition at 9.75\u00a2 \u2014 do any of your industrial accounts in that area have supply expiring?",
     "futureUse": "aggregation",
-    "notes": "NOAC member, Toledo Edison/FirstEnergy. Industrial character — refinery, port, and manufacturing facilities. Good C&I prospecting area.",
+    "notes": "NOAC member, Toledo Edison/FirstEnergy. Industrial character \u2014 refinery, port, and manufacturing facilities. Good C&I prospecting area.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Lucas County Unincorporated",
@@ -113,10 +123,12 @@
     "status": "verify",
     "confidence": "medium",
     "takeaway": "Lucas County unincorporated areas are nominally in the NOAC coalition but rural corners may not be enrolled. Verify address before assuming NOAC coverage applies.",
-    "hook": "If your accounts are in unincorporated Lucas County, NOAC might apply — but let's verify the service address first to be sure.",
+    "hook": "If your accounts are in unincorporated Lucas County, NOAC might apply \u2014 but let's verify the service address first to be sure.",
     "futureUse": "address_check",
-    "notes": "NOAC includes Lucas County unincorporated as a member, but some rural and fringe addresses outside township enrollment may fall outside aggregation. Toledo Edison serves the area. Note: Bowling Green (Wood County) is a municipal utility — not part of NOAC and not eligible for competitive electric supply.",
+    "notes": "NOAC includes Lucas County unincorporated as a member, but some rural and fringe addresses outside township enrollment may fall outside aggregation. Toledo Edison serves the area. Note: Bowling Green (Wood County) is a municipal utility \u2014 not part of NOAC and not eligible for competitive electric supply.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   }
 ]

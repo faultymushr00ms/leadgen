@@ -12,12 +12,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate jumps to 11.162¢ in June 2026 — Dublin's tech corridor and office parks along Sawmill Road are heavily exposed.",
-    "hook": "Dublin is on SOPEC — that green rate is going over 11¢ in June. A lot of the tech companies and office parks haven't locked in alternatives.",
+    "takeaway": "SOPEC green rate jumps to 11.162\u00a2 in June 2026 \u2014 Dublin's tech corridor and office parks along Sawmill Road are heavily exposed.",
+    "hook": "Dublin is on SOPEC \u2014 that green rate is going over 11\u00a2 in June. A lot of the tech companies and office parks haven't locked in alternatives.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Dense commercial and tech office presence along Sawmill, Brand, and Perimeter corridors. High RCE potential.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Dense commercial and tech office presence along Sawmill, Brand, and Perimeter corridors. High RCE potential.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Hilliard",
@@ -32,12 +34,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Hilliard commercial accounts along Hilliard-Rome Road are exposed to the June hike.",
-    "hook": "Hilliard is on SOPEC — that green rate is going over 11¢ in June. Hilliard-Rome Road commercial strip is worth a call before it hits.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Hilliard commercial accounts along Hilliard-Rome Road are exposed to the June hike.",
+    "hook": "Hilliard is on SOPEC \u2014 that green rate is going over 11\u00a2 in June. Hilliard-Rome Road commercial strip is worth a call before it hits.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Growing Columbus suburb with strong commercial activity.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Growing Columbus suburb with strong commercial activity.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Worthington",
@@ -52,12 +56,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Worthington professional services and commercial accounts along Worthington-Galena Road are strong targets.",
-    "hook": "Worthington is on SOPEC — that green rate is going over 11¢ next month. Professional accounts on High Street and Worthington-Galena deserve a conversation.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Worthington professional services and commercial accounts along Worthington-Galena Road are strong targets.",
+    "hook": "Worthington is on SOPEC \u2014 that green rate is going over 11\u00a2 next month. Professional accounts on High Street and Worthington-Galena deserve a conversation.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Upscale Columbus suburb, strong commercial/professional corridor.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Upscale Columbus suburb, strong commercial/professional corridor.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Reynoldsburg",
@@ -72,12 +78,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Reynoldsburg commercial strip along East Main Street and I-70 is exposed.",
-    "hook": "Reynoldsburg is on SOPEC — that rate goes over 11¢ in June. East Main Street commercial accounts are worth reviewing.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Reynoldsburg commercial strip along East Main Street and I-70 is exposed.",
+    "hook": "Reynoldsburg is on SOPEC \u2014 that rate goes over 11\u00a2 in June. East Main Street commercial accounts are worth reviewing.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Commercial corridor along East Main / Route 40 and I-70 interchange.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Commercial corridor along East Main / Route 40 and I-70 interchange.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "New Albany",
@@ -92,12 +100,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. New Albany's major corporate campus and business park cluster (Intel, Amazon data centers, corporate HQs) represents enormous RCE exposure.",
-    "hook": "New Albany is on SOPEC — that green rate is going over 11¢ in June. The business park out there has some of the largest commercial accounts in central Ohio.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. New Albany's major corporate campus and business park cluster (Intel, Amazon data centers, corporate HQs) represents enormous RCE exposure.",
+    "hook": "New Albany is on SOPEC \u2014 that green rate is going over 11\u00a2 in June. The business park out there has some of the largest commercial accounts in central Ohio.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. High-value corporate campus and data center presence. Intel, Amazon Web Services, and major corporate HQ accounts. Very high RCE potential per account.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. High-value corporate campus and data center presence. Intel, Amazon Web Services, and major corporate HQ accounts. Very high RCE potential per account.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Bexley",
@@ -112,12 +122,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Bexley commercial accounts along Main Street are eligible.",
-    "hook": "Bexley is on SOPEC — the rate goes over 11¢ in June. Any commercial accounts on Main Street worth a look?",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Bexley commercial accounts along Main Street are eligible.",
+    "hook": "Bexley is on SOPEC \u2014 the rate goes over 11\u00a2 in June. Any commercial accounts on Main Street worth a look?",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Inner-ring Columbus suburb, commercial presence along Main Street.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Inner-ring Columbus suburb, commercial presence along Main Street.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Grandview Heights",
@@ -132,12 +144,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Grandview Heights commercial strip along Fifth Avenue and Grandview Ave is active.",
-    "hook": "Grandview is on SOPEC — that rate jumps over 11¢ in June. Fifth Avenue corridor commercial accounts should hear from us.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Grandview Heights commercial strip along Fifth Avenue and Grandview Ave is active.",
+    "hook": "Grandview is on SOPEC \u2014 that rate jumps over 11\u00a2 in June. Fifth Avenue corridor commercial accounts should hear from us.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Urban commercial village, dense commercial corridor along Fifth Avenue.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Urban commercial village, dense commercial corridor along Fifth Avenue.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Powell",
@@ -152,12 +166,14 @@
     "termEnd": "2027-05-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "SOPEC green rate moves to 11.162¢ June 2026. Powell's growing commercial base along Olentangy Road and Liberty Road is exposed.",
-    "hook": "Powell is on SOPEC — the rate goes over 11¢ in June. A lot of the newer commercial development out there is still on the program.",
+    "takeaway": "SOPEC green rate moves to 11.162\u00a2 June 2026. Powell's growing commercial base along Olentangy Road and Liberty Road is exposed.",
+    "hook": "Powell is on SOPEC \u2014 the rate goes over 11\u00a2 in June. A lot of the newer commercial development out there is still on the program.",
     "futureUse": "aggregation",
-    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Growing Columbus exurb in Delaware County with expanding retail and commercial presence.",
+    "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Growing Columbus exurb in Delaware County with expanding retail and commercial presence.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Westerville",
@@ -175,7 +191,9 @@
     "takeaway": "Municipal electric; do not treat as AEP aggregation unless address is outside municipal service.",
     "hook": "Verify whether the address is actually on Westerville municipal electric.",
     "futureUse": "municipal_blacklist",
-    "notes": "Municipal utility environment. Westerville Electric Division serves the city. Addresses outside city limits may be AEP Ohio and eligible for SOPEC/competitive supply."
+    "notes": "Municipal utility environment. Westerville Electric Division serves the city. Addresses outside city limits may be AEP Ohio and eligible for SOPEC/competitive supply.",
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Lancaster",
@@ -190,12 +208,14 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Lancaster is an AEP Ohio market with SOPEC participation. Rate moves from 9.08¢ to 10.01¢ in June 2026 — Fairfield County seat with commercial and light industrial accounts.",
-    "hook": "Lancaster is on AEP — that rate is going up into the 10¢ range in June. Fairfield County seat has some solid commercial accounts.",
+    "takeaway": "Lancaster is an AEP Ohio market with SOPEC participation. Rate moves from 9.08\u00a2 to 10.01\u00a2 in June 2026 \u2014 Fairfield County seat with commercial and light industrial accounts.",
+    "hook": "Lancaster is on AEP \u2014 that rate is going up into the 10\u00a2 range in June. Fairfield County seat has some solid commercial accounts.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Fairfield County seat. SOPEC-adjacent market. Rate increase exposure June 2026. Verify specific SOPEC community enrollment by municipality.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Delaware (City)",
@@ -210,12 +230,14 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Delaware City is an AEP Ohio market with aggregation. Rate moving from 9.08¢ to 10.01¢ — Delaware County seat with growing Columbus exurb commercial base.",
-    "hook": "Delaware City is on AEP aggregation — that rate goes up into the 10¢ range in June. County seat with some solid commercial accounts on Sandusky Street.",
+    "takeaway": "Delaware City is an AEP Ohio market with aggregation. Rate moving from 9.08\u00a2 to 10.01\u00a2 \u2014 Delaware County seat with growing Columbus exurb commercial base.",
+    "hook": "Delaware City is on AEP aggregation \u2014 that rate goes up into the 10\u00a2 range in June. County seat with some solid commercial accounts on Sandusky Street.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Delaware County seat, growing Columbus exurb. Aggregation rate exposure June 2026. Verify specific program enrollment.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Pickerington",
@@ -230,12 +252,14 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Pickerington AEP aggregation rate moves from 9.08¢ to 10.01¢ in June 2026. Fast-growing Columbus suburb with strong commercial corridor.",
-    "hook": "Pickerington is on AEP aggregation — that rate is going up into the 10¢ range in June. Lot of growth out there that hasn't been reviewed.",
+    "takeaway": "Pickerington AEP aggregation rate moves from 9.08\u00a2 to 10.01\u00a2 in June 2026. Fast-growing Columbus suburb with strong commercial corridor.",
+    "hook": "Pickerington is on AEP aggregation \u2014 that rate is going up into the 10\u00a2 range in June. Lot of growth out there that hasn't been reviewed.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Fast-growing Fairfield/Licking County border community. Commercial corridor expansion along Hill Road. Aggregation rate exposure June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Heath / Newark",
@@ -250,12 +274,14 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Heath and Newark (Licking County) are AEP Ohio markets. Rate moves from 9.08¢ to 10.01¢ in June 2026. Licking County seat with light industrial base.",
-    "hook": "Newark and Heath are on AEP aggregation — that rate's going up into the 10¢ range in June. Licking County has some solid industrial accounts.",
+    "takeaway": "Heath and Newark (Licking County) are AEP Ohio markets. Rate moves from 9.08\u00a2 to 10.01\u00a2 in June 2026. Licking County seat with light industrial base.",
+    "hook": "Newark and Heath are on AEP aggregation \u2014 that rate's going up into the 10\u00a2 range in June. Licking County has some solid industrial accounts.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Licking County. Newark is the county seat. Heath has a commercial/light industrial strip along Route 40. Aggregation rate exposure June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Marysville",
@@ -270,11 +296,13 @@
     "termEnd": "2027-06-01",
     "status": "pain_coming",
     "confidence": "medium",
-    "takeaway": "Marysville AEP aggregation rate moves from 9.08¢ to 10.01¢ in June 2026. Union County seat with Honda manufacturing cluster nearby — industrial accounts worth reviewing.",
-    "hook": "Marysville is on AEP aggregation — that rate is going up in June. Union County seat, Honda supplier cluster out there has accounts that should be reviewed.",
+    "takeaway": "Marysville AEP aggregation rate moves from 9.08\u00a2 to 10.01\u00a2 in June 2026. Union County seat with Honda manufacturing cluster nearby \u2014 industrial accounts worth reviewing.",
+    "hook": "Marysville is on AEP aggregation \u2014 that rate is going up in June. Union County seat, Honda supplier cluster out there has accounts that should be reviewed.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Union County seat. Honda manufacturing nearby drives supplier/industrial cluster. Aggregation rate exposure June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   }
 ]

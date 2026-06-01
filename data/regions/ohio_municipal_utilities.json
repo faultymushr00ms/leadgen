@@ -15,9 +15,11 @@
     "takeaway": "City of Cleveland operates Cleveland Public Power alongside FirstEnergy (Illuminating Co). Address determines which utility serves the account. CPP addresses are exempt; FirstEnergy/Illuminating Co addresses ARE eligible for competitive supply and NOPEC aggregation.",
     "hook": "Do you know if your electric comes through Cleveland Public Power or through FirstEnergy? Sometimes we see both on the same street.",
     "futureUse": "address_check",
-    "notes": "Major gotcha for Cuyahoga County calls. Cleveland city limits contain both CPP and Illuminating Company service territories. CPP is a city-owned municipal utility — completely exempt from retail choice. Illuminating Company accounts within Cleveland are eligible for competitive supply. Always verify by address. Do not assume every Cleveland address is CPP.",
+    "notes": "Major gotcha for Cuyahoga County calls. Cleveland city limits contain both CPP and Illuminating Company service territories. CPP is a city-owned municipal utility \u2014 completely exempt from retail choice. Illuminating Company accounts within Cleveland are eligible for competitive supply. Always verify by address. Do not assume every Cleveland address is CPP.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Columbus Division of Power",
@@ -35,9 +37,11 @@
     "takeaway": "City of Columbus operates its own Division of Power in certain neighborhoods alongside AEP Ohio. Address determines which utility serves the account. CDP addresses are exempt; AEP addresses ARE eligible and may qualify for Clean Energy Columbus aggregation.",
     "hook": "Do you know if your electric is through AEP or through Columbus Division of Power? It varies by neighborhood.",
     "futureUse": "address_check",
-    "notes": "Columbus Division of Power (CDP) serves portions of Columbus in competition with AEP Ohio. CDP accounts are municipal and exempt from retail electric choice. AEP Ohio accounts in Columbus ARE eligible and participate in the Clean Energy Columbus aggregation (10.01¢ → moving terms). Always verify service address before assuming aggregation eligibility.",
+    "notes": "Columbus Division of Power (CDP) serves portions of Columbus in competition with AEP Ohio. CDP accounts are municipal and exempt from retail electric choice. AEP Ohio accounts in Columbus ARE eligible and participate in the Clean Energy Columbus aggregation (10.01\u00a2 \u2192 moving terms). Always verify service address before assuming aggregation eligibility.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Cuyahoga Falls",
@@ -57,7 +61,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Summit County. Located in Akron metro area. Exempt from Ohio retail electric choice. Competitive electric supply cannot be sold here.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Wadsworth",
@@ -77,7 +83,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Medina County. Located within NOPEC geographic footprint but exempt from aggregation. Competitive electric supply cannot be sold here.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Newton Falls",
@@ -97,7 +105,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Trumbull County. Located in the Youngstown/Warren area. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Wellsville",
@@ -117,7 +127,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Columbiana County. On the Youngstown/eastern Ohio border. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Cortland",
@@ -137,7 +149,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Trumbull County. Exempt from Ohio retail electric choice. Confirm service area on address lookup before calling.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Oberlin",
@@ -157,7 +171,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Lorain County. Located within NOPEC geographic area but exempt. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Lodi",
@@ -177,7 +193,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Medina County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Clyde",
@@ -197,7 +215,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Sandusky County, NW Ohio. Located in Firelands Electric co-op border area. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Woodville",
@@ -217,7 +237,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Sandusky County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Elmore",
@@ -237,7 +259,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Ottawa County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Oak Harbor",
@@ -257,7 +281,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Ottawa County. Located near Lake Erie shoreline. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Pemberton",
@@ -277,7 +303,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Small village-owned utility. Verify current operational status before calling. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Liberty Center",
@@ -297,7 +325,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Henry County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Hamler",
@@ -317,7 +347,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Small village-owned electric utility in Henry County. Confirm active status before calling. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Bryan",
@@ -337,7 +369,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Williams County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Montpelier",
@@ -357,7 +391,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Williams County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "West Unity",
@@ -377,7 +413,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Williams County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Stryker",
@@ -397,7 +435,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Small village-owned electric utility in Williams County. Verify active status before calling. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Wauseon",
@@ -417,7 +457,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Fulton County, NW Ohio. County seat of Fulton County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Archbold",
@@ -435,9 +477,11 @@
     "takeaway": "Archbold operates a municipal electric system in Fulton County. Cannot sell competitive electric supply.",
     "hook": "Do you handle your own electric or is it through the city system?",
     "futureUse": "municipal_blacklist",
-    "notes": "Village-owned electric utility in Fulton County. Industrial cluster in Archbold (Sauder Woodworking area) — all accounts are municipal. Exempt from Ohio retail electric choice.",
+    "notes": "Village-owned electric utility in Fulton County. Industrial cluster in Archbold (Sauder Woodworking area) \u2014 all accounts are municipal. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Swanton",
@@ -457,7 +501,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Fulton County, near Toledo metro. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Napoleon",
@@ -477,7 +523,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Henry County, NW Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Bowling Green",
@@ -497,7 +545,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Wood County. Located within NOAC geographic territory but exempt from aggregation. Do not assume NOAC rates apply to Bowling Green addresses.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Paulding",
@@ -517,7 +567,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Paulding County, NW Ohio. County seat. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Piqua",
@@ -537,7 +589,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Miami County. Near Dayton metro. Exempt from Ohio retail electric choice. Do not confuse with AES Ohio (DPL) accounts in the area.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Tipp City",
@@ -557,7 +611,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Miami County, near Dayton. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Versailles",
@@ -577,7 +633,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Darke County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "New Bremen",
@@ -597,7 +655,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Auglaize County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Minster",
@@ -617,7 +677,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Auglaize County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "St. Marys",
@@ -637,7 +699,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Auglaize County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Wapakoneta",
@@ -657,7 +721,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Auglaize County. County seat. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Coldwater",
@@ -677,7 +743,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Mercer County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Celina",
@@ -697,7 +765,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Mercer County. County seat on Grand Lake St. Marys. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Delphos",
@@ -717,7 +787,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility on the Allen/Van Wert County border. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Ripley",
@@ -737,7 +809,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Brown County, SW Ohio. Near the Ohio River. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Bethel",
@@ -757,7 +831,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Clermont County. Confirm active municipal status before calling. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Hamilton",
@@ -772,12 +848,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "Hamilton is a large municipal electric utility — cannot sell competitive electric within city limits. However, industrial addresses just outside Hamilton city limits may be in Duke Energy territory and eligible for aggregation. Verify service address carefully.",
+    "takeaway": "Hamilton is a large municipal electric utility \u2014 cannot sell competitive electric within city limits. However, industrial addresses just outside Hamilton city limits may be in Duke Energy territory and eligible for aggregation. Verify service address carefully.",
     "hook": "Do you handle your own electric or is it through the city system?",
     "futureUse": "address_check",
     "notes": "City of Hamilton (Butler County) operates its own large municipal electric system. Exempt from Ohio retail electric choice within city limits. Adjacent and border addresses may be served by Duke Energy Ohio and ARE eligible for competitive supply. Large industrial accounts on the city fringe are worth investigating by address. Do not call city-addressed accounts for electric supply.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Galion",
@@ -797,7 +875,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Crawford County, central Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Ada",
@@ -817,7 +897,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Hardin County, central Ohio. Home of Ohio Northern University. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Jackson Center",
@@ -837,7 +919,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Small village-owned electric utility in Shelby County. Verify active municipal status before calling. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Orrville",
@@ -857,7 +941,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Wayne County. Near Akron/Summit County metro area. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Dover",
@@ -877,7 +963,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "City-owned electric utility in Tuscarawas County. Near the Akron/Canton corridor. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Beach City",
@@ -897,7 +985,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Stark County. Located in the Akron/Canton metro area. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Barnesville",
@@ -917,7 +1007,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Belmont County, SE Ohio. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
     "name": "Woodsfield",
@@ -937,6 +1029,8 @@
     "futureUse": "municipal_blacklist",
     "notes": "Village-owned electric utility in Monroe County, SE Ohio. County seat of Monroe County. Exempt from Ohio retail electric choice.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": null,
+    "utilityConfidence": "high"
   }
 ]

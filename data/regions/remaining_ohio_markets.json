@@ -17,7 +17,9 @@
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Medina County. Part of the Medina County aggregation program at 9.50\u00a2/kWh through June 2028. Accounts that opted out are on the higher standard offer rate.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Medina City",
@@ -37,7 +39,9 @@
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Medina County seat. Medina County aggregation program 9.50\u00a2/kWh through June 2028. Opt-out accounts are on a higher standard offer.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Elyria",
@@ -57,7 +61,9 @@
     "futureUse": "address_check",
     "notes": "Ohio Edison territory. Lorain County seat. NOPEC territory \u2014 verify address-level enrollment. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Lorain (City)",
@@ -77,7 +83,9 @@
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Lorain County. Industrial lakefront city. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026. Steel and manufacturing heritage \u2014 some high-usage accounts.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Struthers",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Mahoning County. Industrial legacy community adjacent to Youngstown. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Poland Township",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Mahoning County. Suburban commercial and professional accounts along US-224. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Hubbard",
@@ -137,7 +149,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Trumbull County. Light industrial and commercial. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Waterville",
@@ -157,7 +171,9 @@
     "futureUse": "aggregation",
     "notes": "Toledo Edison territory. Lucas County border community. NOAC member. 9.75\u00a2/kWh through approximately June 2027.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Whitehouse",
@@ -177,7 +193,9 @@
     "futureUse": "aggregation",
     "notes": "Toledo Edison territory. Lucas County border / Henry County. NOAC member. 9.75\u00a2/kWh through approximately June 2027.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Rossford",
@@ -197,7 +215,9 @@
     "futureUse": "aggregation",
     "notes": "Toledo Edison territory. Wood County. Industrial community on the Toledo south border. NOAC member. 9.75\u00a2/kWh.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Northwood",
@@ -217,7 +237,9 @@
     "futureUse": "aggregation",
     "notes": "Toledo Edison territory. Wood County. Industrial corridor community adjacent to Toledo. NOAC member. 9.75\u00a2/kWh.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Holland",
@@ -237,7 +259,9 @@
     "futureUse": "aggregation",
     "notes": "Toledo Edison territory. Lucas County. Suburban commercial community northwest of Toledo. NOAC member. 9.75\u00a2/kWh.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Licking County / Pataskala",
@@ -257,7 +281,9 @@
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. Licking County. Fast-growing Columbus exurb east of Columbus. Commercial development along Route 40 and I-70. Aggregation rate exposure June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Grove City Area / Southwest Franklin County",
@@ -277,7 +303,9 @@
     "futureUse": "address_check",
     "notes": "AEP Ohio territory. Southwest Franklin County unincorporated areas. Verify specific aggregation enrollment by address \u2014 adjacent townships to Grove City may have different programs. Grove City itself is at 10.97\u00a2 Dynegy through July 2028.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Athens County (Rural AEP)",
@@ -297,7 +325,9 @@
     "futureUse": "address_check",
     "notes": "Rural Athens County is shared between AEP Ohio and electric cooperatives (South Central Power Co., Buckeye Rural Electric). AEP Ohio addresses are eligible for competitive supply; co-op addresses are exempt. Verify by service address.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Guernsey / Noble / Morgan Counties",
@@ -317,7 +347,9 @@
     "futureUse": "address_check",
     "notes": "AEP Ohio and Guernsey-Muskingum Electric Cooperative shared territory. AEP accounts eligible for competitive supply; GMEC co-op accounts exempt. Verify utility on bill before calling.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Medina County (Rural Unincorporated)",
@@ -337,7 +369,9 @@
     "futureUse": "address_check",
     "notes": "Ohio Edison township addresses in Medina County are covered by the county aggregation at 9.50\u00a2. However, LMRE (Lorain-Medina Rural Electric) co-op serves portions of rural Medina County and is exempt from retail choice. Critical: NOPEC does NOT cover LMRE customers. Verify utility on bill.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Lakeview / Indian Lake Area",
@@ -357,7 +391,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Logan County. Resort/recreational community along Indian Lake. Seasonal commercial accounts (restaurants, marinas, hospitality). No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Steubenville",
@@ -377,7 +413,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Jefferson County seat on the Ohio River. Industrial heritage. Light commercial base. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Marietta",
@@ -397,7 +435,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Washington County seat on the Ohio River. Commercial and light industrial accounts. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "McConnelsville / Morgan County",
@@ -417,6 +457,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Morgan County seat. Small rural market. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   }
 ]

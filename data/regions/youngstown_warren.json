@@ -5,17 +5,19 @@
     "utility": "Ohio Edison / FirstEnergy",
     "aggregationStatus": "address_dependent",
     "currentRate": 10.14,
-    "previousRate": 7.90,
+    "previousRate": 7.9,
     "rateChange": 28.4,
     "supplier": "Dynegy Energy Services",
     "termStart": "2026-06-01",
     "termEnd": "2027-12-01",
     "status": "pain_hit",
     "confidence": "high",
-    "takeaway": "County program moved from 7.90¢ to 10.14¢; historical 4.53¢ context makes the pain sharper.",
-    "hook": "Did you see where the county program landed? It moved into the 10¢ range.",
+    "takeaway": "County program moved from 7.90\u00a2 to 10.14\u00a2; historical 4.53\u00a2 context makes the pain sharper.",
+    "hook": "Did you see where the county program landed? It moved into the 10\u00a2 range.",
     "futureUse": "address_check",
-    "notes": "County program excludes cities/villages plus Brookfield and Liberty townships."
+    "notes": "County program excludes cities/villages plus Brookfield and Liberty townships.",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Mahoning County",
@@ -23,17 +25,19 @@
     "utility": "Ohio Edison / FirstEnergy",
     "aggregationStatus": "address_dependent",
     "currentRate": 10.59,
-    "previousRate": 7.90,
+    "previousRate": 7.9,
     "rateChange": 34.1,
     "supplier": "Dynegy Energy Services",
     "termStart": "2026-06-01",
     "termEnd": "2027-12-01",
     "status": "pain_hit",
     "confidence": "medium",
-    "takeaway": "County aggregation is now above Trumbull at 10.59¢; strong double-digit pain story.",
+    "takeaway": "County aggregation is now above Trumbull at 10.59\u00a2; strong double-digit pain story.",
     "hook": "Mahoning County landed over ten and a half cents.",
     "futureUse": "address_check",
-    "notes": "County-level program does not mean every address in Mahoning County is eligible."
+    "notes": "County-level program does not mean every address in Mahoning County is eligible.",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Warren City",
@@ -51,7 +55,9 @@
     "takeaway": "City of Warren has no clean aggregation anchor; use supplier/utility discovery.",
     "hook": "Are you guys on a supplier right now or just riding utility?",
     "futureUse": "price_to_compare_analysis",
-    "notes": "Surrounding Trumbull townships may have county aggregation."
+    "notes": "Surrounding Trumbull townships may have county aggregation.",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Sebring",
@@ -69,6 +75,8 @@
     "takeaway": "Municipal electric village, but outer commercial addresses may be Ohio Edison.",
     "hook": "Verify from bill before treating it as municipal or Ohio Edison.",
     "futureUse": "address_check",
-    "notes": "1005 Lake Park Blvd likely leans Ohio Edison but must be verified."
+    "notes": "1005 Lake Park Blvd likely leans Ohio Edison but must be verified.",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   }
 ]

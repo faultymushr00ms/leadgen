@@ -283,9 +283,21 @@
               <div class="stat-label mb-1">Region</div>
               <input name="region" type="text" class="dark-input" placeholder="e.g. Cincinnati / Duke Energy">
             </div>
-            <div style="grid-column:1/-1;">
+            <div>
               <div class="stat-label mb-1">Utility</div>
               <input name="utility" type="text" class="dark-input" placeholder="e.g. Duke Energy Ohio">
+            </div>
+            <div>
+              <div class="stat-label mb-1">Utility Parent</div>
+              <input name="utilityParent" type="text" class="dark-input" placeholder="e.g. FirstEnergy">
+            </div>
+            <div style="grid-column:1/-1;">
+              <div class="stat-label mb-1">Utility Confidence</div>
+              <select name="utilityConfidence" class="dark-input">
+                <option value="high">High — confirmed from PUCO or unambiguous</option>
+                <option value="medium">Medium — geographic assignment, not PUCO-verified</option>
+                <option value="low">Low — flagged as likely wrong, needs address check</option>
+              </select>
             </div>
             <div style="grid-column:1/-1;">
               <div class="stat-label mb-1">Aggregation Status</div>
@@ -529,7 +541,7 @@ function renderTable() {
         class="${selectedZone && selectedZone.name === z.name ? 'active' : ''}">
       <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
-      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.utility)}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.utility)}${z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}</td>
       <td>${aggBadge(z.aggregationStatus, true)}</td>
       <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${fmtRate(z.currentRate)}</td>
       <td style="text-align:right; color:var(--forge-muted);">${fmtRate(z.previousRate)}</td>
@@ -589,7 +601,15 @@ function selectZone(name) {
   }
 
   // Term / supplier
+  const utilConf = selectedZone.utilityConfidence || 'medium';
+  const utilConfIcon = utilConf === 'low'
+    ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.7rem;" title="Utility assignment unverified — check PUCO map"></i>'
+    : utilConf === 'medium' ? ' <i class="bi bi-question-circle" style="color:var(--forge-muted); font-size:0.65rem;" title="Utility assigned by geography, not PUCO-verified"></i>' : '';
   document.getElementById('bc-term-kv').innerHTML = `
+    <div class="bc-kv-item">
+      <div class="kv-label">Utility</div>
+      <div class="kv-val">${esc(selectedZone.utility || '—')}${utilConfIcon}${selectedZone.utilityParent ? `<span style="color:var(--forge-muted); font-size:0.7rem; margin-left:4px;">(${esc(selectedZone.utilityParent)})</span>` : ''}</div>
+    </div>
     <div class="bc-kv-item">
       <div class="kv-label">Supplier</div>
       <div class="kv-val">${esc(selectedZone.supplier || '—')}</div>
@@ -694,7 +714,7 @@ function startEditMode() {
 function startNewZone() {
   isNewZone = true;
   populateEditForm({
-    name:'', region:'', utility:'', aggregationStatus:'no_aggregation_verified',
+    name:'', region:'', utility:'', utilityParent:null, utilityConfidence:'medium', aggregationStatus:'no_aggregation_verified',
     currentRate:null, previousRate:null, rateChange:null, supplier:null,
     termStart:null, termEnd:null, status:'verify', confidence:'medium',
     takeaway:'', hook:'', futureUse:'price_to_compare_analysis', notes:'',
@@ -711,7 +731,9 @@ function populateEditForm(z) {
   const f = document.getElementById('bc-edit-form');
   f.querySelector('[name=name]').value         = z.name || '';
   f.querySelector('[name=region]').value       = z.region || '';
-  f.querySelector('[name=utility]').value      = z.utility || '';
+  f.querySelector('[name=utility]').value           = z.utility || '';
+  f.querySelector('[name=utilityParent]').value     = z.utilityParent || '';
+  f.querySelector('[name=utilityConfidence]').value = z.utilityConfidence || 'medium';
   f.querySelector('[name=aggregationStatus]').value = z.aggregationStatus || 'no_aggregation_verified';
   f.querySelector('[name=currentRate]').value  = z.currentRate ?? '';
   f.querySelector('[name=previousRate]').value = z.previousRate ?? '';
@@ -750,6 +772,8 @@ function saveZone() {
     name:              f.querySelector('[name=name]').value.trim(),
     region:            f.querySelector('[name=region]').value.trim(),
     utility:           f.querySelector('[name=utility]').value.trim(),
+    utilityParent:     f.querySelector('[name=utilityParent]').value.trim() || null,
+    utilityConfidence: f.querySelector('[name=utilityConfidence]').value,
     aggregationStatus: f.querySelector('[name=aggregationStatus]').value,
     currentRate:       parseFloat(f.querySelector('[name=currentRate]').value) || null,
     previousRate:      parseFloat(f.querySelector('[name=previousRate]').value) || null,

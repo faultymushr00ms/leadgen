@@ -12,12 +12,14 @@
     "termEnd": "2026-07-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Cleveland SOPEC term ends July 2026 — repricing window opens in a few months. Already up from an estimated 7.8¢ baseline.",
-    "hook": "Cleveland's SOPEC contract is up mid-summer — have you looked at what the city program reprices to after July?",
+    "takeaway": "Cleveland SOPEC term ends July 2026 \u2014 repricing window opens in a few months. Already up from an estimated 7.8\u00a2 baseline.",
+    "hook": "Cleveland's SOPEC contract is up mid-summer \u2014 have you looked at what the city program reprices to after July?",
     "futureUse": "aggregation",
-    "notes": "SOPEC program rate 9.236¢/kWh Aug 2025–Jul 2026. Previous rate estimated ~7.8¢. Large commercial accounts in Cleveland may benefit from competitive supply before term ends.",
+    "notes": "SOPEC program rate 9.236\u00a2/kWh Aug 2025\u2013Jul 2026. Previous rate estimated ~7.8\u00a2. Large commercial accounts in Cleveland may benefit from competitive supply before term ends.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Parma",
@@ -32,12 +34,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate jumps from 8.999¢ to 9.999¢ in June 2026 — an 11% hit landing in 30 days. Parma businesses are already feeling the prior cycle increase.",
-    "hook": "Are you aware Parma's NOPEC rate goes up another cent next month — to nearly 10¢?",
+    "takeaway": "NOPEC rate jumps from 8.999\u00a2 to 9.999\u00a2 in June 2026 \u2014 an 11% hit landing in 30 days. Parma businesses are already feeling the prior cycle increase.",
+    "hook": "Are you aware Parma's NOPEC rate goes up another cent next month \u2014 to nearly 10\u00a2?",
     "futureUse": "aggregation",
-    "notes": "NOPEC standard rate: 8.999¢ Jan–May 2026, rising to 9.999¢ June 2026. Prior cycle approx 7.0¢. Rate has increased ~43% over two cycles.",
+    "notes": "NOPEC standard rate: 8.999\u00a2 Jan\u2013May 2026, rising to 9.999\u00a2 June 2026. Prior cycle approx 7.0\u00a2. Rate has increased ~43% over two cycles.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Strongsville",
@@ -52,12 +56,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate climbs to 9.999¢ in June 2026. Strongsville commercial accounts are exposed to back-to-back cycle increases.",
-    "hook": "Strongsville's on NOPEC — that rate is going up again June 1st. Have you had a chance to review your supply contract?",
+    "takeaway": "NOPEC rate climbs to 9.999\u00a2 in June 2026. Strongsville commercial accounts are exposed to back-to-back cycle increases.",
+    "hook": "Strongsville's on NOPEC \u2014 that rate is going up again June 1st. Have you had a chance to review your supply contract?",
     "futureUse": "aggregation",
-    "notes": "NOPEC standard rate 8.999¢ rising to 9.999¢ June 2026. Strong commercial/industrial corridor along Route 82 and I-71.",
+    "notes": "NOPEC standard rate 8.999\u00a2 rising to 9.999\u00a2 June 2026. Strong commercial/industrial corridor along Route 82 and I-71.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Euclid",
@@ -72,12 +78,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate rising to 9.999¢ June 2026. Euclid's industrial and manufacturing base makes this a high-value target before the increase hits.",
-    "hook": "Euclid businesses on NOPEC are looking at another rate hike next month — worth a conversation before June?",
+    "takeaway": "NOPEC rate rising to 9.999\u00a2 June 2026. Euclid's industrial and manufacturing base makes this a high-value target before the increase hits.",
+    "hook": "Euclid businesses on NOPEC are looking at another rate hike next month \u2014 worth a conversation before June?",
     "futureUse": "aggregation",
     "notes": "NOPEC territory, The Illuminating Company. Industrial base along Euclid Avenue and Lakeshore corridor.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Solon",
@@ -92,12 +100,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "Solon is a high-value NOPEC suburb with strong industrial park activity. NOPEC rate hits 9.999¢ June 2026 — strong competitive window.",
-    "hook": "Solon's NOPEC rate is going to 9.999¢ in June — a lot of the industrial park tenants haven't locked in anything yet.",
+    "takeaway": "Solon is a high-value NOPEC suburb with strong industrial park activity. NOPEC rate hits 9.999\u00a2 June 2026 \u2014 strong competitive window.",
+    "hook": "Solon's NOPEC rate is going to 9.999\u00a2 in June \u2014 a lot of the industrial park tenants haven't locked in anything yet.",
     "futureUse": "aggregation",
-    "notes": "Dense industrial park presence (Solon Industrial Parkway corridor). NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Dense industrial park presence (Solon Industrial Parkway corridor). NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "North Royalton",
@@ -112,12 +122,14 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate increase to 9.999¢ effective June 2026. North Royalton commercial corridors along State Road are active targets.",
-    "hook": "North Royalton is NOPEC — that rate goes up to nearly 10¢ in June. Good time to review.",
+    "takeaway": "NOPEC rate increase to 9.999\u00a2 effective June 2026. North Royalton commercial corridors along State Road are active targets.",
+    "hook": "North Royalton is NOPEC \u2014 that rate goes up to nearly 10\u00a2 in June. Good time to review.",
     "futureUse": "aggregation",
     "notes": "Cuyahoga County community, NOPEC/The Illuminating Company territory.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Berea",
@@ -132,11 +144,13 @@
     "termEnd": "2026-12-31",
     "status": "pain_coming",
     "confidence": "high",
-    "takeaway": "NOPEC rate rises to 9.999¢ in June 2026. Berea commercial accounts near Baldwin Wallace and the industrial corridor are exposed.",
-    "hook": "Berea is on NOPEC — their rate is jumping another cent next month. Any of your facilities still on the city program?",
+    "takeaway": "NOPEC rate rises to 9.999\u00a2 in June 2026. Berea commercial accounts near Baldwin Wallace and the industrial corridor are exposed.",
+    "hook": "Berea is on NOPEC \u2014 their rate is jumping another cent next month. Any of your facilities still on the city program?",
     "futureUse": "aggregation",
-    "notes": "Western Cuyahoga County, The Illuminating Company territory. NOPEC standard rate 8.999¢ → 9.999¢ June 2026.",
+    "notes": "Western Cuyahoga County, The Illuminating Company territory. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

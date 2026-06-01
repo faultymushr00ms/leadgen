@@ -17,7 +17,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Butler County. Major commercial/retail/industrial presence. No confirmed active aggregation. Price-to-compare analysis is the play for commercial accounts here.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Mason",
@@ -37,7 +39,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Warren County. Major corporate campus presence (P&G, others). No confirmed active aggregation program. High-value commercial accounts.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Blue Ash",
@@ -57,7 +61,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Hamilton County. Dense office park and corporate campus presence along Reed Hartman Highway corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Montgomery",
@@ -77,7 +83,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Hamilton County. Upscale commercial strip along Montgomery Road. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Anderson Township",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Unincorporated Hamilton County. Commercial strip along Beechmont Avenue / Route 125. No confirmed aggregation program.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Fairfield",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Butler County. Industrial and commercial corridor along Route 4 and Seward Road. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Milford",
@@ -137,7 +149,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Clermont County. Commercial strip along Route 28. No confirmed aggregation program.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Loveland",
@@ -157,7 +171,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Straddles Hamilton and Clermont counties. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Springdale",
@@ -177,7 +193,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Hamilton County. Commercial strip along Kemper Road. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Kenwood / Symmes Township",
@@ -197,6 +215,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Duke Energy Ohio territory. Hamilton County / Warren County border. High commercial density along Kenwood Road and Montgomery Road corridors. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "Duke Energy",
+    "utilityConfidence": "high"
   }
 ]

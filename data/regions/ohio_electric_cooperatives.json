@@ -12,12 +12,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "REC serving Adams, Brown, Highland, Pike counties. Cannot sell competitive electric — co-op members are locked in. Gas supply through Columbia Gas may be available for commercial accounts.",
+    "takeaway": "REC serving Adams, Brown, Highland, Pike counties. Cannot sell competitive electric \u2014 co-op members are locked in. Gas supply through Columbia Gas may be available for commercial accounts.",
     "hook": "Is your electric through the co-op or a regular utility?",
     "futureUse": "municipal_blacklist",
     "notes": "One of 25 Ohio electric cooperatives powered by Buckeye Power Inc. Headquarters: West Union, OH.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Buckeye Rural Electric",
@@ -32,12 +34,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "One of Ohio's largest RECs — 18,562+ members across 9 southern counties. Cannot sell competitive electric.",
+    "takeaway": "One of Ohio's largest RECs \u2014 18,562+ members across 9 southern counties. Cannot sell competitive electric.",
     "hook": "Is your electric through Buckeye Rural or a utility like AEP?",
     "futureUse": "municipal_blacklist",
     "notes": "Serves Athens, Gallia, Jackson, Lawrence, Meigs, Pike, Ross, Scioto, Vinton counties. HQ: Rio Grande, OH.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://www.buckeyerec.coop/"
+    "sourceUrl": "https://www.buckeyerec.coop/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Butler Rural Electric",
@@ -52,12 +56,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "medium",
-    "takeaway": "REC in SW Ohio, embedded in Duke Energy and AES Ohio territory. Address verification required — rural commercial accounts on this co-op cannot be sold competitive electric.",
+    "takeaway": "REC in SW Ohio, embedded in Duke Energy and AES Ohio territory. Address verification required \u2014 rural commercial accounts on this co-op cannot be sold competitive electric.",
     "hook": "Is your electric through Butler Rural Electric or Duke Energy?",
     "futureUse": "address_check",
     "notes": "Serves Butler, Preble, and surrounding SW Ohio counties near Cincinnati. HQ: Oxford, OH area.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Carroll Electric",
@@ -77,7 +83,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Serves Carroll, Harrison, Columbiana, Jefferson, Tuscarawas, Stark county rural portions. HQ: Carrollton, OH.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Consolidated Cooperative",
@@ -97,7 +105,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Mount Gilead, OH. Formerly Consolidated Electric Cooperative.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Darke Rural Electric",
@@ -112,12 +122,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "Rural co-op in Darke, Shelby, Miami, Mercer, Montgomery county rural areas. AES Ohio and Pioneer territory overlaps here — verify utility from bill.",
+    "takeaway": "Rural co-op in Darke, Shelby, Miami, Mercer, Montgomery county rural areas. AES Ohio and Pioneer territory overlaps here \u2014 verify utility from bill.",
     "hook": "Is the electric bill through the co-op or Dayton Power & Light?",
     "futureUse": "address_check",
     "notes": "Serves Darke/Shelby/Miami/Mercer/Montgomery rural portions. Overlaps with AES Ohio and Pioneer Electric service areas. HQ: Greenville area.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "The Energy Cooperative",
@@ -132,12 +144,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "Large central Ohio REC — also offers natural gas and propane to members. Electric exempt from retail choice but gas supply may be competitive opportunity.",
+    "takeaway": "Large central Ohio REC \u2014 also offers natural gas and propane to members. Electric exempt from retail choice but gas supply may be competitive opportunity.",
     "hook": "Do you get your gas and electric through The Energy Cooperative?",
     "futureUse": "municipal_blacklist",
-    "notes": "Serves Licking, Knox, Coshocton, Muskingum, Holmes county rural areas. Formerly Licking Rural Electrification. HQ: Newark, OH. Note: co-op also offers natural gas — verify if commercial gas is through co-op or Columbia Gas.",
+    "notes": "Serves Licking, Knox, Coshocton, Muskingum, Holmes county rural areas. Formerly Licking Rural Electrification. HQ: Newark, OH. Note: co-op also offers natural gas \u2014 verify if commercial gas is through co-op or Columbia Gas.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Firelands Electric",
@@ -152,12 +166,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "N Ohio REC serving 9,100+ accounts in Ashland, Erie, Huron, Lorain, Richland, Sandusky counties. Cannot sell competitive electric — but gas supply may apply in Columbia Gas territory.",
+    "takeaway": "N Ohio REC serving 9,100+ accounts in Ashland, Erie, Huron, Lorain, Richland, Sandusky counties. Cannot sell competitive electric \u2014 but gas supply may apply in Columbia Gas territory.",
     "hook": "Are you on Firelands Electric or Ohio Edison out there?",
     "futureUse": "municipal_blacklist",
     "notes": "995 miles of distribution lines. Serves rural portions of Ashland, Erie, Huron, Lorain, Richland, Sandusky counties. HQ: Norwalk, OH.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://firelandsec.com/"
+    "sourceUrl": "https://firelandsec.com/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "The Frontier Power Company",
@@ -172,12 +188,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "medium",
-    "takeaway": "Small NW Ohio cooperative serving Wood, Sandusky, Hancock county rural pockets. Toledo Edison territory overlaps here — verify from bill.",
+    "takeaway": "Small NW Ohio cooperative serving Wood, Sandusky, Hancock county rural pockets. Toledo Edison territory overlaps here \u2014 verify from bill.",
     "hook": "Is this address on Frontier Power or Toledo Edison?",
     "futureUse": "address_check",
     "notes": "Small REC in Wood/Sandusky/Hancock rural areas. HQ: Weston, OH area. Address verification especially important in this region.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Guernsey-Muskingum Electric",
@@ -192,12 +210,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "E-Central Ohio REC covering Guernsey, Muskingum, Morgan, Noble, Perry, Coshocton county rural areas. AEP Ohio is the IOU neighbor here — verify from bill.",
+    "takeaway": "E-Central Ohio REC covering Guernsey, Muskingum, Morgan, Noble, Perry, Coshocton county rural areas. AEP Ohio is the IOU neighbor here \u2014 verify from bill.",
     "hook": "Is your electric through the co-op or AEP out there?",
     "futureUse": "municipal_blacklist",
     "notes": "HQ: New Concord, OH. Serves rural portions of Guernsey, Muskingum, Morgan, Noble, Perry, Coshocton counties.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Holmes-Wayne Electric",
@@ -212,12 +232,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "NE Ohio REC serving Holmes, Wayne, Tuscarawas, Coshocton rural areas. Ohio Edison territory surrounds this co-op — address check critical for any Wayne/Holmes county commercial lead.",
+    "takeaway": "NE Ohio REC serving Holmes, Wayne, Tuscarawas, Coshocton rural areas. Ohio Edison territory surrounds this co-op \u2014 address check critical for any Wayne/Holmes county commercial lead.",
     "hook": "Is your electric through Holmes-Wayne Electric or Ohio Edison?",
     "futureUse": "address_check",
-    "notes": "HQ: Millersburg, OH. Heavy Amish/farm-country territory. Embedded within Ohio Edison service area — commercial addresses need bill verification.",
+    "notes": "HQ: Millersburg, OH. Heavy Amish/farm-country territory. Embedded within Ohio Edison service area \u2014 commercial addresses need bill verification.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Logan County Electric",
@@ -237,7 +259,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Bellefontaine, OH. Serves rural Logan, Champaign, Auglaize, Hardin, Union counties.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Lorain-Medina Rural Electric (LMRE)",
@@ -252,12 +276,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "NE Ohio REC embedded in NOPEC / Ohio Edison territory. Rural commercial accounts in Lorain and Medina counties may be LMRE, not Ohio Edison — critical address check before pitching NOPEC aggregation.",
+    "takeaway": "NE Ohio REC embedded in NOPEC / Ohio Edison territory. Rural commercial accounts in Lorain and Medina counties may be LMRE, not Ohio Edison \u2014 critical address check before pitching NOPEC aggregation.",
     "hook": "Is the electric bill through Lorain-Medina Electric or Ohio Edison?",
     "futureUse": "address_check",
     "notes": "Shares management federation with North Central Electric. Serves Lorain, Medina, Ashland, Wayne county rural portions. HQ: Oberlin area. NOPEC does NOT cover LMRE customers.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://www.lmre.org/"
+    "sourceUrl": "https://www.lmre.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Mid-Ohio Energy",
@@ -275,9 +301,11 @@
     "takeaway": "North-central Ohio REC serving portions of Richland, Crawford, Marion area rural customers. Cannot sell competitive electric.",
     "hook": "Is your electric through Mid-Ohio Energy or Ohio Edison?",
     "futureUse": "municipal_blacklist",
-    "notes": "Serves north-central Ohio rural areas. Verify exact county coverage — overlaps with Ohio Edison and North Central Electric territory.",
+    "notes": "Serves north-central Ohio rural areas. Verify exact county coverage \u2014 overlaps with Ohio Edison and North Central Electric territory.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "North Central Electric",
@@ -292,12 +320,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "Large N Ohio REC — 9,600 members across 8 counties. Toledo Edison and Ohio Edison both border this territory. Address check mandatory.",
+    "takeaway": "Large N Ohio REC \u2014 9,600 members across 8 counties. Toledo Edison and Ohio Edison both border this territory. Address check mandatory.",
     "hook": "Are you on North Central Electric or one of the FirstEnergy utilities out there?",
     "futureUse": "address_check",
     "notes": "Serves Crawford, Hancock, Huron, Richland, Sandusky, Seneca, Wood, Wyandot counties rural portions. HQ: Attica, OH. Management federation with LMRE.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://www.ncelec.org/"
+    "sourceUrl": "https://www.ncelec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Paulding-Putnam Electric",
@@ -317,7 +347,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Paulding, OH. Serves Paulding, Putnam, Defiance, Van Wert county rural portions.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Pioneer Electric Cooperative",
@@ -332,12 +364,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "W-Central Ohio REC serving Shelby, Auglaize, Logan, Miami, Champaign, Mercer, Darke county rural areas. Embedded in AES Ohio and AEP territory — always verify from bill.",
+    "takeaway": "W-Central Ohio REC serving Shelby, Auglaize, Logan, Miami, Champaign, Mercer, Darke county rural areas. Embedded in AES Ohio and AEP territory \u2014 always verify from bill.",
     "hook": "Is the electric through Pioneer Electric or Dayton Power & Light?",
     "futureUse": "address_check",
     "notes": "HQ: Piqua, OH. Explicitly confirmed that county aggregation ballots do NOT affect Pioneer co-op members. Serves rural W-central Ohio counties.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://pioneerec.com/"
+    "sourceUrl": "https://pioneerec.com/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "South Central Power",
@@ -352,12 +386,14 @@
     "termEnd": null,
     "status": "stable",
     "confidence": "high",
-    "takeaway": "One of Ohio's larger RECs — serves Fairfield, Hocking, Perry, Morgan, Muskingum, Athens, Vinton county rural areas. AEP Ohio borders this territory.",
+    "takeaway": "One of Ohio's larger RECs \u2014 serves Fairfield, Hocking, Perry, Morgan, Muskingum, Athens, Vinton county rural areas. AEP Ohio borders this territory.",
     "hook": "Is your electric through South Central Power or AEP?",
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Lancaster, OH. Serves central-southern Ohio rural counties. AEP Ohio is the dominant IOU neighbor.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   },
   {
     "name": "Tri-County Rural Electric",
@@ -377,7 +413,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Defiance, OH. Serves Defiance, Williams, Fulton, Henry county rural portions. Explicitly confirms: co-op members are NOT affected by township aggregation ballots.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://www.tricountyelectriccoop.coop/"
+    "sourceUrl": "https://www.tricountyelectriccoop.coop/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Union Rural Electric",
@@ -397,7 +435,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Marysville, OH. Serves Union, Delaware, Marion, Logan, Champaign county rural portions.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Washington Electric",
@@ -417,7 +457,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "HQ: Marietta, OH. Serves rural SE Ohio counties along the Ohio River corridor.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Ohio Valley Electric Cooperative",
@@ -437,7 +479,9 @@
     "futureUse": "municipal_blacklist",
     "notes": "Note: distinct from Ohio Valley Electric Corporation (OVEC), which is a wholesale generator. HQ: Jackson, OH area.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": "Buckeye Power",
+    "utilityConfidence": "high"
   },
   {
     "name": "Midwest Energy & Communications",
@@ -457,12 +501,14 @@
     "futureUse": "address_check",
     "notes": "HQ: Cassopolis, MI. The only non-Ohio based co-op in the Buckeye Power family. Serves select border areas in NW Ohio near Michigan line.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": null,
+    "utilityConfidence": "high"
   },
   {
-    "name": "Ohio Electric Co-ops — 2 Unconfirmed",
+    "name": "Ohio Electric Co-ops \u2014 2 Unconfirmed",
     "region": "Central Ohio",
-    "utility": "Unknown — Buckeye Power member",
+    "utility": "Unknown \u2014 Buckeye Power member",
     "aggregationStatus": "electric_cooperative",
     "currentRate": null,
     "previousRate": null,
@@ -472,11 +518,13 @@
     "termEnd": null,
     "status": "verify",
     "confidence": "low",
-    "takeaway": "Ohio has 25 electric cooperatives total. 23 are identified in this database. 2 additional co-ops or reorganized entities may exist — verify against current OREC/ohioec.org roster.",
+    "takeaway": "Ohio has 25 electric cooperatives total. 23 are identified in this database. 2 additional co-ops or reorganized entities may exist \u2014 verify against current OREC/ohioec.org roster.",
     "hook": null,
     "futureUse": "municipal_blacklist",
     "notes": "Placeholder for any Ohio RECs not yet confirmed in this database. Review ohioec.org for the current complete list of Buckeye Power members.",
     "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/"
+    "sourceUrl": "https://ohioec.org/",
+    "utilityParent": null,
+    "utilityConfidence": "medium"
   }
 ]

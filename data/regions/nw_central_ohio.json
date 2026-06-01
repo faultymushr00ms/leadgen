@@ -17,7 +17,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Hancock County seat. Marathon Petroleum headquarters drives corporate account activity. Significant industrial base. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Lima",
@@ -37,7 +39,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Allen County seat. Industrial manufacturing base. Significant oil refining and manufacturing heritage. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Fremont",
@@ -57,7 +61,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Sandusky County seat. Commercial and light industrial base along Route 20. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Tiffin",
@@ -77,7 +83,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Seneca County seat. Commercial and light industrial. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Defiance",
@@ -97,7 +105,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Toledo Edison territory. Defiance County seat. Commercial and light industrial. Not covered by NOAC aggregation program. Verify current rate vs. competitive supply opportunity.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   },
   {
     "name": "Sandusky",
@@ -117,7 +127,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Erie County seat. Cedar Point area creates significant commercial and hospitality account density. No confirmed aggregation. Verify Firelands Electric co-op vs. Ohio Edison by address for rural Erie County addresses.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Port Clinton",
@@ -137,7 +149,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Ottawa County seat on Lake Erie. Seasonal tourism-driven commercial accounts. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Bucyrus",
@@ -157,7 +171,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Crawford County seat. Small commercial market. Note: nearby Galion is a municipal utility \u2014 do not confuse. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Kenton",
@@ -177,7 +193,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Hardin County seat. Small commercial base. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Bellefontaine",
@@ -197,7 +215,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Logan County seat. Small commercial market. Route 33 corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Washington Court House",
@@ -217,7 +237,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Fayette County seat. Small commercial market. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Wilmington",
@@ -237,7 +259,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Clinton County seat. Air park / logistics presence (former DHL hub). Some warehouse/distribution accounts. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Ashland",
@@ -257,7 +281,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Ohio Edison territory. Ashland County seat. Commercial and light industrial. Route 30 corridor. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   },
   {
     "name": "Marion",
@@ -277,7 +303,9 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "AEP Ohio territory. Marion County seat. Industrial manufacturing base along Route 23. No confirmed aggregation.",
     "lastVerified": "2026-06-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "AEP",
+    "utilityConfidence": "high"
   },
   {
     "name": "Fostoria",
@@ -297,6 +325,8 @@
     "futureUse": "address_check",
     "notes": "Seneca/Hancock/Wood County border area. Fostoria sits on the Ohio Edison / Toledo Edison boundary. Verify utility by service address. Both are FirstEnergy affiliates but have different aggregation programs.",
     "lastVerified": "2026-05-01",
-    "sourceUrl": null
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

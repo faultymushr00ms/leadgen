@@ -1,5 +1,27 @@
 [
   {
+    "name": "Youngstown",
+    "region": "Youngstown / Warren",
+    "utility": "Ohio Edison",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high",
+    "aggregationStatus": "confirmed_active_aggregation",
+    "currentRate": 7.99,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": "Dynegy",
+    "termStart": null,
+    "termEnd": "2026-06-30",
+    "status": "rollover",
+    "confidence": "high",
+    "takeaway": "Youngstown's Dynegy aggregation contract ends at the June 2026 meter read \u2014 no announced renewal. Accounts are about to revert to Ohio Edison standard. This is the hottest individual agg in the valley right now.",
+    "hook": "Youngstown's Dynegy contract is ending at the June meter read and there's no renewal announcement. Are those accounts going back to Ohio Edison standard? That's a 9.38-cent conversation happening right now.",
+    "futureUse": "aggregation",
+    "notes": "Dynegy program through June 2026 meter read. No confirmed successor program as of June 2026. Distinct from Mahoning County program (which covers unincorporated areas at different rate).",
+    "lastVerified": "2026-06-01",
+    "sourceUrl": "https://youngstownohio.gov/sites/default/files/forms/City%20of%20Youngstown%20-%20Electrical%20Aggregation%20-%20Dynegy.pdf"
+  },
+  {
     "name": "Trumbull County",
     "region": "Youngstown / Warren",
     "utility": "Ohio Edison / FirstEnergy",

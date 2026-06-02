@@ -5,6 +5,11 @@
 
 {% block topbar_actions %}
 <div style="display:flex;align-items:center;gap:10px;">
+  {% if rollover_count %}
+  <span class="heat-badge" style="font-size:0.72rem;background:rgba(229,57,53,0.3);color:#ff8a80;border:1px solid rgba(229,57,53,0.6);font-weight:700;">
+    <i class="bi bi-fire"></i> {{ rollover_count }} ROLLOVER
+  </span>
+  {% endif %}
   <span class="heat-badge heat-hot" style="font-size:0.72rem;">
     <i class="bi bi-crosshair2"></i> {{ targetable_count }} targetable
   </span>
@@ -146,6 +151,16 @@
   <!-- Tab bar -->
   <div class="tab-bar">
     <button class="tab-btn active" data-tab="all">All</button>
+    {% if rollover_alerts %}
+    <button class="tab-btn" data-tab="rollover" style="color:#ff8a80;border-color:rgba(229,57,53,0.4);">
+      🔥 Rollover <span class="count-pill ms-1" style="background:rgba(229,57,53,0.3);color:#ff8a80;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ rollover_alerts|length }}</span>
+    </button>
+    {% endif %}
+    {% if contract_review %}
+    <button class="tab-btn" data-tab="review" style="color:#ff8a80;">
+      Review Needed <span class="count-pill ms-1" style="background:rgba(229,57,53,0.15);color:#ef9a9a;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ contract_review|length }}</span>
+    </button>
+    {% endif %}
     <button class="tab-btn" data-tab="pain_hit">
       Pain Hit <span class="count-pill ms-1" style="background:rgba(229,57,53,0.2);color:#ef9a9a;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ pain_hit|length }}</span>
     </button>
@@ -161,6 +176,36 @@
       Avoid List <span class="count-pill ms-1" style="background:rgba(84,110,122,0.15);color:#90a4ae;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ avoid_list|length }}</span>
     </button>
   </div>
+
+  <!-- ── ROLLOVER ALERTS ── -->
+  {% if rollover_alerts %}
+  <div class="section-block" data-section="rollover">
+    <div class="section-header" style="color:#ff8a80;border-color:rgba(229,57,53,0.3);">
+      <i class="bi bi-fire" style="color:#e53935;"></i>
+      Rollover Alerts — Act Now
+      <span class="count-pill" style="background:rgba(229,57,53,0.3);color:#ff8a80;">{{ rollover_alerts|length }}</span>
+    </div>
+    <div style="font-size:0.72rem;color:var(--forge-muted);margin:-8px 0 12px;padding-left:2px;">
+      Term ended. No confirmed renewal. These are the hottest accounts in the territory.
+    </div>
+    {% for z in rollover_alerts %}{{ _zone_card(z) }}{% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- ── CONTRACT REVIEW NEEDED ── -->
+  {% if contract_review %}
+  <div class="section-block" data-section="review">
+    <div class="section-header" style="color:#ef9a9a;">
+      <i class="bi bi-hourglass-split" style="color:#e53935;"></i>
+      Contract Review Needed
+      <span class="count-pill" style="background:rgba(229,57,53,0.15);color:#ef9a9a;">{{ contract_review|length }}</span>
+    </div>
+    <div style="font-size:0.72rem;color:var(--forge-muted);margin:-8px 0 12px;padding-left:2px;">
+      termEnd has passed — research renewal status before these go cold.
+    </div>
+    {% for z in contract_review %}{{ _zone_card(z) }}{% endfor %}
+  </div>
+  {% endif %}
 
   <!-- ── PAIN HIT ── -->
   <div class="section-block" data-section="pain_hit">

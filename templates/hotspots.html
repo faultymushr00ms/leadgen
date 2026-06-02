@@ -119,6 +119,8 @@
   .agg-coop       { background: rgba(255,143,0,0.15);  color: #ffcc80; border: 1px solid rgba(255,143,0,0.3); }
 
   /* ── Status badges ── */
+  .status-rollover_dissolved { background: rgba(229,57,53,0.35);  color: #fff;             border: 1px solid rgba(229,57,53,0.8); font-weight:700; }
+  .status-rollover     { background: rgba(229,57,53,0.25);  color: #ff8a80;          border: 1px solid rgba(229,57,53,0.5); font-weight:600; }
   .status-pain_hit     { background: rgba(229,57,53,0.18);  color: var(--heat-hot);  border: 1px solid rgba(229,57,53,0.3); }
   .status-pain_coming  { background: rgba(255,111,0,0.18);  color: var(--heat-pain); border: 1px solid rgba(255,111,0,0.3); }
   .status-stable       { background: rgba(46,125,50,0.18);  color: #81c784;          border: 1px solid rgba(46,125,50,0.3); }
@@ -162,6 +164,8 @@
     </select>
     <select id="filter-status"  class="dark-input" onchange="applyFilters()">
       <option value="">All Status</option>
+      <option value="rollover_dissolved">Dissolved</option>
+      <option value="rollover">Rollover</option>
       <option value="pain_hit">Pain Hit</option>
       <option value="pain_coming">Pain Coming</option>
       <option value="stable">Stable</option>
@@ -336,6 +340,8 @@
             <div>
               <div class="stat-label mb-1">Status</div>
               <select name="status" class="dark-input">
+                <option value="rollover_dissolved">Dissolved (Super Hot)</option>
+                <option value="rollover">Rollover (Hottest)</option>
                 <option value="pain_hit">Pain Hit</option>
                 <option value="pain_coming">Pain Coming</option>
                 <option value="stable">Stable</option>
@@ -429,6 +435,7 @@ const AGG_CSS = {
   address_dependent:            'agg-address',
 };
 const STATUS_LABELS = {
+  rollover_dissolved: 'DISSOLVED', rollover: 'Rollover',
   pain_hit: 'Pain Hit', pain_coming: 'Pain Coming',
   stable: 'Stable', transition: 'Transition', verify: 'Verify',
 };

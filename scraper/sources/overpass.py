@@ -1,6 +1,6 @@
 """
 OpenStreetMap via Overpass API — completely free, no key required.
-Pulls businesses by type within the Youngstown metro bounding box.
+Pulls businesses by type across all 5 Ohio PJM area groups.
 """
 
 import time
@@ -8,13 +8,29 @@ import requests
 from typing import List
 from .base import BaseSource, RawLead
 
-# Youngstown metro area: Mahoning + Trumbull counties
-YOUNGSTOWN_BBOX = {
-    "south": 40.85,
-    "west": -81.15,
-    "north": 41.55,
-    "east": -80.35,
-}
+# Ohio PJM territory — 5 area groups
+OHIO_AREA_GROUPS = [
+    {
+        "name": "Mahoning Valley",
+        "bbox": {"south": 40.95, "west": -81.05, "north": 41.35, "east": -80.35},
+    },
+    {
+        "name": "Greater Toledo",
+        "bbox": {"south": 41.50, "west": -83.90, "north": 41.80, "east": -83.25},
+    },
+    {
+        "name": "Akron / Summit",
+        "bbox": {"south": 40.95, "west": -81.65, "north": 41.20, "east": -81.30},
+    },
+    {
+        "name": "Cincinnati / Duke Energy",
+        "bbox": {"south": 38.95, "west": -84.75, "north": 39.35, "east": -84.20},
+    },
+    {
+        "name": "Columbus / AEP Ohio",
+        "bbox": {"south": 39.80, "west": -83.15, "north": 40.20, "east": -82.75},
+    },
+]
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
@@ -102,47 +118,52 @@ class OverpassSource(BaseSource):
     name = "OpenStreetMap"
 
     def fetch(self) -> List[RawLead]:
-        print(f"  [{self.name}] Querying Overpass API for Youngstown metro...")
-        query = _build_query(YOUNGSTOWN_BBOX)
-
-        try:
-            response = requests.post(
-                OVERPASS_URL,
-                data={"data": query},
-                timeout=130,
-                headers={"User-Agent": "OhioLeadGenBot/1.0"},
-            )
-            response.raise_for_status()
-        except requests.RequestException as e:
-            print(f"  [{self.name}] Request failed: {e}")
-            return []
-
-        data = response.json()
-        elements = data.get("elements", [])
-        print(f"  [{self.name}] Got {len(elements)} raw elements.")
-
-        # Build a tag→industry lookup so each element gets labeled correctly
-        tag_lookup = {(k, v): label for k, v, label in HIGH_ENERGY_TAGS}
-
-        leads: List[RawLead] = []
+        all_leads: List[RawLead] = []
         seen: set[str] = set()
 
-        for element in elements:
-            tags = element.get("tags", {})
-            industry = "Unknown"
-            for key, value, label in HIGH_ENERGY_TAGS:
-                if tags.get(key) == value:
-                    industry = label
-                    break
+        for area in OHIO_AREA_GROUPS:
+            area_name = area["name"]
+            bbox = area["bbox"]
+            print(f"  [{self.name}] Querying {area_name}...")
+            query = _build_query(bbox)
 
-            lead = _parse_element(element, industry)
-            if lead is None:
+            try:
+                response = requests.post(
+                    OVERPASS_URL,
+                    data={"data": query},
+                    timeout=130,
+                    headers={"User-Agent": "ForgeLeadGen/1.0"},
+                )
+                response.raise_for_status()
+            except requests.RequestException as e:
+                print(f"  [{self.name}] {area_name} request failed: {e}")
                 continue
-            key = lead.dedup_key()
-            if key in seen:
-                continue
-            seen.add(key)
-            leads.append(lead)
 
-        print(f"  [{self.name}] {len(leads)} named businesses extracted.")
-        return leads
+            elements = response.json().get("elements", [])
+            area_count = 0
+
+            for element in elements:
+                tags = element.get("tags", {})
+                industry = "Unknown"
+                for key, value, label in HIGH_ENERGY_TAGS:
+                    if tags.get(key) == value:
+                        industry = label
+                        break
+
+                lead = _parse_element(element, industry)
+                if lead is None:
+                    continue
+                # Tag the area group on the lead for downstream use
+                lead.known_info = f"Area: {area_name}"
+                key = lead.dedup_key()
+                if key in seen:
+                    continue
+                seen.add(key)
+                all_leads.append(lead)
+                area_count += 1
+
+            print(f"  [{self.name}] {area_name}: {area_count} leads")
+            time.sleep(1)  # be polite to Overpass
+
+        print(f"  [{self.name}] {len(all_leads)} total unique leads across all areas.")
+        return all_leads

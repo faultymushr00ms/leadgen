@@ -14,7 +14,7 @@ app = Flask(__name__)
 OUTPUT_DIR = "output"
 REGIONS_DIR = os.path.join("data", "regions")
 
-STATUS_SORT = {"pain_hit": 0, "pain_coming": 1, "transition": 2, "verify": 3, "stable": 4}
+STATUS_SORT = {"rollover_dissolved": 0, "rollover": 1, "pain_hit": 2, "pain_coming": 3, "transition": 4, "verify": 5, "stable": 6}
 
 
 def _load_zones() -> list:
@@ -152,10 +152,13 @@ def lead_detail(idx):
 def _compute_weekly(zones: list) -> dict:
     from datetime import date, timedelta
     today = date.today()
-    cutoff = today + timedelta(days=90)
+    cutoff_90 = today + timedelta(days=90)
+    cutoff_30 = today + timedelta(days=30)
 
-    pain_hit, pain_coming, timing_windows, avoid_list, verify_list = [], [], [], [], []
+    rollover_alerts, contract_review, pain_hit, pain_coming = [], [], [], []
+    timing_windows, avoid_list, verify_list = [], [], []
     blacklisted = {"municipal_utility", "electric_cooperative"}
+    hot_statuses = {"rollover_dissolved", "rollover", "pain_hit", "pain_coming"}
 
     for z in zones:
         agg = z.get("aggregationStatus", "")
@@ -163,35 +166,51 @@ def _compute_weekly(zones: list) -> dict:
         if agg in blacklisted:
             avoid_list.append(z)
             continue
-        term_end = z.get("termEnd")
-        near_expiry = False
-        if term_end:
+
+        term_end_str = z.get("termEnd")
+        term_end_date = None
+        if term_end_str:
             try:
-                near_expiry = date.fromisoformat(term_end) <= cutoff
+                term_end_date = date.fromisoformat(term_end_str)
             except ValueError:
                 pass
-        if status == "pain_hit":
+
+        expired = term_end_date is not None and term_end_date <= today
+        near_expiry_90 = term_end_date is not None and term_end_date <= cutoff_90
+        near_expiry_30 = term_end_date is not None and term_end_date <= cutoff_30
+
+        if status == "rollover_dissolved":
+            rollover_alerts.append(z)
+        elif status == "rollover":
+            rollover_alerts.append(z)
+        elif expired and status not in hot_statuses:
+            # termEnd passed but zone not yet manually flagged — surface for review
+            contract_review.append(z)
+        elif status == "pain_hit":
             pain_hit.append(z)
         elif status == "pain_coming":
             pain_coming.append(z)
-            if near_expiry:
+            if near_expiry_90:
                 timing_windows.append(z)
         elif status == "transition":
-            if near_expiry:
+            if near_expiry_90:
                 timing_windows.append(z)
         elif status == "verify":
             verify_list.append(z)
 
-    targetable = len(pain_hit) + len(pain_coming) + len(timing_windows)
     return {
+        "rollover_alerts": rollover_alerts,
+        "contract_review": contract_review,
         "pain_hit": pain_hit,
         "pain_coming": pain_coming,
         "timing_windows": timing_windows,
         "avoid_list": avoid_list,
         "verify_list": verify_list,
-        "targetable_count": len(pain_hit) + len(pain_coming),
+        "targetable_count": len(rollover_alerts) + len(pain_hit) + len(pain_coming),
         "blacklisted_count": len(avoid_list),
         "timing_count": len(timing_windows),
+        "rollover_count": len(rollover_alerts),
+        "review_count": len(contract_review),
     }
 
 

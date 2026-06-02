@@ -44,7 +44,7 @@
     "region": "Youngstown / Warren",
     "utility": "Ohio Edison / FirstEnergy",
     "aggregationStatus": "no_aggregation_verified",
-    "currentRate": null,
+    "currentRate": 9.38,
     "previousRate": null,
     "rateChange": null,
     "supplier": null,
@@ -57,7 +57,8 @@
     "futureUse": "price_to_compare_analysis",
     "notes": "Surrounding Trumbull townships may have county aggregation.",
     "utilityParent": "FirstEnergy",
-    "utilityConfidence": "medium"
+    "utilityConfidence": "medium",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Sebring",

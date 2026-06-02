@@ -101,5 +101,27 @@
     "notes": "1005 Lake Park Blvd likely leans Ohio Edison but must be verified.",
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "high"
+  },
+  {
+    "name": "Austintown Township",
+    "region": "Youngstown / Warren",
+    "utility": "Ohio Edison",
+    "aggregationStatus": "confirmed_active_aggregation",
+    "currentRate": 10.59,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": "Dynegy",
+    "termStart": null,
+    "termEnd": null,
+    "status": "pain_hit",
+    "confidence": "medium",
+    "takeaway": "Austintown Township is the commercial core of the Youngstown metro \u2014 Mahoning Ave, US-224 corridor. Falls under the Mahoning County Dynegy program at 10.59\u00a2. Rate is already elevated; confirm exact term end.",
+    "hook": "Austintown is on the Mahoning County aggregation at 10.59\u00a2 \u2014 that's one of the highest rates in the valley right now. Are your accounts there on the county program or do they have their own deal?",
+    "futureUse": "aggregation",
+    "notes": "Austintown Township is the largest unincorporated community in Mahoning County (~35,000 residents) and the dominant commercial strip in the metro area (Mahoning Ave, US-224, Belmont Ave corridors). Falls under Mahoning County aggregation territory (Dynegy). Rate and term end date tied to Mahoning County program \u2014 verify township's independent opt-in status separately from county program. Distinct from Youngstown city program (Dynegy 7.99\u00a2, expired June 2026). Ohio Edison territory.",
+    "lastVerified": "2026-06-01",
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   }
 ]

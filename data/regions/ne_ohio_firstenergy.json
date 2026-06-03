@@ -416,5 +416,27 @@
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "high"
+  },
+  {
+    "name": "Andover",
+    "region": "Youngstown / Warren",
+    "utility": "Ohio Edison",
+    "aggregationStatus": "confirmed_active_aggregation",
+    "currentRate": 9.86,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": "Dynegy",
+    "termStart": null,
+    "termEnd": "2028-06-30",
+    "status": "stable",
+    "confidence": "high",
+    "takeaway": "Andover is locked on Dynegy at 9.86\u00a2 through June 2028 \u2014 below Ohio Edison PTC. Long lock-in, not a target until 2028 renewal window.",
+    "hook": "Andover is on Dynegy at 9.86\u00a2 through June 2028 \u2014 solid deal for them. Circle back when that renewal comes up.",
+    "futureUse": "aggregation",
+    "notes": "Dynegy aggregation confirmed through June 2028. Ashtabula County village. Ohio Edison territory. Priority low \u2014 locked long-term below PTC.",
+    "lastVerified": "2026-06-03",
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   }
 ]

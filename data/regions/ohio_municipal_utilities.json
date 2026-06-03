@@ -1032,5 +1032,27 @@
     "sourceUrl": null,
     "utilityParent": null,
     "utilityConfidence": "high"
+  },
+  {
+    "name": "Lebanon",
+    "region": "Cincinnati / Duke Energy",
+    "utility": "City of Lebanon Electric Department",
+    "aggregationStatus": "municipal_utility",
+    "currentRate": null,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": "American Municipal Power (AMP)",
+    "termStart": null,
+    "termEnd": null,
+    "status": "stable",
+    "confidence": "high",
+    "takeaway": "Lebanon operates its own municipal electric utility (est. 1895) and buys wholesale from AMP \u2014 completely exempt from retail electric choice. Dead end for competitive supply.",
+    "hook": null,
+    "futureUse": "municipal_blacklist",
+    "notes": "Warren County seat. Municipal electric dept owns T&D plus 30MW generation plant. Buys wholesale from American Municipal Power (AMP), Columbus OH. Exempt from Ohio retail electric choice \u2014 cannot sell competitive electric supply here.",
+    "lastVerified": "2026-06-03",
+    "sourceUrl": "https://www.lebanonohio.gov/departments/electric/index.php",
+    "utilityParent": null,
+    "utilityConfidence": "high"
   }
 ]

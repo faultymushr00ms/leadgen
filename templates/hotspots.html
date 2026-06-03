@@ -179,9 +179,36 @@
       <option value="price_to_compare_analysis">Price to Compare</option>
       <option value="address_check">Address Check</option>
     </select>
-    <button class="btn btn-forge btn-sm" onclick="startNewZone()" style="white-space:nowrap; margin-left:auto;">
+    <!-- ZIP Lookup -->
+    <div style="display:flex; align-items:center; gap:4px; margin-left:auto;">
+      <div style="position:relative;">
+        <input id="zip-input" type="text" class="dark-input" maxlength="5"
+               placeholder="ZIP lookup…"
+               style="min-width:110px !important; max-width:110px !important; padding-right:28px;"
+               oninput="this.value=this.value.replace(/\D/g,'')"
+               onkeydown="if(event.key==='Enter')lookupZip()">
+        <i class="bi bi-search" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--forge-muted);font-size:0.75rem;pointer-events:none;"></i>
+      </div>
+      <button class="btn btn-forge btn-sm" onclick="lookupZip()" style="white-space:nowrap;">
+        <i class="bi bi-geo-alt me-1"></i>Go
+      </button>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="startNewZone()" style="white-space:nowrap;">
       <i class="bi bi-plus-circle me-1"></i>New Zone
     </button>
+  </div>
+
+  <!-- ZIP result toast -->
+  <div id="zip-toast" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999;
+       background:var(--forge-panel); border:1px solid var(--forge-border); border-radius:8px;
+       padding:14px 18px; min-width:280px; max-width:360px; box-shadow:0 4px 24px rgba(0,0,0,0.5);">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+      <div id="zip-toast-body" style="font-size:0.82rem; line-height:1.5;"></div>
+      <button onclick="document.getElementById('zip-toast').style.display='none'"
+              style="background:none;border:none;color:var(--forge-muted);cursor:pointer;padding:0;flex-shrink:0;">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
   </div>
 
   <!-- Main split -->
@@ -817,6 +844,79 @@ function deleteZone() {
   fetch(`/api/zones/${regionFile}/${encodeURIComponent(selectedZone.name)}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(res => { if (res.ok) location.reload(); else alert('Delete failed'); });
+}
+
+// ── ZIP Lookup ──────────────────────────────────────────────────────────────
+function lookupZip() {
+  const zip = document.getElementById('zip-input').value.trim();
+  if (zip.length !== 5) { showZipToast('Enter a 5-digit ZIP code.', 'warn'); return; }
+
+  fetch(`/api/zip/${zip}`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.found) {
+        showZipToast(
+          `<span style="color:var(--forge-muted);">ZIP ${zip}</span><br>` +
+          `<span style="color:#ef9a9a;">Not in covered territory</span><br>` +
+          `<span style="font-size:0.75rem;color:var(--forge-muted);">${data.message}</span>`,
+          'none'
+        );
+        return;
+      }
+      if (!data.zone) {
+        showZipToast(
+          `<span style="color:var(--forge-muted);">ZIP ${zip} → <strong style="color:#e0e0e0;">${data.zone_name}</strong></span><br>` +
+          `<span style="color:var(--forge-gold);font-size:0.75rem;">${data.message}</span>`,
+          'none'
+        );
+        return;
+      }
+      const z = data.zone;
+      const statusColors = {
+        rollover_dissolved: '#ff8a80', rollover: '#ff8a80',
+        pain_hit: 'var(--heat-hot)', pain_coming: 'var(--heat-pain)',
+        stable: '#81c784', transition: '#64b5f6', verify: '#ce93d8'
+      };
+      const statusColor = statusColors[z.status] || '#e0e0e0';
+      const rate = z.currentRate ? `${z.currentRate.toFixed(3)}¢` : '—';
+      const statusLabel = (z.status || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      showZipToast(
+        `<div style="font-size:0.7rem;color:var(--forge-muted);margin-bottom:2px;">ZIP ${zip}</div>` +
+        `<div style="font-weight:700;font-size:1rem;color:var(--forge-orange);margin-bottom:4px;">${z.name}</div>` +
+        `<div style="font-size:0.75rem;color:var(--forge-muted);margin-bottom:6px;">${z.region || ''}</div>` +
+        `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">` +
+          `<span style="font-size:0.72rem;padding:2px 7px;border-radius:5px;border:1px solid ${statusColor};color:${statusColor};">${statusLabel}</span>` +
+          `<span style="font-size:0.85rem;font-weight:700;color:#e0e0e0;">${rate}</span>` +
+        `</div>` +
+        `<div style="font-size:0.78rem;color:#ffe082;font-style:italic;line-height:1.4;border-top:1px solid var(--forge-border);padding-top:7px;">${z.hook || z.takeaway || ''}</div>` +
+        `<button onclick="selectZoneByName('${z.name.replace(/'/g, "\\'")}')" ` +
+          `style="margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;">` +
+          `<i class="bi bi-arrow-right-circle me-1"></i>Open Battlecard` +
+        `</button>`,
+        'none'
+      );
+    })
+    .catch(() => showZipToast('Lookup failed — server error.', 'warn'));
+}
+
+function showZipToast(html, type) {
+  const toast = document.getElementById('zip-toast');
+  document.getElementById('zip-toast-body').innerHTML = html;
+  toast.style.display = 'block';
+  toast.style.borderColor = type === 'warn' ? 'rgba(255,111,0,0.5)' : 'var(--forge-border)';
+}
+
+function selectZoneByName(name) {
+  document.getElementById('zip-toast').style.display = 'none';
+  selectZone(name);
+  // Scroll zone into view in table
+  const rows = document.querySelectorAll('#zone-tbody tr');
+  for (const row of rows) {
+    if (row.dataset.name === name) {
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      break;
+    }
+  }
 }
 </script>
 {% endblock %}

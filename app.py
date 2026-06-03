@@ -316,6 +316,42 @@ def api_add_zone(region_file):
         json.dump(zones, f, indent=2)
     return jsonify({"ok": True})
 
+_ZIP_MAP_PATH = os.path.join("data", "zip_zone_map.json")
+_zip_map_cache: dict | None = None
+
+def _load_zip_map() -> dict:
+    global _zip_map_cache
+    if _zip_map_cache is None:
+        if os.path.exists(_ZIP_MAP_PATH):
+            with open(_ZIP_MAP_PATH) as f:
+                raw = json.load(f)
+            _zip_map_cache = {k: v for k, v in raw.items() if not k.startswith("_")}
+        else:
+            _zip_map_cache = {}
+    return _zip_map_cache
+
+
+@app.route("/api/zip/<zipcode>")
+def api_zip_lookup(zipcode):
+    zipcode = zipcode.strip()
+    zip_map = _load_zip_map()
+    zone_name = zip_map.get(zipcode)
+    if not zone_name:
+        return jsonify({"found": False, "zip": zipcode, "message": "ZIP not mapped — may be outside covered territory or unincorporated area"}), 404
+
+    all_zones = _load_zones()
+    zone_name_lower = zone_name.lower()
+    match = next(
+        (z for z in all_zones if z["name"].lower() == zone_name_lower),
+        None
+    )
+    if not match:
+        return jsonify({"found": True, "zip": zipcode, "zone_name": zone_name,
+                        "message": "ZIP mapped but zone not yet in DB — check region files"}), 200
+
+    return jsonify({"found": True, "zip": zipcode, "zone_name": zone_name, "zone": match}), 200
+
+
 @app.route("/api/zones/<region_file>/<path:zone_name>", methods=["DELETE"])
 def api_delete_zone(region_file, zone_name):
     path = os.path.join(REGIONS_DIR, region_file + ".json")

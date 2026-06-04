@@ -14,7 +14,7 @@ app = Flask(__name__)
 OUTPUT_DIR = "output"
 REGIONS_DIR = os.path.join("data", "regions")
 
-STATUS_SORT = {"rollover_dissolved": 0, "rollover": 1, "pain_hit": 2, "pain_coming": 3, "transition": 4, "verify": 5, "stable": 6}
+STATUS_SORT = {"rollover_dissolved": 0, "rollover": 1, "pain_hit": 2, "pricing_updated": 3, "pain_coming": 4, "transition": 5, "verify": 6, "stable": 7}
 
 
 def _load_zones() -> list:
@@ -158,7 +158,7 @@ def _compute_weekly(zones: list) -> dict:
     rollover_alerts, contract_review, pain_hit, pain_coming = [], [], [], []
     timing_windows, avoid_list, verify_list = [], [], []
     blacklisted = {"municipal_utility", "electric_cooperative"}
-    hot_statuses = {"rollover_dissolved", "rollover", "pain_hit", "pain_coming"}
+    hot_statuses = {"rollover_dissolved", "rollover", "pain_hit", "pricing_updated", "pain_coming"}
 
     for z in zones:
         agg = z.get("aggregationStatus", "")
@@ -187,6 +187,8 @@ def _compute_weekly(zones: list) -> dict:
             # termEnd passed but zone not yet manually flagged — surface for review
             contract_review.append(z)
         elif status == "pain_hit":
+            pain_hit.append(z)
+        elif status == "pricing_updated":
             pain_hit.append(z)
         elif status == "pain_coming":
             pain_coming.append(z)

@@ -121,8 +121,9 @@
   /* ── Status badges ── */
   .status-rollover_dissolved { background: rgba(229,57,53,0.35);  color: #fff;             border: 1px solid rgba(229,57,53,0.8); font-weight:700; }
   .status-rollover     { background: rgba(229,57,53,0.25);  color: #ff8a80;          border: 1px solid rgba(229,57,53,0.5); font-weight:600; }
-  .status-pain_hit     { background: rgba(229,57,53,0.18);  color: var(--heat-hot);  border: 1px solid rgba(229,57,53,0.3); }
-  .status-pain_coming  { background: rgba(255,111,0,0.18);  color: var(--heat-pain); border: 1px solid rgba(255,111,0,0.3); }
+  .status-pain_hit        { background: rgba(229,57,53,0.18);  color: var(--heat-hot);  border: 1px solid rgba(229,57,53,0.3); }
+  .status-pricing_updated { background: rgba(103,58,183,0.18); color: #b39ddb;          border: 1px solid rgba(103,58,183,0.35); }
+  .status-pain_coming     { background: rgba(255,111,0,0.18);  color: var(--heat-pain); border: 1px solid rgba(255,111,0,0.3); }
   .status-stable       { background: rgba(46,125,50,0.18);  color: #81c784;          border: 1px solid rgba(46,125,50,0.3); }
   .status-transition   { background: rgba(21,101,192,0.18); color: #64b5f6;          border: 1px solid rgba(21,101,192,0.3); }
   .status-verify       { background: rgba(123,31,162,0.15); color: #ce93d8;          border: 1px solid rgba(123,31,162,0.3); }
@@ -167,6 +168,7 @@
       <option value="rollover_dissolved">Dissolved</option>
       <option value="rollover">Rollover</option>
       <option value="pain_hit">Pain Hit</option>
+      <option value="pricing_updated">Pricing Updated</option>
       <option value="pain_coming">Pain Coming</option>
       <option value="stable">Stable</option>
       <option value="transition">Transition</option>
@@ -874,7 +876,8 @@ function lookupZip() {
       const z = data.zone;
       const statusColors = {
         rollover_dissolved: '#ff8a80', rollover: '#ff8a80',
-        pain_hit: 'var(--heat-hot)', pain_coming: 'var(--heat-pain)',
+        pain_hit: 'var(--heat-hot)', pricing_updated: '#b39ddb',
+        pain_coming: 'var(--heat-pain)',
         stable: '#81c784', transition: '#64b5f6', verify: '#ce93d8'
       };
       const statusColor = statusColors[z.status] || '#e0e0e0';

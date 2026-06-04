@@ -108,5 +108,27 @@
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "medium"
+  },
+  {
+    "name": "Clinton",
+    "region": "Akron / Summit County",
+    "utility": "Ohio Edison",
+    "aggregationStatus": "no_aggregation_verified",
+    "currentRate": null,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": null,
+    "termStart": null,
+    "termEnd": null,
+    "status": "stable",
+    "confidence": "medium",
+    "takeaway": "Clinton (Summit County) has no township aggregation program. It sits in the Akron/Canton orbit \u2014 accounts are on Ohio Edison standard supply with no bulk price protection.",
+    "hook": "Clinton doesn't have an aggregation program, so those accounts are on Ohio Edison standard. The nearest talking points are Akron's Dynegy contract expiring this month and Medina County's new 9.50\u00a2 program \u2014 worth checking if they have a supplier or just riding utility.",
+    "futureUse": "price_to_compare_analysis",
+    "notes": "Village of Clinton, Summit County (not Clinton County). Located near 2534 W Comet Rd area. Ohio Edison service area. No municipal or township aggregation program found. Sits in Akron/Canton commercial orbit. Nearest active aggregation programs: Akron city (Dynegy, expiring June 2026), Medina County (Dynegy 9.50\u00a2, pain_hit locked through 2028), NOPEC territory (Summit County communities at 9.999\u00a2 June 2026). Use Medina County pain story or Akron renewal story when prospecting in this corridor.",
+    "lastVerified": "2026-06-04",
+    "sourceUrl": null,
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "medium"
   }
 ]

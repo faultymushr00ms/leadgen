@@ -285,7 +285,11 @@
   <div class="zone-card-header" onclick="toggleNotes(this)">
     <div>
       <!-- Status badge -->
-      {% if status == 'pain_hit' %}
+      {% if status == 'rollover_dissolved' %}
+        <span class="heat-badge mb-1" style="font-size:0.65rem;background:rgba(229,57,53,0.35);color:#fff;border:1px solid rgba(229,57,53,0.8);">🔥 DISSOLVED</span>
+      {% elif status == 'rollover' %}
+        <span class="heat-badge mb-1" style="font-size:0.65rem;background:rgba(229,57,53,0.25);color:#ff8a80;border:1px solid rgba(229,57,53,0.5);">🔥 ROLLOVER</span>
+      {% elif status == 'pain_hit' %}
         <span class="heat-badge heat-hot mb-1" style="font-size:0.65rem;">PAIN HIT</span>
       {% elif status == 'pain_coming' %}
         <span class="heat-badge heat-pain mb-1" style="font-size:0.65rem;">PAIN COMING</span>

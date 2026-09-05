@@ -17,7 +17,8 @@
     "futureUse": "aggregation",
     "notes": "Good example of Cincinnati/Duke repricing.",
     "utilityParent": "Duke Energy",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Reading",
@@ -37,7 +38,8 @@
     "futureUse": "aggregation",
     "notes": "Prior local historical should be confirmed further, but Duke baseline is useful.",
     "utilityParent": "Duke Energy",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Norwood",
@@ -57,7 +59,8 @@
     "futureUse": "aggregation",
     "notes": "Use as a high-pain Duke-area comparison.",
     "utilityParent": "Duke Energy",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Cincinnati",
@@ -77,6 +80,7 @@
     "futureUse": "aggregation",
     "notes": "Short fixed window before later variable structure.",
     "utilityParent": "Duke Energy",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   }
 ]

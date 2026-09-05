@@ -17,7 +17,8 @@
     "futureUse": "aggregation",
     "notes": "Core AEP anchor.",
     "utilityParent": "AEP",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Gahanna",
@@ -37,7 +38,8 @@
     "futureUse": "aggregation",
     "notes": "SOPEC archetype.",
     "utilityParent": "AEP",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Grove City",
@@ -57,7 +59,8 @@
     "futureUse": "aggregation",
     "notes": "Good AEP clean-energy high-rate example.",
     "utilityParent": "AEP",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Ontario",
@@ -77,7 +80,8 @@
     "futureUse": "aggregation",
     "notes": "Do not leave blank. Confirmed live area.",
     "utilityParent": "AEP",
-    "utilityConfidence": "high"
+    "utilityConfidence": "high",
+    "lastVerified": "2026-06-01"
   },
   {
     "name": "Westerville",

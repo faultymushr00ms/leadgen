@@ -1,0 +1,188 @@
+# Ohio Lead Gen Bot - Agent Configuration
+# Edit these values to tune how the agents behave.
+# No coding required — just change the numbers and text.
+
+# ─────────────────────────────────────────
+# QUOTA & GOALS
+# The goal engine uses these to coach you daily.
+# ─────────────────────────────────────────
+goals:
+  # Monthly baseline — must hit this to stay on track
+  rce_per_month: 100
+
+  # Bonus tier — company trips + higher pay
+  # 600 RCE over 4 months, weighted. Aim for 150/month to land it.
+  bonus_rce_per_4_months: 600
+  bonus_rce_per_month_target: 150   # 600 / 4
+
+  # Working days per month (adjust for your schedule)
+  working_days_per_month: 20
+
+  # Derived targets (calculated from above — don't edit these)
+  # Baseline: 100 RCE / 20 days = 5 RCE/day, ~1 close/day at avg 5 RCE
+  # Bonus:    150 RCE / 20 days = 7.5 RCE/day, ~1.5 closes/day
+  baseline_rce_per_day: 5
+  bonus_rce_per_day: 7.5
+
+# ─────────────────────────────────────────
+# RCE THRESHOLDS
+# RCE = Residential Commercial Equivalent
+# 1 RCE ≈ the energy usage of one average home
+# Volume model: 2 closes at 5 RCE/day hits bonus pace.
+# ─────────────────────────────────────────
+qualification:
+  min_rce: 3              # Below this = not worth the call
+  sweet_spot_min: 5       # Sweet spot starts here — volume play
+  sweet_spot_max: 30      # Sweet spot ends here
+  large_account_min: 30   # Above this = corporate conversation, flag not reject
+  max_rce: 500            # No hard ceiling — willing to play corporate for a win
+
+# ─────────────────────────────────────────
+# CONTRACT RULES
+# Governs when existing customers are eligible for renewal
+# and when competitors' customers can be re-signed.
+# ─────────────────────────────────────────
+contracts:
+  target_length_years: 5     # What we aim to sign them on
+
+  # Re-sign rules by territory and energy type
+  # A business is eligible if they have LESS than X years remaining
+  ohio:
+    electric_max_remaining_years: 2   # Can sign if under 2 years left
+    gas_max_remaining_years: 0        # No restriction noted — always eligible
+  texas:
+    electric_max_remaining_years: 3   # Under 3 years left
+    gas_max_remaining_years: 0
+    priority: low                     # Texas is background — Ohio first
+
+  # When to start re-engaging our own customers for renewal
+  renewal_outreach_months_before_expiry: 12  # Start talking 1 year before contract ends
+
+# ─────────────────────────────────────────
+# URGENCY SCORING WEIGHTS (Agent 3)
+# Higher number = more influence on the final rank.
+# All weights are relative to each other.
+# ─────────────────────────────────────────
+urgency:
+  rce_weight: 40               # Sweet spot (10-30) scores highest
+  followup_overdue_weight: 30  # Overdue follow-ups jump the queue
+  seasonal_weight: 15          # Winter = gas urgency, summer = electric urgency
+  lead_freshness_weight: 15    # Fresh leads get a small boost
+
+  followup_days_threshold: 21  # Days before a lead is considered overdue
+
+# ─────────────────────────────────────────
+# SEASONAL SETTINGS
+# ─────────────────────────────────────────
+seasons:
+  gas_peak_months: [11, 12, 1, 2, 3]      # Nov–Mar: push gas leads harder
+  electric_peak_months: [6, 7, 8, 9]      # Jun–Sep: push electric leads harder
+  neutral_months: [4, 5, 10]
+
+# ─────────────────────────────────────────
+# CONVERSATION RULES (Agent 2 — AI qualifier)
+# ─────────────────────────────────────────
+conversation_rules:
+  - "Ask about number of locations — multiple sites, aggregate the bills for total usage"
+  - "Identify the decision maker early — don't waste time on non-owners"
+  - "Ask about current provider and contract end date"
+  - "For electricity: if contract is over 2 years remaining, move on immediately"
+  - "For restaurants: ask about cooking equipment — hot pot and pho use significantly more gas"
+  - "For gas stations: ask if there's a car wash attached — changes usage significantly"
+  - "Listen for mentions of expansion or new equipment — growth signals"
+
+# ─────────────────────────────────────────
+# REJECTION TRIGGERS (Agent 2 — AI qualifier)
+# ─────────────────────────────────────────
+rejection_triggers:
+  - "Single-family home or personal residence"
+  - "Confirmed under 3 RCE"
+  - "Electricity contract with more than 2 years remaining"
+  - "Large corporation or enterprise account (over 200 RCE)"
+  - "Empty or storage-only warehouse with no active operations"
+  - "Out of Ohio service territory"
+  - "Explicitly asked not to be contacted again"
+
+# ─────────────────────────────────────────
+# INDUSTRY TIERS
+# Based on real field experience — governs scrape priority and rule scoring.
+# Tier 1 = almost always in sweet spot, call first.
+# Tier 2 = often qualify, good to work.
+# Tier 3 = hit or miss, lower priority.
+# SKIP = not our market.
+# ─────────────────────────────────────────
+target_industries:
+
+  tier_1:  # Bread and butter — almost always 10-30 RCE, call these first
+    - Gas Station / Convenience Store
+    - Gas Station with Car Wash         # Car wash adds significant usage
+    - Small Restaurant / Diner
+    - Asian Restaurant                  # Hot pot and pho use more gas than expected
+    - Hotel / Motel (small to mid)
+    - Car Wash (standalone)
+    - Laundromat / Coin Laundry
+
+  tier_2:  # Often qualify — worth including in every sweep
+    - Warehouse / Distribution (active operations) # Looks big, runs ~5 RCE — that's the target
+    - Fast Food (independent or small chain)
+    - Auto Repair / Body Shop
+    - Gym / Fitness Center
+    - Grocery / Convenience (small chain)
+    - Medical / Dental Office
+    - Bakery / Cafe
+    - Bar / Tavern
+
+  tier_3:  # Variable — check before calling
+    - Retail (single location)
+    - Office Building (small)
+    - Light Manufacturing (verify size)
+    - Large Corporate Account            # Flag for special handling — willing to play the game
+
+  skip:  # Truly not worth it — no active energy use
+    - Storage Only (empty / inactive)   # No operations = no energy = no deal
+    - Vacant Property
+    - Empty Building
+
+# ─────────────────────────────────────────
+# BUSINESS NUANCE RULES (Rule-based qualifier)
+# Signals that adjust RCE estimates up or down.
+# These get smarter as you add more from field experience.
+# ─────────────────────────────────────────
+nuance_rules:
+
+  rce_boosters:  # Keywords that suggest higher usage than average
+    - keyword: "hot pot"
+      boost: 8
+      reason: "Hot pot cooking uses significantly more gas"
+    - keyword: "pho"
+      boost: 6
+      reason: "Pho broth requires extended high-heat cooking"
+    - keyword: "buffet"
+      boost: 5
+      reason: "Buffet-style keeps food hot continuously"
+    - keyword: "24 hour"
+      boost: 4
+      reason: "24/7 operations never cycle down"
+    - keyword: "car wash"
+      boost: 10
+      reason: "Car wash adds major gas and electric load"
+    - keyword: "laundry"
+      boost: 8
+      reason: "Laundry equipment runs hot and constant"
+    - keyword: "multiple location"
+      boost: 15
+      reason: "Aggregate billing multiplies total usage"
+
+  rce_reducers:  # Keywords that suggest lower usage than average
+    - keyword: "storage"
+      reduce: 12
+      reason: "Storage-only means minimal active energy use"
+    - keyword: "carry out"
+      reduce: 4
+      reason: "Carry-out only means no dine-in heating load"
+    - keyword: "seasonal"
+      reduce: 5
+      reason: "Seasonal business means partial-year usage"
+    - keyword: "vacant"
+      reduce: 20
+      reason: "Vacant = no usage"

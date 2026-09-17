@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}— Call Sheet{% endblock %}
+
+{% set active = 'leads' %}
+
+{% block topbar_title %}LEADS{% endblock %}
+{% block topbar_sub %}Call Sheet — sorted by urgency{% endblock %}
+
+{% block topbar_actions %}
+<a href="/run" class="btn btn-forge btn-sm"><i class="bi bi-play-fill me-1"></i>Run Pipeline</a>
+<a href="/export" class="btn btn-ghost btn-sm"><i class="bi bi-download me-1"></i>Export</a>
+{% endblock %}
+
+{% block content %}
+<div style="display:flex; flex-direction:column; height:100%; overflow:hidden; padding:14px; gap:12px;">
+
+  <!-- Stat strip -->
+  <div style="display:flex; gap:10px; flex-shrink:0;">
+    <div class="panel" style="flex:1; padding:12px 16px;">
+      <div class="stat-label">Leads Ready</div>
+      <div class="stat-number">{{ stats.qualified }}</div>
+    </div>
+    <div class="panel" style="flex:1; padding:12px 16px;">
+      <div class="stat-label">High Confidence</div>
+      <div class="stat-number">{{ stats.high_confidence }}</div>
+    </div>
+    <div class="panel" style="flex:1; padding:12px 16px;">
+      <div class="stat-label">Sweet Spot (5–30 RCE)</div>
+      <div class="stat-number">{{ stats.sweet_spot }}</div>
+    </div>
+    <div class="panel" style="flex:2; padding:12px 16px;">
+      <div class="stat-label mb-2">Monthly Quota — {{ stats.rce_logged }} / 100 RCE</div>
+      <div class="progress" style="height:6px;">
+        <div class="progress-bar" style="width:{{ stats.quota_pct }}%"></div>
+      </div>
+      <div style="font-size:0.7rem; color:var(--forge-muted); margin-top:4px;">{{ stats.quota_pct }}% of baseline</div>
+    </div>
+  </div>
+
+  <!-- Call sheet -->
+  <div class="panel" style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+    <div class="panel-header">
+      <span><i class="bi bi-lightning-charge me-2" style="color:var(--forge-orange)"></i>
+        Today's Call Sheet &nbsp;<span style="color:var(--forge-muted); font-weight:400">{{ today }}</span>
+      </span>
+    </div>
+
+    {% if leads %}
+    <div class="scrollable" style="flex:1;">
+      <table class="forge-table">
+        <thead>
+          <tr>
+            <th style="width:38px">#</th>
+            <th>Company</th>
+            <th>Phone</th>
+            <th>RCE</th>
+            <th>Conf</th>
+            <th style="width:120px">Urgency</th>
+            <th>Why Call Now</th>
+            <th>Terr.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lead in leads %}
+          <tr onclick="window.location='/lead/{{ loop.index0 }}'">
+            <td style="color:var(--forge-muted); font-size:0.75rem;">{{ loop.index }}</td>
+            <td>
+              <div style="font-weight:600; color:#e0e0e0;">{{ lead.company_name }}</div>
+              <div style="font-size:0.72rem; color:var(--forge-muted);">{{ lead.industry }}</div>
+            </td>
+            <td>
+              {% if lead.phone %}
+                <a class="phone-link" href="tel:{{ lead.phone }}" onclick="event.stopPropagation()">
+                  {{ lead.phone }}
+                </a>
+              {% else %}
+                <span style="color:var(--forge-muted)">—</span>
+              {% endif %}
+            </td>
+            <td>
+              <span style="color:var(--forge-orange); font-weight:700;">~{{ lead.rce_estimate }}</span>
+            </td>
+            <td>
+              {% if lead.confidence == 'HIGH' %}
+                <span class="heat-badge heat-hot">HIGH</span>
+              {% elif lead.confidence == 'MEDIUM' %}
+                <span class="heat-badge heat-warm">MED</span>
+              {% else %}
+                <span class="heat-badge heat-cooling">LOW</span>
+              {% endif %}
+            </td>
+            <td>
+              <div style="background:var(--forge-border); border-radius:3px; height:5px; width:100%; margin-bottom:3px;">
+                <div style="background:var(--forge-orange); border-radius:3px; height:5px; width:{{ lead.urgency_score }}%;"></div>
+              </div>
+              <span style="font-size:0.7rem; color:var(--forge-muted);">{{ lead.urgency_score }}</span>
+            </td>
+            <td style="max-width:260px;">
+              <span style="font-size:0.78rem; color:#b0b0b0;">{{ lead.reasoning }}</span>
+            </td>
+            <td>
+              <span style="font-size:0.7rem; padding:2px 6px; border-radius:4px; background:var(--forge-border); color:var(--forge-muted);">
+                {{ lead.location.split(',')[-1].strip() if ',' in lead.location else 'OH' }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--forge-muted);">
+      <i class="bi bi-inbox" style="font-size:3rem; margin-bottom:12px;"></i>
+      <div style="font-size:0.88rem;">No leads yet.</div>
+      <div style="font-size:0.78rem; margin-top:4px;">Click <strong style="color:var(--forge-orange)">Run Pipeline</strong> to generate your call sheet.</div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

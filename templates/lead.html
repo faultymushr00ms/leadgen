@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}— {{ lead.company_name }}{% endblock %}
+
+{% set active = 'leads' %}
+
+{% block topbar_title %}LEAD DETAIL{% endblock %}
+{% block topbar_sub %}Rank #{{ rank }}{% endblock %}
+
+{% block topbar_actions %}
+<a href="/" class="btn btn-ghost btn-sm"><i class="bi bi-arrow-left me-1"></i>Back to Call Sheet</a>
+{% endblock %}
+
+{% block content %}
+<div style="padding:14px; overflow-y:auto; height:100%;">
+  <div style="display:grid; grid-template-columns:1fr 320px; gap:14px; max-width:1100px;">
+
+    <!-- Main card -->
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <span style="font-size:1rem; font-weight:700; color:var(--forge-orange); text-transform:none; letter-spacing:0;">
+            {{ lead.company_name }}
+          </span>
+          <span style="color:var(--forge-muted); font-size:0.78rem; margin-left:10px; text-transform:none; letter-spacing:0;">
+            {{ lead.industry }}
+          </span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          {% if lead.confidence == 'HIGH' %}
+            <span class="heat-badge heat-hot">HIGH CONF</span>
+          {% elif lead.confidence == 'MEDIUM' %}
+            <span class="heat-badge heat-warm">MED CONF</span>
+          {% else %}
+            <span class="heat-badge heat-cooling">LOW CONF</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <div style="padding:16px;">
+        <!-- Key metrics -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:18px;">
+          <div>
+            <div class="stat-label">Est. RCE</div>
+            <div class="stat-number" style="font-size:2rem;">~{{ lead.rce_estimate }}</div>
+          </div>
+          <div>
+            <div class="stat-label">Urgency Score</div>
+            <div class="stat-number" style="font-size:2rem;">{{ lead.urgency_score }}</div>
+          </div>
+          <div>
+            <div class="stat-label">Next Action</div>
+            <div style="color:var(--forge-orange); font-weight:700; font-size:0.95rem; text-transform:uppercase; margin-top:8px;">
+              {{ lead.next_action.replace('_', ' ') if lead.next_action else '—' }}
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--forge-border); padding-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div class="stat-label mb-1">Phone</div>
+            {% if lead.phone %}
+              <a class="phone-link" href="tel:{{ lead.phone }}" style="font-size:1.05rem;">
+                <i class="bi bi-telephone me-1"></i>{{ lead.phone }}
+              </a>
+            {% else %}
+              <span style="color:var(--forge-muted)">No phone on file</span>
+            {% endif %}
+          </div>
+          <div>
+            <div class="stat-label mb-1">Location</div>
+            <span style="font-size:0.88rem;">{{ lead.location }}</span>
+          </div>
+          <div style="grid-column:1/-1;">
+            <div class="stat-label mb-1">Why Call Now</div>
+            <p style="color:#e0e0e0; font-size:0.88rem; line-height:1.5; margin:0;">{{ lead.reasoning }}</p>
+          </div>
+          {% if lead.known_info %}
+          <div style="grid-column:1/-1;">
+            <div class="stat-label mb-1">Field Notes</div>
+            <p style="color:var(--forge-muted); font-size:0.8rem; line-height:1.5; margin:0;">{{ lead.known_info }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Action sidebar -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-check2-square me-2"></i>Log Outcome</span>
+        </div>
+        <div style="padding:12px; display:flex; flex-direction:column; gap:8px;">
+          <button class="btn btn-forge" style="font-size:0.82rem;">
+            <i class="bi bi-calendar-check me-1"></i>Appointment Booked
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem;">
+            <i class="bi bi-voicemail me-1"></i>Left Voicemail
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem;">
+            <i class="bi bi-arrow-clockwise me-1"></i>Callback Scheduled
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem; color:var(--forge-muted);">
+            Not Interested
+          </button>
+          <button class="btn btn-ghost" style="font-size:0.82rem; color:var(--forge-muted);">
+            Does Not Qualify
+          </button>
+          <div style="border-top:1px solid var(--forge-border); padding-top:10px; margin-top:2px;">
+            <textarea class="dark-input" rows="3"
+              placeholder="Notes from the call..." style="resize:none;"></textarea>
+            <button class="btn btn-forge w-100 mt-2" style="font-size:0.82rem;">Save Notes</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span><i class="bi bi-clock-history me-2"></i>Activity</span>
+        </div>
+        <div style="padding:20px; text-align:center; color:var(--forge-muted); font-size:0.82rem;">
+          No activity logged yet.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

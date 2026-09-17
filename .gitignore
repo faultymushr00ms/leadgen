@@ -1,0 +1,17 @@
+# Environment — never commit your API keys
+.env
+
+# Raw data files — add your CSV exports here, they stay local
+data/*.csv
+data/*.xlsx
+
+# Generated files — rebuilt on each run
+output/
+models/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/

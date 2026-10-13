@@ -8,6 +8,7 @@ import csv
 import json
 import os
 from datetime import datetime, date
+from typing import Optional
 from flask import Flask, jsonify, render_template, redirect, request
 
 app = Flask(__name__)
@@ -39,7 +40,7 @@ def _load_zones() -> list:
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
-def _latest_file(prefix: str, ext: str) -> str | None:
+def _latest_file(prefix: str, ext: str) -> Optional[str]:
     if not os.path.exists(OUTPUT_DIR):
         return None
     files = sorted(f for f in os.listdir(OUTPUT_DIR)

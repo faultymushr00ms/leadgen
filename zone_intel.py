@@ -506,7 +506,16 @@ def build_card(zone: dict) -> dict:
         "url": "/card?file=" + quote(source_file) + "&name=" + quote(name),
         "jurisdiction": research.get("jurisdiction") or name,
         "county": research.get("county") or "",
-        "utility": research.get("utility") or zone.get("utility") or "",
+        "utility": research.get("utilityDetail") or research.get("utility") or zone.get("utility") or "",
+        "utilityDetail": research.get("utilityDetail") or "",
+        "lifecycle": research.get("lifecycle") or None,
+        "futureNote": research.get("futureNote") or "",
+        "currentCaption": (
+            "Last aggregation rate"
+            if (research.get("lifecycle") or {}).get("status") == "ended"
+            and "aggregation" in (current.get("basis") or "").lower()
+            else "Current"
+        ),
         "administrator": research.get("administrator") or "",
         "supplier": research.get("supplier") or "",
         "program": status.get("program") or "",
@@ -644,6 +653,8 @@ def _research_with_corrections(row: dict, source_file: str, name: str) -> dict:
 
 def attach_research(zones: list) -> list:
     """Add research fields. Does not change original FORGE values."""
+    import merged_research
+
     index = _load_dataset_index()
     for zone in zones:
         # _source_file is the region key without .json
@@ -655,6 +666,7 @@ def attach_research(zones: list) -> list:
             dataset_file = (event or {}).get("dataset_source_file") or ""
             if dataset_file:
                 row = index.get((dataset_file, name))
+        row = merged_research.prepare_row(key[0], name, row)
         snapshot = {field: zone.get(field) for field in ORIGINAL_FIELDS}
         zone["original"] = snapshot
         if row is None:
@@ -664,6 +676,7 @@ def attach_research(zones: list) -> list:
         # Guard: never copy research conclusions onto the FORGE status fields.
         before = {field: zone.get(field) for field in ("status", "aggregationStatus", "currentRate", "supplier")}
         zone["research"] = _research_with_corrections(row, key[0], name)
+        merged_research.annotate(zone)
         zone["card"] = build_card(zone)
         for field, value in before.items():
             zone[field] = value

@@ -59,7 +59,7 @@
     "takeaway": "Fremont has a Dynegy aggregation at 9.96¢/kWh, August 2026 through December 2027. The utility is address-dependent.",
     "hook": "",
     "futureUse": "address_check",
-    "notes": "Call the city utilities office or run a utility address lookup. Dynegy's terms file says Toledo Edison and the territory layers say AEP Ohio. Do not quote an Ohio Edison Price to Compare.",
+    "notes": "Call the city utilities office or run a utility address lookup. Dynegy's terms file says Toledo Edison and the territory layers say AEP Ohio. Do not quote an Ohio Edison Price to Compare. Two Dynegy tiers: Toledo Edison accounts 9.96¢ August 2026–December 2027; AEP Ohio accounts 10.67¢ July 2026–December 2027.",
     "lastVerified": "2026-06-01",
     "sourceUrl": "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Fremont-TE",
     "utilityParent": null,

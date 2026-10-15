@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}— Hot leads{% endblock %}
+{% block topbar_title %}HOT LEADS{% endblock %}
+{% block topbar_sub %}{{ rows|length }} communities · residential Price to Compare vs aggregation{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div class="banner-alert banner-note">
+    Residential Price to Compare is the utility default from energychoice.ohio.gov, accessed 2026-10-15.
+    The aggregation rate is a different product. agg−PTC is negative when the aggregation rate is below that default.
+    Rows that are not confirmed or likely stay in this list and do not replace a battlecard.
+  </div>
+  <div class="panel">
+    <div class="panel-header"><span>Ranked from the merged hot-lead list</span><span>{{ rows|length }}</span></div>
+    <div class="scrollable">
+      <table class="forge-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Community</th>
+            <th>Utility</th>
+            <th>Supplier</th>
+            <th>Agg rate</th>
+            <th>Term end</th>
+            <th>Residential PTC</th>
+            <th>agg−PTC</th>
+            <th>Lifecycle</th>
+            <th>Confidence</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ row.rank }}</td>
+            <td style="white-space:normal;">
+              {% if row.card_url %}
+              <a href="{{ row.card_url }}" style="color:var(--forge-orange);">{{ row.community }}</a>
+              {% else %}
+              {{ row.community }}
+              {% endif %}
+              <div style="color:var(--forge-muted); font-size:0.72rem;">{{ row.county }}</div>
+            </td>
+            <td style="white-space:normal;">{{ row.utility or '—' }}</td>
+            <td style="white-space:normal;">{{ row.supplier or '—' }}</td>
+            <td>{{ row.agg_rate or '—' }}</td>
+            <td>{{ row.term_end or '—' }}</td>
+            <td style="white-space:normal;">{{ row.PTC_c_kWh or '—' }}</td>
+            <td style="white-space:normal;">{{ row.agg_minus_PTC or '—' }}</td>
+            <td style="white-space:normal;">{{ row.lifecycle or '—' }}</td>
+            <td style="white-space:normal;">
+              {{ row.confidence or '—' }}
+              {% if row.confidence and not (row.confidence.startswith('confirmed') or row.confidence.startswith('likely')) %}
+              <div style="color:#ffe082; font-size:0.72rem;">Not confirmed</div>
+              {% endif %}
+            </td>
+            <td style="white-space:normal;">{{ row.why or row.bucket }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

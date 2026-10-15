@@ -44,6 +44,19 @@
     {% if card.municipalFlagUnconfirmed %}
     <div class="banner-alert banner-unresolved">Municipal blacklist flag is not confirmed.</div>
     {% endif %}
+    {% if card.lifecycle and card.lifecycle.status == 'ended' %}
+    <div class="banner-alert banner-block">
+      <strong>Ended{% if card.lifecycle.endedDate %} {{ card.lifecycle.endedDate }}{% endif %}.</strong>
+      {{ card.lifecycle.reason or card.lifecycle.detail or 'Reason not stated.' }}
+      {% if card.lifecycle.sources %}<div style="margin-top:4px;">Sources: {{ card.lifecycle.sources }}</div>{% endif %}
+    </div>
+    {% elif card.lifecycle and card.lifecycle.status == 'certified_not_launched' %}
+    <div class="banner-alert banner-unresolved"><strong>Certified but not launched.</strong> A PUCO certificate is certification only.</div>
+    {% elif card.lifecycle and card.lifecycle.status == 'rate_pending' %}
+    <div class="banner-alert banner-unresolved"><strong>Rate pending.</strong> {{ card.lifecycle.detail or 'No launched aggregation rate.' }}</div>
+    {% elif card.lifecycle and card.lifecycle.status == 'seeking_supplier' %}
+    <div class="banner-alert banner-unresolved"><strong>Seeking supplier.</strong> No aggregation rate to quote.</div>
+    {% endif %}
 
     <div class="panel" style="padding:16px; margin-bottom:12px;">
       <div style="font-size:1.4rem; font-weight:800; color:var(--forge-orange);">{{ card.jurisdiction }}</div>
@@ -58,6 +71,9 @@
       {% endif %}
       <div style="display:flex; gap:6px; flex-wrap:wrap;">
         <span class="pill">{{ card.program or 'program unknown' }}</span>
+        {% if card.lifecycle %}
+        <span class="pill" style="{% if card.lifecycle.status == 'ended' %}color:#ff8a80;border-color:rgba(229,57,53,0.55);{% elif card.lifecycle.status == 'active' %}color:#c8e6c9;border-color:rgba(102,187,106,0.45);{% else %}color:#ffe082;border-color:rgba(255,179,0,0.45);{% endif %}">lifecycle: {{ card.lifecycle.label }}</span>
+        {% endif %}
         <span class="pill">term: {{ card.termStatus or '—' }}</span>
         <span class="pill">verification: {{ card.verificationLabel }}</span>
         {% if queue_item %}<span class="pill">queue score {{ queue_item.trigger_score }}</span>{% endif %}
@@ -66,7 +82,7 @@
 
     <div class="rate-grid" style="margin-bottom:12px;">
       <div class="rate-cell">
-        <div class="k">Current</div>
+        <div class="k">{{ card.currentCaption or 'Current' }}</div>
         {% if card.currentSourced %}
           <div class="v">{{ card.currentLabel }}¢</div>
           <div class="s">{{ card.currentBasis }}<br>{{ card.currentStart or '—' }} – {{ card.currentEnd or '—' }}<br>Accessed {{ card.accessedAt or '—' }}</div>
@@ -107,11 +123,14 @@
 
     {% if card.futureLabel %}
     <div class="panel" style="padding:12px 14px; margin-bottom:12px;">
-      <div class="stat-label">Future term</div>
+      <div class="stat-label">Announced / Future</div>
       <div style="font-size:1.05rem; font-weight:700; margin-top:4px;">
         {% if card.futureSourced %}{{ card.futureLabel }}¢{% else %}{{ card.futureLabel }}¢ <span style="font-weight:500; color:var(--forge-muted);">(unsourced)</span>{% endif %}
         <span style="font-weight:500; color:var(--forge-muted); font-size:0.85rem;">{{ card.futureStart or '—' }} – {{ card.futureEnd or '—' }}</span>
       </div>
+      {% if card.futureNote %}
+      <div style="font-size:0.8rem; margin-top:4px;">{{ card.futureNote }}</div>
+      {% endif %}
       {% if card.changeFuture %}
       <div style="font-size:0.8rem; margin-top:4px;">Vs the sourced current rate: {{ '%+.3f'|format(card.changeFuture.cents) }}¢ ({{ '%+.1f'|format(card.changeFuture.percent) }}%) at rollover.</div>
       {% endif %}

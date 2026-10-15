@@ -16,6 +16,7 @@ from flask import Flask, jsonify, render_template, redirect, request, send_file
 
 from forge_config import env_is_configured, pipeline_argv
 import history_store
+import merged_research
 import place_index
 import puco_layer
 import territory
@@ -673,6 +674,42 @@ def investigation_queue():
         puco_filter=selected,
         puco_disclaimer=puco["disclaimer"],
         puco_attribution=puco["attribution"],
+    )
+
+
+@app.route("/hot-leads")
+def hot_leads():
+    zones = _load_zones()
+    by_name = {}
+    for zone in zones:
+        by_name.setdefault((zone.get("name") or "").casefold(), zone)
+    rows = []
+    for row in merged_research.load_hot_leads():
+        item = dict(row)
+        zone = by_name.get((row.get("community") or "").casefold())
+        if zone is None:
+            cleaned = (row.get("community") or "").replace(" Twp", "").casefold()
+            zone = by_name.get(cleaned)
+        item["card_url"] = zone["card"]["url"] if zone and zone.get("card") else ""
+        rows.append(item)
+    return render_template("hot_leads.html", active="hotleads", rows=rows)
+
+
+@app.route("/unverified")
+def unverified_leads():
+    query = (request.args.get("q") or "").strip().lower()
+    groups = merged_research.unverified_groups()
+    if query:
+        groups = [
+            group for group in groups
+            if query in group["community"].lower() or query in group["county"].lower()
+        ]
+    return render_template(
+        "unverified.html",
+        active="unverified",
+        groups=groups,
+        questions=merged_research.unmatched_questions(),
+        q=request.args.get("q") or "",
     )
 
 

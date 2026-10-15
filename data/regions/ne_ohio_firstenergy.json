@@ -301,7 +301,7 @@
     "takeaway": "Plain Township is a NOPEC electric member. The distribution utility looks like AEP Ohio. The AEP-territory price still needs a check.",
     "hook": "",
     "futureUse": "aggregation",
-    "notes": "Plain Township is a NOPEC electric member. The distribution utility looks like AEP Ohio. The AEP-territory price still needs a check. Prior Dynegy figure 8.26¢/kWh was recorded through May 2026.",
+    "notes": "Plain Township is a NOPEC electric member. The distribution utility looks like AEP Ohio. The AEP-territory price still needs a check. Prior Dynegy figure 8.26¢/kWh was recorded through May 2026. The township page lists both AEP Ohio and Ohio Edison. The AEP-area NOPEC price is unverified.",
     "lastVerified": "2026-10-15",
     "sourceUrl": "https://www.plaintownshipstarkoh.gov/services/electric_aggregation.php",
     "utilityParent": "AEP",

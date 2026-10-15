@@ -1,6 +1,7 @@
 """Data loading, comparable rate changes, and the report-only monitor."""
 
 import hashlib
+import json
 import os
 import sys
 import tempfile
@@ -12,12 +13,14 @@ sys.path.insert(0, ROOT)
 os.chdir(ROOT)
 
 import app as forge_app
+import history_store
 from forge_config import key_is_configured, pipeline_argv
 from zone_intel import (
     append_monitor_items,
     comparable_change,
     compare_observation,
     historical_benchmark,
+    load_monitor_additions,
     load_ptc,
     load_queue,
     load_rate_ledger,
@@ -211,6 +214,137 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(_zone("Akron")["research"]["current"]["rate_raw"], stored)
 
 
+class HistoryTests(unittest.TestCase):
+    def test_refresh_keeps_prior_records(self):
+        zone = _zone("Akron")
+        region = zone["_source_file"]
+        region_path = os.path.join(ROOT, "data", "regions", f"{region}.json")
+        with open(region_path, "rb") as handle:
+            region_before = handle.read()
+        with tempfile.TemporaryDirectory() as tmp:
+            queue_path = os.path.join(tmp, "monitor_additions.csv")
+            history_dir = os.path.join(tmp, "history")
+            report_path = os.path.join(tmp, "refresh_report.json")
+            observations = []
+            for rate, accessed_at in (("10.50", "2026-10-15T12:00:00"), ("11.10", "2026-10-16T12:00:00")):
+                path = os.path.join(tmp, f"obs-{rate}.json")
+                with open(path, "w", encoding="utf-8") as handle:
+                    json.dump([{
+                        "zone": "Akron",
+                        "region": region,
+                        "rate": rate,
+                        "supplier": "Dynegy",
+                        "source_url": "https://example.test/akron",
+                        "accessed_at": accessed_at,
+                    }], handle)
+                observations.append(path)
+            env = {"FORGE_HISTORY_DIR": history_dir}
+            with patch("zone_intel.MONITOR_QUEUE_PATH", queue_path), patch.dict(os.environ, env):
+                import run_refresh
+                run_refresh.main(["--observations", observations[0], "--report", report_path])
+                with open(queue_path, "rb") as handle:
+                    queue_after_first = handle.read()
+                with open(report_path, "rb") as handle:
+                    report_after_first = handle.read()
+                journal_path = history_store.journal_path()
+                with open(journal_path, "rb") as handle:
+                    journal_after_first = handle.read()
+                run_refresh.main(["--observations", observations[1], "--report", report_path])
+                with open(queue_path, "rb") as handle:
+                    queue_after_second = handle.read()
+                with open(report_path, "rb") as handle:
+                    report_after_second = handle.read()
+                with open(journal_path, "rb") as handle:
+                    journal_after_second = handle.read()
+                rows = load_monitor_additions(queue_path)
+                events = history_store.load_events(journal_path)
+            self.assertTrue(queue_after_second.startswith(queue_after_first))
+            self.assertIn(b"10.50", queue_after_first)
+            self.assertIn(b"11.10", queue_after_second)
+            self.assertEqual(report_after_first, report_after_second)
+            self.assertIn(b"10.50", report_after_first)
+            self.assertTrue(os.path.exists(os.path.join(tmp, "refresh_report-1.json")))
+            self.assertTrue(journal_after_second.startswith(journal_after_first))
+            self.assertEqual(len(rows), 2)
+            self.assertIn("10.50", rows[0]["change"])
+            self.assertTrue(rows[0]["superseded"])
+            self.assertTrue(rows[0]["superseded_at"])
+            self.assertIn("11.10", rows[1]["change"])
+            self.assertFalse(rows[1].get("superseded"))
+            rates = [event for event in events if event["kind"] == "rate"]
+            self.assertEqual([event["rate"] for event in rates], ["10.50", "11.10"])
+            self.assertTrue(rates[0]["superseded"])
+            self.assertTrue(rates[0]["superseded_at"])
+            self.assertFalse(rates[1].get("superseded"))
+            reports = [event for event in events if event["kind"] == "refresh_report"]
+            self.assertEqual(len(reports), 2)
+            with open(reports[0]["path"], encoding="utf-8") as handle:
+                self.assertIn("10.50", handle.read())
+            with open(reports[1]["path"], encoding="utf-8") as handle:
+                self.assertIn("11.10", handle.read())
+        with open(region_path, "rb") as handle:
+            self.assertEqual(handle.read(), region_before)
+
+    def test_zone_edits_append_and_keep_the_region_file(self):
+        zone = _zone("Akron")
+        region = zone["_source_file"]
+        region_path = os.path.join(ROOT, "data", "regions", f"{region}.json")
+        with open(region_path, "rb") as handle:
+            before = handle.read()
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.dict(os.environ, {"FORGE_HISTORY_DIR": tmp}):
+                client = forge_app.app.test_client()
+                first = client.put(
+                    f"/api/zones/{region}/Akron",
+                    json={"name": "Akron", "notes": "history-test"},
+                )
+                self.assertEqual(first.status_code, 200)
+                journal_path = history_store.journal_path()
+                with open(journal_path, "rb") as handle:
+                    journal_after_first = handle.read()
+                second = client.put(
+                    f"/api/zones/{region}/Akron",
+                    json={"name": "Akron", "notes": "second-note"},
+                )
+                self.assertEqual(second.status_code, 200)
+                removed = client.delete(f"/api/zones/{region}/Akron")
+                self.assertEqual(removed.status_code, 200)
+                self.assertTrue(removed.get_json()["superseded"])
+                loaded = [
+                    item for item in forge_app._load_zones()
+                    if item.get("_history_key") == "Akron" and item.get("_source_file") == region
+                ]
+                self.assertEqual(len(loaded), 1)
+                self.assertEqual(len(forge_app._load_zones()), 327)
+                self.assertTrue(loaded[0]["superseded"])
+                self.assertTrue(loaded[0]["superseded_at"])
+                self.assertEqual(loaded[0]["notes"], "second-note")
+                kept_notes = [entry["values"].get("notes") for entry in loaded[0]["history"]]
+                self.assertIn("history-test", kept_notes)
+                self.assertTrue(all(entry.get("superseded_at") for entry in loaded[0]["history"]))
+                with open(journal_path, "rb") as handle:
+                    journal_after = handle.read()
+                self.assertTrue(journal_after.startswith(journal_after_first))
+                self.assertIn(b"history-test", journal_after_first)
+                events = history_store.load_events(journal_path)
+                self.assertEqual(len(events), 3)
+                self.assertTrue(events[0]["superseded"])
+                self.assertTrue(events[0]["superseded_at"])
+                self.assertTrue(events[1]["superseded"])
+        with open(region_path, "rb") as handle:
+            self.assertEqual(handle.read(), before)
+
+    def test_prune_refuses_history(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.dict(os.environ, {"FORGE_HISTORY_DIR": tmp}):
+                history_store.append_event("note", {"text": "keep"})
+                path = history_store.journal_path()
+                with self.assertRaises(RuntimeError):
+                    history_store.guard_against_prune(path)
+                with open(path, encoding="utf-8") as handle:
+                    self.assertIn("keep", handle.read())
+
+
 class AppBehaviorTests(unittest.TestCase):
     def setUp(self):
         self.client = forge_app.app.test_client()
@@ -276,6 +410,21 @@ class AppBehaviorTests(unittest.TestCase):
         weekly = self.client.get("/weekly").get_data(as_text=True)
         self.assertIn("Streetsboro — Dynegy at 9.999", weekly)
         self.assertNotIn("still on the NOPEC program", weekly)
+
+    def test_queue_page_marks_superseded_additions(self):
+        item = {
+            "added_on": "2026-10-15",
+            "zone": "Akron",
+            "region": "akron_summit_medina",
+            "change": "observed rate 10.50 differs from stored 9.999",
+            "exact_next_action": "Review this diff.",
+            "superseded": True,
+            "superseded_at": "2026-10-16T00:00:00+00:00",
+        }
+        with patch("app.zone_intel.load_monitor_additions", return_value=[item]):
+            page = self.client.get("/queue").get_data(as_text=True)
+        self.assertIn("Superseded 2026-10-16T00:00:00+00:00", page)
+        self.assertIn("observed rate 10.50", page)
 
 
 if __name__ == "__main__":

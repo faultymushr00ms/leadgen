@@ -14,11 +14,13 @@ unresolved; they are not marked inactive.
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import re
+import uuid
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime, timezone
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -75,6 +77,10 @@ MONITOR_FIELDS = [
     "STATUS_verification",
     "STATUS_program",
     "STATUS_term",
+    "record_id",
+    "recorded_at",
+    "supersedes",
+    "record_kind",
 ]
 
 _dataset_cache: dict | None = None
@@ -877,12 +883,42 @@ def load_queue() -> list[dict]:
     return rows
 
 
+def _monitor_record_id(row: dict, index: int) -> str:
+    existing = (row.get("record_id") or "").strip()
+    if existing:
+        return existing
+    raw = "|".join([
+        str(index),
+        row.get("zone") or "",
+        row.get("region") or "",
+        row.get("change") or "",
+        row.get("source_url") or "",
+        row.get("added_on") or "",
+    ])
+    return "legacy-" + hashlib.sha256(raw.encode()).hexdigest()[:16]
+
+
+def annotate_monitor_rows(rows: list[dict]) -> list[dict]:
+    """Mark superseded queue rows in memory. The file is not rewritten."""
+    for index, row in enumerate(rows):
+        row["record_id"] = _monitor_record_id(row, index)
+    by_id = {row["record_id"]: row for row in rows}
+    for row in rows:
+        prior_id = (row.get("supersedes") or "").strip()
+        if not prior_id or prior_id not in by_id:
+            continue
+        prior = by_id[prior_id]
+        prior["superseded"] = True
+        prior["superseded_at"] = row.get("recorded_at") or row.get("added_on") or ""
+    return rows
+
+
 def load_monitor_additions(path: str | None = None) -> list[dict]:
     path = path or MONITOR_QUEUE_PATH
     if not os.path.exists(path):
         return []
     with open(path, newline="") as handle:
-        return list(csv.DictReader(handle))
+        return annotate_monitor_rows(list(csv.DictReader(handle)))
 
 
 def queue_for_zone(zone: dict, queue: list | None = None) -> dict | None:
@@ -960,23 +996,47 @@ def compare_observation(zone: dict, observation: dict) -> dict | None:
 
 
 def append_monitor_items(items: list[dict], path: str | None = None) -> list[dict]:
-    """Append new diffs to the monitor queue. Skips exact duplicates."""
+    """Append new diffs to the monitor queue. Skips exact duplicates.
+
+    A newer different observation for the same zone appends a new row whose
+    ``supersedes`` points at the prior row. The prior row is left as stored
+    and is marked superseded, with a timestamp, when the file is read.
+    """
     path = path or MONITOR_QUEUE_PATH
     existing = load_monitor_additions(path)
     seen = {
         (row.get("zone"), row.get("region"), row.get("change"), row.get("source_url"))
         for row in existing
     }
+    active = {}
+    for row in existing:
+        if row.get("superseded"):
+            continue
+        active[(row.get("zone"), row.get("region"))] = row
     added = []
+    recorded_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
     for item in items:
         key = (item.get("zone"), item.get("region"), item.get("change"), item.get("source_url"))
         if key in seen:
             continue
         seen.add(key)
-        added.append(item)
+        row = dict(item)
+        row["record_id"] = row.get("record_id") or uuid.uuid4().hex
+        row["recorded_at"] = row.get("recorded_at") or recorded_at
+        row["record_kind"] = row.get("record_kind") or "observation"
+        prior = active.get((row.get("zone"), row.get("region")))
+        if prior and not row.get("supersedes"):
+            row["supersedes"] = prior["record_id"]
+        else:
+            row["supersedes"] = row.get("supersedes") or ""
+        active[(row.get("zone"), row.get("region"))] = {
+            **row,
+            "superseded": False,
+        }
+        added.append(row)
     if not added:
         return []
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     write_header = not os.path.exists(path) or os.path.getsize(path) == 0
     with open(path, "a", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=MONITOR_FIELDS, extrasaction="ignore")

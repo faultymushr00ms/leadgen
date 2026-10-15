@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, redirect, request
 
 from forge_config import env_is_configured, pipeline_argv
+import history_store
 import zone_intel
 
 load_dotenv()
@@ -37,8 +38,10 @@ def _load_zones() -> list:
                 file_zones = json.load(f)
             for z in file_zones:
                 z["_source_file"] = region_key
+                z["_history_key"] = z.get("name")
             zones.extend(file_zones)
     zone_intel.attach_research(zones)
+    zones = history_store.apply_zone_history(zones)
     zones.sort(key=lambda z: (
         STATUS_SORT.get(z.get("status", "verify"), 9),
         -(z.get("rateChange") or 0),
@@ -317,41 +320,51 @@ def api_regions_list():
     files = sorted(f.replace(".json","") for f in os.listdir(REGIONS_DIR) if f.endswith(".json"))
     return jsonify(files)
 
+def _find_loaded_zone(region_file, zone_name):
+    matches = [
+        zone for zone in _load_zones()
+        if zone.get("_source_file") == region_file
+        and (zone.get("name") == zone_name or zone.get("_history_key") == zone_name)
+    ]
+    current = [zone for zone in matches if zone.get("name") == zone_name]
+    if current:
+        return current[0]
+    return matches[0] if matches else None
+
+
+def _zone_payload():
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return None
+    for key in ("_source_file", "_history_key", "research", "original", "card", "history"):
+        data.pop(key, None)
+    return data
+
+
 @app.route("/api/zones/<region_file>/<path:zone_name>", methods=["PUT"])
 def api_update_zone(region_file, zone_name):
-    path = os.path.join(REGIONS_DIR, region_file + ".json")
-    if not os.path.exists(path):
-        return jsonify({"error": "region not found"}), 404
-    with open(path) as f:
-        zones = json.load(f)
-    data = request.get_json()
-    # Research is derived from the reconciliation files. Never persist it
-    # back into the original region JSON.
-    for key in ("_source_file", "research", "original", "card"):
-        data.pop(key, None)
-    idx = next((i for i, z in enumerate(zones) if z["name"] == zone_name), None)
-    if idx is None:
+    # Region JSON stays as first recorded. The edit is appended to history.
+    data = _zone_payload()
+    if data is None:
+        return jsonify({"error": "expected object"}), 400
+    zone = _find_loaded_zone(region_file, zone_name)
+    if zone is None:
         return jsonify({"error": "zone not found"}), 404
-    zones[idx] = data
-    with open(path, "w") as f:
-        json.dump(zones, f, indent=2)
-    return jsonify({"ok": True})
+    event = history_store.record_zone_change(
+        region_file,
+        zone.get("_history_key") or zone.get("name"),
+        "update",
+        data,
+    )
+    return jsonify({"ok": True, "id": event["id"], "appended": True})
 
 @app.route("/api/zones/<region_file>", methods=["POST"])
 def api_add_zone(region_file):
-    path = os.path.join(REGIONS_DIR, region_file + ".json")
-    data = request.get_json()
-    for key in ("_source_file", "research", "original", "card"):
-        data.pop(key, None)
-    if os.path.exists(path):
-        with open(path) as f:
-            zones = json.load(f)
-    else:
-        zones = []
-    zones.append(data)
-    with open(path, "w") as f:
-        json.dump(zones, f, indent=2)
-    return jsonify({"ok": True})
+    data = _zone_payload()
+    if data is None or not data.get("name"):
+        return jsonify({"error": "name required"}), 400
+    event = history_store.record_zone_change(region_file, data["name"], "add", data)
+    return jsonify({"ok": True, "id": event["id"], "appended": True})
 
 _ZIP_MAP_PATH = os.path.join("data", "zip_zone_map.json")
 _zip_map_cache: dict | None = None
@@ -545,15 +558,17 @@ def api_ptc():
 
 @app.route("/api/zones/<region_file>/<path:zone_name>", methods=["DELETE"])
 def api_delete_zone(region_file, zone_name):
-    path = os.path.join(REGIONS_DIR, region_file + ".json")
-    if not os.path.exists(path):
-        return jsonify({"error": "region not found"}), 404
-    with open(path) as f:
-        zones = json.load(f)
-    zones = [z for z in zones if z["name"] != zone_name]
-    with open(path, "w") as f:
-        json.dump(zones, f, indent=2)
-    return jsonify({"ok": True})
+    """Mark a zone superseded. The record stays stored."""
+    zone = _find_loaded_zone(region_file, zone_name)
+    if zone is None:
+        return jsonify({"error": "zone not found"}), 404
+    event = history_store.record_zone_change(
+        region_file,
+        zone.get("_history_key") or zone.get("name"),
+        "supersede",
+        {"name": zone.get("name")},
+    )
+    return jsonify({"ok": True, "superseded": True, "id": event["id"], "superseded_at": event["recorded_at"]})
 
 
 if __name__ == "__main__":

@@ -2,7 +2,8 @@
 
 Compare stored research rates against a snapshot file or a live fetch of each
 zone's stored source URL. Disagreements are appended to the investigation
-monitor queue. Region JSON is never written.
+monitor queue. Region JSON is never written. Reports and observations are
+appended to history; a later run does not replace an earlier report.
 
 Usage:
     python run_refresh.py
@@ -22,6 +23,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 os.chdir(ROOT)
 sys.path.insert(0, ROOT)
 
+import history_store  # noqa: E402
 from zone_intel import (  # noqa: E402
     append_monitor_items,
     compare_observation,
@@ -60,6 +62,10 @@ def _report(zones, observations, fetch_notes) -> dict:
         if item:
             items.append(item)
     added = append_monitor_items(items) if items else []
+    for observation in observations:
+        history_store.record_observation(observation)
+    for item in added:
+        history_store.record_queue_item(item)
     queue = load_queue()
     return {
         "run_date": date.today().isoformat(),
@@ -115,11 +121,11 @@ def _fetch(zones, limit: int | None) -> tuple[list, list]:
 
 
 def main(argv: list[str] | None = None) -> dict:
-    parser = argparse.ArgumentParser(description="Report-only source refresh. Does not overwrite zone data.")
+    parser = argparse.ArgumentParser(description="Report-only source refresh. Appends history and does not overwrite zone data.")
     parser.add_argument("--observations", help="JSON list of {zone, region, rate, supplier, source_url, accessed_at}")
     parser.add_argument("--fetch", action="store_true", help="Fetch stored source URLs and flag missing rates")
     parser.add_argument("--limit", type=int, default=None, help="Max sourced pages to fetch")
-    parser.add_argument("--report", default=None, help="Write the JSON report here (default: output/refresh_report_DATE.json)")
+    parser.add_argument("--report", default=None, help="Also copy the JSON report here. An existing file is kept.")
     args = parser.parse_args(argv)
 
     zones = _load_zones()
@@ -134,18 +140,17 @@ def main(argv: list[str] | None = None) -> dict:
         notes.extend(fetch_notes)
     report = _report(zones, observations, notes)
 
-    out = args.report
-    if out is None:
-        out = os.path.join("output", f"refresh_report_{date.today().isoformat()}.json")
-    os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
-    with open(out, "w") as handle:
-        json.dump(report, handle, indent=2)
+    stamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+    mirror = args.report or os.path.join("output", f"refresh_report_{stamp}.json")
+    stored = history_store.store_report("refresh_report", report, mirror)
     print(
         f"[refresh] report-only. zones={report['zones_loaded']} "
         f"observations={report['observations']} diffs={report['diffs_found']} "
         f"queued={report['queue_items_added']} zone_files_written=0"
     )
-    print(f"[refresh] report: {out}")
+    print(f"[refresh] report: {stored['path']}")
+    if stored["mirror"]:
+        print(f"[refresh] copy: {stored['mirror']}")
     return report
 
 

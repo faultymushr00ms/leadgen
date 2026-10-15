@@ -23,7 +23,7 @@
         <tr>
           <td>{{ item.added_on }}</td>
           <td><a href="/card?file={{ item.region }}&name={{ item.zone | urlencode }}" style="color:var(--forge-orange);">{{ item.zone }}</a></td>
-          <td style="white-space:normal;">{{ item.change }}</td>
+          <td style="white-space:normal;">{{ item.change }}{% if item.superseded %}<div style="color:var(--forge-gold);">Superseded {{ item.superseded_at }}</div>{% endif %}</td>
           <td style="white-space:normal;">{{ item.exact_next_action }}</td>
         </tr>
         {% endfor %}

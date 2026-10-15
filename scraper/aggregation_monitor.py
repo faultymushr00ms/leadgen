@@ -11,12 +11,14 @@ Sources scraped (no API key required):
   - NOAC member list
   - Constellation Ohio aggregation index
 
-Output: output/agg_monitor_YYYYMMDD.json
+Output: a new history report, plus output/agg_monitor_YYYYMMDDTHHMMSS.json.
+Earlier reports are kept.
 """
 
 import json
 import os
 import re
+import sys
 import time
 from datetime import date, datetime
 from difflib import SequenceMatcher
@@ -24,6 +26,9 @@ from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import history_store  # noqa: E402
 
 OUTPUT_DIR = "output"
 REGIONS_DIR = os.path.join("data", "regions")
@@ -319,16 +324,15 @@ def run_monitor() -> dict:
         ),
     }
 
-    # Write report
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    out_path = os.path.join(OUTPUT_DIR, f"agg_monitor_{today_str}.json")
-    with open(out_path, "w") as f:
-        json.dump(report, f, indent=2)
+    # Append a new report. An existing report from earlier today stays stored.
+    stamp = datetime.now().strftime("%Y%m%dT%H%M%S")
+    mirror = os.path.join(OUTPUT_DIR, f"agg_monitor_{stamp}.json")
+    stored = history_store.store_report("monitor_report", report, mirror)
 
     print(f"\n[AggMonitor] Done.")
     print(f"  New communities not in DB : {len(new_communities)}")
     print(f"  DB agg zones not scraped  : {len(not_seen_in_scrape)}")
-    print(f"  Report written            : {out_path}")
+    print(f"  Report written            : {stored['path']}")
 
     if new_communities:
         print("\n  ── NEW (not in DB) ──")

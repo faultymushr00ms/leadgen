@@ -36,6 +36,7 @@ Layout classes: `.panel`, `.forge-table`, `.btn-forge`, `.btn-ghost`, `.dark-inp
 
 ```
 app.py                          # Flask app, all routes and API endpoints
+history_store.py                # Append-only journal; pruning must not touch data/history/
 templates/
   base.html                     # Dark sidebar layout, CDN includes, CSS vars
   hotspots.html                 # Zone intelligence cockpit (most complex)
@@ -137,6 +138,10 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 3. **NEVER include** DNC (do-not-call) records anywhere in the codebase or output
 4. **NEVER store or use** third-party service credentials (Salesforce, LinkedIn, etc.)
 5. **data/regions/*.json** files ARE safe to commit — they contain publicly sourced market intelligence only
+
+## History (permanent)
+
+Keep a full history for the life of the project. Never discard old data. Writes for zones, rates, sources, research results, the investigation queue, and refresh/monitor output are append-only (`data/history/` and append-only queue rows). Superseded values are marked superseded with a timestamp and stay stored. Pruning or cleanup must not touch history.
 
 ## Branch
 

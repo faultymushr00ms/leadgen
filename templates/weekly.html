@@ -172,10 +172,29 @@
       Timing Windows <span class="count-pill ms-1" style="background:rgba(253,216,53,0.15);color:#fdd835;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ timing_windows|length }}</span>
     </button>
     {% endif %}
+    {% if unresolved_list %}
+    <button class="tab-btn" data-tab="unresolved" style="color:#ffe082;border-color:rgba(255,179,0,0.4);">
+      Unresolved <span class="count-pill ms-1" style="background:rgba(255,179,0,0.15);color:#ffe082;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ unresolved_list|length }}</span>
+    </button>
+    {% endif %}
     <button class="tab-btn" data-tab="avoid">
       Avoid List <span class="count-pill ms-1" style="background:rgba(84,110,122,0.15);color:#90a4ae;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ avoid_list|length }}</span>
     </button>
   </div>
+
+  {% if unresolved_list %}
+  <div class="section-block" data-section="unresolved">
+    <div class="section-header" style="color:#ffe082;border-color:rgba(255,179,0,0.35);">
+      <i class="bi bi-telephone" style="color:#ffb300;"></i>
+      Unresolved — needs a call or sources conflict
+      <span class="count-pill" style="background:rgba(255,179,0,0.15);color:#ffe082;">{{ unresolved_list|length }}</span>
+    </div>
+    <div style="font-size:0.72rem;color:var(--forge-muted);margin:-8px 0 12px;padding-left:2px;">
+      These rows are not marked inactive. Do not pitch from the old FORGE hook.
+    </div>
+    {% for z in unresolved_list %}{{ _zone_card(z) }}{% endfor %}
+  </div>
+  {% endif %}
 
   <!-- ── ROLLOVER ALERTS ── -->
   {% if rollover_alerts %}
@@ -301,24 +320,26 @@
         <span class="heat-badge heat-cooling mb-1" style="font-size:0.65rem;">VERIFY</span>
       {% endif %}
       <div class="zone-name">{{ z.name }}</div>
-      <div class="zone-meta">{{ z.region }} &middot; {{ z.utility }}</div>
+      <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
     </div>
     <div class="zone-right">
-      <!-- Rate info -->
-      {% if z.currentRate and z.previousRate %}
-        <div class="rate-arrow">
-          <span class="rate-old">{{ z.previousRate }}¢</span>
-          <i class="bi bi-arrow-right" style="color:var(--forge-muted);font-size:0.6rem;"></i>
-          <span class="rate-new">{{ z.currentRate }}¢</span>
-          {% if z.rateChange %}
-            <span class="rate-pct">+{{ z.rateChange }}%</span>
-          {% endif %}
-        </div>
+      <!-- Rate info: sourced current only. FORGE rateChange is not a verified delta. -->
+      {% if z.card and z.card.currentSourced %}
+        <div class="rate-current">{{ z.card.currentLabel }}¢ <span style="font-size:0.62rem;color:var(--forge-muted);">current</span></div>
+        {% if z.card.changePrior %}
+          <div class="rate-pct">{{ '%+.1f'|format(z.card.changePrior.percent) }}% vs prior</div>
+        {% endif %}
+      {% elif z.card %}
+        <div class="rate-current" style="color:var(--forge-muted);">no sourced current</div>
       {% elif z.currentRate %}
         <div class="rate-current">{{ z.currentRate }}¢</div>
       {% endif %}
-      <!-- Term dates -->
-      {% if z.termStart or z.termEnd %}
+      <!-- Term dates from the sourced current term when research is attached. -->
+      {% if z.card and (z.card.currentStart or z.card.currentEnd) %}
+        <div class="term-dates">
+          {{ z.card.currentStart or '—' }} → <span class="expiry-near">{{ z.card.currentEnd or '—' }}</span>
+        </div>
+      {% elif z.termStart or z.termEnd %}
         <div class="term-dates">
           {% if z.termStart %}{{ z.termStart }}{% endif %}
           {% if z.termStart and z.termEnd %} → {% endif %}
@@ -326,7 +347,9 @@
         </div>
       {% endif %}
       <!-- Supplier -->
-      {% if z.supplier %}
+      {% if z.card and z.card.supplier %}
+        <div style="font-size:0.68rem;color:var(--forge-muted);">{{ z.card.supplier }}</div>
+      {% elif z.supplier %}
         <div style="font-size:0.68rem;color:var(--forge-muted);">{{ z.supplier }}</div>
       {% endif %}
       <!-- Confidence -->
@@ -338,8 +361,21 @@
     </div>
   </div>
 
-  <!-- Hook box -->
-  {% if z.hook %}
+  <!-- Hook box. Escalate-call and conflict rows get no pitch. -->
+  {% if z.card and z.card.hookAllowed and z.card.hook %}
+  <div class="hook-box">
+    <div class="hook-label"><i class="bi bi-chat-quote me-1"></i>Field opener</div>
+    <div class="hook-text">{{ z.card.hook }}</div>
+    <button class="copy-btn" data-hook="{{ z.card.hook | e }}" onclick="copyHook(this, this.dataset.hook)">
+      <i class="bi bi-clipboard"></i>
+    </button>
+  </div>
+  {% elif z.card and not z.card.hookAllowed %}
+  <div class="hook-box">
+    <div class="hook-label">Verify before using</div>
+    <div class="hook-text">No field opener. Verification is {{ z.card.verificationLabel }}.</div>
+  </div>
+  {% elif z.hook %}
   <div class="hook-box">
     <div class="hook-label"><i class="bi bi-chat-quote me-1"></i>Sales Hook</div>
     <div class="hook-text">{{ z.hook }}</div>
@@ -356,8 +392,9 @@
     <span>Notes &amp; context</span>
   </div>
   <div class="notes-body">
-    {% if z.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.takeaway }}</div>{% endif %}
-    {% if z.notes %}<div>{{ z.notes }}</div>{% endif %}
+    {% if z.card and z.card.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.card.takeaway }}</div>
+    {% elif z.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.takeaway }}</div>{% endif %}
+    {% if z.notes %}<div><span style="color:var(--forge-muted);">FORGE recorded notes:</span> {{ z.notes }}</div>{% endif %}
   </div>
   {% endif %}
 </div>

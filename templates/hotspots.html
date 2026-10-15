@@ -255,6 +255,8 @@
           <div class="bc-zone-name" id="bc-name"></div>
           <div class="bc-region" id="bc-region"></div>
           <div class="bc-badges" id="bc-badges"></div>
+          <div id="bc-alert" style="display:none; margin-top:10px;"></div>
+          <a id="bc-print-link" href="#" class="btn btn-ghost btn-sm" style="margin-top:8px; display:none; text-align:center;">Printable card</a>
           <button onclick="startEditMode()" id="bc-edit-btn"
                   style="margin-top:10px; width:100%; background:transparent; border:1px solid var(--forge-border);
                          color:var(--forge-muted); border-radius:6px; padding:5px; cursor:pointer; font-size:0.75rem;
@@ -437,7 +439,7 @@
 
 {% block scripts %}
 <script>
-const ALL_ZONES = {{ zones_json | safe }};
+const ALL_ZONES = {{ zones | tojson }};
 let filteredZones = [...ALL_ZONES];
 let sortKey = 'status';
 let sortAsc = true;
@@ -579,9 +581,9 @@ function renderTable() {
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.utility)}${z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}</td>
       <td>${aggBadge(z.aggregationStatus, true)}</td>
-      <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${fmtRate(z.currentRate)}</td>
-      <td style="text-align:right; color:var(--forge-muted);">${fmtRate(z.previousRate)}</td>
-      <td style="text-align:right;">${fmtChg(z.rateChange)}</td>
+      <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${sourcedRate(z)}</td>
+      <td style="text-align:right; color:var(--forge-muted);">${sourcedPrior(z)}</td>
+      <td style="text-align:right;">${sourcedChange(z)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.supplier || '—')}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${fmtDate(z.termEnd)}</td>
       <td>${statusBadge(z.status)}</td>
@@ -603,35 +605,46 @@ function selectZone(name) {
   // Populate battlecard
   document.getElementById('bc-name').textContent = selectedZone.name;
   document.getElementById('bc-region').textContent = selectedZone.region;
+  const card = selectedZone.card;
   document.getElementById('bc-badges').innerHTML =
     aggBadge(selectedZone.aggregationStatus) + ' ' +
     statusBadge(selectedZone.status) + ' ' +
-    confBadge(selectedZone.confidence);
+    (card ? `<span class="heat-badge conf-medium" style="font-size:0.65rem;">${esc(card.verificationLabel)}</span>` : confBadge(selectedZone.confidence));
 
-  // Rate story
+  const alertEl = document.getElementById('bc-alert');
+  const printLink = document.getElementById('bc-print-link');
+  if (card) {
+    printLink.style.display = 'block';
+    printLink.href = card.url;
+    const bits = [];
+    if (card.notEligible) bits.push('<div class="banner-alert banner-block"><strong>NOT ELIGIBLE.</strong> Municipal utility or co-op.</div>');
+    if (card.unresolved) bits.push('<div class="banner-alert banner-unresolved"><strong>Unresolved — ' + esc(card.verificationLabel) + '.</strong> Not marked inactive.</div>');
+    alertEl.innerHTML = bits.join('');
+    alertEl.style.display = bits.length ? 'block' : 'none';
+  } else {
+    printLink.style.display = 'none';
+    alertEl.style.display = 'none';
+  }
+
+  // Rate story — Current / Prior / Historical. Unsourced FORGE numbers are not "Current".
   const rateSection = document.getElementById('bc-rate-section');
-  if (selectedZone.currentRate !== null || selectedZone.previousRate !== null) {
+  if (card) {
     rateSection.style.display = '';
-    let html = '';
-    if (selectedZone.previousRate !== null) {
-      html += `<div class="rate-box">
-        <div class="rate-val" style="color:var(--forge-muted);">${fmtRate(selectedZone.previousRate)}</div>
-        <div class="rate-sub">Previous</div>
-      </div>
-      <div class="rate-arrow">→</div>`;
-    }
-    if (selectedZone.currentRate !== null) {
-      html += `<div class="rate-box">
-        <div class="rate-val" style="color:var(--forge-orange);">${fmtRate(selectedZone.currentRate)}</div>
-        <div class="rate-sub">Current</div>
-      </div>`;
-    }
-    if (selectedZone.rateChange !== null) {
-      html += `<div class="rate-change-badge ${selectedZone.rateChange > 0 ? 'rate-up' : selectedZone.rateChange < 0 ? 'rate-down' : 'rate-flat'}">
-        ${selectedZone.rateChange > 0 ? '▲' : selectedZone.rateChange < 0 ? '▼' : '='} ${Math.abs(selectedZone.rateChange)}%
-      </div>`;
+    const cell = (label, value, note) => `<div class="rate-box">
+      <div class="rate-val" style="color:${label === 'Current' ? 'var(--forge-orange)' : 'var(--forge-muted)'}; font-size:1rem;">${value}</div>
+      <div class="rate-sub">${label}</div>
+      <div class="rate-sub">${note}</div>
+    </div>`;
+    let html = cell('Current', card.currentSourced ? esc(card.currentLabel) + '¢' : '—', card.currentSourced ? 'sourced' : 'unsourced hidden');
+    html += cell('Prior', card.priorSourced ? esc(card.priorLabel) + '¢' : (card.priorLabel ? esc(card.priorLabel) + '¢' : '—'), card.priorSourced ? 'sourced' : 'FORGE recorded');
+    html += cell('Historical', card.historicalSourced ? esc(card.historicalLabel) + '¢' : '—', card.historicalCapture ? ('capture ' + esc(card.historicalCapture)) : '');
+    if (card.changePrior) {
+      html += `<div class="rate-change-badge ${card.changePrior.percent > 0 ? 'rate-up' : 'rate-down'}">${card.changePrior.percent > 0 ? '▲' : '▼'} ${Math.abs(card.changePrior.percent)}% vs prior</div>`;
     }
     document.getElementById('bc-rate-story').innerHTML = html;
+  } else if (selectedZone.currentRate !== null || selectedZone.previousRate !== null) {
+    rateSection.style.display = '';
+    document.getElementById('bc-rate-story').innerHTML = `<div class="rate-sub">No research overlay on this zone.</div>`;
   } else {
     rateSection.style.display = 'none';
   }
@@ -648,26 +661,32 @@ function selectZone(name) {
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Supplier</div>
-      <div class="kv-val">${esc(selectedZone.supplier || '—')}</div>
+      <div class="kv-val">${esc((card && card.supplier) || selectedZone.supplier || '—')}</div>
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Future Use</div>
       <div class="kv-val">${fuBadge(selectedZone.futureUse)}</div>
     </div>
     <div class="bc-kv-item">
-      <div class="kv-label">Term Start</div>
-      <div class="kv-val">${fmtDate(selectedZone.termStart)}</div>
+      <div class="kv-label">Current term start</div>
+      <div class="kv-val">${card && card.currentStart ? esc(card.currentStart) : fmtDate(selectedZone.termStart)}</div>
     </div>
     <div class="bc-kv-item">
-      <div class="kv-label">Term End</div>
-      <div class="kv-val">${fmtDate(selectedZone.termEnd)}</div>
+      <div class="kv-label">Current term end</div>
+      <div class="kv-val">${card && card.currentEnd ? esc(card.currentEnd) : fmtDate(selectedZone.termEnd)}</div>
     </div>
   `;
 
-  document.getElementById('bc-takeaway').textContent = selectedZone.takeaway || '—';
+  document.getElementById('bc-takeaway').textContent = (card && card.takeaway) ? card.takeaway : (selectedZone.takeaway || '—');
 
   const hookSection = document.getElementById('bc-hook-section');
-  if (selectedZone.hook) {
+  if (card && !card.hookAllowed) {
+    hookSection.style.display = '';
+    document.getElementById('bc-hook').textContent = 'Verify before using.';
+  } else if (card && card.hook) {
+    hookSection.style.display = '';
+    document.getElementById('bc-hook').textContent = card.hook;
+  } else if (!card && selectedZone.hook) {
     hookSection.style.display = '';
     document.getElementById('bc-hook').textContent = selectedZone.hook;
   } else {
@@ -677,7 +696,9 @@ function selectZone(name) {
   const notesSection = document.getElementById('bc-notes-section');
   if (selectedZone.notes) {
     notesSection.style.display = '';
-    document.getElementById('bc-notes').textContent = selectedZone.notes;
+    document.getElementById('bc-notes').textContent = card
+      ? ('FORGE recorded notes: ' + selectedZone.notes)
+      : selectedZone.notes;
   } else {
     notesSection.style.display = 'none';
   }
@@ -705,6 +726,18 @@ function fuBadge(val) {
 }
 
 // ── Format helpers ─────────────────────────────────────────────────────────────
+function sourcedRate(z) {
+  if (z.card && z.card.currentSourced) return esc(z.card.currentLabel) + '¢';
+  return '<span style="color:var(--forge-border)" title="FORGE recorded value is unsourced and is not shown as current">—</span>';
+}
+function sourcedPrior(z) {
+  if (z.card && z.card.priorSourced) return esc(z.card.priorLabel) + '¢';
+  return '<span style="color:var(--forge-border)">—</span>';
+}
+function sourcedChange(z) {
+  if (!z.card || !z.card.changePrior) return '<span style="color:var(--forge-border)">—</span>';
+  return fmtChg(z.card.changePrior.percent);
+}
 function fmtRate(r) {
   return r !== null && r !== undefined ? r.toFixed(2) + '¢' : '<span style="color:var(--forge-border)">—</span>';
 }
@@ -858,44 +891,31 @@ function lookupZip() {
     .then(data => {
       if (!data.found) {
         showZipToast(
-          `<span style="color:var(--forge-muted);">ZIP ${zip}</span><br>` +
-          `<span style="color:#ef9a9a;">Not in covered territory</span><br>` +
-          `<span style="font-size:0.75rem;color:var(--forge-muted);">${data.message}</span>`,
+          `<span style="color:var(--forge-muted);">ZIP ${esc(zip)}</span><br>` +
+          `<span style="color:#ef9a9a;">${esc(data.message || 'Not mapped')}</span><br>` +
+          `<span style="font-size:0.75rem;color:#bbdefb;">${esc(data.disclaimer || '')}</span>`,
           'none'
         );
         return;
       }
-      if (!data.zone) {
-        showZipToast(
-          `<span style="color:var(--forge-muted);">ZIP ${zip} → <strong style="color:#e0e0e0;">${data.zone_name}</strong></span><br>` +
-          `<span style="color:var(--forge-gold);font-size:0.75rem;">${data.message}</span>`,
-          'none'
-        );
-        return;
-      }
-      const z = data.zone;
-      const statusColors = {
-        rollover_dissolved: '#ff8a80', rollover: '#ff8a80',
-        pain_hit: 'var(--heat-hot)', pricing_updated: '#b39ddb',
-        pain_coming: 'var(--heat-pain)',
-        stable: '#81c784', transition: '#64b5f6', verify: '#ce93d8'
-      };
-      const statusColor = statusColors[z.status] || '#e0e0e0';
-      const rate = z.currentRate ? `${z.currentRate.toFixed(3)}¢` : '—';
-      const statusLabel = (z.status || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const rows = data.jurisdictions || [];
+      const lines = rows.map(item =>
+        `<div style="margin-top:6px;"><strong style="color:#e0e0e0;">${esc(item.jurisdiction)}</strong>` +
+        `<div style="color:var(--forge-muted);">${esc(item.county || '')} · ${esc(item.utility || '')}</div>` +
+        `<div style="font-size:0.72rem;">${esc(item.verification || '')}</div></div>`
+      ).join('');
+      const ambiguous = data.match_count !== 1
+        ? `<div style="color:#ffe082;font-size:0.75rem;margin-top:6px;">${data.match_count} zone records share this name.</div>`
+        : '';
       showZipToast(
-        `<div style="font-size:0.7rem;color:var(--forge-muted);margin-bottom:2px;">ZIP ${zip}</div>` +
-        `<div style="font-weight:700;font-size:1rem;color:var(--forge-orange);margin-bottom:4px;">${z.name}</div>` +
-        `<div style="font-size:0.75rem;color:var(--forge-muted);margin-bottom:6px;">${z.region || ''}</div>` +
-        `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">` +
-          `<span style="font-size:0.72rem;padding:2px 7px;border-radius:5px;border:1px solid ${statusColor};color:${statusColor};">${statusLabel}</span>` +
-          `<span style="font-size:0.85rem;font-weight:700;color:#e0e0e0;">${rate}</span>` +
-        `</div>` +
-        `<div style="font-size:0.78rem;color:#ffe082;font-style:italic;line-height:1.4;border-top:1px solid var(--forge-border);padding-top:7px;">${z.hook || z.takeaway || ''}</div>` +
-        `<button onclick="selectZoneByName('${z.name.replace(/'/g, "\\'")}')" ` +
-          `style="margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;">` +
-          `<i class="bi bi-arrow-right-circle me-1"></i>Open Battlecard` +
-        `</button>`,
+        `<div style="font-size:0.7rem;color:var(--forge-muted);margin-bottom:2px;">ZIP ${esc(zip)} → mapped name ${esc(data.zone_name)}</div>` +
+        `<div style="font-size:0.75rem;color:#bbdefb;line-height:1.4;">${esc(data.disclaimer || '')}</div>` +
+        ambiguous + lines +
+        (data.zone
+          ? `<button onclick="selectZoneByName('${data.zone.name.replace(/'/g, "\\'")}')" ` +
+            `style="margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;">` +
+            `Open battlecard</button>`
+          : ''),
         'none'
       );
     })

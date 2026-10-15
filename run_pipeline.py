@@ -17,6 +17,8 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 
+from forge_config import key_is_configured
+
 load_dotenv()
 
 DATE_STR = datetime.now().strftime("%Y-%m-%d")
@@ -28,9 +30,10 @@ QUALIFIED_LEADS_FILE = os.path.join(OUTPUT_DIR, f"qualified_leads_{DATE_STR}.jso
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _check_api_key():
-    key = os.getenv("ANTHROPIC_API_KEY", "").strip()
-    if not key:
+    key = os.getenv("ANTHROPIC_API_KEY", "")
+    if not key_is_configured(key):
         print("\nERROR: ANTHROPIC_API_KEY is not set.")
+        print("A placeholder copied from .env.example does not count.")
         print("Steps to fix:")
         print("  1. Copy .env.example to .env")
         print("  2. Open .env and paste your key after ANTHROPIC_API_KEY=")
@@ -71,7 +74,7 @@ def _tier_rank(industry: str) -> int:
 
 def _use_ai_qualifier() -> bool:
     """Returns True if the AI (Claude) qualifier should be used."""
-    return bool(os.getenv("ANTHROPIC_API_KEY", "").strip())
+    return key_is_configured(os.getenv("ANTHROPIC_API_KEY"))
 
 
 # ── Agent 1: Scrape ────────────────────────────────────────────────────────────

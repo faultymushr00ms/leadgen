@@ -7,8 +7,17 @@ Then open: http://localhost:5000
 import csv
 import json
 import os
+import subprocess
 from datetime import datetime, date
+from urllib.parse import unquote
+
+from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, redirect, request
+
+from forge_config import env_is_configured, pipeline_argv
+import zone_intel
+
+load_dotenv()
 
 app = Flask(__name__)
 OUTPUT_DIR = "output"
@@ -29,6 +38,7 @@ def _load_zones() -> list:
             for z in file_zones:
                 z["_source_file"] = region_key
             zones.extend(file_zones)
+    zone_intel.attach_research(zones)
     zones.sort(key=lambda z: (
         STATUS_SORT.get(z.get("status", "verify"), 9),
         -(z.get("rateChange") or 0),
@@ -156,15 +166,29 @@ def _compute_weekly(zones: list) -> dict:
     cutoff_30 = today + timedelta(days=30)
 
     rollover_alerts, contract_review, pain_hit, pain_coming = [], [], [], []
-    timing_windows, avoid_list, verify_list = [], [], []
+    timing_windows, avoid_list, verify_list, unresolved_list = [], [], [], []
     blacklisted = {"municipal_utility", "electric_cooperative"}
     hot_statuses = {"rollover_dissolved", "rollover", "pain_hit", "pricing_updated", "pain_coming"}
 
     for z in zones:
         agg = z.get("aggregationStatus", "")
         status = z.get("status", "")
-        if agg in blacklisted:
+        research = z.get("research") or {}
+        research_status = research.get("status") or {}
+        program = research_status.get("program") or ""
+        unresolved = bool(research_status.get("unresolved"))
+        # Needs-call and conflict rows stay unresolved. A research note that
+        # the app called a zone municipal does not move it to the avoid list.
+        if unresolved and program.startswith("active"):
+            unresolved_list.append(z)
+            continue
+        if agg in blacklisted or program.startswith("not_eligible"):
             avoid_list.append(z)
+            if unresolved:
+                unresolved_list.append(z)
+            continue
+        if unresolved:
+            unresolved_list.append(z)
             continue
 
         term_end_str = z.get("termEnd")
@@ -213,6 +237,8 @@ def _compute_weekly(zones: list) -> dict:
         "timing_count": len(timing_windows),
         "rollover_count": len(rollover_alerts),
         "review_count": len(contract_review),
+        "unresolved_list": unresolved_list,
+        "unresolved_count": len(unresolved_list),
     }
 
 
@@ -228,7 +254,6 @@ def hotspots():
     zones = _load_zones()
     return render_template("hotspots.html",
                            zones=zones,
-                           zones_json=json.dumps(zones),
                            active="hotspots")
 
 
@@ -241,8 +266,8 @@ def goals():
 
 @app.route("/settings")
 def settings():
-    ai_enabled = bool(os.getenv("ANTHROPIC_API_KEY"))
-    gmaps_enabled = bool(os.getenv("GOOGLE_MAPS_API_KEY"))
+    ai_enabled = env_is_configured("ANTHROPIC_API_KEY")
+    gmaps_enabled = env_is_configured("GOOGLE_MAPS_API_KEY")
     return render_template("settings.html",
                            ai_enabled=ai_enabled,
                            gmaps_enabled=gmaps_enabled,
@@ -269,7 +294,14 @@ def export():
 
 @app.route("/run")
 def run_pipeline():
-    os.system("python run_pipeline.py --skip-scrape &")
+    # sys.executable is the venv interpreter when the app itself is.
+    subprocess.Popen(
+        pipeline_argv(),
+        cwd=os.path.dirname(os.path.abspath(__file__)),
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
     return redirect("/")
 
 
@@ -293,8 +325,10 @@ def api_update_zone(region_file, zone_name):
     with open(path) as f:
         zones = json.load(f)
     data = request.get_json()
-    # Remove internal field before saving
-    data.pop("_source_file", None)
+    # Research is derived from the reconciliation files. Never persist it
+    # back into the original region JSON.
+    for key in ("_source_file", "research", "original", "card"):
+        data.pop(key, None)
     idx = next((i for i, z in enumerate(zones) if z["name"] == zone_name), None)
     if idx is None:
         return jsonify({"error": "zone not found"}), 404
@@ -307,7 +341,8 @@ def api_update_zone(region_file, zone_name):
 def api_add_zone(region_file):
     path = os.path.join(REGIONS_DIR, region_file + ".json")
     data = request.get_json()
-    data.pop("_source_file", None)
+    for key in ("_source_file", "research", "original", "card"):
+        data.pop(key, None)
     if os.path.exists(path):
         with open(path) as f:
             zones = json.load(f)
@@ -333,25 +368,179 @@ def _load_zip_map() -> dict:
     return _zip_map_cache
 
 
-@app.route("/api/zip/<zipcode>")
-def api_zip_lookup(zipcode):
-    zipcode = zipcode.strip()
+def _zip_payload(zipcode: str) -> tuple[dict, int]:
+    zipcode = unquote(zipcode).strip()
+    disclaimer = zone_intel.zip_disclaimer()
     zip_map = _load_zip_map()
     zone_name = zip_map.get(zipcode)
     if not zone_name:
-        return jsonify({"found": False, "zip": zipcode, "message": "ZIP not mapped — may be outside covered territory or unincorporated area"}), 404
+        return {
+            "found": False,
+            "zip": zipcode,
+            "eligibility": "not_proof",
+            "disclaimer": disclaimer,
+            "message": "ZIP not mapped. That is not a finding about eligibility.",
+        }, 404
 
     all_zones = _load_zones()
-    zone_name_lower = zone_name.lower()
-    match = next(
-        (z for z in all_zones if z["name"].lower() == zone_name_lower),
-        None
-    )
-    if not match:
-        return jsonify({"found": True, "zip": zipcode, "zone_name": zone_name,
-                        "message": "ZIP mapped but zone not yet in DB — check region files"}), 200
+    matches = zone_intel.zones_named(all_zones, zone_name)
+    jurisdictions = []
+    for zone in matches:
+        research = zone.get("research") or {}
+        card = zone.get("card") or {}
+        jurisdictions.append({
+            "name": zone.get("name"),
+            "source_file": zone.get("_source_file"),
+            "jurisdiction": research.get("jurisdiction") or zone.get("name"),
+            "county": research.get("county") or "",
+            "utility": research.get("utility") or zone.get("utility") or "",
+            "verification": (research.get("status") or {}).get("verificationLabel") or "",
+            "card_url": card.get("url") or "",
+        })
+    payload = {
+        "found": True,
+        "zip": zipcode,
+        "zone_name": zone_name,
+        "eligibility": "not_proof",
+        "disclaimer": disclaimer,
+        "match_count": len(matches),
+        "jurisdictions": jurisdictions,
+        "zone": matches[0] if len(matches) == 1 else None,
+        "message": (
+            f"ZIP {zipcode} is mapped to the zone name “{zone_name}”. "
+            "That mapping is not proof the address is eligible."
+        ),
+    }
+    return payload, 200
 
-    return jsonify({"found": True, "zip": zipcode, "zone_name": zone_name, "zone": match}), 200
+
+@app.route("/api/zip/<zipcode>")
+def api_zip_lookup(zipcode):
+    payload, status = _zip_payload(zipcode)
+    return jsonify(payload), status
+
+
+def _queue_view():
+    baseline = zone_intel.load_queue()
+    additions = zone_intel.load_monitor_additions()
+    return baseline, additions
+
+
+@app.route("/intel")
+def intel():
+    zones = _load_zones()
+    return render_template(
+        "intel.html",
+        active="intel",
+        glance=zone_intel.nopec_glance(zones),
+        ptc=zone_intel.load_ptc(),
+    )
+
+
+@app.route("/counties")
+def counties():
+    zones = _load_zones()
+    selected = (request.args.get("county") or "").strip()
+    zipcode = (request.args.get("zip") or "").strip()
+    groups = zone_intel.group_counties(zones)
+    current = next((group for group in groups if group["county"].lower() == selected.lower()), None)
+    if current is None and groups and not zipcode:
+        current = groups[0]
+        selected = current["county"]
+    zip_result = None
+    if zipcode:
+        zip_result, _status = _zip_payload(zipcode)
+    return render_template(
+        "counties.html",
+        active="intel",
+        groups=groups,
+        selected=selected,
+        current=current,
+        zipcode=zipcode,
+        zip_result=zip_result,
+        disclaimer=zone_intel.zip_disclaimer(),
+    )
+
+
+@app.route("/ptc")
+def price_to_compare():
+    zones = _load_zones()
+    defaults = []
+    for zone in zones:
+        research = zone.get("research") or {}
+        current = research.get("current") or {}
+        if "price to compare" in (current.get("basis") or "").lower() and current.get("rate_raw"):
+            defaults.append(zone)
+    defaults.sort(key=lambda zone: ((zone.get("research") or {}).get("utility") or "", zone.get("name") or ""))
+    return render_template(
+        "ptc.html",
+        active="intel",
+        ptc=zone_intel.load_ptc(),
+        defaults=defaults,
+    )
+
+
+@app.route("/queue")
+def investigation_queue():
+    baseline, additions = _queue_view()
+    verification = (request.args.get("verification") or "").strip()
+    rows = baseline
+    if verification:
+        rows = [row for row in baseline if row.get("STATUS_verification") == verification]
+    return render_template(
+        "queue.html",
+        active="queue",
+        rows=rows,
+        total=len(baseline),
+        additions=additions,
+        verification=verification,
+    )
+
+
+@app.route("/expiring")
+def expiring():
+    zones = _load_zones()
+    queue = zone_intel.load_queue()
+    return render_template(
+        "expiring.html",
+        active="expiring",
+        expiring=zone_intel.expiring_zones(zones, queue),
+        hotspots=zone_intel.hotspot_zones(zones, queue),
+    )
+
+
+@app.route("/card")
+def battlecard():
+    zones = _load_zones()
+    source_file = (request.args.get("file") or "").strip()
+    name = (request.args.get("name") or "").strip()
+    zone = zone_intel.find_zone(zones, source_file, name)
+    if zone is None or not zone.get("card"):
+        return render_template("battlecard.html", active="intel", zone=None, card=None, queue_item=None), 404
+    return render_template(
+        "battlecard.html",
+        active="intel",
+        zone=zone,
+        card=zone["card"],
+        research=zone.get("research") or {},
+        queue_item=zone_intel.queue_for_zone(zone),
+    )
+
+
+@app.route("/api/rate-ledger")
+def api_rate_ledger():
+    return jsonify(zone_intel.load_rate_ledger())
+
+
+@app.route("/api/queue")
+def api_queue():
+    baseline, additions = _queue_view()
+    return jsonify({"baseline": baseline, "additions": additions})
+
+
+@app.route("/api/ptc")
+def api_ptc():
+    return jsonify(zone_intel.load_ptc())
 
 
 @app.route("/api/zones/<region_file>/<path:zone_name>", methods=["DELETE"])

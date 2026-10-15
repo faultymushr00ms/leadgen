@@ -1,0 +1,62 @@
+{
+  "as_of": "2026-10",
+  "unit": "cents_per_kwh",
+  "note": "October 2026 Price to Compare by investor-owned utility. Ohio Edison, AEP Ohio, Duke Energy Ohio, and AES Ohio rates match sourced rows in forge_corrected_dataset.csv. The Illuminating Company (11.24) and Toledo Edison (11.26) figures were supplied with the implementation request; the reconciliation dataset has no sourced Price to Compare row for those two utilities. 11.262 values in the dataset are SOPEC aggregation rates, not the Toledo Edison Price to Compare.",
+  "rates": [
+    {
+      "code": "OE",
+      "utility": "Ohio Edison",
+      "cents_per_kwh": 11.07,
+      "as_of": "2026-10",
+      "source_url": "https://energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=7",
+      "source": "Energy Choice Ohio apples-to-apples page cited for 11.07 in forge_corrected_dataset.csv",
+      "customer_class": "RateCode=1 on the cited Energy Choice URL"
+    },
+    {
+      "code": "CEI",
+      "utility": "The Illuminating Company",
+      "cents_per_kwh": 11.24,
+      "as_of": "2026-10",
+      "source_url": null,
+      "source": "October 2026 Price to Compare supplied in the implementation request. No sourced row for 11.24 appears in the reconciliation dataset.",
+      "customer_class": ""
+    },
+    {
+      "code": "TE",
+      "utility": "Toledo Edison",
+      "cents_per_kwh": 11.26,
+      "as_of": "2026-10",
+      "source_url": null,
+      "source": "October 2026 Price to Compare supplied in the implementation request. No sourced Toledo Edison Price to Compare row for 11.26 appears in the reconciliation dataset.",
+      "customer_class": ""
+    },
+    {
+      "code": "AEP",
+      "utility": "AEP Ohio",
+      "cents_per_kwh": 10.19,
+      "as_of": "2026-10",
+      "source_url": "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=electric&RateCode=1&TerritoryId=2",
+      "source": "Energy Choice Ohio apples-to-apples page cited for 10.19 in forge_corrected_dataset.csv",
+      "customer_class": "RateCode=1 on the cited Energy Choice URL"
+    },
+    {
+      "code": "DUKE",
+      "utility": "Duke Energy Ohio",
+      "cents_per_kwh": 10.49,
+      "as_of": "2026-10",
+      "source_url": "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=4",
+      "source": "Energy Choice Ohio apples-to-apples page cited for 10.49 in forge_corrected_dataset.csv",
+      "customer_class": "RateCode=1 on the cited Energy Choice URL"
+    },
+    {
+      "code": "AES",
+      "utility": "AES Ohio",
+      "aliases": ["AES Ohio (Dayton P&L)"],
+      "cents_per_kwh": 10.86,
+      "as_of": "2026-10",
+      "source_url": "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=9",
+      "source": "Energy Choice Ohio apples-to-apples page cited for 10.86 in forge_corrected_dataset.csv",
+      "customer_class": "RateCode=1 on the cited Energy Choice URL"
+    }
+  ]
+}

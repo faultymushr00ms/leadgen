@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}— {% if card %}{{ card.jurisdiction }}{% else %}Card{% endif %}{% endblock %}
+{% block head %}
+<style>
+  .card-sheet { max-width: 820px; margin: 0 auto; }
+  .rate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .rate-cell { background: var(--forge-dark); border: 1px solid var(--forge-border); border-radius: 6px; padding: 10px; }
+  .rate-cell .k { font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: var(--forge-muted); }
+  .rate-cell .v { font-size: 1.35rem; font-weight: 700; color: var(--forge-orange); line-height: 1.1; margin-top: 4px; }
+  .rate-cell .s { font-size: 0.72rem; color: var(--forge-muted); margin-top: 4px; line-height: 1.35; }
+  .takeaway-box { background: rgba(232,97,26,0.08); border: 1px solid rgba(232,97,26,0.25); border-radius: 6px; padding: 10px 12px; }
+  .hook-box { background: rgba(255,179,0,0.07); border: 1px solid rgba(255,179,0,0.2); border-radius: 6px; padding: 10px 12px; color: #ffe082; font-style: italic; }
+  @media print {
+    #sidebar, #topbar, .no-print { display: none !important; }
+    html, body { overflow: visible !important; height: auto !important; display: block !important; background: #fff !important; color: #111 !important; }
+    #main, #content, .research-page { overflow: visible !important; height: auto !important; display: block !important; }
+    .panel, .rate-cell, .takeaway-box, .hook-box { background: #fff !important; color: #111 !important; border-color: #ccc !important; }
+    a { color: #111 !important; }
+  }
+</style>
+{% endblock %}
+{% block topbar_title %}BATTLECARD{% endblock %}
+{% block topbar_sub %}{% if card %}{{ card.jurisdiction }} · {{ card.county }} County{% endif %}{% endblock %}
+{% block topbar_actions %}
+{% if card %}<button class="btn btn-forge btn-sm no-print" onclick="window.print()">Print</button>{% endif %}
+<a class="btn btn-ghost btn-sm no-print" href="/expiring">Expiring</a>
+{% endblock %}
+{% block content %}
+<div class="research-page">
+  {% if not card %}
+    <div class="panel" style="padding:20px;">No researched card for that zone.</div>
+  {% else %}
+  <div class="card-sheet">
+    {% if card.notEligible %}
+    <div class="banner-alert banner-block"><strong>NOT ELIGIBLE.</strong> Municipal utility or electric cooperative. Competitive retail supply does not apply.</div>
+    {% endif %}
+    {% if card.unresolved %}
+    <div class="banner-alert banner-unresolved">
+      <strong>Unresolved — {{ card.verificationLabel }}.</strong>
+      This record is not marked inactive. Verify before using. No field opener is shown.
+    </div>
+    {% endif %}
+
+    <div class="panel" style="padding:16px; margin-bottom:12px;">
+      <div style="font-size:1.4rem; font-weight:800; color:var(--forge-orange);">{{ card.jurisdiction }}</div>
+      <div style="color:var(--forge-muted); margin-bottom:8px;">{{ card.county }} County · {{ card.utility }}</div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <span class="pill">{{ card.program or 'program unknown' }}</span>
+        <span class="pill">term: {{ card.termStatus or '—' }}</span>
+        <span class="pill">verification: {{ card.verificationLabel }}</span>
+        {% if queue_item %}<span class="pill">queue score {{ queue_item.trigger_score }}</span>{% endif %}
+      </div>
+    </div>
+
+    <div class="rate-grid" style="margin-bottom:12px;">
+      <div class="rate-cell">
+        <div class="k">Current</div>
+        {% if card.currentSourced %}
+          <div class="v">{{ card.currentLabel }}¢</div>
+          <div class="s">{{ card.currentBasis }}<br>{{ card.currentStart or '—' }} – {{ card.currentEnd or '—' }}<br>Accessed {{ card.accessedAt or '—' }}</div>
+        {% else %}
+          <div class="v" style="font-size:1rem; color:var(--forge-muted);">No sourced current rate</div>
+          <div class="s">A FORGE-recorded number is not shown as current.</div>
+        {% endif %}
+      </div>
+      <div class="rate-cell">
+        <div class="k">Prior</div>
+        {% if card.priorLabel and card.priorSourced %}
+          <div class="v">{{ card.priorLabel }}¢</div>
+          <div class="s">{{ card.priorTerm or 'term not stated' }}</div>
+        {% elif card.priorLabel %}
+          <div class="v" style="font-size:1rem; color:var(--forge-muted);">{{ card.priorLabel }}¢</div>
+          <div class="s">FORGE recorded (unsourced). Not used for a change figure.</div>
+        {% else %}
+          <div class="v" style="font-size:1rem; color:var(--forge-muted);">—</div>
+        {% endif %}
+        {% if card.changePrior %}
+          <div class="s" style="color:#ff8a80;">Change vs prior: {{ '%+.3f'|format(card.changePrior.cents) }}¢ ({{ '%+.1f'|format(card.changePrior.percent) }}%)</div>
+        {% endif %}
+      </div>
+      <div class="rate-cell">
+        <div class="k">Historical</div>
+        {% if card.historicalLabel and card.historicalSourced %}
+          <div class="v">{{ card.historicalLabel }}¢</div>
+          <div class="s">{{ card.historicalText }}{% if card.historicalCapture %}<br>Capture {{ card.historicalCapture }}{% endif %}</div>
+        {% else %}
+          <div class="v" style="font-size:1rem; color:var(--forge-muted);">—</div>
+          <div class="s">No archived benchmark on this row.</div>
+        {% endif %}
+        {% if card.changeHistorical %}
+          <div class="s" style="color:#ff8a80;">Change vs historical: {{ '%+.3f'|format(card.changeHistorical.cents) }}¢ ({{ '%+.1f'|format(card.changeHistorical.percent) }}%)</div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if card.futureLabel %}
+    <div class="panel" style="padding:12px 14px; margin-bottom:12px;">
+      <div class="stat-label">Future term</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-top:4px;">
+        {% if card.futureSourced %}{{ card.futureLabel }}¢{% else %}{{ card.futureLabel }}¢ <span style="font-weight:500; color:var(--forge-muted);">(unsourced)</span>{% endif %}
+        <span style="font-weight:500; color:var(--forge-muted); font-size:0.85rem;">{{ card.futureStart or '—' }} – {{ card.futureEnd or '—' }}</span>
+      </div>
+      {% if card.changeFuture %}
+      <div style="font-size:0.8rem; margin-top:4px;">Vs the sourced current rate: {{ '%+.3f'|format(card.changeFuture.cents) }}¢ ({{ '%+.1f'|format(card.changeFuture.percent) }}%) at rollover.</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if card.ptc %}
+    <div class="panel" style="padding:12px 14px; margin-bottom:12px;">
+      <div class="stat-label">Area Price to Compare · not a program rate</div>
+      <div style="margin-top:4px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong> as of {{ card.ptc.as_of }}</div>
+      <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.source }}</div>
+      <div style="font-size:0.75rem; color:var(--forge-muted);">Not compared with the aggregation rate. Different basis.</div>
+    </div>
+    {% endif %}
+
+    <div class="takeaway-box" style="margin-bottom:10px;">
+      <div class="stat-label" style="margin-bottom:4px;">Takeaway</div>
+      {{ card.takeaway }}
+    </div>
+
+    {% if card.hookAllowed and card.hook %}
+    <div class="hook-box" style="margin-bottom:12px;">“{{ card.hook }}”</div>
+    {% endif %}
+
+    <div class="panel" style="padding:12px 14px; margin-bottom:12px; font-size:0.82rem;">
+      <div><span class="stat-label">Supplier</span> {{ card.supplier or '—' }}</div>
+      <div><span class="stat-label">Administrator</span> {{ card.administrator or '—' }}</div>
+      <div style="margin-top:8px; color:var(--forge-muted);">{{ card.commercialApplicability }}</div>
+      {% if card.openQuestions %}
+      <div style="margin-top:8px;"><span class="stat-label">Open questions</span><br>{{ card.openQuestions }}</div>
+      {% endif %}
+      {% if queue_item %}
+      <div style="margin-top:8px;"><span class="stat-label">Prospecting relevance</span><br>Queue rank {{ queue_item.rank }}, score {{ queue_item.trigger_score }}. {{ queue_item.exact_next_action }}</div>
+      {% endif %}
+    </div>
+
+    <div class="panel" style="margin-bottom:12px;">
+      <div class="panel-header">Sources</div>
+      <div style="padding:10px 14px; font-size:0.75rem; line-height:1.5;">
+        {% if card.currentSourced %}<div><strong>Current</strong> · accessed {{ card.accessedAt or '—' }} · <a href="{{ card.currentSource }}" style="color:#4fc3f7;">{{ card.currentSource }}</a></div>{% endif %}
+        {% if card.priorSourced %}<div><strong>Prior</strong> · <a href="{{ card.priorSource }}" style="color:#4fc3f7;">{{ card.priorSource }}</a></div>{% endif %}
+        {% if card.historicalSourced %}<div><strong>Historical</strong> · capture {{ card.historicalCapture or '—' }}</div>{% endif %}
+        {% if card.futureSourced %}<div><strong>Future</strong> · <a href="{{ card.futureSource }}" style="color:#4fc3f7;">{{ card.futureSource }}</a></div>{% endif %}
+      </div>
+    </div>
+
+    {% if research and research.corrections %}
+    <div class="panel">
+      <div class="panel-header">Correction · original FORGE value kept</div>
+      {% for correction in research.corrections %}
+      <div style="padding:12px 14px; font-size:0.78rem; line-height:1.5; border-bottom:1px solid var(--forge-border);">
+        <div><span class="stat-label">Type</span> {{ correction.type }} · {{ correction.date }}</div>
+        <div style="margin-top:6px;"><span class="stat-label">Old value</span><br>{{ correction.oldValue }}</div>
+        <div style="margin-top:6px;"><span class="stat-label">New value</span><br>{{ correction.newValue }}</div>
+        <div style="margin-top:6px;"><span class="stat-label">Reason</span><br>{{ correction.reason }}</div>
+        {% if correction.sourceUrls %}
+        <div style="margin-top:6px;"><span class="stat-label">Evidence</span>
+          {% for url in correction.sourceUrls %}<div><a href="{{ url }}" style="color:#4fc3f7;">{{ url }}</a></div>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <div style="padding:12px 14px; font-size:0.75rem; color:var(--forge-muted);">
+        FORGE record still on file: status {{ card.forgeStatus }}, aggregation {{ card.forgeAggregation }},
+        supplier {{ card.forgeSupplier or '—' }}, recorded rate {{ card.forgeCurrentRate if card.forgeCurrentRate is not none else '—' }}.
+        Those fields were not overwritten.
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

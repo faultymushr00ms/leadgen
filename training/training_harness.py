@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 import anthropic
 
+from forge_config import key_is_configured
+
 load_dotenv()
 
 @dataclass
@@ -21,7 +23,12 @@ class AgentTrainingHarness:
     def __init__(self, config_path: str = "config/agent_config.yaml"):
         """Initialize the training harness with configuration"""
         self.config = self._load_config(config_path)
-        self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not key_is_configured(api_key):
+            raise RuntimeError(
+                "ANTHROPIC_API_KEY is unset or still the .env.example placeholder."
+            )
+        self.client = anthropic.Anthropic(api_key=api_key.strip())
         self.model = "claude-3-5-sonnet-20241022"
         self.training_examples: List[TrainingExample] = []
         self.qualified_leads = []

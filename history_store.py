@@ -1,10 +1,16 @@
-"""Append-only history for the life of the project.
+"""History for the life of the project.
 
-Zone edits, rates, sources, research results, investigation-queue changes,
-and refresh/monitor reports are appended. Older lines and report files are
-never deleted or overwritten. A later event marks an earlier one superseded
-by id; readers set ``superseded_at`` from that later timestamp. Pruning and
-cleanup must not touch this directory.
+Genuine past data stays: real prior and historical rates, contracts,
+suppliers, sources, and superseded values that were once true. Those writes
+are append-only. A later event marks an earlier genuine one superseded by
+id; readers set ``superseded_at`` from that later timestamp.
+
+Proven-incorrect data is deleted: wrong classifications, and unsourced
+values contradicted by verified sources. That deletion is not kept as
+superseded history. The only record is a one-line removal note (zone,
+field, "removed incorrect value", date, reason) that does not contain the
+removed value. Genuine expired rates stay. Pruning must not wipe this
+directory.
 """
 
 from __future__ import annotations
@@ -17,6 +23,7 @@ from datetime import datetime, timezone
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_HISTORY_DIR = os.path.join(ROOT, "data", "history")
 JOURNAL_NAME = "journal.jsonl"
+REMOVAL_NOTES_NAME = "removal_notes.jsonl"
 
 # Fields that belong to the loader, not to a stored zone edit.
 DERIVED_ZONE_KEYS = {
@@ -40,27 +47,32 @@ def journal_path() -> str:
     return os.path.join(history_dir(), JOURNAL_NAME)
 
 
+def removal_notes_path() -> str:
+    return os.path.join(history_dir(), REMOVAL_NOTES_NAME)
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def guard_against_prune(path: str) -> None:
-    """Refuse to delete or truncate stored history.
+    """Refuse to wipe the history directory.
 
-    Cleanup may call this before removing a path. History stays for the
-    life of the project.
+    Genuine history stays for the life of the project. Proven-incorrect
+    values are removed by a correction, which leaves a one-line note, and
+    that correction is not a prune of this directory.
     """
     target = os.path.abspath(path)
     root = os.path.abspath(history_dir())
     if target == root or target.startswith(root + os.sep):
         raise RuntimeError(
             "Refusing to prune history. "
-            "History is kept for the life of the project and is append-only."
+            "Genuine history stays for the life of the project."
         )
 
 
 def append_event(kind: str, body: dict) -> dict:
-    """Append one journal line. Never rewrites earlier lines."""
+    """Append one journal line."""
     event = {
         "id": uuid.uuid4().hex,
         "kind": kind,
@@ -73,6 +85,24 @@ def append_event(kind: str, body: dict) -> dict:
     with open(path, "a", encoding="utf-8") as handle:
         handle.write(line)
     return event
+
+
+def load_removal_notes(path: str | None = None) -> list[dict]:
+    """One-line notes for values that were deleted as incorrect.
+
+    Each note has zone, field, note, date, and reason. It does not contain
+    the removed value.
+    """
+    path = path or removal_notes_path()
+    notes = []
+    if not os.path.exists(path):
+        return notes
+    with open(path, encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if line:
+                notes.append(json.loads(line))
+    return notes
 
 
 def load_events(path: str | None = None) -> list[dict]:
@@ -235,14 +265,17 @@ def apply_zone_history(zones: list[dict]) -> list[dict]:
         if zone is None:
             continue
         if event.get("action") == "move":
-            # The live file already holds the destination record. Keep the
-            # municipal object from the journal as the superseded snapshot.
-            zone.setdefault("history", []).append({
-                "superseded": True,
-                "superseded_at": event.get("recorded_at") or "",
-                "values": event.get("previous_zone") or {},
-                "moved_from": event.get("from_region_file") or "",
-            })
+            # A move keeps a previous snapshot only when that snapshot is
+            # genuine history. An incorrect classification is deleted from
+            # the journal instead of being replayed.
+            previous = event.get("previous_zone") or None
+            if previous:
+                zone.setdefault("history", []).append({
+                    "superseded": True,
+                    "superseded_at": event.get("recorded_at") or "",
+                    "values": previous,
+                    "moved_from": event.get("from_region_file") or "",
+                })
             for key_name, value in (event.get("zone") or {}).items():
                 if key_name in DERIVED_ZONE_KEYS:
                     continue

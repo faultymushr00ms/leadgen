@@ -47,10 +47,11 @@ class DataLoadTests(unittest.TestCase):
         self.assertEqual(len(zones), 327)
         self.assertTrue(all(zone.get("research") and zone.get("original") for zone in zones))
         streetsboro = _zone("Streetsboro")
-        self.assertEqual(streetsboro["supplier"], "NOPEC")
+        self.assertEqual(streetsboro["supplier"], "Dynegy")
         self.assertEqual(streetsboro["currentRate"], 9.999)
+        self.assertIsNone(streetsboro["previousRate"])
         self.assertEqual(streetsboro["status"], "pricing_updated")
-        self.assertEqual(streetsboro["original"]["supplier"], "NOPEC")
+        self.assertEqual(streetsboro["original"]["supplier"], "Dynegy")
         research = streetsboro["research"]
         self.assertEqual(research["supplier"], "Dynegy")
         self.assertEqual(research["current"]["rate_raw"], "9.999")
@@ -58,8 +59,9 @@ class DataLoadTests(unittest.TestCase):
         correction = research["corrections"][0]
         self.assertEqual(correction["type"], "program_or_supplier_correction")
         self.assertEqual(correction["date"], "2026-10-14")
-        self.assertIn("NOPEC", correction["oldValue"])
+        self.assertEqual(correction["oldValue"], "")
         self.assertIn("Dynegy", correction["newValue"])
+        self.assertIn("9.999", correction["newValue"])
         self.assertTrue(correction["sourceUrls"])
         self.assertTrue(correction["reason"])
 
@@ -127,9 +129,15 @@ class DataLoadTests(unittest.TestCase):
         self.assertIn("Archbold", unresolved_names)
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="", encoding="utf-8") as handle:
             original = next(row for row in csv.DictReader(handle) if row["orig_name"] == "Archbold")
-        self.assertEqual(original["orig_aggregationStatus"], "municipal_utility")
-        self.assertEqual(original["orig_utility"], "Archbold Municipal Electric")
+        self.assertEqual(original["orig_aggregationStatus"], "")
+        self.assertEqual(original["orig_utility"], "")
+        self.assertNotIn("Archbold Municipal Electric", json.dumps(original))
         self.assertIn("Ample, reliable electric power is provided to the Archbold area by Toledo Edison", original["CORR_evidence_quotes"])
+        notes = [note for note in history_store.load_removal_notes() if note["zone"] == "Archbold"]
+        self.assertEqual(len(notes), 1)
+        self.assertEqual(notes[0]["note"], "removed incorrect value")
+        self.assertEqual(notes[0]["field"], "classification")
+        self.assertNotIn("Municipal", notes[0]["reason"])
 
     def test_swanton_moved_to_toledo_edison_aggregation(self):
         zone = _zone("Swanton")
@@ -151,14 +159,15 @@ class DataLoadTests(unittest.TestCase):
             "IOU-served (Toledo Edison) village with Dynegy opt-out aggregation at 9.76c through Jun 2028; customers can opt out and shop. Closable.",
         )
         self.assertNotIn("municipal_blacklist", zone["futureUse"])
-        previous = zone["history"][-1]["values"]
-        self.assertEqual(zone["history"][-1]["moved_from"], "ohio_municipal_utilities")
-        self.assertTrue(zone["history"][-1]["superseded"])
-        self.assertEqual(previous["utility"], "Swanton Municipal Electric")
-        self.assertEqual(previous["aggregationStatus"], "municipal_utility")
-        self.assertEqual(previous["futureUse"], "municipal_blacklist")
-        self.assertEqual(previous["supplier"], "Municipal (exempt from retail choice)")
-        self.assertIn("Cannot sell", previous["takeaway"])
+        history_blob = json.dumps(zone.get("history") or [])
+        self.assertNotIn("Swanton Municipal Electric", history_blob)
+        self.assertNotIn("municipal_blacklist", history_blob)
+        notes = [note for note in history_store.load_removal_notes() if note["zone"] == "Swanton"]
+        self.assertEqual(len(notes), 1)
+        self.assertEqual(notes[0]["field"], "classification")
+        self.assertEqual(notes[0]["note"], "removed incorrect value")
+        self.assertEqual(notes[0]["date"], "2026-10-15")
+        self.assertNotIn("Municipal", json.dumps(notes))
         research = zone["research"]
         self.assertEqual(research["utility"], "Toledo Edison")
         self.assertEqual(research["supplier"], "Dynegy")
@@ -189,20 +198,21 @@ class DataLoadTests(unittest.TestCase):
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="", encoding="utf-8") as handle:
             original = next(row for row in csv.DictReader(handle) if row["orig_name"] == "Swanton" and row["record_index"] == "22")
         self.assertEqual(original["source_file"], "ohio_municipal_utilities.json")
-        self.assertEqual(original["orig_aggregationStatus"], "municipal_utility")
-        self.assertEqual(original["orig_utility"], "Swanton Municipal Electric")
-        self.assertEqual(original["orig_futureUse"], "municipal_blacklist")
+        self.assertEqual(original["orig_aggregationStatus"], "")
+        self.assertEqual(original["orig_utility"], "")
+        self.assertEqual(original["orig_futureUse"], "")
+        self.assertEqual(original["CURRENT_rate"], "9.76")
+        self.assertNotIn("Swanton Municipal Electric", json.dumps(original))
+        self.assertNotIn("municipal_blacklist", json.dumps(original))
         periods = [
             row for row in load_rate_ledger()
             if row["origin"] == "rate_ledger.csv" and row["zone"] == "Swanton"
         ]
         municipal = [
             row for row in periods
-            if row["supplier"] == "Municipal (exempt from retail choice)"
+            if "Municipal" in (row["supplier"] or "")
         ]
-        self.assertEqual(len(municipal), 1)
-        self.assertTrue(municipal[0]["superseded"])
-        self.assertEqual(municipal[0]["region"], "ohio_municipal_utilities")
+        self.assertEqual(municipal, [])
         verified = [
             row for row in periods
             if row["source"] == "verified correction (likely)" and row["rate_raw"] == "9.76"
@@ -219,7 +229,8 @@ class DataLoadTests(unittest.TestCase):
         old = next(row for row in queue if row["region"] == "ohio_municipal_utilities")
         new = next(row for row in queue if row["region"] == "nw_central_ohio")
         self.assertTrue(old["superseded"])
-        self.assertIn("municipal system", old["exact_next_action"])
+        self.assertEqual(old["utility"], "Toledo Edison")
+        self.assertNotIn("Swanton Municipal Electric", old["exact_next_action"])
         self.assertFalse(new.get("superseded"))
         self.assertEqual(new["rank"], "329")
         self.assertEqual(new["utility"], "Toledo Edison")
@@ -234,6 +245,10 @@ class DataLoadTests(unittest.TestCase):
         self.assertIn("11.26", body)
         self.assertIn("419-826-9515", body)
         self.assertNotIn("Cannot sell", body)
+        self.assertNotIn("Swanton Municipal Electric", body)
+        self.assertNotIn("municipal_blacklist", body)
+        self.assertNotIn("Municipal (exempt", body)
+        self.assertIn("Swanton | classification | removed incorrect value | 2026-10-15 |", body)
         self.assertIn("Toledo Edison <strong>11.26¢/kWh</strong>", body)
         missing = self.client.get("/card?file=ohio_municipal_utilities&name=Swanton")
         self.assertEqual(missing.status_code, 404)
@@ -261,6 +276,35 @@ class DataLoadTests(unittest.TestCase):
         hotspots = self.client.get("/hotspots").get_data(as_text=True)
         self.assertIn("municipalFlagUnconfirmed", hotspots)
         self.assertIn("Municipal blacklist flag is not confirmed.", hotspots)
+
+    def test_incorrect_history_is_removed_and_genuine_rates_stay(self):
+        euclid = _zone("Euclid")
+        self.assertEqual(euclid["supplier"], "Dynegy")
+        self.assertEqual(euclid["currentRate"], 9.95)
+        self.assertIsNone(euclid["previousRate"])
+        self.assertEqual(euclid["research"]["historical"]["rate_raw"], "7.69")
+        self.assertEqual(euclid["research"]["prior"]["rate_raw"], "")
+        stow = _zone("Stow")
+        self.assertEqual(stow["research"]["historical"]["rate_raw"], "8.38")
+        self.assertEqual(stow["currentRate"], 8.99)
+        green = _zone("Green")
+        self.assertEqual(green["research"]["prior"]["rate_raw"], "9.24")
+        self.assertEqual(green["research"]["current"]["rate_raw"], "9.48")
+        self.assertNotIn("10.399", green["research"]["corrections"][0]["reason"])
+        self.assertNotIn("10.399", green["research"]["corrections"][0]["newValue"])
+        shaker = _zone("Shaker Heights")
+        self.assertEqual(shaker["research"]["historical"]["rate_raw"], "9.49")
+        self.assertEqual(shaker["currentRate"], 9.99)
+        notes = history_store.load_removal_notes()
+        blob = json.dumps(notes)
+        for token in ("9.999", "8.999", "7.0", "Swanton Municipal Electric", "municipal_blacklist"):
+            self.assertNotIn(token, blob)
+        self.assertTrue(any(note["zone"] == "Euclid" and note["note"] == "removed incorrect value" for note in notes))
+        ledger = [
+            row for row in load_rate_ledger()
+            if row["origin"] == "rate_ledger.csv" and row["zone"] == "Euclid" and row["supplier"] == "NOPEC"
+        ]
+        self.assertEqual(ledger, [])
 
 
 class RateChangeTests(unittest.TestCase):
@@ -666,15 +710,14 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("2026-10-31", reference)
         self.assertIn("2027-05-31", reference)
 
-    def test_westlake_correction_keeps_unsourced_forge_history(self):
-        region_path = os.path.join(ROOT, "data", "regions", "nopec_cuyahoga_suburbs.json")
-        with open(region_path, "rb") as handle:
-            region_bytes = handle.read()
+    def test_westlake_drops_unsourced_rates_and_keeps_real_history(self):
         westlake = _zone("Westlake")
-        self.assertEqual(westlake["utility"], "Ohio Edison")
-        self.assertEqual(westlake["supplier"], "NOPEC")
-        self.assertEqual(westlake["currentRate"], 9.999)
-        self.assertIn("on NOPEC", westlake["original"]["hook"])
+        self.assertEqual(westlake["utility"], "The Illuminating Company")
+        self.assertEqual(westlake["supplier"], "Dynegy")
+        self.assertIsNone(westlake["currentRate"])
+        self.assertEqual(westlake["previousRate"], 8.38)
+        self.assertNotIn("NOPEC", westlake["hook"])
+        self.assertNotIn("9.999", json.dumps(westlake["original"]))
         self.assertEqual(westlake["research"]["utility"], "The Illuminating Company")
         self.assertEqual(westlake["research"]["administrator"], "City of Westlake (consultant Brenda Fargo)")
         self.assertIn("Dynegy", westlake["research"]["supplier"])
@@ -683,9 +726,7 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertEqual(westlake["research"]["prior"]["rate_raw"], "8.38")
         self.assertEqual(westlake["research"]["prior"]["term"], "2025-02 to 2026-06")
         self.assertEqual(westlake["research"]["historical"]["rate_raw"], "4.77")
-        self.assertTrue(westlake["research"]["supersededResearch"]["superseded"])
-        self.assertEqual(westlake["research"]["supersededResearch"]["utility"], "Ohio Edison")
-        self.assertTrue(westlake["research"]["supersededResearch"]["superseded_at"])
+        self.assertNotIn("supersededResearch", westlake["research"])
         card = westlake["card"]
         self.assertEqual(
             card["hook"],
@@ -694,28 +735,34 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertNotIn("NOPEC", card["hook"])
         self.assertTrue(card["noGasAggregation"])
         self.assertEqual(card["rejectedRenewal"]["rate"], "10.11")
-        self.assertEqual([item["rate"] for item in card["unsourcedForgeRates"]], ["9.999", "7.0", "8.999"])
+        self.assertEqual(card["unsourcedForgeRates"], [])
+        self.assertEqual(card["removalNotes"][0]["note"], "removed incorrect value")
+        self.assertNotIn("9.999", json.dumps(card["removalNotes"]))
         self.assertIsNone(card["ptc"]["comparison"])
         self.assertEqual(card["ptc"]["cents_per_kwh"], 11.24)
         page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
         self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).", page)
-        self.assertIn("FORGE recorded history, unsourced", page)
+        self.assertNotIn("FORGE recorded history, unsourced", page)
         self.assertIn("No gas aggregation.", page)
         self.assertIn("10.11", page)
         self.assertIn("8.38", page)
         self.assertIn("4.77", page)
-        self.assertIn("superseded", page)
+        self.assertIn("Westlake | recorded rate | removed incorrect value | 2026-10-15 |", page)
+        self.assertNotIn("9.999", page)
+        self.assertNotIn("8.999", page)
         weekly = self.client.get("/weekly").get_data(as_text=True)
         self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c", weekly)
         self.assertNotIn("Westlake is on NOPEC", weekly)
-        with open(region_path, "rb") as handle:
-            self.assertEqual(handle.read(), region_bytes)
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="") as handle:
             stored = [row for row in csv.DictReader(handle) if row["orig_name"] == "Westlake"]
         self.assertEqual(len(stored), 1)
-        self.assertEqual(stored[0]["norm_utility"], "Ohio Edison")
-        self.assertEqual(stored[0]["PRIOR_rate"], "7.0")
-        self.assertIn("FORGE repo", stored[0]["PRIOR_source"])
+        self.assertEqual(stored[0]["norm_utility"], "The Illuminating Company")
+        self.assertEqual(stored[0]["PRIOR_rate"], "8.38")
+        self.assertIn("hoodline.com", stored[0]["PRIOR_source"])
+        self.assertIn("4.77", stored[0]["HISTORICAL_rate_benchmark"])
+        self.assertEqual(stored[0]["HISTORICAL_repo_rate_trail"], "")
+        self.assertNotIn("9.999", json.dumps(stored[0]))
+        self.assertNotIn("7.0", stored[0]["PRIOR_rate"])
 
     def test_queue_page_marks_superseded_additions(self):
         item = {

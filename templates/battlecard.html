@@ -48,8 +48,13 @@
     <div class="panel" style="padding:16px; margin-bottom:12px;">
       <div style="font-size:1.4rem; font-weight:800; color:var(--forge-orange);">{{ card.jurisdiction }}</div>
       <div style="color:var(--forge-muted); margin-bottom:8px;">{{ card.county }} County · {{ card.utility }}</div>
+      {% if card.removalNotes %}
+      {% for note in card.removalNotes %}
+      <div style="font-size:0.75rem; color:var(--forge-muted); margin-bottom:4px;">{{ note.zone }} | {{ note.field }} | {{ note.note }} | {{ note.date }} | {{ note.reason }}</div>
+      {% endfor %}
+      {% endif %}
       {% if card.supersededUtility %}
-      <div style="font-size:0.75rem; color:var(--forge-gold); margin-bottom:8px;">FORGE recorded utility {{ card.supersededUtility }} is superseded {{ card.supersededAt }}. Unsourced. Not the utility to use.</div>
+      <div style="font-size:0.75rem; color:var(--forge-gold); margin-bottom:8px;">Earlier utility {{ card.supersededUtility }} is superseded {{ card.supersededAt }}.</div>
       {% endif %}
       <div style="display:flex; gap:6px; flex-wrap:wrap;">
         <span class="pill">{{ card.program or 'program unknown' }}</span>
@@ -135,15 +140,8 @@
       {% endif %}
     </div>
 
-    {% if card.unsourcedForgeRates or card.rejectedRenewal or card.noGasAggregation %}
+    {% if card.rejectedRenewal or card.noGasAggregation %}
     <div class="panel" style="padding:12px 14px; margin-bottom:12px; font-size:0.8rem;">
-      {% if card.unsourcedForgeRates %}
-      <div class="stat-label">FORGE recorded history, unsourced</div>
-      <div style="margin-top:4px;">
-        {% for item in card.unsourcedForgeRates %}{{ item.rate }}¢ ({{ item.label }}){% if not loop.last %}; {% endif %}{% endfor %}.
-        These stay stored and are not the sourced current, prior, or historical rate.
-      </div>
-      {% endif %}
       {% if card.rejectedRenewal %}
       <div style="margin-top:8px;"><span class="stat-label">Rejected renewal</span> {{ card.rejectedRenewal.rate }}¢/kWh. {{ card.rejectedRenewal.note }}</div>
       {% endif %}
@@ -194,11 +192,13 @@
 
     {% if research and research.corrections %}
     <div class="panel">
-      <div class="panel-header">Correction · original FORGE value kept</div>
+      <div class="panel-header">Correction</div>
       {% for correction in research.corrections %}
       <div style="padding:12px 14px; font-size:0.78rem; line-height:1.5; border-bottom:1px solid var(--forge-border);">
         <div><span class="stat-label">Type</span> {{ correction.type }} · {{ correction.date }}{% if correction.superseded %} · superseded {{ correction.superseded_at }}{% endif %}</div>
+        {% if correction.oldValue %}
         <div style="margin-top:6px;"><span class="stat-label">Old value</span><br>{{ correction.oldValue }}</div>
+        {% endif %}
         <div style="margin-top:6px;"><span class="stat-label">New value</span><br>{{ correction.newValue }}</div>
         <div style="margin-top:6px;"><span class="stat-label">Reason</span><br>{{ correction.reason }}</div>
         {% if correction.sourceUrls %}
@@ -212,9 +212,8 @@
       </div>
       {% endfor %}
       <div style="padding:12px 14px; font-size:0.75rem; color:var(--forge-muted);">
-        FORGE record still on file: status {{ card.forgeStatus }}, aggregation {{ card.forgeAggregation }},
+        Live record: status {{ card.forgeStatus }}, aggregation {{ card.forgeAggregation }},
         supplier {{ card.forgeSupplier or '—' }}, recorded rate {{ card.forgeCurrentRate if card.forgeCurrentRate is not none else '—' }}.
-        Those fields were not overwritten.
       </div>
     </div>
     {% endif %}

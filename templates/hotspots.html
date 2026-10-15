@@ -618,7 +618,7 @@ function renderTable() {
         class="${selectedZone && selectedZone.name === z.name ? 'active' : ''}">
       <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
-      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}${z.card && z.card.utility && z.utility && z.card.utility !== z.utility ? ' <span title="FORGE recorded ' + esc(z.utility) + ', superseded, unsourced">†</span>' : ''}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}${z.card && z.card.utility && z.utility && z.card.utility !== z.utility ? ' <span title="Recorded utility ' + esc(z.utility) + ' differs from the sourced utility">†</span>' : ''}</td>
       <td>${aggBadge(displayAgg(z), true)}</td>
       <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${sourcedRate(z)}</td>
       <td style="text-align:right; color:var(--forge-muted);">${sourcedPrior(z)}</td>
@@ -699,7 +699,7 @@ function selectZone(name) {
   document.getElementById('bc-term-kv').innerHTML = `
     <div class="bc-kv-item">
       <div class="kv-label">Utility</div>
-      <div class="kv-val">${esc((card && card.utility) || selectedZone.utility || '—')}${card && card.utility && card.utility !== selectedZone.utility ? '' : utilConfIcon}${selectedZone.utilityParent ? `<span style="color:var(--forge-muted); font-size:0.7rem; margin-left:4px;">(${esc(selectedZone.utilityParent)})</span>` : ''}${card && card.supersededUtility ? `<div class="rate-sub">FORGE recorded ${esc(card.supersededUtility)} superseded ${esc(card.supersededAt || '')}. Unsourced.</div>` : ''}</div>
+      <div class="kv-val">${esc((card && card.utility) || selectedZone.utility || '—')}${card && card.utility && card.utility !== selectedZone.utility ? '' : utilConfIcon}${selectedZone.utilityParent ? `<span style="color:var(--forge-muted); font-size:0.7rem; margin-left:4px;">(${esc(selectedZone.utilityParent)})</span>` : ''}${card && card.supersededUtility ? `<div class="rate-sub">Earlier utility ${esc(card.supersededUtility)} superseded ${esc(card.supersededAt || '')}.</div>` : ''}</div>
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Supplier</div>
@@ -741,10 +741,12 @@ function selectZone(name) {
     noteBits.push('Municipal blacklist flag is not confirmed.');
   }
   if (selectedZone.notes) {
-    noteBits.push(card ? ('FORGE recorded notes: ' + selectedZone.notes) : selectedZone.notes);
+    noteBits.push(card ? ('Notes: ' + selectedZone.notes) : selectedZone.notes);
   }
-  if (card && card.unsourcedForgeRates && card.unsourcedForgeRates.length) {
-    noteBits.push('FORGE recorded history, unsourced: ' + card.unsourcedForgeRates.map(item => item.rate + '¢ (' + item.label + ')').join('; ') + '.');
+  if (card && card.removalNotes && card.removalNotes.length) {
+    noteBits.push(card.removalNotes.map(function (note) {
+      return [note.zone, note.field, note.note, note.date, note.reason].join(' | ');
+    }).join(' '));
   }
   if (card && card.rejectedRenewal) {
     noteBits.push('Rejected renewal ' + card.rejectedRenewal.rate + '¢/kWh. ' + (card.rejectedRenewal.note || ''));

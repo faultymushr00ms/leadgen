@@ -6,9 +6,10 @@ fields and gains ``original`` (a snapshot of those fields), ``research``
 (display values for battlecards).
 
 Rate changes are computed only when both sides are externally sourced and
-share a rate basis. A FORGE-recorded number is kept as history and is not
-treated as a current sourced rate. Escalate-call and conflict rows stay
-unresolved; they are not marked inactive.
+share a rate basis. A genuine prior or historical rate stays on file and is
+not treated as a current sourced rate. A proven-incorrect value is removed
+and is not shown. Escalate-call and conflict rows stay unresolved; they are
+not marked inactive.
 """
 
 from __future__ import annotations
@@ -555,6 +556,7 @@ def build_card(zone: dict) -> dict:
         "municipalFlagUnconfirmed": municipal_flag_unconfirmed(zone, research),
         "supersededUtility": ((research.get("supersededResearch") or {}).get("utility") or ""),
         "supersededAt": ((research.get("supersededResearch") or {}).get("superseded_at") or ""),
+        "removalNotes": _removal_notes_for(name),
     }
 
 
@@ -591,33 +593,50 @@ def _correction_event_for(source_file: str, name: str) -> dict | None:
     return found
 
 
+def _removal_notes_for(name: str) -> list[dict]:
+    import history_store
+
+    path = history_store.removal_notes_path()
+    cached = getattr(_removal_notes_for, "_cache", None)
+    if cached is None or cached[0] != path:
+        cached = (path, history_store.load_removal_notes(path))
+        _removal_notes_for._cache = cached
+    return [note for note in cached[1] if note.get("zone") == name]
+
+
 def _research_with_corrections(row: dict, source_file: str, name: str) -> dict:
-    """Apply an appended correction without dropping the dataset research."""
+    """Apply an appended correction. Incorrect values are not kept beside it."""
     event = _correction_event_for(source_file, name)
     if event is None:
         return build_research(row)
+    drop_incorrect = bool(event.get("incorrect_history_removed"))
     previous = build_research(row)
-    previous["superseded"] = True
-    previous["superseded_at"] = event.get("recorded_at") or ""
-    for old in previous.get("corrections") or []:
-        old["superseded"] = True
-        old["superseded_at"] = event.get("recorded_at") or ""
+    if not drop_incorrect:
+        previous["superseded"] = True
+        previous["superseded_at"] = event.get("recorded_at") or ""
+        for old in previous.get("corrections") or []:
+            old["superseded"] = True
+            old["superseded_at"] = event.get("recorded_at") or ""
     merged = dict(row)
     merged.update(event.get("fields") or {})
     research = build_research(merged)
-    research["supersededResearch"] = previous
     extra = dict(event.get("correction") or {})
     extra.setdefault("date", (event.get("recorded_at") or "")[:10])
     extra.setdefault("type", "verified_correction")
     extra.setdefault("sourceUrls", [])
     extra.setdefault("sources", extra.get("sources") or [])
-    research["corrections"] = (previous.get("corrections") or []) + [extra]
+    if drop_incorrect:
+        research["corrections"] = (research.get("corrections") or []) + [extra]
+    else:
+        research["supersededResearch"] = previous
+        research["corrections"] = (previous.get("corrections") or []) + [extra]
     if event.get("hook"):
         research["hook"] = event["hook"]
         research["hookAllowed"] = True
     if event.get("takeaway"):
         research["takeaway"] = event["takeaway"]
-    research["unsourcedForgeRates"] = event.get("unsourced_forge_rates") or []
+    if not drop_incorrect:
+        research["unsourcedForgeRates"] = event.get("unsourced_forge_rates") or []
     research["noGasAggregation"] = bool(event.get("no_gas_aggregation"))
     research["rejectedRenewal"] = event.get("rejected_renewal")
     return research

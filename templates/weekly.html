@@ -319,6 +319,9 @@
       {% elif status == 'verify' %}
         <span class="heat-badge heat-cooling mb-1" style="font-size:0.65rem;">VERIFY</span>
       {% endif %}
+      {% if z.card and z.card.municipalFlagUnconfirmed %}
+        <span class="heat-badge heat-warm mb-1" style="font-size:0.65rem;">UNRESOLVED</span>
+      {% endif %}
       <div class="zone-name">{{ z.name }}</div>
       <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
     </div>
@@ -392,6 +395,9 @@
     <span>Notes &amp; context</span>
   </div>
   <div class="notes-body">
+    {% if z.card and z.card.municipalFlagUnconfirmed %}
+    <div style="color:#ffe082;margin-bottom:6px;">Municipal blacklist flag is not confirmed.</div>
+    {% endif %}
     {% if z.card and z.card.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.card.takeaway }}</div>
     {% elif z.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.takeaway }}</div>{% endif %}
     {% if z.notes %}<div><span style="color:var(--forge-muted);">FORGE recorded notes:</span> {{ z.notes }}</div>{% endif %}

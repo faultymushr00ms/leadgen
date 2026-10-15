@@ -328,5 +328,27 @@
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "medium"
+  },
+  {
+    "name": "Swanton",
+    "region": "Toledo / NW Ohio",
+    "utility": "Toledo Edison",
+    "aggregationStatus": "confirmed_active_aggregation",
+    "currentRate": 9.76,
+    "previousRate": 6.96,
+    "rateChange": 40.2,
+    "supplier": "Dynegy",
+    "termStart": "2026-05",
+    "termEnd": "2028-06",
+    "status": "stable",
+    "confidence": "medium",
+    "takeaway": "IOU-served (Toledo Edison) village with Dynegy opt-out aggregation at 9.76c through Jun 2028; customers can opt out and shop. Closable.",
+    "hook": "",
+    "futureUse": "aggregation",
+    "notes": "Moved out of the municipal list 2026-10-15. Not a municipal utility. Opt-out electric aggregation. Administrator: Village of Swanton, PUCO cert 11-357E / 11-2430-EL-GAG. Not on the AMP list. Toledo Edison (FirstEnergy) serves the village.",
+    "lastVerified": "2026-10-15",
+    "sourceUrl": "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Swanton",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "high"
   }
 ]

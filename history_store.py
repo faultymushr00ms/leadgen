@@ -234,6 +234,22 @@ def apply_zone_history(zones: list[dict]) -> list[dict]:
             created = True
         if zone is None:
             continue
+        if event.get("action") == "move":
+            # The live file already holds the destination record. Keep the
+            # municipal object from the journal as the superseded snapshot.
+            zone.setdefault("history", []).append({
+                "superseded": True,
+                "superseded_at": event.get("recorded_at") or "",
+                "values": event.get("previous_zone") or {},
+                "moved_from": event.get("from_region_file") or "",
+            })
+            for key_name, value in (event.get("zone") or {}).items():
+                if key_name in DERIVED_ZONE_KEYS:
+                    continue
+                zone[key_name] = value
+            zone["superseded"] = False
+            zone.pop("superseded_at", None)
+            continue
         if not created:
             zone.setdefault("history", []).append({
                 "superseded": True,

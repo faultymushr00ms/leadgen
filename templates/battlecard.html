@@ -41,6 +41,9 @@
       This record is not marked inactive. Verify before using. No field opener is shown.
     </div>
     {% endif %}
+    {% if card.municipalFlagUnconfirmed %}
+    <div class="banner-alert banner-unresolved">Municipal blacklist flag is not confirmed.</div>
+    {% endif %}
 
     <div class="panel" style="padding:16px; margin-bottom:12px;">
       <div style="font-size:1.4rem; font-weight:800; color:var(--forge-orange);">{{ card.jurisdiction }}</div>

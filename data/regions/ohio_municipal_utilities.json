@@ -484,28 +484,6 @@
     "utilityConfidence": "high"
   },
   {
-    "name": "Swanton",
-    "region": "Toledo / NW Ohio",
-    "utility": "Swanton Municipal Electric",
-    "aggregationStatus": "municipal_utility",
-    "currentRate": null,
-    "previousRate": null,
-    "rateChange": null,
-    "supplier": "Municipal (exempt from retail choice)",
-    "termStart": null,
-    "termEnd": null,
-    "status": "stable",
-    "confidence": "medium",
-    "takeaway": "Swanton operates a municipal electric system in Fulton County. Cannot sell competitive electric supply.",
-    "hook": "Do you handle your own electric or is it through the city system?",
-    "futureUse": "municipal_blacklist",
-    "notes": "Village-owned electric utility in Fulton County, near Toledo metro. Exempt from Ohio retail electric choice.",
-    "lastVerified": "2026-05-01",
-    "sourceUrl": null,
-    "utilityParent": null,
-    "utilityConfidence": "high"
-  },
-  {
     "name": "Napoleon",
     "region": "Toledo / NW Ohio",
     "utility": "Napoleon Municipal Electric",

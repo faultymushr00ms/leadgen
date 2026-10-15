@@ -523,9 +523,9 @@ function applyFilters() {
     if (q && !matchSearch(z, q)) return false;
     if (region  && z.region  !== region)  return false;
     if (utility && z.utility !== utility && displayUtility(z) !== utility) return false;
-    if (agg     && z.aggregationStatus !== agg)   return false;
+    if (agg     && displayAgg(z) !== agg)   return false;
     if (status  && z.status  !== status)  return false;
-    if (future  && z.futureUse !== future) return false;
+    if (future  && displayFuture(z) !== future) return false;
     return true;
   });
 
@@ -535,12 +535,33 @@ function applyFilters() {
     filteredZones.length + ' / ' + ALL_ZONES.length + ' zones';
 }
 
+function conflictMunicipal(z) {
+  return !!(z.card && z.card.municipalFlagUnconfirmed);
+}
+function displayAgg(z) {
+  return conflictMunicipal(z) ? 'unresolved' : z.aggregationStatus;
+}
+function displaySupplier(z) {
+  if (conflictMunicipal(z) && z.card && z.card.supplier) return z.card.supplier;
+  return z.supplier || '';
+}
+function displayFuture(z) {
+  return conflictMunicipal(z) ? 'unresolved' : z.futureUse;
+}
+function futureUseBadge(z) {
+  if (conflictMunicipal(z)) {
+    return '<span class="heat-badge heat-warm" style="font-size:0.65rem;">Unresolved</span>'
+      + '<div class="rate-sub">Municipal blacklist flag is not confirmed.</div>';
+  }
+  return fuBadge(z.futureUse);
+}
 function matchSearch(z, q) {
+  const supplier = displaySupplier(z);
   return (z.name    || '').toLowerCase().includes(q) ||
          (z.region  || '').toLowerCase().includes(q) ||
          (z.utility || '').toLowerCase().includes(q) ||
          displayUtility(z).toLowerCase().includes(q) ||
-         (z.supplier|| '').toLowerCase().includes(q) ||
+         (supplier || '').toLowerCase().includes(q) ||
          (z.notes   || '').toLowerCase().includes(q) ||
          (z.takeaway|| '').toLowerCase().includes(q);
 }
@@ -576,7 +597,7 @@ function sortZones() {
 
 function sortVal(z, key) {
   if (key === 'status')            return STATUS_ORDER[z.status] ?? 9;
-  if (key === 'aggregationStatus') return AGG_ORDER[z.aggregationStatus] ?? 9;
+  if (key === 'aggregationStatus') return AGG_ORDER[displayAgg(z)] ?? 9;
   if (key === 'confidence')        return CONF_ORDER[z.confidence] ?? 9;
   return z[key];
 }
@@ -598,11 +619,11 @@ function renderTable() {
       <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}${z.card && z.card.utility && z.utility && z.card.utility !== z.utility ? ' <span title="FORGE recorded ' + esc(z.utility) + ', superseded, unsourced">†</span>' : ''}</td>
-      <td>${aggBadge(z.aggregationStatus, true)}</td>
+      <td>${aggBadge(displayAgg(z), true)}</td>
       <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${sourcedRate(z)}</td>
       <td style="text-align:right; color:var(--forge-muted);">${sourcedPrior(z)}</td>
       <td style="text-align:right;">${sourcedChange(z)}</td>
-      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.supplier || '—')}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displaySupplier(z) || '—')}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${fmtDate(z.termEnd)}</td>
       <td>${statusBadge(z.status)}</td>
       <td>${confBadge(z.confidence)}</td>
@@ -625,7 +646,7 @@ function selectZone(name) {
   document.getElementById('bc-region').textContent = selectedZone.region;
   const card = selectedZone.card;
   document.getElementById('bc-badges').innerHTML =
-    aggBadge(selectedZone.aggregationStatus) + ' ' +
+    aggBadge(displayAgg(selectedZone)) + ' ' +
     statusBadge(selectedZone.status) + ' ' +
     (card ? `<span class="heat-badge conf-medium" style="font-size:0.65rem;">${esc(card.verificationLabel)}</span>` : confBadge(selectedZone.confidence));
 
@@ -686,7 +707,7 @@ function selectZone(name) {
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Future Use</div>
-      <div class="kv-val">${fuBadge(selectedZone.futureUse)}</div>
+      <div class="kv-val">${futureUseBadge(selectedZone)}</div>
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Current term start</div>
@@ -716,6 +737,9 @@ function selectZone(name) {
 
   const notesSection = document.getElementById('bc-notes-section');
   const noteBits = [];
+  if (conflictMunicipal(selectedZone)) {
+    noteBits.push('Municipal blacklist flag is not confirmed.');
+  }
   if (selectedZone.notes) {
     noteBits.push(card ? ('FORGE recorded notes: ' + selectedZone.notes) : selectedZone.notes);
   }

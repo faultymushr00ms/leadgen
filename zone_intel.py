@@ -552,6 +552,7 @@ def build_card(zone: dict) -> dict:
         "unsourcedForgeRates": research.get("unsourcedForgeRates") or [],
         "noGasAggregation": bool(research.get("noGasAggregation")),
         "rejectedRenewal": research.get("rejectedRenewal"),
+        "municipalFlagUnconfirmed": municipal_flag_unconfirmed(zone, research),
         "supersededUtility": ((research.get("supersededResearch") or {}).get("utility") or ""),
         "supersededAt": ((research.get("supersededResearch") or {}).get("superseded_at") or ""),
     }
@@ -628,7 +629,13 @@ def attach_research(zones: list) -> list:
     for zone in zones:
         # _source_file is the region key without .json
         key = (f"{zone.get('_source_file', '')}.json", zone.get("name"))
+        name = zone.get("name") or ""
         row = index.get(key)
+        if row is None:
+            event = _correction_event_for(key[0], name)
+            dataset_file = (event or {}).get("dataset_source_file") or ""
+            if dataset_file:
+                row = index.get((dataset_file, name))
         snapshot = {field: zone.get(field) for field in ORIGINAL_FIELDS}
         zone["original"] = snapshot
         if row is None:
@@ -637,7 +644,7 @@ def attach_research(zones: list) -> list:
             continue
         # Guard: never copy research conclusions onto the FORGE status fields.
         before = {field: zone.get(field) for field in ("status", "aggregationStatus", "currentRate", "supplier")}
-        zone["research"] = _research_with_corrections(row, key[0], zone.get("name") or "")
+        zone["research"] = _research_with_corrections(row, key[0], name)
         zone["card"] = build_card(zone)
         for field, value in before.items():
             zone[field] = value
@@ -673,10 +680,28 @@ def load_ptc() -> dict:
     return _ptc_cache
 
 
+def municipal_flag_unconfirmed(zone: dict, research: dict | None = None) -> bool:
+    """A conflict row whose research says the program is active.
+
+    The stored municipal blacklist flag stays in the region file. The card
+    treats that flag as unresolved until an owner correction confirms it.
+    """
+    research = research if research is not None else (zone.get("research") or {})
+    status_info = research.get("status") or {}
+    program = status_info.get("program") or ""
+    return (
+        bool(status_info.get("unresolved"))
+        and program.startswith("active")
+        and (zone.get("aggregationStatus") or "") == "municipal_utility"
+    )
+
+
 def _ptc_not_applicable(zone: dict, research: dict) -> bool:
     """Municipal utilities and cooperatives are outside Price to Compare."""
     if research.get("notEligible"):
         return True
+    if municipal_flag_unconfirmed(zone, research):
+        return False
     status = zone.get("aggregationStatus") or ""
     if status in {"municipal_utility", "electric_cooperative"}:
         return True
@@ -1014,8 +1039,31 @@ def load_rate_ledger() -> list[dict]:
                 "date_type": "research accessed (future term)",
                 "sourced": future["sourced"],
             })
+    _apply_ledger_supersede(periods)
     _ledger_cache = periods
     return periods
+
+
+def _apply_ledger_supersede(periods: list[dict]) -> None:
+    """Mark matched rate_ledger.csv rows superseded. The CSV is not rewritten."""
+    import history_store
+
+    events = [
+        event for event in history_store.load_events()
+        if event.get("kind") == "rate_ledger"
+        and event.get("action") == "supersede"
+        and not event.get("superseded")
+    ]
+    for event in events:
+        match = event.get("match") or {}
+        if not match:
+            continue
+        for period in periods:
+            if period.get("origin") != "rate_ledger.csv":
+                continue
+            if all(period.get(key) == value for key, value in match.items()):
+                period["superseded"] = True
+                period["superseded_at"] = event.get("recorded_at") or ""
 
 
 def _mark_superseded_queue_rows(rows: list[dict]) -> None:
@@ -1033,6 +1081,20 @@ def _mark_superseded_queue_rows(rows: list[dict]) -> None:
         for index in indexes[:-1]:
             rows[index]["superseded"] = True
             rows[index]["superseded_at"] = stamp
+    for event in load_corrections():
+        if event.get("superseded"):
+            continue
+        dataset_file = event.get("dataset_source_file") or ""
+        new_file = event.get("source_file") or ""
+        if not dataset_file or dataset_file == new_file:
+            continue
+        old_region = dataset_file[:-5] if dataset_file.endswith(".json") else dataset_file
+        zone_name = event.get("zone") or ""
+        stamp = event.get("recorded_at") or ""
+        for row in rows:
+            if row.get("zone") == zone_name and row.get("region") == old_region:
+                row["superseded"] = True
+                row["superseded_at"] = stamp
 
 
 def load_queue() -> list[dict]:

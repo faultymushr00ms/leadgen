@@ -1,5 +1,6 @@
 """Data loading, comparable rate changes, and the report-only monitor."""
 
+import csv
 import hashlib
 import json
 import os
@@ -161,7 +162,12 @@ class RateChangeTests(unittest.TestCase):
         ]
         self.assertEqual(prior[0]["rate_raw"], "6.57")
         self.assertTrue(prior[0]["sourced"])
-        self.assertEqual(len(load_queue()), 327)
+        self.assertEqual(len(load_queue()), 328)
+        westlake_queue = [row for row in load_queue() if row["zone"] == "Westlake"]
+        self.assertEqual(len(westlake_queue), 2)
+        self.assertTrue(westlake_queue[0]["superseded"])
+        self.assertIn("Update FORGE supplier field", westlake_queue[0]["exact_next_action"])
+        self.assertEqual(westlake_queue[1]["utility"], "The Illuminating Company")
         ptc_rows = {row["code"]: row for row in load_ptc()["rates"]}
         self.assertEqual(
             {code: row["cents_per_kwh"] for code, row in ptc_rows.items()},
@@ -477,6 +483,57 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("Earlier source note kept", reference)
         self.assertIn("2026-10-31", reference)
         self.assertIn("2027-05-31", reference)
+
+    def test_westlake_correction_keeps_unsourced_forge_history(self):
+        region_path = os.path.join(ROOT, "data", "regions", "nopec_cuyahoga_suburbs.json")
+        with open(region_path, "rb") as handle:
+            region_bytes = handle.read()
+        westlake = _zone("Westlake")
+        self.assertEqual(westlake["utility"], "Ohio Edison")
+        self.assertEqual(westlake["supplier"], "NOPEC")
+        self.assertEqual(westlake["currentRate"], 9.999)
+        self.assertIn("on NOPEC", westlake["original"]["hook"])
+        self.assertEqual(westlake["research"]["utility"], "The Illuminating Company")
+        self.assertEqual(westlake["research"]["administrator"], "City of Westlake (consultant Brenda Fargo)")
+        self.assertIn("Dynegy", westlake["research"]["supplier"])
+        self.assertEqual(westlake["research"]["current"]["rate_raw"], "11.24")
+        self.assertIn("TerritoryId=6", westlake["research"]["current"]["source"])
+        self.assertEqual(westlake["research"]["prior"]["rate_raw"], "8.38")
+        self.assertEqual(westlake["research"]["prior"]["term"], "2025-02 to 2026-06")
+        self.assertEqual(westlake["research"]["historical"]["rate_raw"], "4.77")
+        self.assertTrue(westlake["research"]["supersededResearch"]["superseded"])
+        self.assertEqual(westlake["research"]["supersededResearch"]["utility"], "Ohio Edison")
+        self.assertTrue(westlake["research"]["supersededResearch"]["superseded_at"])
+        card = westlake["card"]
+        self.assertEqual(
+            card["hook"],
+            "Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).",
+        )
+        self.assertNotIn("NOPEC", card["hook"])
+        self.assertTrue(card["noGasAggregation"])
+        self.assertEqual(card["rejectedRenewal"]["rate"], "10.11")
+        self.assertEqual([item["rate"] for item in card["unsourcedForgeRates"]], ["9.999", "7.0", "8.999"])
+        self.assertIsNone(card["ptc"]["comparison"])
+        self.assertEqual(card["ptc"]["cents_per_kwh"], 11.24)
+        page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
+        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).", page)
+        self.assertIn("FORGE recorded history, unsourced", page)
+        self.assertIn("No gas aggregation.", page)
+        self.assertIn("10.11", page)
+        self.assertIn("8.38", page)
+        self.assertIn("4.77", page)
+        self.assertIn("superseded", page)
+        weekly = self.client.get("/weekly").get_data(as_text=True)
+        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c", weekly)
+        self.assertNotIn("Westlake is on NOPEC", weekly)
+        with open(region_path, "rb") as handle:
+            self.assertEqual(handle.read(), region_bytes)
+        with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="") as handle:
+            stored = [row for row in csv.DictReader(handle) if row["orig_name"] == "Westlake"]
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0]["norm_utility"], "Ohio Edison")
+        self.assertEqual(stored[0]["PRIOR_rate"], "7.0")
+        self.assertIn("FORGE repo", stored[0]["PRIOR_source"])
 
     def test_queue_page_marks_superseded_additions(self):
         item = {

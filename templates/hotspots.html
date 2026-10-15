@@ -491,7 +491,7 @@ const FU_CSS = {
 // ── Init dropdowns ────────────────────────────────────────────────────────────
 function initDropdowns() {
   const regions   = [...new Set(ALL_ZONES.map(z => z.region))].sort();
-  const utilities = [...new Set(ALL_ZONES.map(z => z.utility))].sort();
+  const utilities = [...new Set(ALL_ZONES.flatMap(z => [z.utility, displayUtility(z)].filter(Boolean)))].sort();
   const regionSel  = document.getElementById('filter-region');
   const utilSel    = document.getElementById('filter-utility');
   regions.forEach(r => { const o = document.createElement('option'); o.value = r; o.textContent = r; regionSel.appendChild(o); });
@@ -510,7 +510,7 @@ function applyFilters() {
   filteredZones = ALL_ZONES.filter(z => {
     if (q && !matchSearch(z, q)) return false;
     if (region  && z.region  !== region)  return false;
-    if (utility && z.utility !== utility) return false;
+    if (utility && z.utility !== utility && displayUtility(z) !== utility) return false;
     if (agg     && z.aggregationStatus !== agg)   return false;
     if (status  && z.status  !== status)  return false;
     if (future  && z.futureUse !== future) return false;
@@ -527,6 +527,7 @@ function matchSearch(z, q) {
   return (z.name    || '').toLowerCase().includes(q) ||
          (z.region  || '').toLowerCase().includes(q) ||
          (z.utility || '').toLowerCase().includes(q) ||
+         displayUtility(z).toLowerCase().includes(q) ||
          (z.supplier|| '').toLowerCase().includes(q) ||
          (z.notes   || '').toLowerCase().includes(q) ||
          (z.takeaway|| '').toLowerCase().includes(q);
@@ -584,7 +585,7 @@ function renderTable() {
         class="${selectedZone && selectedZone.name === z.name ? 'active' : ''}">
       <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
-      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.utility)}${z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}${z.card && z.card.utility && z.utility && z.card.utility !== z.utility ? ' <span title="FORGE recorded ' + esc(z.utility) + ', superseded, unsourced">†</span>' : ''}</td>
       <td>${aggBadge(z.aggregationStatus, true)}</td>
       <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${sourcedRate(z)}</td>
       <td style="text-align:right; color:var(--forge-muted);">${sourcedPrior(z)}</td>
@@ -665,7 +666,7 @@ function selectZone(name) {
   document.getElementById('bc-term-kv').innerHTML = `
     <div class="bc-kv-item">
       <div class="kv-label">Utility</div>
-      <div class="kv-val">${esc(selectedZone.utility || '—')}${utilConfIcon}${selectedZone.utilityParent ? `<span style="color:var(--forge-muted); font-size:0.7rem; margin-left:4px;">(${esc(selectedZone.utilityParent)})</span>` : ''}</div>
+      <div class="kv-val">${esc((card && card.utility) || selectedZone.utility || '—')}${card && card.utility && card.utility !== selectedZone.utility ? '' : utilConfIcon}${selectedZone.utilityParent ? `<span style="color:var(--forge-muted); font-size:0.7rem; margin-left:4px;">(${esc(selectedZone.utilityParent)})</span>` : ''}${card && card.supersededUtility ? `<div class="rate-sub">FORGE recorded ${esc(card.supersededUtility)} superseded ${esc(card.supersededAt || '')}. Unsourced.</div>` : ''}</div>
     </div>
     <div class="bc-kv-item">
       <div class="kv-label">Supplier</div>
@@ -702,11 +703,22 @@ function selectZone(name) {
   }
 
   const notesSection = document.getElementById('bc-notes-section');
+  const noteBits = [];
   if (selectedZone.notes) {
+    noteBits.push(card ? ('FORGE recorded notes: ' + selectedZone.notes) : selectedZone.notes);
+  }
+  if (card && card.unsourcedForgeRates && card.unsourcedForgeRates.length) {
+    noteBits.push('FORGE recorded history, unsourced: ' + card.unsourcedForgeRates.map(item => item.rate + '¢ (' + item.label + ')').join('; ') + '.');
+  }
+  if (card && card.rejectedRenewal) {
+    noteBits.push('Rejected renewal ' + card.rejectedRenewal.rate + '¢/kWh. ' + (card.rejectedRenewal.note || ''));
+  }
+  if (card && card.noGasAggregation) {
+    noteBits.push('No gas aggregation.');
+  }
+  if (noteBits.length) {
     notesSection.style.display = '';
-    document.getElementById('bc-notes').textContent = card
-      ? ('FORGE recorded notes: ' + selectedZone.notes)
-      : selectedZone.notes;
+    document.getElementById('bc-notes').textContent = noteBits.join(' ');
   } else {
     notesSection.style.display = 'none';
   }
@@ -734,6 +746,9 @@ function fuBadge(val) {
 }
 
 // ── Format helpers ─────────────────────────────────────────────────────────────
+function displayUtility(z) {
+  return (z.card && z.card.utility) || z.utility || '';
+}
 function renderResidentialPtc(card, zone) {
   const host = document.getElementById('bc-ptc');
   const ptc = card && card.ptc;

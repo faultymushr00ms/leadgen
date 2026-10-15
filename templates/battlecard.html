@@ -44,6 +44,9 @@
     <div class="panel" style="padding:16px; margin-bottom:12px;">
       <div style="font-size:1.4rem; font-weight:800; color:var(--forge-orange);">{{ card.jurisdiction }}</div>
       <div style="color:var(--forge-muted); margin-bottom:8px;">{{ card.county }} County · {{ card.utility }}</div>
+      {% if card.supersededUtility %}
+      <div style="font-size:0.75rem; color:var(--forge-gold); margin-bottom:8px;">FORGE recorded utility {{ card.supersededUtility }} is superseded {{ card.supersededAt }}. Unsourced. Not the utility to use.</div>
+      {% endif %}
       <div style="display:flex; gap:6px; flex-wrap:wrap;">
         <span class="pill">{{ card.program or 'program unknown' }}</span>
         <span class="pill">term: {{ card.termStatus or '—' }}</span>
@@ -128,6 +131,24 @@
       {% endif %}
     </div>
 
+    {% if card.unsourcedForgeRates or card.rejectedRenewal or card.noGasAggregation %}
+    <div class="panel" style="padding:12px 14px; margin-bottom:12px; font-size:0.8rem;">
+      {% if card.unsourcedForgeRates %}
+      <div class="stat-label">FORGE recorded history, unsourced</div>
+      <div style="margin-top:4px;">
+        {% for item in card.unsourcedForgeRates %}{{ item.rate }}¢ ({{ item.label }}){% if not loop.last %}; {% endif %}{% endfor %}.
+        These stay stored and are not the sourced current, prior, or historical rate.
+      </div>
+      {% endif %}
+      {% if card.rejectedRenewal %}
+      <div style="margin-top:8px;"><span class="stat-label">Rejected renewal</span> {{ card.rejectedRenewal.rate }}¢/kWh. {{ card.rejectedRenewal.note }}</div>
+      {% endif %}
+      {% if card.noGasAggregation %}
+      <div style="margin-top:8px;">No gas aggregation.</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
     <div class="takeaway-box" style="margin-bottom:10px;">
       <div class="stat-label" style="margin-bottom:4px;">Takeaway</div>
       {{ card.takeaway }}
@@ -165,7 +186,7 @@
       <div class="panel-header">Correction · original FORGE value kept</div>
       {% for correction in research.corrections %}
       <div style="padding:12px 14px; font-size:0.78rem; line-height:1.5; border-bottom:1px solid var(--forge-border);">
-        <div><span class="stat-label">Type</span> {{ correction.type }} · {{ correction.date }}</div>
+        <div><span class="stat-label">Type</span> {{ correction.type }} · {{ correction.date }}{% if correction.superseded %} · superseded {{ correction.superseded_at }}{% endif %}</div>
         <div style="margin-top:6px;"><span class="stat-label">Old value</span><br>{{ correction.oldValue }}</div>
         <div style="margin-top:6px;"><span class="stat-label">New value</span><br>{{ correction.newValue }}</div>
         <div style="margin-top:6px;"><span class="stat-label">Reason</span><br>{{ correction.reason }}</div>
@@ -174,6 +195,9 @@
           {% for url in correction.sourceUrls %}<div><a href="{{ url }}" style="color:#4fc3f7;">{{ url }}</a></div>{% endfor %}
         </div>
         {% endif %}
+        {% for source in correction.sources or [] %}
+          {% if source.quote %}<div style="margin-top:6px; color:var(--forge-muted);">“{{ source.quote }}” {% if source.published %}({{ source.published }}){% endif %}</div>{% endif %}
+        {% endfor %}
       </div>
       {% endfor %}
       <div style="padding:12px 14px; font-size:0.75rem; color:var(--forge-muted);">

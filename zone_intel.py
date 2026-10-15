@@ -30,6 +30,7 @@ LEDGER_PATH = os.path.join(RESEARCH_DIR, "rate_ledger.csv")
 QUEUE_PATH = os.path.join(RESEARCH_DIR, "investigation_queue.csv")
 PTC_PATH = os.path.join(RESEARCH_DIR, "price_to_compare.json")
 MONITOR_QUEUE_PATH = os.path.join(RESEARCH_DIR, "monitor_additions.csv")
+CORRECTIONS_PATH = os.path.join(RESEARCH_DIR, "corrections.jsonl")
 
 ORIGINAL_FIELDS = (
     "name",
@@ -87,6 +88,7 @@ _dataset_cache: dict | None = None
 _ledger_cache: list | None = None
 _queue_cache: list | None = None
 _ptc_cache: dict | None = None
+_corrections_cache: list | None = None
 
 _RATE_RE = re.compile(r"-?\d+(?:\.\d+)?")
 _HIST_RE = re.compile(r"(-?\d+(?:\.\d+)?)\s*\(([^)]*)\)")
@@ -373,7 +375,8 @@ def build_research(row: dict) -> dict:
         row.get("CURRENT_term_end"),
         accessed,
     )
-    prior_basis = basis_from_source(row.get("PRIOR_source"), "")
+    prior_explicit = (row.get("PRIOR_basis") or "").strip()
+    prior_basis = prior_explicit or basis_from_source(row.get("PRIOR_source"), "")
     prior = _period(
         row.get("PRIOR_rate"),
         row.get("PRIOR_source"),
@@ -546,7 +549,77 @@ def build_card(zone: dict) -> dict:
         "forgeSupplier": zone.get("supplier"),
         "forgeCurrentRate": zone.get("currentRate"),
         "forgePreviousRate": zone.get("previousRate"),
+        "unsourcedForgeRates": research.get("unsourcedForgeRates") or [],
+        "noGasAggregation": bool(research.get("noGasAggregation")),
+        "rejectedRenewal": research.get("rejectedRenewal"),
+        "supersededUtility": ((research.get("supersededResearch") or {}).get("utility") or ""),
+        "supersededAt": ((research.get("supersededResearch") or {}).get("superseded_at") or ""),
     }
+
+
+def load_corrections() -> list[dict]:
+    """Append-only research corrections. Later lines can supersede earlier ids."""
+    global _corrections_cache
+    if _corrections_cache is not None:
+        return _corrections_cache
+    events = []
+    if os.path.exists(CORRECTIONS_PATH):
+        with open(CORRECTIONS_PATH, encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if line:
+                    events.append(json.loads(line))
+    by_id = {event.get("id"): event for event in events if event.get("id")}
+    for event in events:
+        prior_id = event.get("supersedes")
+        if prior_id and prior_id in by_id:
+            prior = by_id[prior_id]
+            prior["superseded"] = True
+            prior["superseded_at"] = event.get("recorded_at") or ""
+    _corrections_cache = events
+    return events
+
+
+def _correction_event_for(source_file: str, name: str) -> dict | None:
+    found = None
+    for event in load_corrections():
+        if event.get("superseded"):
+            continue
+        if event.get("source_file") == source_file and event.get("zone") == name:
+            found = event
+    return found
+
+
+def _research_with_corrections(row: dict, source_file: str, name: str) -> dict:
+    """Apply an appended correction without dropping the dataset research."""
+    event = _correction_event_for(source_file, name)
+    if event is None:
+        return build_research(row)
+    previous = build_research(row)
+    previous["superseded"] = True
+    previous["superseded_at"] = event.get("recorded_at") or ""
+    for old in previous.get("corrections") or []:
+        old["superseded"] = True
+        old["superseded_at"] = event.get("recorded_at") or ""
+    merged = dict(row)
+    merged.update(event.get("fields") or {})
+    research = build_research(merged)
+    research["supersededResearch"] = previous
+    extra = dict(event.get("correction") or {})
+    extra.setdefault("date", (event.get("recorded_at") or "")[:10])
+    extra.setdefault("type", "verified_correction")
+    extra.setdefault("sourceUrls", [])
+    extra.setdefault("sources", extra.get("sources") or [])
+    research["corrections"] = (previous.get("corrections") or []) + [extra]
+    if event.get("hook"):
+        research["hook"] = event["hook"]
+        research["hookAllowed"] = True
+    if event.get("takeaway"):
+        research["takeaway"] = event["takeaway"]
+    research["unsourcedForgeRates"] = event.get("unsourced_forge_rates") or []
+    research["noGasAggregation"] = bool(event.get("no_gas_aggregation"))
+    research["rejectedRenewal"] = event.get("rejected_renewal")
+    return research
 
 
 def attach_research(zones: list) -> list:
@@ -564,7 +637,7 @@ def attach_research(zones: list) -> list:
             continue
         # Guard: never copy research conclusions onto the FORGE status fields.
         before = {field: zone.get(field) for field in ("status", "aggregationStatus", "currentRate", "supplier")}
-        zone["research"] = build_research(row)
+        zone["research"] = _research_with_corrections(row, key[0], zone.get("name") or "")
         zone["card"] = build_card(zone)
         for field, value in before.items():
             zone[field] = value
@@ -794,6 +867,8 @@ def hotspot_zones(zones: list, queue: list | None = None, limit: int = 25) -> li
     by_key = {(zone.get("_source_file"), zone.get("name")): zone for zone in zones}
     ranked = []
     for item in queue or []:
+        if item.get("superseded"):
+            continue
         zone = by_key.get((item.get("region"), item.get("zone")))
         if zone is None:
             continue
@@ -814,6 +889,8 @@ def _role_from_date_type(date_type: str) -> str:
     text = (date_type or "").lower()
     if "future" in text:
         return "future"
+    if "prior" in text:
+        return "prior"
     if "current" in text:
         return "current"
     if "archived" in text or "wayback" in text:
@@ -941,6 +1018,23 @@ def load_rate_ledger() -> list[dict]:
     return periods
 
 
+def _mark_superseded_queue_rows(rows: list[dict]) -> None:
+    """A later row for the same zone supersedes the earlier one. The file is not rewritten."""
+    grouped: dict[tuple, list[int]] = defaultdict(list)
+    for index, row in enumerate(rows):
+        grouped[(row.get("zone"), row.get("region"))].append(index)
+    for key, indexes in grouped.items():
+        if len(indexes) < 2:
+            continue
+        zone_name, region = key
+        source_file = region if str(region).endswith(".json") else f"{region}.json"
+        event = _correction_event_for(source_file, zone_name or "")
+        stamp = (event or {}).get("recorded_at") or ""
+        for index in indexes[:-1]:
+            rows[index]["superseded"] = True
+            rows[index]["superseded_at"] = stamp
+
+
 def load_queue() -> list[dict]:
     global _queue_cache
     if _queue_cache is not None:
@@ -951,6 +1045,7 @@ def load_queue() -> list[dict]:
             for row in csv.DictReader(handle):
                 row["queue_origin"] = "reconciliation"
                 rows.append(row)
+    _mark_superseded_queue_rows(rows)
     _queue_cache = rows
     return rows
 
@@ -996,10 +1091,11 @@ def load_monitor_additions(path: str | None = None) -> list[dict]:
 def queue_for_zone(zone: dict, queue: list | None = None) -> dict | None:
     region = zone.get("_source_file") or ""
     name = zone.get("name") or ""
+    found = None
     for item in queue if queue is not None else load_queue():
-        if item.get("zone") == name and item.get("region") == region:
-            return item
-    return None
+        if item.get("zone") == name and item.get("region") == region and not item.get("superseded"):
+            found = item
+    return found
 
 
 # ── Refresh monitor (report only) ──────────────────────────────────────────────

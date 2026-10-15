@@ -67,7 +67,7 @@
           </td>
           <td style="white-space:normal;">{{ row.STATUS_program }}</td>
           <td>{{ row.STATUS_term }}</td>
-          <td style="white-space:normal; max-width:420px;">{{ row.exact_next_action }}</td>
+          <td style="white-space:normal; max-width:420px;">{{ row.exact_next_action }}{% if row.superseded %}<div style="color:var(--forge-gold);">Superseded {{ row.superseded_at }}</div>{% endif %}</td>
         </tr>
         {% endfor %}
       </tbody>

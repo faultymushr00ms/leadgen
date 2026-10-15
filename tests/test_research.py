@@ -411,6 +411,73 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("Streetsboro — Dynegy at 9.999", weekly)
         self.assertNotIn("still on the NOPEC program", weekly)
 
+    def test_battlecard_shows_residential_ptc_gap(self):
+        streetsboro = _zone("Streetsboro")
+        ptc = streetsboro["card"]["ptc"]
+        self.assertTrue(ptc["applicable"])
+        self.assertEqual(ptc["customer_class"], "residential")
+        self.assertEqual(ptc["code"], "OE")
+        self.assertEqual(ptc["cents_per_kwh"], 11.07)
+        self.assertEqual(ptc["effective_start"], "2026-10-01")
+        self.assertEqual(ptc["effective_end"], "2026-12-31")
+        self.assertIn("TerritoryId=7", ptc["source_url"])
+        stored = {row["code"]: row for row in load_ptc()["rates"]}
+        self.assertIn("apples-to-apples page cited for 11.07", stored["OE"]["previous_source"])
+        self.assertFalse(stored["OE"]["value_changed"])
+        self.assertFalse(stored["DUKE"]["value_changed"])
+        self.assertFalse(stored["AES"]["value_changed"])
+        self.assertEqual(ptc["comparison"]["customer_class"], "residential")
+        self.assertEqual(ptc["comparison"]["cents"], -1.071)
+        self.assertEqual(ptc["comparison"]["percent"], -9.7)
+
+        sharonville = _zone("Sharonville")
+        duke = sharonville["card"]["ptc"]
+        self.assertEqual(duke["code"], "DUKE")
+        self.assertEqual(duke["effective_end"], "2026-10-31")
+        self.assertEqual(duke["comparison"]["cents"], -1.1)
+        self.assertEqual(duke["comparison"]["percent"], -10.5)
+
+        centerville = _zone("Centerville")
+        aes = centerville["card"]["ptc"]
+        self.assertEqual(aes["code"], "AES")
+        self.assertEqual(aes["effective_start"], "2026-06-01")
+        self.assertEqual(aes["effective_end"], "2027-05-31")
+        self.assertEqual(aes["comparison"]["cents"], -1.811)
+        self.assertEqual(aes["comparison"]["percent"], -16.7)
+
+        for name in ("Wauseon", "Amherst"):
+            blocked = _zone(name)["card"]["ptc"]
+            self.assertFalse(blocked["applicable"])
+            self.assertEqual(blocked["label"], "PTC not applicable")
+            self.assertIsNone(blocked["comparison"])
+        coop = next(
+            zone for zone in forge_app._load_zones()
+            if zone.get("aggregationStatus") == "electric_cooperative" and zone.get("card")
+        )
+        self.assertEqual(coop["card"]["ptc"]["label"], "PTC not applicable")
+
+        card = self.client.get("/card?file=nopec_lorain_summit_portage&name=Streetsboro").get_data(as_text=True)
+        self.assertIn("Residential Price to Compare", card)
+        self.assertIn("11.07", card)
+        self.assertIn("2026-10-01", card)
+        self.assertIn("2026-12-31", card)
+        self.assertIn("TerritoryId=7", card)
+        self.assertIn("Aggregation current vs this residential PTC: -1.071¢ (-9.7%)", card)
+        self.assertNotIn('class="no-print">Residential', card)
+        duke_page = self.client.get("/card?file=cincinnati_duke&name=Sharonville").get_data(as_text=True)
+        self.assertIn("2026-10-31", duke_page)
+        self.assertIn("-1.100¢ (-10.5%)", duke_page)
+        municipal = self.client.get("/card?file=ohio_municipal_utilities&name=Wauseon").get_data(as_text=True)
+        self.assertIn("PTC not applicable", municipal)
+        self.assertNotIn("Aggregation current vs this residential PTC", municipal)
+        hotspots = self.client.get("/hotspots").get_data(as_text=True)
+        self.assertIn('id="bc-ptc"', hotspots)
+        self.assertIn("Aggregation current vs this residential PTC", hotspots)
+        reference = self.client.get("/ptc").get_data(as_text=True)
+        self.assertIn("Earlier source note kept", reference)
+        self.assertIn("2026-10-31", reference)
+        self.assertIn("2027-05-31", reference)
+
     def test_queue_page_marks_superseded_additions(self):
         item = {
             "added_on": "2026-10-15",

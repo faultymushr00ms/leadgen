@@ -272,6 +272,11 @@
           <div class="rate-story" id="bc-rate-story"></div>
         </div>
 
+        <div class="bc-section" id="bc-ptc-section">
+          <div class="bc-section-label">Residential Price to Compare</div>
+          <div id="bc-ptc" style="font-size:0.78rem; line-height:1.45;"></div>
+        </div>
+
         <div class="bc-section">
           <div class="bc-section-label">Supplier & Term</div>
           <div class="bc-kv" id="bc-term-kv"></div>
@@ -642,11 +647,14 @@ function selectZone(name) {
       html += `<div class="rate-change-badge ${card.changePrior.percent > 0 ? 'rate-up' : 'rate-down'}">${card.changePrior.percent > 0 ? '▲' : '▼'} ${Math.abs(card.changePrior.percent)}% vs prior</div>`;
     }
     document.getElementById('bc-rate-story').innerHTML = html;
+    renderResidentialPtc(card, selectedZone);
   } else if (selectedZone.currentRate !== null || selectedZone.previousRate !== null) {
     rateSection.style.display = '';
     document.getElementById('bc-rate-story').innerHTML = `<div class="rate-sub">No research overlay on this zone.</div>`;
+    renderResidentialPtc(card, selectedZone);
   } else {
     rateSection.style.display = 'none';
+    renderResidentialPtc(card, selectedZone);
   }
 
   // Term / supplier
@@ -726,6 +734,42 @@ function fuBadge(val) {
 }
 
 // ── Format helpers ─────────────────────────────────────────────────────────────
+function renderResidentialPtc(card, zone) {
+  const host = document.getElementById('bc-ptc');
+  const ptc = card && card.ptc;
+  if (!ptc) {
+    const status = zone && zone.aggregationStatus;
+    if (status === 'municipal_utility' || status === 'electric_cooperative') {
+      host.innerHTML = '<strong>PTC not applicable</strong><div class="rate-sub">Municipal utility or electric cooperative.</div>';
+      return;
+    }
+    host.innerHTML = '<span class="rate-sub">Price to Compare not assigned</span>';
+    return;
+  }
+  if (!ptc.applicable) {
+    host.innerHTML = '<strong>' + esc(ptc.label) + '</strong><div class="rate-sub">' + esc(ptc.reason || '') + '</div>';
+    return;
+  }
+  const gap = ptc.comparison
+    ? '<div style="margin-top:6px; font-weight:650;">Aggregation current vs this residential PTC: '
+      + signedNumber(ptc.comparison.cents, 3) + '¢ (' + signedNumber(ptc.comparison.percent, 1) + '%)</div>'
+    : '<div class="rate-sub" style="margin-top:6px;">No sourced aggregation current rate to compare with this residential Price to Compare.</div>';
+  const source = ptc.source_url
+    ? '<div style="margin-top:4px;"><a href="' + esc(ptc.source_url) + '" style="color:#4fc3f7;">' + esc(ptc.source_url) + '</a></div>'
+    : '';
+  host.innerHTML =
+    '<div>' + esc(ptc.utility || '') + ' <strong>' + esc(String(ptc.cents_per_kwh)) + '¢/kWh</strong> <span class="rate-sub">· residential</span></div>'
+    + '<div class="rate-sub">Effective ' + esc(ptc.effective_start || '—') + ' – ' + esc(ptc.effective_end || '—')
+    + (ptc.accessed_at ? ' · accessed ' + esc(ptc.accessed_at) : '') + '</div>'
+    + '<div class="rate-sub">' + esc(ptc.source || '') + '</div>'
+    + source
+    + gap;
+}
+function signedNumber(value, digits) {
+  const number = Number(value);
+  const text = number.toFixed(digits);
+  return number > 0 ? '+' + text : text;
+}
 function sourcedRate(z) {
   if (z.card && z.card.currentSourced) return esc(z.card.currentLabel) + '¢';
   return '<span style="color:var(--forge-border)" title="FORGE recorded value is unsourced and is not shown as current">—</span>';

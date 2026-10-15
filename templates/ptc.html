@@ -37,6 +37,9 @@
             {% if row.source_url %}
               <div><a href="{{ row.source_url }}" style="color:#4fc3f7;">{{ row.source_url }}</a></div>
             {% endif %}
+            {% if row.previous_source %}
+              <div style="margin-top:4px;">Earlier source note kept: {{ row.previous_source }}</div>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

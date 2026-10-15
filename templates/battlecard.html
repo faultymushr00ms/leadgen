@@ -106,20 +106,27 @@
     </div>
     {% endif %}
 
-    {% if card.ptc %}
     <div class="panel" style="padding:12px 14px; margin-bottom:12px;">
-      <div class="stat-label">Area Price to Compare · not a program rate</div>
+      <div class="stat-label">Residential Price to Compare</div>
+      {% if not card.ptc.applicable %}
+      <div style="margin-top:4px; font-weight:700;">{{ card.ptc.label }}</div>
+      <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.reason }}</div>
+      {% else %}
       <div style="margin-top:4px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong>
-        {% if card.ptc.effective_start %}effective {{ card.ptc.effective_start }} – {{ card.ptc.effective_end }}{% else %}as of {{ card.ptc.as_of }}{% endif %}
-        {% if card.ptc.accessed_at %}<span style="color:var(--forge-muted);">· accessed {{ card.ptc.accessed_at }}</span>{% endif %}
+        <span style="color:var(--forge-muted);">· residential</span>
       </div>
+      <div style="font-size:0.8rem; margin-top:4px;">Effective {{ card.ptc.effective_start or '—' }} – {{ card.ptc.effective_end or '—' }}{% if card.ptc.accessed_at %} · accessed {{ card.ptc.accessed_at }}{% endif %}</div>
       <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.source }}</div>
       {% if card.ptc.source_url %}
       <div style="font-size:0.75rem; margin-top:4px;"><a href="{{ card.ptc.source_url }}" style="color:#4fc3f7;">{{ card.ptc.source_url }}</a></div>
       {% endif %}
-      <div style="font-size:0.75rem; color:var(--forge-muted);">Not compared with the aggregation rate. Different basis.</div>
+      {% if card.ptc.comparison %}
+      <div style="margin-top:6px; font-weight:650;">Aggregation current vs this residential PTC: {{ '%+.3f'|format(card.ptc.comparison.cents) }}¢ ({{ '%+.1f'|format(card.ptc.comparison.percent) }}%)</div>
+      {% else %}
+      <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:6px;">No sourced aggregation current rate to compare with this residential Price to Compare.</div>
+      {% endif %}
+      {% endif %}
     </div>
-    {% endif %}
 
     <div class="takeaway-box" style="margin-bottom:10px;">
       <div class="stat-label" style="margin-bottom:4px;">Takeaway</div>
@@ -149,6 +156,7 @@
         {% if card.priorSourced %}<div><strong>Prior</strong> · <a href="{{ card.priorSource }}" style="color:#4fc3f7;">{{ card.priorSource }}</a></div>{% endif %}
         {% if card.historicalSourced %}<div><strong>Historical</strong> · capture {{ card.historicalCapture or '—' }}</div>{% endif %}
         {% if card.futureSourced %}<div><strong>Future</strong> · <a href="{{ card.futureSource }}" style="color:#4fc3f7;">{{ card.futureSource }}</a></div>{% endif %}
+        {% if card.ptc.applicable and card.ptc.source_url %}<div><strong>Residential Price to Compare</strong> · effective {{ card.ptc.effective_start or '—' }} – {{ card.ptc.effective_end or '—' }} · accessed {{ card.ptc.accessed_at or '—' }} · <a href="{{ card.ptc.source_url }}" style="color:#4fc3f7;">{{ card.ptc.source_url }}</a></div>{% endif %}
       </div>
     </div>
 

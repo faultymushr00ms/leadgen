@@ -540,7 +540,7 @@ def build_card(zone: dict) -> dict:
         "changePrior": research.get("changeVsPrior") if (research.get("changeVsPrior") or {}).get("comparable") else None,
         "changeHistorical": research.get("changeVsHistorical") if (research.get("changeVsHistorical") or {}).get("comparable") else None,
         "changeFuture": research.get("changeVsFuture") if (research.get("changeVsFuture") or {}).get("comparable") else None,
-        "ptc": ptc_for_utility(research.get("utility") or ""),
+        "ptc": residential_ptc_for_card(zone),
         "forgeStatus": zone.get("status"),
         "forgeAggregation": zone.get("aggregationStatus"),
         "forgeSupplier": zone.get("supplier"),
@@ -598,6 +598,78 @@ def load_ptc() -> dict:
         with open(PTC_PATH) as handle:
             _ptc_cache = json.load(handle)
     return _ptc_cache
+
+
+def _ptc_not_applicable(zone: dict, research: dict) -> bool:
+    """Municipal utilities and cooperatives are outside Price to Compare."""
+    if research.get("notEligible"):
+        return True
+    status = zone.get("aggregationStatus") or ""
+    if status in {"municipal_utility", "electric_cooperative"}:
+        return True
+    return False
+
+
+def residential_rate_gap(aggregation_rate, ptc_cents) -> dict | None:
+    """Aggregation current minus the residential Price to Compare.
+
+    This is a labeled residential cross-check. It does not treat the two
+    rates as the same product for prior/historical change math.
+    """
+    current = parse_rate(aggregation_rate)
+    other = parse_rate(ptc_cents)
+    if current is None or other is None or other == 0:
+        return None
+    return {
+        "cents": round(current - other, 3),
+        "percent": round((current - other) / other * 100, 1),
+        "customer_class": "residential",
+        "aggregation_rate": current,
+        "ptc_rate": other,
+    }
+
+
+def residential_ptc_for_card(zone: dict) -> dict:
+    """PTC block for a battlecard. Does not rewrite stored rates."""
+    research = zone.get("research") or {}
+    if _ptc_not_applicable(zone, research):
+        return {
+            "applicable": False,
+            "customer_class": "residential",
+            "label": "PTC not applicable",
+            "reason": "Municipal utility or electric cooperative.",
+            "comparison": None,
+        }
+    row = ptc_for_utility(research.get("utility") or zone.get("utility") or "")
+    if not row:
+        return {
+            "applicable": False,
+            "customer_class": "residential",
+            "label": "Price to Compare not assigned",
+            "reason": (
+                "This zone does not map to one investor-owned utility "
+                "(Ohio Edison, The Illuminating Company, Toledo Edison, AEP Ohio, Duke Energy Ohio, or AES Ohio)."
+            ),
+            "comparison": None,
+        }
+    current = research.get("current") or {}
+    comparison = None
+    if current.get("sourced") and basis_family(current.get("basis")) == "aggregation":
+        comparison = residential_rate_gap(current.get("rate_raw"), row.get("cents_per_kwh"))
+    return {
+        "applicable": True,
+        "customer_class": "residential",
+        "code": row.get("code"),
+        "utility": row.get("utility"),
+        "cents_per_kwh": row.get("cents_per_kwh"),
+        "effective_start": row.get("effective_start") or "",
+        "effective_end": row.get("effective_end") or "",
+        "accessed_at": row.get("accessed_at") or "",
+        "as_of": row.get("as_of") or "",
+        "source": row.get("source") or "",
+        "source_url": row.get("source_url") or "",
+        "comparison": comparison,
+    }
 
 
 def ptc_for_utility(utility: str | None) -> dict | None:

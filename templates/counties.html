@@ -8,17 +8,31 @@
 {% endblock %}
 {% block content %}
 <div class="research-page">
-  <form method="get" action="/counties" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
-    <select name="county" class="dark-input" style="max-width:240px;" onchange="this.form.submit()">
-      {% for group in groups %}
-      <option value="{{ group.county }}" {% if group.county == selected %}selected{% endif %}>{{ group.county }} ({{ group.count }})</option>
-      {% endfor %}
-    </select>
-    <input name="zip" value="{{ zipcode }}" class="dark-input" maxlength="5" placeholder="ZIP lookup" style="max-width:120px;">
-    <button class="btn btn-forge btn-sm" type="submit">Look up</button>
-  </form>
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
+    <form method="get" action="/counties" autocomplete="off" style="display:flex; gap:8px; align-items:center;">
+      <select name="county" class="dark-input" autocomplete="off" style="max-width:240px;" onchange="this.form.submit()">
+        {% for group in groups %}
+        <option value="{{ group.county }}" {% if group.county == selected %}selected{% endif %}>{{ group.county }} ({{ group.count }})</option>
+        {% endfor %}
+      </select>
+    </form>
+    <form role="search" method="post" action="/counties" autocomplete="off" style="display:flex; gap:8px; align-items:center;">
+      <label for="place-lookup" class="stat-label" style="margin:0;">ZIP or place</label>
+      <input id="place-lookup" type="search" name="q" value="{{ lookup_value }}"
+             class="dark-input" maxlength="81" enterkeyhint="search"
+             autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off"
+             aria-label="ZIP or place name" placeholder="ZIP or place name"
+             style="max-width:220px; -webkit-text-security: none;">
+      {% if selected %}<input type="hidden" name="county" value="{{ selected }}">{% endif %}
+      <button class="btn btn-forge btn-sm" type="submit">Look up</button>
+    </form>
+  </div>
 
   <div class="banner-alert banner-note">{{ disclaimer }}</div>
+
+  {% if lookup_error %}
+  <div class="banner-alert banner-unresolved">{{ lookup_error }}</div>
+  {% endif %}
 
   {% if zip_result %}
   <div class="panel" style="margin-bottom:14px; padding:12px 14px;">
@@ -52,6 +66,28 @@
         </tbody>
       </table>
     {% endif %}
+  </div>
+  {% endif %}
+
+  {% if place_hits %}
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header"><span>Places</span><span>{{ place_hits|length }}</span></div>
+    <table class="forge-table">
+      <thead>
+        <tr><th>Place</th><th>Type</th><th>Counties</th><th>Townships</th><th>Coverage</th></tr>
+      </thead>
+      <tbody>
+        {% for place in place_hits %}
+        <tr>
+          <td>{{ place.name }}</td>
+          <td>{{ place.type }}</td>
+          <td>{% for county in place.counties %}{{ county.name }}{% if county.share %} {{ county.share }}%{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}</td>
+          <td>{% for township in place.townships %}{{ township.name }} township ({{ township.county }}, {{ township.role }}){% if not loop.last %}; {% endif %}{% else %}—{% endfor %}</td>
+          <td>{{ place.coverage.label }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   {% endif %}
 

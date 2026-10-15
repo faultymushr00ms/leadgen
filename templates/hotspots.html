@@ -150,7 +150,8 @@
 
   <!-- Filter bar -->
   <div id="filter-bar">
-    <input id="search-input" type="text" class="dark-input"
+    <input id="search-input" type="search" name="forge-zone-filter" class="dark-input"
+           autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Search zones"
            placeholder="&#xF52A;  Search zone, region, notes…"
            oninput="applyFilters()">
     <select id="filter-region"  class="dark-input" onchange="applyFilters()"><option value="">All Regions</option></select>
@@ -184,11 +185,13 @@
     <!-- ZIP Lookup -->
     <div style="display:flex; align-items:center; gap:4px; margin-left:auto;">
       <div style="position:relative;">
-        <input id="zip-input" type="text" class="dark-input" maxlength="5"
-               placeholder="ZIP lookup…"
-               style="min-width:110px !important; max-width:110px !important; padding-right:28px;"
-               oninput="this.value=this.value.replace(/\D/g,'')"
-               onkeydown="if(event.key==='Enter')lookupZip()">
+        <input id="zip-input" type="text" name="forge-zip-lookup" class="dark-input"
+               inputmode="numeric" pattern="[0-9]{5}" maxlength="5"
+               autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off"
+               aria-label="ZIP lookup" placeholder="ZIP lookup"
+               style="min-width:110px !important; max-width:110px !important; padding-right:28px; -webkit-text-security: none;"
+               oninput="this.value=this.value.replace(/\D/g,'').slice(0,5)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();lookupZip();}">
         <i class="bi bi-search" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--forge-muted);font-size:0.75rem;pointer-events:none;"></i>
       </div>
       <button class="btn btn-forge btn-sm" onclick="lookupZip()" style="white-space:nowrap;">
@@ -943,49 +946,84 @@ function deleteZone() {
 // ── ZIP Lookup ──────────────────────────────────────────────────────────────
 function lookupZip() {
   const zip = document.getElementById('zip-input').value.trim();
-  if (zip.length !== 5) { showZipToast('Enter a 5-digit ZIP code.', 'warn'); return; }
-
-  fetch(`/api/zip/${zip}`)
+  if (!/^\d{5}$/.test(zip)) {
+    showZipMessage('Enter a 5-digit ZIP code.');
+    return;
+  }
+  fetch('/api/lookup', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({q: zip})
+  })
     .then(r => r.json())
-    .then(data => {
-      if (!data.found) {
-        showZipToast(
-          `<span style="color:var(--forge-muted);">ZIP ${esc(zip)}</span><br>` +
-          `<span style="color:#ef9a9a;">${esc(data.message || 'Not mapped')}</span><br>` +
-          `<span style="font-size:0.75rem;color:#bbdefb;">${esc(data.disclaimer || '')}</span>`,
-          'none'
-        );
-        return;
-      }
-      const rows = data.jurisdictions || [];
-      const lines = rows.map(item =>
-        `<div style="margin-top:6px;"><strong style="color:#e0e0e0;">${esc(item.jurisdiction)}</strong>` +
-        `<div style="color:var(--forge-muted);">${esc(item.county || '')} · ${esc(item.utility || '')}</div>` +
-        `<div style="font-size:0.72rem;">${esc(item.verification || '')}</div></div>`
-      ).join('');
-      const ambiguous = data.match_count !== 1
-        ? `<div style="color:#ffe082;font-size:0.75rem;margin-top:6px;">${data.match_count} zone records share this name.</div>`
-        : '';
-      showZipToast(
-        `<div style="font-size:0.7rem;color:var(--forge-muted);margin-bottom:2px;">ZIP ${esc(zip)} → mapped name ${esc(data.zone_name)}</div>` +
-        `<div style="font-size:0.75rem;color:#bbdefb;line-height:1.4;">${esc(data.disclaimer || '')}</div>` +
-        ambiguous + lines +
-        (data.zone
-          ? `<button onclick="selectZoneByName('${data.zone.name.replace(/'/g, "\\'")}')" ` +
-            `style="margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;">` +
-            `Open battlecard</button>`
-          : ''),
-        'none'
-      );
-    })
-    .catch(() => showZipToast('Lookup failed — server error.', 'warn'));
+    .then(data => renderZipToast(data))
+    .catch(() => showZipMessage('Lookup failed.'));
 }
 
-function showZipToast(html, type) {
+function showZipMessage(text) {
   const toast = document.getElementById('zip-toast');
-  document.getElementById('zip-toast-body').innerHTML = html;
+  const body = document.getElementById('zip-toast-body');
+  body.replaceChildren();
+  const line = document.createElement('div');
+  line.textContent = text;
+  body.appendChild(line);
   toast.style.display = 'block';
-  toast.style.borderColor = type === 'warn' ? 'rgba(255,111,0,0.5)' : 'var(--forge-border)';
+  toast.style.borderColor = 'rgba(255,111,0,0.5)';
+}
+
+function renderZipToast(data) {
+  const toast = document.getElementById('zip-toast');
+  const body = document.getElementById('zip-toast-body');
+  body.replaceChildren();
+  toast.style.display = 'block';
+  if (!data || data.ok === false) {
+    toast.style.borderColor = 'rgba(255,111,0,0.5)';
+    const line = document.createElement('div');
+    line.textContent = (data && data.message) || 'Enter a 5-digit ZIP code.';
+    body.appendChild(line);
+    return;
+  }
+  toast.style.borderColor = 'var(--forge-border)';
+  const head = document.createElement('div');
+  head.style.cssText = 'font-size:0.7rem;color:var(--forge-muted);margin-bottom:2px;';
+  head.textContent = data.found
+    ? ('ZIP ' + (data.zip || '') + ' → mapped name ' + (data.zone_name || ''))
+    : (data.message || 'ZIP not mapped.');
+  body.appendChild(head);
+  if (data.disclaimer) {
+    const note = document.createElement('div');
+    note.style.cssText = 'font-size:0.75rem;color:#bbdefb;';
+    note.textContent = data.disclaimer;
+    body.appendChild(note);
+  }
+  if (data.found && data.match_count !== 1) {
+    const amb = document.createElement('div');
+    amb.style.cssText = 'color:#ffe082;font-size:0.75rem;margin-top:6px;';
+    amb.textContent = String(data.match_count) + ' zone records share this name.';
+    body.appendChild(amb);
+  }
+  (data.jurisdictions || []).forEach(item => {
+    const wrap = document.createElement('div');
+    wrap.style.marginTop = '6px';
+    const title = document.createElement('div');
+    title.style.cssText = 'color:#e0e0e0;font-weight:600;';
+    title.textContent = item.jurisdiction || '';
+    const meta = document.createElement('div');
+    meta.style.color = 'var(--forge-muted)';
+    meta.textContent = (item.county || '') + ' · ' + (item.utility || '');
+    wrap.appendChild(title);
+    wrap.appendChild(meta);
+    body.appendChild(wrap);
+  });
+  if (data.zone && data.zone.name) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Open battlecard';
+    btn.style.cssText = 'margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;';
+    const name = data.zone.name;
+    btn.addEventListener('click', () => selectZoneByName(name));
+    body.appendChild(btn);
+  }
 }
 
 function selectZoneByName(name) {

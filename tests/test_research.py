@@ -16,6 +16,7 @@ os.chdir(ROOT)
 import app as forge_app
 import history_store
 from forge_config import key_is_configured, pipeline_argv
+from place_index import classify_lookup
 from zone_intel import (
     append_monitor_items,
     comparable_change,
@@ -549,6 +550,73 @@ class AppBehaviorTests(unittest.TestCase):
             page = self.client.get("/queue").get_data(as_text=True)
         self.assertIn("Superseded 2026-10-16T00:00:00+00:00", page)
         self.assertIn("observed rate 10.50", page)
+
+
+class LookupFieldTests(unittest.TestCase):
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_lookup_field_is_plain_search_and_rejects_secrets(self):
+        self.assertEqual(classify_lookup("44241"), ("zip", "44241"))
+        self.assertEqual(classify_lookup("Addyston"), ("place", "Addyston"))
+        self.assertIsNone(classify_lookup("p@ssw0rd!"))
+        self.assertIsNone(classify_lookup("<script>alert(1)</script>"))
+        self.assertIsNone(classify_lookup("1234"))
+
+        counties = self.client.get("/counties").get_data(as_text=True)
+        self.assertIn('role="search"', counties)
+        self.assertIn('method="post"', counties)
+        self.assertIn('type="search"', counties)
+        self.assertIn('autocomplete="off"', counties)
+        self.assertIn('name="q"', counties)
+        self.assertNotIn('type="password"', counties)
+        self.assertNotIn('name="zip"', counties)
+        self.assertNotIn('name="password"', counties)
+        self.assertNotIn("ANTHROPIC_API_KEY", counties)
+        self.assertNotIn("GOOGLE_MAPS_API_KEY", counties)
+
+        hotspots = self.client.get("/hotspots").get_data(as_text=True)
+        self.assertIn('id="zip-input"', hotspots)
+        self.assertIn('type="text"', hotspots)
+        self.assertIn('inputmode="numeric"', hotspots)
+        self.assertIn('autocomplete="off"', hotspots)
+        self.assertIn('name="forge-zip-lookup"', hotspots)
+        self.assertIn("-webkit-text-security: none", hotspots)
+        self.assertIn("'/api/lookup'", hotspots)
+        self.assertNotIn("type=\"password\"", hotspots)
+        self.assertNotIn("showZipToast", hotspots)
+        self.assertNotIn("/api/zip/${", hotspots)
+
+        rejected = self.client.post("/counties", data={"q": "<script>alert(1)</script>"})
+        page = rejected.get_data(as_text=True)
+        self.assertNotIn("<script>alert", page)
+        self.assertNotIn("alert(1)", page)
+        self.assertIn("Enter a 5-digit ZIP or a place name.", page)
+        self.assertIn('id="place-lookup" type="search" name="q" value=""', page)
+
+        secret = self.client.post("/api/lookup", json={"q": "p@ssw0rd!"})
+        self.assertEqual(secret.status_code, 400)
+        encoded = json.dumps(secret.get_json())
+        self.assertNotIn("p@ssw0rd", encoded)
+        self.assertNotIn("API_KEY", encoded)
+
+        zip_lookup = self.client.post("/api/lookup", json={"q": "44241"})
+        self.assertEqual(zip_lookup.status_code, 200)
+        body = zip_lookup.get_json()
+        self.assertEqual(body["zip"], "44241")
+        self.assertEqual(body["zone"], {"name": "Streetsboro"})
+        self.assertNotIn("hook", body["zone"])
+        self.assertTrue(any(item["name"] == "Streetsboro" for item in body["places"]))
+
+        place = self.client.post("/counties", data={"q": "Addyston"})
+        html = place.get_data(as_text=True)
+        self.assertIn("Addyston", html)
+        self.assertIn("village", html)
+        self.assertNotIn("type=\"password\"", html)
+
+        poisoned = self.client.get("/api/zip/%3Cscript%3E")
+        self.assertEqual(poisoned.status_code, 400)
+        self.assertNotIn("script", json.dumps(poisoned.get_json()))
 
 
 if __name__ == "__main__":

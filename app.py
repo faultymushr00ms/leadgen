@@ -16,6 +16,7 @@ from flask import Flask, jsonify, render_template, redirect, request
 
 from forge_config import env_is_configured, pipeline_argv
 import history_store
+import place_index
 import zone_intel
 
 load_dotenv()
@@ -381,14 +382,30 @@ def _load_zip_map() -> dict:
     return _zip_map_cache
 
 
+_LOOKUP_REJECTED = "Enter a 5-digit ZIP or a place name."
+
+
 def _zip_payload(zipcode: str) -> tuple[dict, int]:
-    zipcode = unquote(zipcode).strip()
+    """ZIP map lookup. Invalid input is not echoed or logged."""
     disclaimer = zone_intel.zip_disclaimer()
+    classified = place_index.classify_lookup(unquote(zipcode or "").strip())
+    if classified is None or classified[0] != "zip":
+        return {
+            "ok": False,
+            "found": False,
+            "kind": "rejected",
+            "eligibility": "not_proof",
+            "disclaimer": disclaimer,
+            "message": _LOOKUP_REJECTED,
+        }, 400
+    zipcode = classified[1]
     zip_map = _load_zip_map()
     zone_name = zip_map.get(zipcode)
     if not zone_name:
         return {
+            "ok": True,
             "found": False,
+            "kind": "zip",
             "zip": zipcode,
             "eligibility": "not_proof",
             "disclaimer": disclaimer,
@@ -410,15 +427,18 @@ def _zip_payload(zipcode: str) -> tuple[dict, int]:
             "verification": (research.get("status") or {}).get("verificationLabel") or "",
             "card_url": card.get("url") or "",
         })
+    single = {"name": matches[0].get("name")} if len(matches) == 1 else None
     payload = {
+        "ok": True,
         "found": True,
+        "kind": "zip",
         "zip": zipcode,
         "zone_name": zone_name,
         "eligibility": "not_proof",
         "disclaimer": disclaimer,
         "match_count": len(matches),
         "jurisdictions": jurisdictions,
-        "zone": matches[0] if len(matches) == 1 else None,
+        "zone": single,
         "message": (
             f"ZIP {zipcode} is mapped to the zone name “{zone_name}”. "
             "That mapping is not proof the address is eligible."
@@ -427,9 +447,49 @@ def _zip_payload(zipcode: str) -> tuple[dict, int]:
     return payload, 200
 
 
-@app.route("/api/zip/<zipcode>")
+def _lookup_payload(raw) -> tuple[dict, int]:
+    """Classify a lookup. Rejected text is not copied into the response."""
+    classified = place_index.classify_lookup(raw if isinstance(raw, str) else "")
+    if classified is None:
+        return {
+            "ok": False,
+            "found": False,
+            "kind": "rejected",
+            "message": _LOOKUP_REJECTED,
+        }, 400
+    kind, value = classified
+    zones = _load_zones()
+    if kind == "zip":
+        payload, status = _zip_payload(value)
+        payload["places"] = place_index.lookup_zip(value, zones).get("places") or []
+        return payload, status
+    found = place_index.lookup_name(value, zones)
+    places = found.get("places") or []
+    return {
+        "ok": True,
+        "found": bool(places),
+        "kind": "place",
+        "query": value,
+        "count": found.get("count") or 0,
+        "truncated": bool(found.get("truncated")),
+        "zip_note": found.get("zip_note") or "",
+        "places": places,
+        "message": "Place name matched." if places else "No place with that name is in the index.",
+    }, 200
+
+
+@app.route("/api/zip/<path:zipcode>")
 def api_zip_lookup(zipcode):
     payload, status = _zip_payload(zipcode)
+    return jsonify(payload), status
+
+
+@app.route("/api/lookup", methods=["POST"])
+def api_lookup():
+    """POST body only. The lookup value is not placed in the URL or the log."""
+    data = request.get_json(silent=True) or {}
+    raw = data.get("q") if isinstance(data, dict) else ""
+    payload, status = _lookup_payload(raw)
     return jsonify(payload), status
 
 
@@ -450,27 +510,49 @@ def intel():
     )
 
 
-@app.route("/counties")
+@app.route("/counties", methods=["GET", "POST"])
 def counties():
     zones = _load_zones()
-    selected = (request.args.get("county") or "").strip()
-    zipcode = (request.args.get("zip") or "").strip()
+    if request.method == "POST":
+        selected = (request.form.get("county") or "").strip()
+        raw_lookup = request.form.get("q") or ""
+    else:
+        selected = (request.args.get("county") or "").strip()
+        raw_lookup = request.args.get("zip") or request.args.get("q") or ""
     groups = zone_intel.group_counties(zones)
+    known = {group["county"].lower(): group["county"] for group in groups}
+    selected = known.get(selected.lower(), "")
+    lookup_error = None
+    lookup_value = ""
+    zip_result = None
+    place_hits = []
+    if str(raw_lookup).strip():
+        payload, _status = _lookup_payload(raw_lookup)
+        if not payload.get("ok"):
+            lookup_error = payload.get("message")
+        elif payload.get("kind") == "zip":
+            lookup_value = payload.get("zip") or ""
+            zip_result = payload
+            place_hits = payload.get("places") or []
+        else:
+            lookup_value = payload.get("query") or ""
+            place_hits = payload.get("places") or []
+            if not place_hits:
+                lookup_error = payload.get("message")
     current = next((group for group in groups if group["county"].lower() == selected.lower()), None)
-    if current is None and groups and not zipcode:
+    if current is None and groups and not str(raw_lookup).strip():
         current = groups[0]
         selected = current["county"]
-    zip_result = None
-    if zipcode:
-        zip_result, _status = _zip_payload(zipcode)
     return render_template(
         "counties.html",
         active="intel",
         groups=groups,
         selected=selected,
         current=current,
-        zipcode=zipcode,
+        lookup_value=lookup_value,
+        lookup_error=lookup_error,
         zip_result=zip_result,
+        place_hits=place_hits,
         disclaimer=zone_intel.zip_disclaimer(),
     )
 

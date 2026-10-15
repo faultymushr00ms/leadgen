@@ -88,6 +88,46 @@ class DataLoadTests(unittest.TestCase):
         self.assertNotIn("Wauseon", avoid_names)
         self.assertIn("Medina County", unresolved_names)
 
+    def test_archbold_is_toledo_edison_and_not_blacklisted(self):
+        zone = _zone("Archbold")
+        self.assertEqual(zone["utility"], "Toledo Edison")
+        self.assertEqual(zone["utilityParent"], "FirstEnergy")
+        self.assertEqual(zone["aggregationStatus"], "unresolved")
+        self.assertEqual(zone["futureUse"], "price_to_compare_analysis")
+        self.assertEqual(zone["status"], "verify")
+        self.assertIsNone(zone["supplier"])
+        self.assertIsNone(zone["currentRate"])
+        self.assertEqual(
+            zone["notes"],
+            "Removed from the municipal list 2026-10-15: not a municipal utility; Toledo Edison (FirstEnergy) serves Archbold; not on the AMP list.",
+        )
+        self.assertNotIn("municipal_blacklist", zone["futureUse"])
+        research = zone["research"]
+        self.assertEqual(research["utility"], "Toledo Edison")
+        self.assertEqual(research["supplier"], "")
+        self.assertTrue(research["status"]["unresolved"])
+        self.assertFalse(research["notEligible"])
+        self.assertFalse(research["hookAllowed"])
+        card = zone["card"]
+        self.assertTrue(card["ptc"]["applicable"])
+        self.assertEqual(card["ptc"]["cents_per_kwh"], 11.26)
+        self.assertEqual(card["ptc"]["utility"], "Toledo Edison")
+        self.assertIn("2026-10-01", card["ptc"]["effective_start"])
+        self.assertIn("2026-12-31", card["ptc"]["effective_end"])
+        self.assertFalse(card["currentSourced"])
+        self.assertEqual(card["supplier"], "")
+        self.assertNotIn("Cannot sell", card["takeaway"])
+        weekly = forge_app._compute_weekly(forge_app._load_zones())
+        avoid_names = {item["name"] for item in weekly["avoid_list"]}
+        unresolved_names = {item["name"] for item in weekly["unresolved_list"]}
+        self.assertNotIn("Archbold", avoid_names)
+        self.assertIn("Archbold", unresolved_names)
+        with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="", encoding="utf-8") as handle:
+            original = next(row for row in csv.DictReader(handle) if row["orig_name"] == "Archbold")
+        self.assertEqual(original["orig_aggregationStatus"], "municipal_utility")
+        self.assertEqual(original["orig_utility"], "Archbold Municipal Electric")
+        self.assertIn("Ample, reliable electric power is provided to the Archbold area by Toledo Edison", original["CORR_evidence_quotes"])
+
 
 class RateChangeTests(unittest.TestCase):
     def test_comparable_only_when_sourced_and_same_basis(self):

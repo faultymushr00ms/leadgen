@@ -159,6 +159,7 @@
     <select id="filter-agg"     class="dark-input" onchange="applyFilters()">
       <option value="">All Agg Status</option>
       <option value="confirmed_active_aggregation">Confirmed Active</option>
+      <option value="unresolved">Unresolved</option>
       <option value="municipal_utility">Municipal Utility</option>
       <option value="electric_cooperative">Electric Co-op</option>
       <option value="no_aggregation_verified">No Aggregation</option>
@@ -351,6 +352,7 @@
               <div class="stat-label mb-1">Aggregation Status</div>
               <select name="aggregationStatus" class="dark-input">
                 <option value="confirmed_active_aggregation">Confirmed Active Aggregation</option>
+                <option value="unresolved">Unresolved</option>
                 <option value="municipal_utility">Municipal Utility</option>
                 <option value="electric_cooperative">Electric Co-op</option>
                 <option value="no_aggregation_verified">No Aggregation Verified</option>
@@ -460,12 +462,13 @@ let selectedZone = null;
 
 // ── Status / agg sort priority ──────────────────────────────────────────────
 const STATUS_ORDER  = { pain_hit:0, pain_coming:1, transition:2, verify:3, stable:4 };
-const AGG_ORDER     = { confirmed_active_aggregation:0, address_dependent:1, no_aggregation_verified:2, municipal_utility:3, electric_cooperative:4 };
+const AGG_ORDER     = { confirmed_active_aggregation:0, address_dependent:1, no_aggregation_verified:2, unresolved:3, municipal_utility:4, electric_cooperative:5 };
 const CONF_ORDER    = { high:0, medium:1, low:2 };
 
 // ── Labels / display strings ─────────────────────────────────────────────────
 const AGG_LABELS = {
   confirmed_active_aggregation: 'Confirmed Active',
+  unresolved:                   'Unresolved',
   municipal_utility:            'Municipal Utility',
   electric_cooperative:         'Electric Co-op',
   no_aggregation_verified:      'No Aggregation',
@@ -473,6 +476,7 @@ const AGG_LABELS = {
 };
 const AGG_CSS = {
   confirmed_active_aggregation: 'agg-confirmed',
+  unresolved:                   'heat-warm',
   municipal_utility:            'agg-municipal',
   electric_cooperative:         'agg-coop',
   no_aggregation_verified:      'agg-none',

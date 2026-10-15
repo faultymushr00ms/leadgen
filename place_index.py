@@ -43,6 +43,7 @@ _IOU = (
 
 _places_cache: list | None = None
 _crosswalk_cache: list | None = None
+_crosswalk_by_geoid: dict | None = None
 
 _TOWNSHIP_RE = re.compile(
     r"^(?P<name>.+?) township \((?P<county>[^)]+)\)(?: \((?P<share>[0-9.]+)% pop\))?$",
@@ -120,6 +121,16 @@ def _canonical_iou(hifld_name: str) -> str:
     return ""
 
 
+def _float_or_none(value) -> float | None:
+    try:
+        number = float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+    if number != number:
+        return None
+    return number
+
+
 def load_places() -> list[dict]:
     """Read the place index. The file is not rewritten."""
     global _places_cache
@@ -144,6 +155,8 @@ def load_places() -> list[dict]:
                     "utilities": parse_utilities(row.get("electric_utility_hifld")),
                     "utility_text": (row.get("electric_utility_hifld") or "").strip(),
                     "amp": (row.get("amp_member_muni_electric") or "").strip(),
+                    "lat": _float_or_none(row.get("lat")),
+                    "lon": _float_or_none(row.get("lon")),
                     "notes": (row.get("notes") or "").strip(),
                     "source": (row.get("source") or "").strip(),
                 })
@@ -153,13 +166,17 @@ def load_places() -> list[dict]:
 
 def load_crosswalk() -> list[dict]:
     """Read the place-to-zone crosswalk. The file is not rewritten."""
-    global _crosswalk_cache
+    global _crosswalk_cache, _crosswalk_by_geoid
     if _crosswalk_cache is not None:
         return _crosswalk_cache
     rows = []
     if os.path.exists(CROSSWALK_PATH):
         with open(CROSSWALK_PATH, newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
+    by_geoid: dict[str, list] = {}
+    for row in rows:
+        by_geoid.setdefault((row.get("geoid") or "").strip(), []).append(row)
+    _crosswalk_by_geoid = by_geoid
     _crosswalk_cache = rows
     return rows
 
@@ -167,7 +184,8 @@ def load_crosswalk() -> list[dict]:
 def _crosswalk_for(geoid: str) -> list[dict]:
     if not geoid:
         return []
-    return [row for row in load_crosswalk() if (row.get("geoid") or "") == geoid]
+    load_crosswalk()
+    return list((_crosswalk_by_geoid or {}).get(geoid) or [])
 
 
 def _active_zones(zones: list) -> list:

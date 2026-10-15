@@ -12,11 +12,12 @@ from datetime import datetime, date
 from urllib.parse import unquote
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, render_template, redirect, request
+from flask import Flask, jsonify, render_template, redirect, request, send_file
 
 from forge_config import env_is_configured, pipeline_argv
 import history_store
 import place_index
+import territory
 import zone_intel
 
 load_dotenv()
@@ -461,10 +462,10 @@ def _lookup_payload(raw) -> tuple[dict, int]:
     zones = _load_zones()
     if kind == "zip":
         payload, status = _zip_payload(value)
-        payload["places"] = place_index.lookup_zip(value, zones).get("places") or []
+        payload["places"] = _with_nearby(place_index.lookup_zip(value, zones).get("places") or [], zones)
         return payload, status
     found = place_index.lookup_name(value, zones)
-    places = found.get("places") or []
+    places = _with_nearby(found.get("places") or [], zones)
     return {
         "ok": True,
         "found": bool(places),
@@ -491,6 +492,68 @@ def api_lookup():
     raw = data.get("q") if isinstance(data, dict) else ""
     payload, status = _lookup_payload(raw)
     return jsonify(payload), status
+
+
+def _with_nearby(places: list, zones: list) -> list:
+    """Attach nearest places and zones. Coordinates stay off this payload."""
+    for place in places:
+        place["nearby"] = territory.nearby_for_geoid(place.get("geoid") or "", zones, place.get("name") or "")
+    return places
+
+
+def _json_no_store(payload, status: int = 200):
+    response = jsonify(payload)
+    response.headers["Cache-Control"] = "no-store"
+    return response, status
+
+
+@app.route("/map")
+def territory_map():
+    return render_template("map.html", active="map", overlay_note=territory.OVERLAY_NOTE)
+
+
+@app.route("/api/map")
+def api_map():
+    places = (request.args.get("places") or "incorporated").strip()
+    payload = territory.map_payload(_load_zones(), include_unincorporated=(places == "all"))
+    return jsonify(payload)
+
+
+@app.route("/api/locate", methods=["POST"])
+def api_locate():
+    """Browser geolocation. The body is not logged, stored, or copied into the response."""
+    data = request.get_json(silent=True) or {}
+    lat = data.get("lat") if isinstance(data, dict) else None
+    lon = data.get("lon") if isinstance(data, dict) else None
+    payload, status = territory.locate(lat, lon, _load_zones())
+    return _json_no_store(payload, status)
+
+
+@app.route("/api/nearby", methods=["POST"])
+def api_nearby():
+    data = request.get_json(silent=True) or {}
+    name = data.get("zone") if isinstance(data, dict) else ""
+    region = data.get("region") if isinstance(data, dict) else ""
+    if not isinstance(name, str) or not isinstance(region, str):
+        return jsonify({"ok": False, "message": "A zone name is required."}), 400
+    zones = _load_zones()
+    zone = zone_intel.find_zone(zones, region.strip(), name.strip())
+    if zone is None:
+        return jsonify({"ok": False, "message": "No zone with that name is on file."}), 404
+    return jsonify({"ok": True, "zone": zone.get("name") or "", "nearby": territory.nearby_for_zone(zone, zones)})
+
+
+@app.route("/api/overlays")
+def api_overlays():
+    return jsonify(territory.load_overlays())
+
+
+@app.route("/api/geo/<path:name>")
+def api_geo(name):
+    path = territory.safe_geo_file(name)
+    if not path:
+        return jsonify({"ok": False, "message": "That map file is not available."}), 404
+    return send_file(path, mimetype="application/geo+json", max_age=0)
 
 
 def _queue_view():
@@ -611,7 +674,7 @@ def battlecard():
     name = (request.args.get("name") or "").strip()
     zone = zone_intel.find_zone(zones, source_file, name)
     if zone is None or not zone.get("card"):
-        return render_template("battlecard.html", active="intel", zone=None, card=None, queue_item=None), 404
+        return render_template("battlecard.html", active="intel", zone=None, card=None, queue_item=None, nearby=None), 404
     return render_template(
         "battlecard.html",
         active="intel",
@@ -619,6 +682,7 @@ def battlecard():
         card=zone["card"],
         research=zone.get("research") or {},
         queue_item=zone_intel.queue_for_zone(zone),
+        nearby=territory.nearby_for_zone(zone, zones),
     )
 
 

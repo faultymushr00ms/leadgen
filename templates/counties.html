@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_nearby.html" import nearby_tables %}
 {% block title %}— Counties{% endblock %}
 {% block topbar_title %}COUNTIES{% endblock %}
 {% block topbar_sub %}Jurisdiction browser · ZIP is not eligibility{% endblock %}
@@ -26,7 +27,9 @@
       {% if selected %}<input type="hidden" name="county" value="{{ selected }}">{% endif %}
       <button class="btn btn-forge btn-sm" type="submit">Look up</button>
     </form>
+    <button id="locate-me" class="btn btn-ghost btn-sm" type="button">Locate me</button>
   </div>
+  <div id="locate-result" class="panel" style="display:none; margin-bottom:14px; padding:12px 14px;"></div>
 
   <div class="banner-alert banner-note">{{ disclaimer }}</div>
 
@@ -88,6 +91,15 @@
         {% endfor %}
       </tbody>
     </table>
+    {% for place in place_hits[:4] %}
+      {% if place.nearby %}
+      <div class="panel-header"><span>Near {{ place.name }}</span></div>
+      {{ nearby_tables(place.nearby) }}
+      {% endif %}
+    {% endfor %}
+    {% if place_hits|length > 4 %}
+    <div style="padding:8px 12px; font-size:0.75rem; color:var(--forge-muted);">Nearby is shown for the first four matches.</div>
+    {% endif %}
   </div>
   {% endif %}
 
@@ -128,4 +140,97 @@
   </div>
   {% endif %}
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var button = document.getElementById('locate-me');
+  var out = document.getElementById('locate-result');
+  function line(parent, label, value) {
+    var row = document.createElement('div');
+    var name = document.createElement('span');
+    name.className = 'stat-label';
+    name.textContent = label + ' ';
+    row.appendChild(name);
+    row.appendChild(document.createTextNode(value || '—'));
+    parent.appendChild(row);
+  }
+  function table(parent, title, rows) {
+    var heading = document.createElement('div');
+    heading.className = 'stat-label';
+    heading.style.marginTop = '10px';
+    heading.textContent = title;
+    parent.appendChild(heading);
+    (rows || []).forEach(function (item) {
+      var row = document.createElement('div');
+      row.style.fontSize = '0.82rem';
+      row.style.marginTop = '4px';
+      var bits = [item.name, item.miles != null ? item.miles.toFixed(1) + ' mi' : '', item.status || '', item.supplier || '', item.rate ? item.rate + '¢' : '', item.ptc || ''];
+      row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+      if (item.card_url) {
+        row.appendChild(document.createTextNode(' · '));
+        var link = document.createElement('a');
+        link.href = item.card_url;
+        link.style.color = 'var(--forge-orange)';
+        link.textContent = item.card_label || 'Battlecard';
+        row.appendChild(link);
+      }
+      parent.appendChild(row);
+    });
+  }
+  function render(data) {
+    out.style.display = 'block';
+    out.replaceChildren();
+    if (!data || data.ok === false || data.inside_ohio === false) {
+      out.textContent = (data && data.message) || 'Location lookup failed.';
+      return;
+    }
+    var title = document.createElement('div');
+    title.className = 'stat-label';
+    title.textContent = 'Your location';
+    out.appendChild(title);
+    line(out, 'County', data.county);
+    line(out, 'Township', data.township ? (data.township + (data.township_county ? ' (' + data.township_county + ')' : '')) : 'No county-subdivision polygon contains this point.');
+    if (data.nearest_place) {
+      line(out, 'Nearest place', data.nearest_place.name + ' · ' + (data.nearest_place.type || '') + (data.nearest_place.miles != null ? ' · ' + data.nearest_place.miles.toFixed(1) + ' mi' : ''));
+      if (data.nearest_place.detail) {
+        var note = document.createElement('div');
+        note.style.color = 'var(--forge-muted)';
+        note.style.fontSize = '0.75rem';
+        note.textContent = data.nearest_place.detail;
+        out.appendChild(note);
+      }
+    }
+    table(out, 'Nearby places', data.nearby_places);
+    table(out, 'Nearby zones', data.nearby_zones);
+    if (data.message) {
+      var msg = document.createElement('div');
+      msg.style.marginTop = '8px';
+      msg.style.color = 'var(--forge-muted)';
+      msg.style.fontSize = '0.75rem';
+      msg.textContent = data.message;
+      out.appendChild(msg);
+    }
+  }
+  button.addEventListener('click', function () {
+    out.style.display = 'block';
+    if (!navigator.geolocation) {
+      out.textContent = 'This browser does not provide location. Nothing was sent.';
+      return;
+    }
+    out.textContent = 'Asking for location permission…';
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      fetch('/api/locate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lat: pos.coords.latitude, lon: pos.coords.longitude})
+      }).then(function (response) { return response.json(); }).then(render).catch(function () {
+        out.textContent = 'Location lookup failed.';
+      });
+    }, function () {
+      out.textContent = 'Location permission was denied. Nothing was sent.';
+    }, {enableHighAccuracy: false, maximumAge: 0, timeout: 10000});
+  });
+})();
+</script>
 {% endblock %}

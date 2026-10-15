@@ -1,0 +1,4 @@
+{
+  "note": "Overlay files are optional GeoJSON under data/geo/overlays. Adding a file does not assert aggregation coverage. List a layer as {\"id\": \"short-name\", \"title\": \"Label\", \"file\": \"filename.geojson\", \"default\": false}. County and township lines stay boundaries only.",
+  "layers": []
+}

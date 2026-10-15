@@ -16,7 +16,8 @@ os.chdir(ROOT)
 import app as forge_app
 import history_store
 from forge_config import key_is_configured, pipeline_argv
-from place_index import classify_lookup
+from place_index import classify_lookup, load_places
+import territory
 from zone_intel import (
     append_monitor_items,
     comparable_change,
@@ -617,6 +618,167 @@ class LookupFieldTests(unittest.TestCase):
         poisoned = self.client.get("/api/zip/%3Cscript%3E")
         self.assertEqual(poisoned.status_code, 400)
         self.assertNotIn("script", json.dumps(poisoned.get_json()))
+
+
+def _coord_keys(value):
+    found = []
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if str(key).lower() in {"lat", "lon", "latitude", "longitude"} or "coord" in str(key).lower():
+                found.append(str(key))
+            found.extend(_coord_keys(item))
+    elif isinstance(value, list):
+        for item in value:
+            found.extend(_coord_keys(item))
+    return found
+
+
+class NearbyMapTests(unittest.TestCase):
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_place_index_has_gazetteer_coordinates(self):
+        places = load_places()
+        missing = [place["name"] for place in places if place.get("lat") is None or place.get("lon") is None]
+        self.assertEqual(missing, [])
+        solon = next(place for place in places if place["name"] == "Solon" and place["type"] == "city")
+        self.assertGreater(solon["lat"], 41)
+        self.assertLess(solon["lat"], 42)
+        self.assertGreater(solon["lon"], -82)
+        self.assertLess(solon["lon"], -81)
+
+    def test_solon_and_reminderville_list_nearby_places_and_zones(self):
+        solon = self.client.post("/api/lookup", json={"q": "Solon"})
+        self.assertEqual(solon.status_code, 200)
+        place = solon.get_json()["places"][0]
+        self.assertEqual(place["name"], "Solon")
+        self.assertEqual(place["coverage"]["status"], "own")
+        nearby = place["nearby"]
+        self.assertEqual(nearby["origin"]["category"], "nopec")
+        self.assertEqual(nearby["origin"]["rate"], "10.399")
+        self.assertIn("11.24", nearby["origin"]["ptc"])
+        names = {item["name"] for item in nearby["places"]}
+        self.assertIn("Reminderville", names)
+        self.assertIn("Twinsburg", names)
+        reminderville = next(item for item in nearby["places"] if item["name"] == "Reminderville")
+        self.assertEqual(reminderville["category"], "none")
+        self.assertEqual(reminderville["status"], "No own program")
+        self.assertNotIn("NOPEC", reminderville["status"])
+        self.assertNotIn("NOPEC", reminderville["detail"])
+        self.assertGreater(reminderville["miles"], 0)
+        zones = {item["name"]: item for item in nearby["zones"]}
+        self.assertIn("Twinsburg", zones)
+        self.assertTrue(zones["Twinsburg"]["card_url"].startswith("/card?"))
+        self.assertEqual(zones["Twinsburg"]["rate"], "10.399")
+        self.assertIn("NOPEC", zones["Twinsburg"]["supplier"])
+        self.assertTrue(zones["Twinsburg"]["ptc"])
+        self.assertNotIn("lat", nearby["origin"])
+
+        reminder = self.client.post("/api/lookup", json={"q": "Reminderville"})
+        body = reminder.get_json()["places"][0]
+        self.assertEqual(body["coverage"]["status"], "not_covered")
+        self.assertNotIn("NOPEC", body["coverage"]["label"])
+        self.assertEqual(body["nearby"]["origin"]["category"], "none")
+        self.assertNotIn("NOPEC", body["nearby"]["origin"]["detail"])
+        zone_names = {item["name"] for item in body["nearby"]["zones"]}
+        self.assertIn("Solon", zone_names)
+        self.assertIn("Twinsburg", zone_names)
+        self.assertIn("Aurora", zone_names)
+
+        page = self.client.post("/counties", data={"q": "Solon"}).get_data(as_text=True)
+        self.assertIn("Near Solon", page)
+        self.assertIn("Reminderville", page)
+        self.assertIn("No own program", page)
+        self.assertIn("Twinsburg", page)
+        self.assertIn("/card?", page)
+        self.assertIn('id="locate-me"', page)
+        self.assertIn('type="button"', page)
+        self.assertNotIn('type="password"', page)
+
+        card = self.client.get("/card?file=cleveland_cuyahoga&name=Solon").get_data(as_text=True)
+        self.assertIn("Nearby", card)
+        self.assertIn("Reminderville", card)
+
+    def test_locate_uses_boundaries_and_does_not_echo_coordinates(self):
+        denied = self.client.get("/api/locate?lat=41.386&lon=-81.441")
+        self.assertEqual(denied.status_code, 405)
+        self.assertNotIn("41.386", denied.get_data(as_text=True))
+
+        found = self.client.post("/api/locate", json={"lat": 41.386, "lon": -81.441})
+        self.assertEqual(found.status_code, 200)
+        self.assertEqual(found.headers.get("Cache-Control"), "no-store")
+        text = found.get_data(as_text=True)
+        self.assertNotIn("41.386", text)
+        self.assertNotIn("-81.441", text)
+        body = found.get_json()
+        self.assertEqual(_coord_keys(body), [])
+        self.assertTrue(body["inside_ohio"])
+        self.assertEqual(body["county"], "Cuyahoga")
+        self.assertEqual(body["township"], "Solon")
+        self.assertEqual(body["nearest_place"]["name"], "Solon")
+        self.assertIn("not a municipal boundary", body["nearest_place"]["detail"])
+        self.assertTrue(body["nearby_zones"])
+        self.assertTrue(body["nearby_zones"][0]["card_url"].startswith("/card?"))
+
+        outside = self.client.post("/api/locate", json={"lat": 40.7, "lon": -74.0})
+        self.assertTrue(outside.get_json()["ok"])
+        self.assertFalse(outside.get_json()["inside_ohio"])
+        self.assertNotIn("40.7", outside.get_data(as_text=True))
+        self.assertNotIn("-74.0", outside.get_data(as_text=True))
+
+        rejected = self.client.post("/api/locate", json={"lat": "41.386; drop", "lon": -81.44})
+        self.assertEqual(rejected.status_code, 400)
+        self.assertNotIn("drop", rejected.get_data(as_text=True))
+        self.assertNotIn("41.386", rejected.get_data(as_text=True))
+
+    def test_map_colors_do_not_confirm_unresolved_or_uncovered_places(self):
+        payload = self.client.get("/api/map").get_json()
+        self.assertTrue(payload["ok"])
+        self.assertIn("not shown as confirmed coverage", payload["note"])
+        solon = next(zone for zone in payload["zones"] if zone["name"] == "Solon")
+        self.assertEqual(solon["category"], "nopec")
+        self.assertEqual(solon["verification"], "likely")
+        self.assertEqual(solon["rate"], "10.399")
+        self.assertIn("11.24", solon["ptc"])
+        wauseon = next(zone for zone in payload["zones"] if zone["name"] == "Wauseon")
+        self.assertEqual(wauseon["category"], "unresolved")
+        self.assertTrue(wauseon["unresolved"])
+        self.assertNotEqual(wauseon["category"], "nopec")
+        reminder = next(place for place in payload["places"] if place["name"] == "Reminderville")
+        self.assertEqual(reminder["category"], "none")
+        self.assertFalse(reminder["hollow"])
+        self.assertNotIn("NOPEC", reminder["detail"])
+        self.assertNotIn("NOPEC", reminder["coverage_label"])
+        self.assertGreater(payload["counts"]["zones_drawn"], 250)
+        self.assertGreater(payload["counts"]["zones_unplaced"], 0)
+
+        page = self.client.get("/map").get_data(as_text=True)
+        self.assertIn("Unresolved / needs call", page)
+        self.assertIn("Locate me", page)
+        self.assertIn("OpenStreetMap", page)
+        self.assertIn("County boundaries", page)
+        self.assertIn("does not assert aggregation coverage", page)
+        self.assertNotIn('type="password"', page)
+        self.assertIn('id="filter-county"', page)
+        self.assertIn('id="filter-expiring"', page)
+
+        counties = self.client.get("/api/geo/ohio_counties.geojson")
+        self.assertEqual(counties.status_code, 200)
+        county_body = counties.get_json()
+        counties.close()
+        self.assertEqual(county_body["type"], "FeatureCollection")
+        self.assertGreaterEqual(len(county_body["features"]), 88)
+        self.assertIsNone(territory.safe_geo_file("../.env"))
+        self.assertIsNone(territory.safe_geo_file("overlays/../../app.py"))
+        missing = self.client.get("/api/geo/overlays/not-a-real-file.geojson")
+        self.assertEqual(missing.status_code, 404)
+        blocked = self.client.get("/api/geo/../app.py")
+        self.assertEqual(blocked.status_code, 404)
+
+        nearby = self.client.post("/api/nearby", json={"zone": "Solon", "region": "cleveland_cuyahoga"})
+        self.assertEqual(nearby.status_code, 200)
+        self.assertIn("Reminderville", {item["name"] for item in nearby.get_json()["nearby"]["places"]})
+        self.assertEqual(_coord_keys(nearby.get_json()), [])
 
 
 if __name__ == "__main__":

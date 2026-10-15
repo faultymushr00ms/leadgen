@@ -295,6 +295,11 @@
           <div class="bc-hook" id="bc-hook"></div>
         </div>
 
+        <div class="bc-section" id="bc-nearby-section" style="display:none;">
+          <div class="bc-section-label">Nearby</div>
+          <div id="bc-nearby" style="font-size:0.78rem; line-height:1.45;"></div>
+        </div>
+
         <div class="bc-section" id="bc-notes-section">
           <div class="bc-section-label">Notes</div>
           <div class="bc-notes" id="bc-notes"></div>
@@ -728,9 +733,69 @@ function selectZone(name) {
 
   document.getElementById('battlecard-empty').style.display   = 'none';
   document.getElementById('battlecard-content').style.display = 'flex';
+  loadNearby(selectedZone);
 
   // Scroll battlecard to top
   document.getElementById('battlecard-pane').scrollTop = 0;
+}
+
+let nearbyToken = 0;
+function loadNearby(zone) {
+  const token = ++nearbyToken;
+  const section = document.getElementById('bc-nearby-section');
+  const box = document.getElementById('bc-nearby');
+  section.style.display = '';
+  box.textContent = 'Looking up nearby places…';
+  fetch('/api/nearby', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({zone: zone.name, region: zone._source_file || ''})
+  }).then(function (response) { return response.json(); }).then(function (data) {
+    if (token !== nearbyToken) return;
+    renderNearby(box, data && data.nearby);
+  }).catch(function () {
+    if (token === nearbyToken) box.textContent = 'Nearby lookup failed.';
+  });
+}
+function renderNearby(box, nearby) {
+  box.replaceChildren();
+  if (!nearby) {
+    box.textContent = 'No nearby places are on file.';
+    return;
+  }
+  function addItem(item) {
+    const row = document.createElement('div');
+    row.style.marginTop = '4px';
+    const bits = [item.name, item.miles != null ? Number(item.miles).toFixed(1) + ' mi' : '', item.status || '', item.supplier || '', item.rate ? item.rate + '¢' : '', item.ptc || ''];
+    row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+    if (item.card_url) {
+      row.appendChild(document.createTextNode(' · '));
+      const link = document.createElement('a');
+      link.href = item.card_url;
+      link.style.color = 'var(--forge-orange)';
+      link.textContent = 'Battlecard';
+      row.appendChild(link);
+    }
+    box.appendChild(row);
+  }
+  const placesLabel = document.createElement('div');
+  placesLabel.className = 'stat-label';
+  placesLabel.textContent = 'Places';
+  box.appendChild(placesLabel);
+  (nearby.places || []).forEach(addItem);
+  const zonesLabel = document.createElement('div');
+  zonesLabel.className = 'stat-label';
+  zonesLabel.style.marginTop = '8px';
+  zonesLabel.textContent = 'Zones';
+  box.appendChild(zonesLabel);
+  (nearby.zones || []).forEach(addItem);
+  if (nearby.note) {
+    const note = document.createElement('div');
+    note.style.color = 'var(--forge-muted)';
+    note.style.marginTop = '6px';
+    note.textContent = nearby.note;
+    box.appendChild(note);
+  }
 }
 
 // ── Badge helpers ─────────────────────────────────────────────────────────────

@@ -324,6 +324,9 @@
       {% endif %}
       <div class="zone-name">{{ z.name }}</div>
       <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
+      {% if z.card and z.card.municipalFlagUnconfirmed %}
+      <div style="font-size:0.68rem;color:#ffe082;margin-top:4px;">Municipal blacklist flag is not confirmed.</div>
+      {% endif %}
     </div>
     <div class="zone-right">
       <!-- Rate info: sourced current only. FORGE rateChange is not a verified delta. -->

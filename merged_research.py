@@ -145,14 +145,24 @@ def unverified_groups() -> list[dict]:
             "county": key[1],
             "fields": [],
             "confidence": row.get("confidence") or "single-source",
-            "flag": row.get("flag") or "single-source — not confirmed",
+            "flags": [],
         })
+        flag = (row.get("flag") or "single-source — not confirmed").strip()
+        if flag and flag not in bucket["flags"]:
+            bucket["flags"].append(flag)
+        if (row.get("confidence") or "").startswith("likely"):
+            bucket["confidence"] = row["confidence"]
         bucket["fields"].append({
             "field": row.get("field") or "",
             "value": row.get("value") or "",
             "sources": row.get("sources") or "",
         })
-    groups = list(grouped.values())
+    groups = []
+    for bucket in grouped.values():
+        flags = bucket.pop("flags")
+        flags.sort(key=lambda item: (0 if item.startswith("likely") else 1, item))
+        bucket["flag"] = " ".join(flags) if flags else "single-source — not confirmed"
+        groups.append(bucket)
     groups.sort(key=lambda item: (item["county"].lower(), item["community"].lower()))
     return groups
 

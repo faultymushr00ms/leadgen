@@ -1211,6 +1211,9 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("Single-source — not confirmed", unverified)
         self.assertIn("Ashley", unverified)
         self.assertIn("not battlecard rates", unverified.lower())
+        reminderville = self.client.get("/unverified?q=Reminderville").get_data(as_text=True)
+        self.assertIn("likely — no aggregation rate", reminderville)
+        self.assertIn("Not a battlecard rate", reminderville)
 
     def test_snapshot_is_append_only_and_map_labels_certification(self):
         import puco_layer

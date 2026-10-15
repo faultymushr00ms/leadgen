@@ -126,6 +126,7 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--fetch", action="store_true", help="Fetch stored source URLs and flag missing rates")
     parser.add_argument("--limit", type=int, default=None, help="Max sourced pages to fetch")
     parser.add_argument("--report", default=None, help="Also copy the JSON report here. An existing file is kept.")
+    parser.add_argument("--puco", action="store_true", help="Fetch a new PUCO aggregation snapshot into the local cache")
     args = parser.parse_args(argv)
 
     zones = _load_zones()
@@ -139,6 +140,15 @@ def main(argv: list[str] | None = None) -> dict:
         observations.extend(fetched)
         notes.extend(fetch_notes)
     report = _report(zones, observations, notes)
+    if args.puco:
+        import puco_layer
+        snapshot = puco_layer.fetch_snapshot()
+        report["puco_snapshot"] = {
+            "filename": snapshot.get("filename") or "",
+            "feature_count": snapshot.get("feature_count"),
+            "fetched_at": snapshot.get("fetched_at") or "",
+        }
+        report["zone_files_written"] = 0
 
     stamp = datetime.now().strftime("%Y%m%dT%H%M%S")
     mirror = args.report or os.path.join("output", f"refresh_report_{stamp}.json")

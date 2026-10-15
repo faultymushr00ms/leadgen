@@ -32,6 +32,45 @@
   </div>
   {% endif %}
 
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header">PUCO crosswalk flags · not applied to zones</div>
+    <p style="font-size:0.8rem; color:#ffe082; margin:8px 14px;">{{ puco_disclaimer }}</p>
+    <p style="font-size:0.84rem; margin:0 14px 8px;">
+      {{ puco_counts.active_missing }} app-active zones with no PUCO listing.
+      {{ puco_counts.nopec_admin }} NOPEC-vs-app administrator conflicts.
+      {{ puco_counts.prospects }} possible prospects to research.
+    </p>
+    <div style="margin:0 14px 10px;">
+      <a class="btn btn-ghost btn-sm {% if puco_filter == 'app' %}active{% endif %}" href="/queue?puco=app{% if verification %}&verification={{ verification }}{% endif %}">App mismatches</a>
+      <a class="btn btn-ghost btn-sm {% if puco_filter == 'active_missing' %}active{% endif %}" href="/queue?puco=active_missing{% if verification %}&verification={{ verification }}{% endif %}">No PUCO listing</a>
+      <a class="btn btn-ghost btn-sm {% if puco_filter == 'nopec_admin' %}active{% endif %}" href="/queue?puco=nopec_admin{% if verification %}&verification={{ verification }}{% endif %}">NOPEC conflict</a>
+      <a class="btn btn-ghost btn-sm {% if puco_filter == 'prospect' %}active{% endif %}" href="/queue?puco=prospect{% if verification %}&verification={{ verification }}{% endif %}">Possible prospects</a>
+    </div>
+    <p style="font-size:0.75rem; color:var(--forge-muted); margin:0 14px 8px;">{{ puco_attribution }}</p>
+    <table class="forge-table">
+      <thead>
+        <tr><th>Name</th><th>County</th><th>Flag</th><th>PUCO listing</th><th>Next action</th></tr>
+      </thead>
+      <tbody>
+        {% for item in puco_flags %}
+        <tr>
+          <td>
+            {% if item.card_file %}
+            <a href="/card?file={{ item.card_file }}&name={{ item.name | urlencode }}" style="color:var(--forge-orange);">{{ item.name }}</a>
+            {% else %}
+            {{ item.name }}
+            {% endif %}
+          </td>
+          <td>{{ item.county }}</td>
+          <td style="white-space:normal;">{{ item.flag_label }}</td>
+          <td style="white-space:normal;">{{ item.listing }}{% if item.app_status %}<div style="color:var(--forge-muted);">App status: {{ item.app_status }}</div>{% endif %}{% if item.app_admin %}<div style="color:var(--forge-muted);">App administrator: {{ item.app_admin }}</div>{% endif %}</td>
+          <td style="white-space:normal;">{{ item.action }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
   <div class="banner-alert banner-unresolved">
     Escalate-call is shown as <strong>needs call</strong>. Conflict stays <strong>unresolved</strong>.
     Neither status is treated as inactive, and neither overwrites the original FORGE record.

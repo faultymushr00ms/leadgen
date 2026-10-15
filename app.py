@@ -17,6 +17,7 @@ from flask import Flask, jsonify, render_template, redirect, request, send_file
 from forge_config import env_is_configured, pipeline_argv
 import history_store
 import place_index
+import puco_layer
 import territory
 import zone_intel
 
@@ -548,6 +549,19 @@ def api_overlays():
     return jsonify(territory.load_overlays())
 
 
+@app.route("/api/puco/aggregation")
+def api_puco_aggregation():
+    try:
+        return jsonify(puco_layer.display_payload())
+    except puco_layer.PucoUnavailable:
+        return jsonify({
+            "ok": False,
+            "message": "The PUCO aggregation map could not be loaded.",
+            "attribution": puco_layer.ATTRIBUTION,
+            "disclaimer": puco_layer.DISCLAIMER,
+        }), 503
+
+
 @app.route("/api/geo/<path:name>")
 def api_geo(name):
     path = territory.safe_geo_file(name)
@@ -645,6 +659,8 @@ def investigation_queue():
     rows = baseline
     if verification:
         rows = [row for row in baseline if row.get("STATUS_verification") == verification]
+    puco = puco_layer.load_queue_flags()
+    selected = (request.args.get("puco") or "app").strip()
     return render_template(
         "queue.html",
         active="queue",
@@ -652,6 +668,11 @@ def investigation_queue():
         total=len(baseline),
         additions=additions,
         verification=verification,
+        puco_flags=puco_layer.filter_flags(puco["flags"], selected),
+        puco_counts=puco["counts"],
+        puco_filter=selected,
+        puco_disclaimer=puco["disclaimer"],
+        puco_attribution=puco["attribution"],
     )
 
 

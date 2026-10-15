@@ -1,0 +1,745 @@
+OBJECTID,CommunityName,BoundaryType,AggType,County,AOGCompany,CommCertID,CommCaseRef,CommIssueDate,name_in_place_index
+3,Fairfield,County,Electric,Fairfield,,14-848E,14-1096-EL-GAG,7/18/2014,yes
+4,Fayette,County,Electric,Fayette,,14-838E,14-1033-EL-GAG,7/5/2014,yes
+7,Fulton,County,Electric,Fulton,,10-283E,10-1231-EL-GAG,9/29/2010,yes
+10,Greene,County,Electric,Greene,,15-955E,15-0392-EL-GAG,3/26/2015,yes
+13,Hardin,County,Electric,Hardin,,12-495E,12-0861-EL-GAG,4/6/2012,yes
+14,Henry,County,Electric,Henry,,12-508E,12-1117-EL-GAG,5/1/2012,yes
+16,Huron,County,Electric,Huron,,10-302E,10-1464-EL-GAG,11/8/2010,yes
+23,Lucas,County,Electric,Lucas,,00-028E,00-2027-EL-GAG,11/24/2000,yes
+24,Madison,County,Electric,Madison,,12-511E,12-1166-EL-GAG,5/7/2012,yes
+30,Muskingum,County,Electric,Muskingum,,12-510E,12-1119-EL-GAG,5/1/2012,no
+38,Mercer,County,Electric,Mercer,,24-129660E,24-0043-EL-GAG,3/25/2024,yes
+39,Preble,County,Electric,Preble,,12-487E,12-0746-EL-GAG,3/27/2012,no
+41,Putnam,County,Electric,Putnam,,12-509E,12-1118-EL-GAG,5/1/2012,no
+42,Allen,County,Electric,Allen,,12-475E,12-0601-EL-GAG,3/12/2012,no
+43,Richland,County,Electric,Richland,,10-291E,10-1361-EL-GAG,10/18/2010,yes
+47,Sandusky,County,Electric,Sandusky,,10-287E,10-1318-EL-GAG,10/6/2010,yes
+53,Summit,County,Electric,Summit,,02-093E,02-2206-EL-GAG,10/22/2002,yes
+56,Tuscarawas,County,Electric,Tuscarawas,,24-128492E,24-0032-EL-GAG,2/11/2024,yes
+57,Clark,County,Electric,Clark,,20-001553E,20-1238-EL-GAG,8/2/2020,yes
+59,Clinton,County,Electric,Clinton,,12-570E,12-2420-EL-GAG,10/2/2012,yes
+60,Van Wert,County,Electric,Van Wert,,12-469E,12-0516-EL-GAG,3/5/2012,yes
+64,Washington,County,Electric,Washington,,23-123744E,23-0759-EL-GAG,8/19/2023,no
+67,Williams,County,Electric,Williams,,12-494E,12-0860-EL-GAG,4/6/2012,no
+68,Wood,County,Electric,Wood,,10-282E,10-1244-EL-GAG,9/29/2010,no
+71,Hocking,County,Electric,Hocking,,12-476E,12-0603-EL-GAG,3/12/2012,yes
+72,Logan,County,Electric,Logan,,23-119331E,23-0134-EL-GAG,3/18/2023,yes
+75,Portage,County,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+78,Miami,County,Electric,Miami,,23-118371E,23-0068-EL-GAG,2/19/2023,no
+79,Seneca,County,Electric,Seneca,,14-779E,14-0079-EL-GAG,2/13/2014,no
+80,Auglaize,County,Electric,Auglaize,,12-477E,12-0602-EL-GAG,3/12/2012,no
+82,Erie,County,Electric,Erie,,10-218E,10-0712-EL-GAG,6/25/2010,no
+83,Ottawa,County,Electric,Ottawa,,10-276E,10-1230-EL-GAG,9/29/2010,yes
+86,Wayne,County,Electric,Wayne,,13-682E,13-0755-EL-GAG,4/27/2013,yes
+87,Darke,County,Electric,Darke,,26-146925E,26-0050-EL-GAG,2/20/2026,no
+148,Madison,Township,Electric,Franklin,,13-734E,13-1742-EL-GAG,9/2/2013,yes
+150,Prairie,Township,Electric,Franklin,,13-725E,13-1585-EL-GAG,8/8/2013,no
+158,Clinton,Township,Electric,Franklin,Southeast Ohio Public Energy Council,,,,yes
+163,Pleasant,Township,Electric,Franklin,,15-940E,15-0231-EL-GAG,3/2/2015,yes
+164,Blendon,Township,Electric,Franklin,Southeast Ohio Public Energy Council,,,,no
+193,Addison,Township,Electric,Gallia,,19-1400E,19-0833-EL-GAG,5/10/2019,yes
+207,Thompson,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+208,Huntsburg,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+210,Chester,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+211,Claridon,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+212,Troy,Township,Electric,Geauga,,20-1469E,20-0405-EL-GAG,4/22/2020,yes
+213,Hambden,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+215,Middlefield,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+216,Montville,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+217,Munson,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,no
+219,Russell,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+220,Parkman,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+221,Auburn,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+222,Burton,Township,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+235,Symmes,Township,Electric,Hamilton,,10-253E,10-1008-EL-GAG,8/24/2010,yes
+239,Whitewater,Township,Electric,Hamilton,,16-1097E,16-1364-EL-GAG,7/14/2016,no
+242,Crosby,Township,Electric,Hamilton,,18-1295E,18-0128-EL-GAG,2/23/2020,no
+246,Columbia,Township,Electric,Hamilton,,12-470E,12-0528-EL-GAG,3/5/2012,yes
+250,Liberty,Township,Electric,Hancock,,19-1365E,19-0037-EL-GAG,2/4/2019,yes
+330,Wayne,Township,Electric,Jefferson,,16-1057E,16-0456-EL-GAG,3/27/2016,yes
+331,Springfield,Township,Electric,Jefferson,,17-1225E,17-0677-EL-GAG,5/12/2017,yes
+333,Knox,Township,Electric,Jefferson,,17-1189E,17-0160-EL-GAG,2/17/2017,yes
+334,Smithfield,Township,Electric,Jefferson,,16-1058E,16-0350-EL-GAG,3/20/2016,yes
+335,Salem,Township,Electric,Jefferson,,17-1218E,17-0675-EL-GAG,4/16/2017,yes
+336,Saline,Township,Electric,Jefferson,,17-1211E,17-0649-EL-GAG,4/8/2017,no
+337,Wells,Township,Electric,Jefferson,,18-1285E,17-2546-EL-GAG,1/20/2018,no
+338,Island Creek,Township,Electric,Jefferson,,16-1050E,16-0250-EL-GAG,3/5/2016,yes
+339,Mount Pleasant,Township,Electric,Jefferson,,16-1067E,16-0558-EL-GAG,4/15/2016,yes
+340,Cross Creek,Township,Electric,Jefferson,,14-859E,14-1238-EL-GAG,8/11/2014,no
+364,Perry,Township,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+366,Concord,Township,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+368,Leroy,Township,Electric,Lake,Northeast Ohio Public Energy Council,,,,no
+385,Etna,Township,Electric,Licking,,15-957E,15-0428-EL-GAG,3/28/2015,yes
+386,Union,Township,Electric,Licking,,14-868E,14-1351-EL-GAG,9/13/2014,yes
+387,Granville,Township,Electric,Licking,,14-777E,14-0052-EL-GAG,2/9/2014,yes
+402,Harrison,Township,Electric,Licking,,16-1083E,16-0937-EL-GAG,6/2/2016,yes
+408,New Russia,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,no
+411,Lagrange,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+413,Eaton,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+414,Columbia,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+421,Pittsfield,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+422,Carlisle,Township,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+452,Ellsworth,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+455,Milton,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,no
+457,Beaver,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+458,Berlin,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+460,Smith,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,no
+463,Green,Township,Electric,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+512,Perry,Township,Electric,Morrow,,14-788E,14-0251-EL-GAG,3/14/2014,yes
+513,Canaan,Township,Electric,Morrow,,10-280E,10-1223-EL-GAG,9/29/2010,yes
+519,Cardington,Township,Electric,Morrow,,15-938E,15-0154-EL-GAG,2/23/2015,yes
+613,Miami,Township,Electric,Montgomery,,22-111264E,22-0591-EL-GAG,7/14/2022,no
+615,Jefferson,Township,Electric,Montgomery,,16-1101E,16-1214-EL-GAG,7/16/2016,yes
+616,German,Township,Electric,Montgomery,,24-127961E,23-1164-EL-GAG,1/22/2024,no
+617,Butler,Township,Electric,Montgomery,,17-1215E,17-0732-EL-GAG,4/13/2017,yes
+618,Harrison,Township,Electric,Montgomery,,24-128119E,23-1110-EL-GAG,1/27/2024,yes
+620,Clay,Township,Electric,Montgomery,,19-1373E,19-0127-EL-GAG,2/15/2019,yes
+621,Perry,Township,Electric,Montgomery,,24-127968E,23-1168-EL-GAG,1/22/2024,yes
+625,Hanover,Township,Electric,Butler,,17-1177E,16-2415-EL-GAG,1/19/2017,yes
+626,Ross,Township,Electric,Butler,,24-128115E,23-1118-EL-GAG,1/27/2024,yes
+629,Reily,Township,Electric,Butler,,24-127676E,23-1089-EL-GAG,1/11/2024,yes
+632,Wayne,Township,Electric,Butler,,24-127897E,23-1120-EL-GAG,1/19/2024,yes
+663,Lanier,Township,Electric,Preble,,23-118329E,23-0055-EL-GAG,2/17/2023,no
+665,Twin,Township,Electric,Preble,,24-128493E,24-0036-EL-GAG,2/11/2024,no
+724,Butler,Township,Electric,Richland,,18-1337E,18-1411-EL-GAG,10/16/2018,yes
+725,Bloominggrove,Township,Electric,Richland,,18-1339E,18-1435-EL-GAG,10/19/2018,yes
+731,Jefferson,Township,Electric,Richland,,19-1359E,18-1904-EL-GAG,1/28/2019,yes
+732,Madison,Township,Electric,Richland,Northeast Ohio Public Energy Council,16-1119E,16-1689-EL-GAG,9/4/2016,yes
+733,Springfield,Township,Electric,Richland,,18-1334E,18-1372-EL-GAG,10/3/2018,yes
+734,Weller,Township,Electric,Richland,,18-1340E,18-1454-EL-GAG,10/21/2018,no
+746,Orange,Township,Electric,Ashland,,19-1376E,18-1910-EL-GAG,1/31/2019,yes
+751,Scioto,Township,Electric,Ross,,17-1216E,17-0726-EL-GAG,4/14/2017,yes
+758,Jefferson,Township,Electric,Ross,,24-127938E,23-1154-EL-GAG,1/22/2024,yes
+766,Orwell,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+767,Dorset,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+769,Harpersfield,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+770,Colebrook,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+771,Pierpont,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+772,Trumbull,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+773,Monroe,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+774,Denmark,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+775,Cherry Valley,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+777,Wayne,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+778,Hartsgrove,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+779,Sheffield,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+780,Kingsville,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+782,Williamsfield,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+783,Windsor,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+784,Austinburg,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+785,Lenox,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,no
+786,Rome,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+787,New Lyme,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+788,Jefferson,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+789,Saybrook,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+790,Plymouth,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+791,Richmond,Township,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+793,Riley,Township,Electric,Sandusky,,23-125710E,23-0906-EL-GAG,10/29/2023,no
+795,Green Creek,Township,Electric,Sandusky,,19-1374E,19-0139-EL-GAG,2/16/2019,yes
+799,Sandusky,Township,Electric,Sandusky,,19-1360E,19-0036-EL-GAG,2/4/2019,yes
+800,Ballville,Township,Electric,Sandusky,,19-1375E,19-0141-EL-GAG,2/16/2019,yes
+801,York,Township,Electric,Sandusky,,19-1372E,19-0126-EL-GAG,2/15/2019,yes
+802,Townsend,Township,Electric,Sandusky,,19-1367E,19-0068-EL-GAG,2/9/2019,no
+816,Green,Township,Electric,Scioto,,16-1127E,16-1648-EL-GAG,9/28/2016,yes
+839,Pultney,Township,Electric,Belmont,,17-1217E,17-0772-EL-GAG,4/15/2017,no
+843,Richland,Township,Electric,Belmont,,17-1230E,17-0899-EL-GAG,5/28/2017,yes
+847,Colerain,Township,Electric,Belmont,,25-137391E,24-1117-EL-GAG,1/13/2025,yes
+849,Pease,Township,Electric,Belmont,,17-1210E,17-0678-EL-GAG,4/8/2017,no
+850,Warren,Township,Electric,Belmont,,17-1214E,17-0715-EL-GAG,4/10/2017,yes
+851,Sugar Creek,Township,Electric,Stark,,10-250E,10-0959-EL-GAG,8/16/2010,yes
+852,Tuscarawas,Township,Electric,Stark,,10-225E,10-0800-EL-GAG,7/13/2010,yes
+854,Lake,Township,Electric,Stark,,10-220E,10-0730-EL-GAG,6/29/2010,no
+855,Lawrence,Township,Electric,Stark,,10-222E,10-0794-EL-GAG,7/13/2010,yes
+856,Pike,Township,Electric,Stark,,16-1042E,15-2056-EL-GAG,1/9/2016,no
+857,Paris,Township,Electric,Stark,Northeast Ohio Public Energy Council,,,,yes
+859,Marlboro,Township,Electric,Stark,,10-224E,10-0799-EL-GAG,12/16/2024,yes
+860,Bethlehem,Township,Electric,Stark,,10-233E,10-0872-EL-GAG,7/27/2010,yes
+861,Osnaburg,Township,Electric,Stark,,16-1049E,16-0249-EL-GAG,2/29/2016,no
+862,Sandy,Township,Electric,Stark,,17-1196E,17-0222-EL-GAG,2/24/2017,no
+865,Lexington,Township,Electric,Stark,,10-227E,10-0829-EL-GAG,7/20/2010,yes
+885,Sagamore Hills,Township,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+898,Augusta,Township,Electric,Carroll,,24-127934E,23-1153-EL-GAG,1/22/2024,yes
+903,Center,Township,Electric,Carroll,,23-117851E,23-0006-EL-GAG,2/3/2023,yes
+906,Brown,Township,Electric,Carroll,,24-127962E,23-1162-EL-GAG,1/22/2024,yes
+919,Warren,Township,Electric,Tuscarawas,,26-152928E,26-0559-EL-GAG,5/31/2026,yes
+920,Sugar Creek,Township,Electric,Tuscarawas,,15-932E,15-0152-EL-GAG,2/22/2015,yes
+923,Auburn,Township,Electric,Tuscarawas,,19-1361E,19-0032-EL-GAG,2/4/2019,yes
+928,Lawrence,Township,Electric,Tuscarawas,,14-871E,14-1392-EL-GAG,9/18/2014,yes
+930,Franklin,Township,Electric,Tuscarawas,,15-928E,15-0063-EL-GAG,2/15/2015,yes
+935,Sandy,Township,Electric,Tuscarawas,,16-1159E,16-2229-EL-GAG,12/18/2016,no
+940,Mill,Township,Electric,Tuscarawas,,16-1084E,16-0955-EL-GAG,6/4/2016,no
+944,German,Township,Electric,Clark,,15-923E,14-2325-EL-GAG,1/28/2015,no
+946,Madison,Township,Electric,Clark,,19-1377E,18-1905-EL-GAG,2/28/2019,yes
+947,Pike,Township,Electric,Clark,,15-925E,14-2333-EL-GAG,1/31/2015,no
+950,Mad River,Township,Electric,Clark,,15-921E,14-2323-EL-GAG,1/26/2015,yes
+953,Monroe,Township,Electric,Clermont,,18-1289E,17-2550-EL-GAG,1/27/2018,yes
+990,Unity,Township,Electric,Columbiana,Southeast Ohio Public Energy Council,,,,yes
+991,Butler,Township,Electric,Columbiana,,16-1153E,16-2145-EL-GAG,12/1/2016,yes
+992,Perry,Township,Electric,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+995,Knox,Township,Electric,Columbiana,,20-1464E,20-0360-EL-GAG,3/7/2020,yes
+997,Fairfield,Township,Electric,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+998,Center,Township,Electric,Columbiana,,10-261E,10-1034-EL-GAG,8/31/2010,yes
+999,Saint Clair,Township,Electric,Columbiana,,12-506E,12-1038-EL-GAG,4/23/2012,no
+1000,Middleton,Township,Electric,Columbiana,,10-239E,10-0916-EL-GAG,8/2/2010,yes
+1001,Madison,Township,Electric,Columbiana,,19-1415E,19-1318-EL-GAG,7/17/2019,yes
+1003,Elkrun,Township,Electric,Columbiana,,10-236E,10-0897-EL-GAG,7/27/2010,no
+1004,Hanover,Township,Electric,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+1005,Liverpool,Township,Electric,Columbiana,,19-1386E,19-0441-EL-GAG,3/23/2019,no
+1007,West,Township,Electric,Columbiana,,19-1446E,19-2085-EL-GAG,12/26/2019,no
+1008,Massie,Township,Electric,Warren,,23-118761E,23-0098-EL-GAG,3/2/2023,no
+1014,Salem,Township,Electric,Warren,,18-1291E,18-0057-EL-GAG,2/6/2018,yes
+1030,Tuscarawas,Township,Electric,Coshocton,,15-922E,14-2324-EL-GAG,1/28/2015,yes
+1036,Franklin,Township,Electric,Coshocton,,15-939E,15-0173-EL-GAG,2/26/2015,yes
+1079,Olmsted,Township,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,no
+1080,Chagrin Falls,Township,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1094,Lake,Township,Electric,Wood,,04-113E,04-0038-EL-GAG,3/3/2004,no
+1124,Berlin,Township,Electric,Delaware,,13-750E,13-2024-EL-GAG,11/1/2013,yes
+1125,Radnor,Township,Electric,Delaware,,10-230E,10-0851-EL-GAG,7/20/2010,yes
+1127,Genoa,Township,Electric,Delaware,,16-1045E,16-0037-EL-GAG,2/13/2016,yes
+1132,Troy,Township,Electric,Delaware,,14-793E,14-0367-EL-GAG,4/4/2014,yes
+1134,Harlem,Township,Electric,Delaware,,14-784E,14-0151-EL-GAG,3/2/2014,yes
+1139,Brown,Township,Electric,Delaware,,14-785E,14-0198-EL-GAG,3/7/2014,yes
+1140,Concord,Township,Electric,Delaware,,14-774E,13-2435-EL-GAG,1/24/2014,yes
+1141,Orange,Township,Electric,Delaware,,15-943E,15-0294-EL-GAG,3/11/2015,yes
+1159,Rushcreek,Township,Electric,Logan,,20-1477E,20-0647-EL-GAG,5/20/2020,no
+1183,Deerfield,Township,Electric,Morgan,,17-1206E,17-0511-EL-GAG,3/24/2017,yes
+1199,Nelson,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1200,Deerfield,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1201,Rootstown,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1202,Paris,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1203,Edinburg,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1204,Windham,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1205,Suffield,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1206,Atwater,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1208,Hiram,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1209,Palmyra,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1210,Brimfield,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1211,Randolph,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1212,Shalersville,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1213,Freedom,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1214,Charlestown,Township,Electric,Portage,Northeast Ohio Public Energy Council,26-152360E,26-0280-EL-GAG,4/23/2026,yes
+1215,Mantua,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1216,Franklin,Township,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1223,Pleasant,Township,Electric,Marion,,16-1138E,16-1947-EL-GAG,10/28/2016,yes
+1224,Green Camp,Township,Electric,Marion,,14-870E,14-1440-EL-GAG,9/19/2014,yes
+1228,Grand Prairie,Township,Electric,Marion,,19-1393E,19-0617-EL-GAG,4/12/2019,no
+1249,Newberry,Township,Electric,Miami,,17-1168E,16-2372-EL-GAG,1/13/2017,no
+1360,Sugar Creek,Township,Electric,Wayne,,10-223E,10-0795-EL-GAG,7/13/2010,yes
+1361,Chippewa,Township,Electric,Wayne,,10-254E,10-1009-EL-GAG,8/24/2010,no
+1364,Canaan,Township,Electric,Wayne,,14-768E,13-2387-EL-GAG,1/16/2014,yes
+1366,Milton,Township,Electric,Wayne,,10-240E,10-0922-EL-GAG,8/2/2010,no
+1372,Baughman,Township,Electric,Wayne,,10-251E,10-0964-EL-GAG,8/16/2010,no
+1382,Brown,Township,Electric,Darke,,17-1193E,17-0197-EL-GAG,2/20/2017,yes
+1384,Greenville,Township,Electric,Darke,,17-1202E,17-0363-EL-GAG,3/10/2017,yes
+1391,Adams,Township,Electric,Darke,,18-1288E,17-2548-EL-GAG,1/27/2018,no
+1423,Addyston,Municipality,Electric,Hamilton,,13-681E,13-0725-EL-GAG,4/21/2013,yes
+1425,Adena,Municipality,Electric,Jefferson,,23-119567E,23-0159-EL-GAG,3/26/2023,yes
+1427,Albany,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+1432,Amberley,Municipality,Electric,Hamilton,,12-454E,12-0179-EL-GAG,2/13/2012,yes
+1433,Amesville,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+1437,Anna,Municipality,Electric,Shelby,,17-1176E,16-2370-EL-GAG,1/13/2017,yes
+1438,Ansonia,Municipality,Electric,Darke,,17-1166E,16-2369-EL-GAG,1/13/2017,yes
+1446,Arlington,Municipality,Electric,Hancock,,15-1011E,15-1492-EL-GAG,9/21/2015,yes
+1449,Ashley,Municipality,Electric,Delaware,,26-151833E,26-0182-EL-GAG,4/3/2026,yes
+1479,Bellbrook,Municipality,Electric,Greene,,22-111348E,22-0599-EL-GAG,7/17/2022,yes
+1480,Belle Center,Municipality,Electric,Logan,,17-1167E,16-2368-EL-GAG,1/13/2017,yes
+1483,Bellevue,Municipality,Electric,Huron,,11-335E,11-0097-EL-GAG,2/9/2011,yes
+1484,Bellville,Municipality,Electric,Richland,,16-1115E,16-1632-EL-GAG,8/25/2016,yes
+1488,Belpre,Municipality,Electric,Washington,Southeast Ohio Public Energy Council,,,,yes
+1489,Bentleyville,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1496,Bethesda,Municipality,Electric,Belmont,,14-888E,14-1752-EL-GAG,11/2/2014,yes
+1509,Boston Heights,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+1510,Botkins,Municipality,Electric,Shelby,,16-1030E,15-2045-EL-GAG,1/4/2016,yes
+1514,Bradford,Municipality,Electric,Miami,,16-1031E,15-2046-EL-GAG,1/4/2016,yes
+1516,Bratenahl,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1521,Bridgeport,Municipality,Electric,Belmont,,21-071939E,21-0621-EL-GAG,6/25/2021,yes
+1523,Brooklyn,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1524,Brooklyn Heights,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1527,Brookville,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1531,Buchtel,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+1538,Burton,Municipality,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+1542,Cadiz,Municipality,Electric,Harrison,,16-1107E,16-1510-EL-GAG,8/1/2016,yes
+1545,Caledonia,Municipality,Electric,Marion,,19-1394E,19-0628-EL-GAG,4/13/2019,yes
+1549,Canal Fulton,Municipality,Electric,Stark,,20-1466E,20-0371-EL-GAG,3/9/2020,yes
+1553,Cardington,Municipality,Electric,Morrow,,10-294E,10-1420-EL-GAG,10/25/2010,yes
+1557,Carrollton,Municipality,Electric,Carroll,,14-834E,14-0968-EL-GAG,6/30/2014,yes
+1568,Chagrin Falls,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1571,Chauncey,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+1574,Chesterhill,Municipality,Electric,Morgan,Southeast Ohio Public Energy Council,,,,yes
+1577,Chickasaw,Municipality,Electric,Mercer,,13-726E,13-1610-EL-GAG,8/11/2013,yes
+1580,Chippewa Lake,Municipality,Electric,Medina,Northeast Ohio Public Energy Council,,,,yes
+1587,Clay Center,Municipality,Electric,Ottawa,,19-1413E,19-1284-EL-GAG,7/10/2019,yes
+1588,Clayton,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1591,Cleves,Municipality,Electric,Hamilton,,13-672E,13-0631-EL-GAG,4/11/2013,yes
+1607,Continental,Municipality,Electric,Putnam,,24-128847E,24-0070-EL-GAG,2/24/2024,yes
+1612,Corwin,Municipality,Electric,Warren,,17-1191E,17-0190-EL-GAG,2/19/2017,yes
+1614,Covington,Municipality,Electric,Miami,,17-1170E,16-2366-EL-GAG,1/13/2017,yes
+1616,Crestline,Municipality,Electric,Crawford,,13-678E,13-0718-EL-GAG,4/20/2013,yes
+1624,Cuyahoga Heights,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1626,Dalton,Municipality,Electric,Wayne,,10-229E,10-0850-EL-GAG,7/20/2010,yes
+1633,Degraff,Municipality,Electric,Logan,,17-1171E,16-2365-EL-GAG,1/13/2017,yes
+1637,Delta,Municipality,Electric,Fulton,,16-1100E,16-1407-EL-GAG,7/16/2016,yes
+1638,Dennison,Municipality,Electric,Tuscarawas,,17-1209E,17-0644-EL-GAG,4/6/2017,yes
+1644,Doylestown,Municipality,Electric,Wayne,,03-110E,03-1888-EL-GAG,10/24/2004,yes
+1645,Dresden,Municipality,Electric,Muskingum,,14-794E ,14-0371-EL-GAG,4/5/2014,yes
+1649,East Canton,Municipality,Electric,Stark,,12-440E,11-6027-EL-GAG,1/27/2012,yes
+1653,East Palestine,Municipality,Electric,Columbiana,,04-120E,04-1142-EL-GAG,8/31/2004,yes
+1655,Eaton,Municipality,Electric,Preble,Miami Valley Communications Council,,,,yes
+1666,Englewood,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1669,Evendale,Municipality,Electric,Hamilton,,15-985E,15-1018-EL-GAG,6/26/2015,yes
+1671,Fairfax,Municipality,Electric,Hamilton,,24-127899E,23-1107-EL-GAG,1/19/2024,yes
+1673,Fairlawn,Municipality,Electric,Summit,,01-070E,01-0615-EL-GAG,4/27/2001,yes
+1674,Fairport Harbor,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1678,Fayette,Municipality,Electric,Fulton,,15-956E,15-0402-EL-GAG,3/27/2015,yes
+1687,Fort Jennings,Municipality,Electric,Putnam,,15-954E,15-0389-EL-GAG,3/23/2015,yes
+1688,Fort Loramie,Municipality,Electric,Shelby,,16-1032E,15-2048-EL-GAG,1/4/2016,yes
+1689,Fort Recovery,Municipality,Electric,Mercer,,14-840E,14-1061-EL-GAG,7/11/2014,yes
+1693,Frazeysburg,Municipality,Electric,Muskingum,,26-146273E,25-1198-EL-GAG,1/30/2026,yes
+1695,Fredericktown,Municipality,Electric,Knox,,12-539E,12-1875-EL-GAG,7/25/2012,yes
+1701,Galena,Municipality,Electric,Delaware,Southeast Ohio Public Energy Council,24-128663E,24-0047-EL-GAG,2/18/2024,yes
+1704,Gambier,Municipality,Electric,Knox,,15-964E,15-0520-EL-GAG,4/17/2015,yes
+1707,Garrettsville,Municipality,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1708,Gates Mills,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1710,Geneva-On-The-Lake,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+1713,Germantown,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1719,Glendale,Municipality,Electric,Hamilton,,10-200E,10-0150-EL-GAG,3/10/2010,yes
+1720,Glenford,Municipality,Electric,Perry,Southeast Ohio Public Energy Council,,,,yes
+1722,Glenwillow,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1723,Gloria Glens Park,Municipality,Electric,Medina,Northeast Ohio Public Energy Council,,,,yes
+1729,Grand Rapids,Municipality,Electric,Wood,,12-484E,12-0674-EL-GAG,3/19/2012,yes
+1730,Grand River,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1732,Granville,Municipality,Electric,Licking,Southeast Ohio Public Energy Council,14-781E,14-0112-EL-GAG,2/22/2014,yes
+1737,Green Camp,Municipality,Electric,Marion,,17-1251E,17-1526-EL-GAG,7/28/2017,yes
+1738,Greenfield,Municipality,Electric,Highland,,11-416E,11-5816-EL-GAG,12/27/2011,yes
+1739,Greenhills,Municipality,Electric,Hamilton,,11-331E,10-3017-EL-GAG,1/19/2011,yes
+1741,Greenville,Municipality,Electric,Darke,,17-1169E,16-2373-EL-GAG,1/13/2017,yes
+1752,Hanoverton,Municipality,Electric,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+1760,Hartville,Municipality,Electric,Stark,,10-242E,10-0906-EL-GAG,8/2/2010,yes
+1761,Harveysburg,Municipality,Electric,Warren,,23-118757E,23-0095-EL-GAG,3/2/2023,yes
+1768,Hemlock,Municipality,Electric,Perry,Southeast Ohio Public Energy Council,,,,yes
+1773,Highland Hills,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1776,Hillsboro,Municipality,Electric,Highland,,23-123387E,23-0727-EL-GAG,8/6/2023,yes
+1777,Hiram,Municipality,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+1789,Hunting Valley,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1791,Huron,Municipality,Electric,Erie,,10-311E,10-2628-EL-GAG,12/16/2010,yes
+1793,Indian Hill,Municipality,Electric,Hamilton,,03-103E,03-1145-EL-GAG,5/12/2003,no
+1800,Jacksonville,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+1802,Jefferson,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+1803,Jeffersonville,Municipality,Electric,Fayette,,14-841E,14-1063-EL-GAG,7/11/2014,yes
+1817,Killbuck,Municipality,Electric,Holmes,,25-141660E,25-0575-EL-GAG,6/19/2025,yes
+1822,Kirtland,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1823,Kirtland Hills,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1825,LaGrange,Municipality,Electric,Lorain,,09-156E,09-0432-EL-GAG,7/1/2009,yes
+1826,Lakeline,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1827,Lakemore,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+1838,Leetonia,Municipality,Electric,Columbiana,,20-1473E,20-0714-EL-GAG,5/20/2020,yes
+1840,Lewisburg,Municipality,Electric,Preble,Miami Valley Communications Council,,,,yes
+1842,Lexington,Municipality,Electric,Richland,Northeast Ohio Public Energy Council,,,,yes
+1845,Lincoln Heights,Municipality,Electric,Hamilton,,24-130167E,24-0224-EL-GAG,4/14/2024,yes
+1847,Linndale,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1848,Lisbon,Municipality,Electric,Columbiana,,15-941E,15-0285-EL-GAG,3/8/2015,yes
+1855,London,Municipality,Electric,Madison,,10-202E,10-0266-EL-GAG,4/13/2010,yes
+1857,Lordstown,Municipality,Electric,Trumbull,,03-109E,03-1887-EL-GAG,10/24/2003,yes
+1859,Loudonville,Municipality,Electric,Ashland,,14-811E,14-0660-EL-GAG,5/16/2014,yes
+1860,Louisville,Municipality,Electric,Stark,,01-078E,01-2055-EL-GAG,9/24/2001,yes
+1862,Lowell,Municipality,Electric,Washington,Southeast Ohio Public Energy Council,,,,yes
+1863,Lowellville,Municipality,Electric,Mahoning,,13-636E,13-0272-EL-GAG,2/25/2013,yes
+1871,Macedonia,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+1874,Madison,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+1876,Magnolia,Municipality,Electric,Stark,,17-1195E,17-0205-EL-GAG,2/23/2017,yes
+1883,Mantua,Municipality,Electric,Portage,,10-234E,10-0873-EL-GAG,7/27/2010,yes
+1885,Marble Cliff,Municipality,Electric,Franklin,Southeast Ohio Public Energy Council,,,,yes
+1886,Marblehead,Municipality,Electric,Ottawa,,10-274E,10-1146-EL-GAG,9/20/2010,yes
+1901,Mayfield,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1903,Mcarthur,Municipality,Electric,Vinton,,16-1158E,16-2152-EL-GAG,12/2/2016,yes
+1907,Mcdonald,Municipality,Electric,Trumbull,Northeast Ohio Public Energy Council,,,,yes
+1915,Metamora,Municipality,Electric,Fulton,,12-516E,12-1291-EL-GAG,5/21/2012,yes
+1919,Middlefield,Municipality,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+1933,Millersburg,Municipality,Electric,Holmes,,14-770E,13-2408-EL-GAG,1/18/2014,yes
+1939,Minerva,Municipality,Electric,Stark,,18-1309E,18-0491-EL-GAG,4/27/2018,yes
+1941,Mingo Junction,Municipality,Electric,Jefferson,,13-710E,13-1349-EL-GAG,7/11/2013,yes
+1943,Mogadore,Municipality,Electric,Summit,,15-1015E,15-1559-EL-GAG,10/5/2015,yes
+1949,Moraine,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1950,Moreland Hills,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1954,Moscow,Municipality,Electric,Clermont,,18-1299E,18-0261-EL-GAG,3/13/2018,yes
+1958,Mount Gilead,Municipality,Electric,Morrow,,10-259E,10-1032-EL-GAG,8/30/2010,yes
+1963,Mount Vernon,Municipality,Electric,Knox,,12-434E,11-5966-EL-GAG,1/17/2012,yes
+1966,Munroe Falls,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,00-034E,00-2151-EL-GAG,12/6/2000,yes
+1971,Navarre,Municipality,Electric,Stark,,03-106E,03-1504-EL-GAG,8/19/2003,yes
+1984,Newburgh Heights,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+1987,New Concord,Municipality,Electric,Muskingum,Southeast Ohio Public Energy Council,,,,yes
+1991,New Lebanon,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+1996,New Middletown,Municipality,Electric,Mahoning,,11-333E,10-3052-EL-GAG,1/20/2011,yes
+1997,New Paris,Municipality,Electric,Preble,,12-461E,12-0352-EL-GAG,2/21/2012,yes
+2001,New Straitsville,Municipality,Electric,Perry,Southeast Ohio Public Energy Council,,,,yes
+2003,Newtown,Municipality,Electric,Hamilton,,15-979E,15-0789-EL-GAG,5/22/2015,yes
+2006,New Waterford,Municipality,Electric,Columbiana,,16-1144E,16-2022-EL-GAG,11/13/2016,yes
+2011,North Bend,Municipality,Electric,Hamilton,,13-680E,13-0716-EL-GAG,4/20/2013,yes
+2015,Northfield,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+2017,North Kingsville,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+2018,North Lewisburg,Municipality,Electric,Champaign,,23-118242E,23-0039-EL-GAG,2/15/2023,yes
+2021,North Randall,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2028,Norwalk,Municipality,Electric,Huron,Northeast Ohio Public Energy Council,,,,yes
+2029,Norwich,Municipality,Electric,Muskingum,Southeast Ohio Public Energy Council,,,,yes
+2033,Oakwood,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2034,Oakwood,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+2043,Orange,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2047,Orwell,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+2050,Ottawa,Municipality,Electric,Putnam,,16-1114E,16-1631-EL-GAG,8/25/2016,yes
+2051,Ottawa Hills,Municipality,Electric,Lucas,,02-083E,02-0100-EL-GAG,3/1/2002,yes
+2068,Peninsula,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+2070,Perry,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+2076,Piketon,Municipality,Electric,Pike,Southeast Ohio Public Energy Council,,,,yes
+2080,Plain City,Municipality,Electric,Madison,Northeast Ohio Public Energy Council,,,,yes
+2087,Poland,Municipality,Electric,Mahoning,,09-190E,09-1864-EL-GAG,12/29/2009,yes
+2088,Polk,Municipality,Electric,Ashland,,19-1353E,18-1814-EL-GAG,1/7/2019,yes
+2103,Quincy,Municipality,Electric,Logan,,17-1172E,16-2364-EL-GAG,1/13/2017,yes
+2104,Racine,Municipality,Electric,Meigs,Southeast Ohio Public Energy Council,,,,yes
+2108,Rayland,Municipality,Electric,Jefferson,,16-1120E,16-1600-EL-GAG,8/22/2016,yes
+2110,Reminderville,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+2114,Richfield,Municipality,Electric,Summit,Northeast Ohio Public Energy Council,,,,yes
+2115,Richmond,Municipality,Electric,Jefferson,,16-1106E,16-1462-EL-GAG,8/1/2016,yes
+2119,Rio Grande,Municipality,Electric,Gallia,Southeast Ohio Public Energy Council,,,,yes
+2122,Rittman,Municipality,Electric,Wayne,Northeast Ohio Public Energy Council,04-117E,04-1006-EL-GAG,7/27/2004,yes
+2125,Roaming Shores,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+2127,Rock Creek,Municipality,Electric,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+2136,Rushsylvania,Municipality,Electric,Logan,,24-132230E,24-0612-EL-GAG,7/6/2024,yes
+2140,Russia,Municipality,Electric,Shelby,,16-1033E,15-2049-EL-GAG,1/4/2016,yes
+2154,Scio,Municipality,Electric,Harrison,,13-764E,13-2273-EL-GAG,12/26/2013,yes
+2162,Shadyside,Municipality,Electric,Belmont,,15-927E,15-0040-EL-GAG,2/9/2015,yes
+2165,Shawnee,Municipality,Electric,Perry,Southeast Ohio Public Energy Council,,,,yes
+2166,Shawnee Hills,Municipality,Electric,Delaware,,10-260E,10-1033-EL-GAG,8/30/2010,yes
+2174,Sidney,Municipality,Electric,Shelby,,16-1029E,15-2047-EL-GAG,1/4/2016,yes
+2175,Silver Lake,Municipality,Electric,Summit,,00-018E,00-1929-EL-GAG,11/16/2000,yes
+2180,Somerset,Municipality,Electric,Perry,Southeast Ohio Public Energy Council,,,,yes
+2181,South Amherst,Municipality,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+2187,South Russell,Municipality,Electric,Geauga,Northeast Ohio Public Energy Council,,,,yes
+2208,Stratton,Municipality,Electric,Jefferson,,15-917E,14-2260-EL-GAG,1/15/2015,yes
+2213,Sugar Bush Knolls,Municipality,Electric,Portage,Northeast Ohio Public Energy Council,,,,yes
+2218,Sunbury,Municipality,Electric,Delaware,,13-626E,12-3228-EL-GAG,1/22/2013,yes
+2229,Tiltonsville,Municipality,Electric,Jefferson,,14-832E,14-0959-EL-GAG,6/28/2014,yes
+2230,Timberlake,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+2235,Toronto,Municipality,Electric,Jefferson,,14-798E,14-0428-EL-GAG,4/17/2014,yes
+2238,Trimble,Municipality,Electric,Athens,Southeast Ohio Public Energy Council,,,,yes
+2239,Trotwood,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+2243,Uhrichsville,Municipality,Electric,Tuscarawas,,15-999E,15-1089-EL-GAG,8/10/2015,yes
+2244,Union,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+2248,Upper Arlington,Municipality,Electric,Franklin,Southeast Ohio Public Energy Council,,,,yes
+2249,Upper Sandusky,Municipality,Electric,Wyandot,,22-112016E,22-0675-EL-GAG,8/6/2022,yes
+2254,Valley View,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2261,Vermilion,Municipality,Electric,Lorain,Northeast Ohio Public Energy Council,,,,yes
+2266,Waite Hill,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+2267,Wakeman,Municipality,Electric,Huron,,19-1379E,19-0377-EL-GAG,3/10/2019,yes
+2268,Walbridge,Municipality,Electric,Wood,,17-1241E,17-1419-EL-GAG,7/9/2017,yes
+2269,Waldo,Municipality,Electric,Marion,,18-1349E,18-1686-EL-GAG,12/14/2018,yes
+2270,Walton Hills,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2274,Warsaw,Municipality,Electric,Coshocton,,25-139714E,25-0059-EL-GAG,4/7/2025,yes
+2281,Wayne Lakes,Municipality,Electric,Darke,,17-1179E,16-2363-EL-GAG,1/13/2017,yes
+2288,West Alexandria,Municipality,Electric,Preble,,24-127937E,23-1155-EL-GAG,1/22/2024,yes
+2289,West Carrollton,Municipality,Electric,Montgomery,Miami Valley Communications Council,,,,yes
+2293,Westfield Center,Municipality,Electric,Medina,,10-266E,10-1076-EL-GAG,9/8/2010,yes
+2295,West Lafayette,Municipality,Electric,Coshocton,,18-1325E,18-1122-EL-GAG,8/15/2018,yes
+2300,West Mansfield,Municipality,Electric,Logan,,24-136600E,24-1047-EL-GAG,12/14/2024,yes
+2302,West Milton,Municipality,Electric,Miami,,17-1175E,16-2362-EL-GAG,1/13/2017,yes
+2303,Weston,Municipality,Electric,Wood,,12-444E,11-6033-EL-GAG,1/31/2012,yes
+2313,Willard,Municipality,Electric,Huron,,15-949E,15-0370-EL-GAG,3/22/2015,yes
+2318,Willowick,Municipality,Electric,Lake,Northeast Ohio Public Energy Council,,,,yes
+2323,Winchester,Municipality,Electric,Adams,,17-1203E,17-0440-EL-GAG,3/13/2017,yes
+2325,Wintersville,Municipality,Electric,Jefferson,,16-1053E,16-0324-EL-GAG,3/12/2016,yes
+2327,Woodmere,Municipality,Electric,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+2339,Yorkville,Municipality,Electric,Jefferson,,14-831E,14-0952-EL-GAG,6/28/2014,yes
+10010,Greene,County,Gas,Greene,,23-119701G,23-0162-GA-GAG,3/30/2023,yes
+10023,Lucas,County,Gas,Lucas,,02-036G,02-2163-GA-GAG,9/23/2002,yes
+10030,Muskingum,County,Gas,Muskingum,,23-118602G,23-0091-GA-GAG,2/27/2023,no
+10042,Allen,County,Gas,Allen,,23-118967G,23-0100-GA-GAG,3/3/2023,no
+10053,Summit,County,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10055,Champaign,County,Gas,Champaign,,23-118390G,23-0074-GA-GAG,2/20/2023,no
+10056,Tuscarawas,County,Gas,Tuscarawas,,24-128491G,24-0033-GA-GAG,2/11/2024,yes
+10057,Clark,County,Gas,Clark,,20-001552G,20-1237-GA-GAG,8/2/2020,yes
+10059,Clinton,County,Gas,Clinton,,24-128486G,24-0028-GA-GAG,2/10/2024,yes
+10060,Van Wert,County,Gas,Van Wert,,22-111558G,22-0622-GA-GAG,7/22/2022,yes
+10064,Washington,County,Gas,Washington,,23-123745G,23-0760-GA-GAG,8/19/2023,no
+10072,Logan,County,Gas,Logan,,23-119330G,23-0135-GA-GAG,3/18/2023,yes
+10075,Portage,County,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+10078,Miami,County,Gas,Miami,,23-118372G,23-0069-GA-GAG,2/19/2023,no
+10082,Erie,County,Gas,Erie,,10-192G,10-0713-GA-GAG,7/2/2010,no
+10083,Ottawa,County,Gas,Ottawa,,23-121005G,23-0400-GA-GAG,5/15/2023,yes
+10086,Wayne,County,Gas,Wayne,,20-745G,20-0139-GA-GAG,2/21/2020,yes
+10148,Madison,Township,Gas,Franklin,,17-602G,17-0914-GA-GAG,5/6/2017,yes
+10150,Prairie,Township,Gas,Franklin,,17-0592G,17-0695-GA-GAG,4/9/2017,no
+10208,Huntsburg,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10210,Chester,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10211,Claridon,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10212,Troy,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10213,Hambden,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10216,Montville,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10217,Munson,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,no
+10219,Russell,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10221,Auburn,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10222,Burton,Township,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+10235,Symmes,Township,Gas,Hamilton,,10-195G,10-0994-GA-GAG,9/21/2010,yes
+10246,Columbia,Township,Gas,Hamilton,,16-507G,16-0569-GA-GAG,4/15/2016,yes
+10250,Liberty,Township,Gas,Hancock,,19-693G,19-0038-GA-GAG,2/4/2019,yes
+10330,Wayne,Township,Gas,Jefferson,,15-505G,16-0457-GA-GAG,3/27/2016,yes
+10331,Springfield,Township,Gas,Jefferson,,17-603G,17-0934-GA-GAG,5/12/2017,yes
+10335,Salem,Township,Gas,Jefferson,,17-597G,17-0674-GA-GAG,4/16/2017,yes
+10336,Saline,Township,Gas,Jefferson,,17-598G,17-0676-GA-GAG,4/16/2017,no
+10338,Island Creek,Township,Gas,Jefferson,,16-499G,16-0251-GA-GAG,3/5/2016,yes
+10340,Cross Creek,Township,Gas,Jefferson,,14-380G,14-1239-GA-GAG,7/18/2022,no
+10364,Perry,Township,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+10366,Concord,Township,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+10368,Leroy,Township,Gas,Lake,Northeast Ohio Public Energy Council,,,,no
+10385,Etna,Township,Gas,Licking,,15-423G,15-0429-GA-GAG,3/28/2015,yes
+10387,Granville,Township,Gas,Licking,,23-125527G,23-0877-GA-GAG,10/22/2023,yes
+10402,Harrison,Township,Gas,Licking,,16-519G,16-0938-GA-GAG,6/3/2016,yes
+10408,New Russia,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,no
+10413,Eaton,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+10414,Columbia,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+10419,Penfield,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+10421,Pittsfield,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+10422,Carlisle,Township,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+10452,Ellsworth,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+10455,Milton,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,no
+10457,Beaver,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+10458,Berlin,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+10460,Smith,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,no
+10463,Green,Township,Gas,Mahoning,Northeast Ohio Public Energy Council,,,,yes
+10613,Miami,Township,Gas,Montgomery,,22-111266G,22-0592-GA-GAG,7/14/2022,no
+10615,Jefferson,Township,Gas,Montgomery,,16-529G,16-1235-GA-GAG,7/7/2016,yes
+10616,German,Township,Gas,Montgomery,,24-127963G,23-1165-GA-GAG,1/22/2024,no
+10618,Harrison,Township,Gas,Montgomery,,24-128118G,23-1111-GA-GAG,1/27/2024,yes
+10620,Clay,Township,Gas,Montgomery,,19-698G,19-0128-GA-GAG,2/15/2019,yes
+10626,Ross,Township,Gas,Butler,,24-128117G,23-1119-GA-GAG,1/27/2024,yes
+10751,Scioto,Township,Gas,Ross,,17-599G,17-0788-GA-GAG,4/20/2017,yes
+10769,Harpersfield,Township,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+10780,Kingsville,Township,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+10788,Jefferson,Township,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+10789,Saybrook,Township,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+10790,Plymouth,Township,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+10799,Sandusky,Township,Gas,Sandusky,,24-127561G,23-1131-GA-GAG,1/8/2024,yes
+10800,Ballville,Township,Gas,Sandusky,,24-127560G,23-1130-GA-GAG,1/8/2024,yes
+10839,Pultney,Township,Gas,Belmont,,25-137388G,24-1113-GA-GAG,1/13/2025,no
+10843,Richland,Township,Gas,Belmont,,17-606G,17-0917-GA-GAG,5/28/2017,yes
+10847,Colerain,Township,Gas,Belmont,,25-137389G,24-1114-GA-GAG,1/13/2025,yes
+10849,Pease,Township,Gas,Belmont,,17-0593G,17-0697-GA-GAG,4/9/2017,no
+10850,Warren,Township,Gas,Belmont,,17-622G,17-1910-GA-GAG,10/4/2017,yes
+10862,Sandy,Township,Gas,Stark,,17-586G,17-0223-GA-GAG,2/23/2017,no
+10884,Springfield,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10885,Sagamore Hills,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10886,Coventry,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,no
+10888,Richfield,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10889,Northfield Center,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10891,Boston,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10892,Bath,Township,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+10903,Center,Township,Gas,Carroll,,23-118516G,23-0014-GA-GAG,2/23/2023,yes
+10906,Brown,Township,Gas,Carroll,,24-127959G,23-1163-GA-GAG,1/22/2024,yes
+10920,Sugar Creek,Township,Gas,Tuscarawas,,15-416G,15-0153-GA-GAG,2/22/2015,yes
+10928,Lawrence,Township,Gas,Tuscarawas,,14-386G,14-1393-GA-GAG,9/22/2014,yes
+10930,Franklin,Township,Gas,Tuscarawas,,15-414G,15-0064-GA-GAG,2/15/2015,yes
+10935,Sandy,Township,Gas,Tuscarawas,,16-565G,16-2228-GA-GAG,12/18/2016,no
+10940,Mill,Township,Gas,Tuscarawas,,16-520G,16-0956-GA-GAG,6/5/2016,no
+10944,German,Township,Gas,Clark,,14-410G,14-2330-GA-GAG,1/30/2015,no
+10946,Madison,Township,Gas,Clark,,19-961G,18-1906-GA-GAG,1/28/2019,yes
+10947,Pike,Township,Gas,Clark,,14-412G,14-2334-GA-GAG,1/31/2015,no
+10950,Mad River,Township,Gas,Clark,,14-409G,14-2329-GA-GAG,1/30/2015,yes
+10953,Monroe,Township,Gas,Clermont,,18-638G,17-2551-GA-GAG,1/27/2018,yes
+10990,Unity,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+10991,Butler,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,24-131713G,24-0517-GA-GAG,6/14/2024,yes
+10992,Perry,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+10995,Knox,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+10997,Fairfield,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+11000,Middleton,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+11004,Hanover,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+11007,West,Township,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,no
+11030,Tuscarawas,Township,Gas,Coshocton,,14-411G,14-2331-GA-GAG,1/30/2015,yes
+11036,Franklin,Township,Gas,Coshocton,,15-418G,15-0174-GA-GAG,2/26/2015,yes
+11079,Olmsted,Township,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,no
+11080,Chagrin Falls,Township,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11094,Lake,Township,Gas,Wood,,04-072G,04-0042-GA-GAG,2/23/2004,no
+11124,Berlin,Township,Gas,Delaware,,13-329G,13-2043-GA-GAG,11/4/2013,yes
+11127,Genoa,Township,Gas,Delaware,,16-496G,16-0038-GA-GAG,2/13/2016,yes
+11132,Troy,Township,Gas,Delaware,,14-347G,14-0368-GA-GAG,4/4/2014,yes
+11134,Harlem,Township,Gas,Delaware,,14-345G,14-0161-GA-GAG,3/3/2014,yes
+11141,Orange,Township,Gas,Delaware,,20-743G,19-2231-GA-GAG,1/20/2020,yes
+11199,Nelson,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11200,Deerfield,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11201,Rootstown,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11202,Paris,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11203,Edinburg,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11204,Windham,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11205,Suffield,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11206,Atwater,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11208,Hiram,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11209,Palmyra,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11210,Brimfield,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11211,Randolph,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11212,Shalersville,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11213,Freedom,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11214,Charlestown,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11215,Mantua,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11216,Franklin,Township,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11249,Newberry,Township,Gas,Miami,,17-572G,16-2389-GA-GAG,1/14/2017,no
+11287,Newton,Township,Gas,Trumbull,,26-145513G,25-1142-GA-GAG,1/4/2026,no
+11361,Chippewa,Township,Gas,Wayne,,10-199G,10-1314-GA-GAG,10/13/2010,no
+11382,Brown,Township,Gas,Darke,,17-584G,17-0198-GA-GAG,2/20/2017,yes
+11384,Greenville,Township,Gas,Darke,,17-589G,17-0364-GA-GAG,3/10/2017,yes
+11391,Adams,Township,Gas,Darke,,18-639G,17-2549-GA-GAG,1/27/2018,no
+11432,Amberley,Municipality,Gas,Hamilton,,12-241G,12-0178-GA-GAG,2/13/2012,yes
+11437,Anna,Municipality,Gas,Shelby,,17-575G,16-2392-GA-GAG,1/14/2017,yes
+11438,Ansonia,Municipality,Gas,Darke,,17-574G,16-2391-GA-GAG,1/14/2017,yes
+11449,Ashley,Municipality,Gas,Delaware,,26-151834G,26-0183-GA-GAG,4/3/2026,yes
+11451,Ashville,Municipality,Gas,Pickaway,,17-590G,17-0441-GA-GAG,3/13/2017,yes
+11479,Bellbrook,Municipality,Gas,Greene,,22-111349G,22-0600-GA-GAG,7/17/2022,yes
+11480,Belle Center,Municipality,Gas,Logan,,17-573G,16-2390-GA-GAG,1/14/2017,yes
+11484,Bellville,Municipality,Gas,Richland,,16-545G,16-1844-GA-GAG,10/7/2018,yes
+11488,Belpre,Municipality,Gas,Washington,Southeast Ohio Public Energy Council,,,,yes
+11489,Bentleyville,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11496,Bethesda,Municipality,Gas,Belmont,,10-202G,10-2632-GA-GAG,12/27/2010,yes
+11501,Blanchester,Municipality,Gas,Clinton,,15-421G,15-0406-GA-GAG,3/28/2015,yes
+11509,Boston Heights,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+11510,Botkins,Municipality,Gas,Shelby,,16-488G,15-2042-GA-GAG,1/4/2016,yes
+11514,Bradford,Municipality,Gas,Miami,,16-487G,15-2041-GA-GAG,1/4/2016,yes
+11515,Bradner,Municipality,Gas,Wood,,13-302G,13-0978-GA-GAG,4/29/2013,yes
+11516,Bratenahl,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11519,Brewster,Municipality,Gas,Stark,,02-016G,02-1722-GA-GAG,8/9/2002,yes
+11521,Bridgeport,Municipality,Gas,Belmont,,09-146G,09-0168-GA-GAG,5/6/2009,yes
+11523,Brooklyn,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11524,Brooklyn Heights,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11527,Brookville,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+11538,Burton,Municipality,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+11542,Cadiz,Municipality,Gas,Harrison,,10-188G,10-0405-GA-GAG,5/4/2010,yes
+11549,Canal Fulton,Municipality,Gas,Stark,,05-095G,05-0021-GA-GAG,2/10/2005,yes
+11557,Carrollton,Municipality,Gas,Carroll,,22-112053G,22-0653-GA-GAG,8/8/2022,yes
+11568,Chagrin Falls,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11580,Chippewa Lake,Municipality,Gas,Medina,Northeast Ohio Public Energy Council,,,,yes
+11588,Clayton,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+11591,Cleves,Municipality,Gas,Hamilton,,13-297G,13-0632-GA-GAG,4/11/2013,yes
+11600,Columbiana,Municipality,Gas,Columbiana,,03-067G,03-1716-GA-GAG,9/29/2003,yes
+11612,Corwin,Municipality,Gas,Warren,,17-582G,17-0191-GA-GAG,2/19/2017,yes
+11614,Covington,Municipality,Gas,Miami,,17-569G,16-2386-GA-GAG,1/14/2017,yes
+11616,Crestline,Municipality,Gas,Crawford,,13-300G,13-0717-GA-GAG,4/20/2013,yes
+11624,Cuyahoga Heights,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11626,Dalton,Municipality,Gas,Wayne,,24-127941G,23-1156-GA-GAG,1/22/2024,yes
+11638,Dennison,Municipality,Gas,Tuscarawas,,24-128825G,24-0065-GA-GAG,2/23/2024,yes
+11644,Doylestown,Municipality,Gas,Wayne,,05-104G,05-1034-GA-GAG,10/4/2005,yes
+11645,Dresden,Municipality,Gas,Muskingum,,15-465G,15-1414-GA-GAG,9/6/2015,yes
+11653,East Palestine,Municipality,Gas,Columbiana,,04-074G,04-0233-GA-GAG,4/1/2004,yes
+11655,Eaton,Municipality,Gas,Preble,Miami Valley Communications Council,,,,yes
+11669,Evendale,Municipality,Gas,Hamilton,,10-201G,10-2384-GA-GAG,11/30/2010,yes
+11671,Fairfax,Municipality,Gas,Hamilton,,24-127898G,23-1108-GA-GAG,1/19/2024,yes
+11673,Fairlawn,Municipality,Gas,Summit,,25-139717G,25-0113-GA-GAG,3/11/2025,yes
+11674,Fairport Harbor,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11688,Fort Loramie,Municipality,Gas,Shelby,,16-489G,15-2043-GA-GAG,1/4/2016,yes
+11689,Fort Recovery,Municipality,Gas,Mercer,,14-366G,14-1060-GA-GAG,7/11/2014,yes
+11693,Frazeysburg,Municipality,Gas,Muskingum,,26-146274G,25-1199-GA-GAG,1/30/2026,yes
+11695,Fredericktown,Municipality,Gas,Knox,,09-145G,09-0093-GA-GAG,3/27/2013,yes
+11701,Galena,Municipality,Gas,Delaware,,25-138239G,25-0079-GA-GAG,2/27/2025,yes
+11704,Gambier,Municipality,Gas,Knox,,15-429G,15-0521-GA-GAG,4/20/2015,yes
+11707,Garrettsville,Municipality,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11708,Gates Mills,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11710,Geneva-On-The-Lake,Municipality,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+11712,Georgetown,Municipality,Gas,Brown,,23-122669G,23-0670-GA-GAG,7/14/2023,yes
+11713,Germantown,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+11719,Glendale,Municipality,Gas,Hamilton,,10-181G,10-0151-GA-GAG,3/20/2014,yes
+11722,Glenwillow,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11723,Gloria Glens Park,Municipality,Gas,Medina,Northeast Ohio Public Energy Council,,,,yes
+11730,Grand River,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11732,Granville,Municipality,Gas,Licking,,23-125484G,23-0876-GA-GAG,10/20/2023,yes
+11738,Greenfield,Municipality,Gas,Highland,,23-122670G,23-0659-GA-GAG,7/13/2023,yes
+11739,Greenhills,Municipality,Gas,Hamilton,,10-206G,10-3016-GA-GAG,1/18/2011,yes
+11741,Greenville,Municipality,Gas,Darke,,17-571G,16-2388-GA-GAG,1/14/2017,yes
+11752,Hanoverton,Municipality,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+11773,Highland Hills,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11777,Hiram,Municipality,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+11789,Hunting Valley,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11793,Indian Hill,Municipality,Gas,Hamilton,,09-151G,09-0426-GA-GAG,6/18/2009,no
+11802,Jefferson,Municipality,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+11803,Jeffersonville,Municipality,Gas,Fayette,,14-367G,14-1062-GA-GAG,7/11/2014,yes
+11817,Killbuck,Municipality,Gas,Holmes,,17-608G,17-1239-GA-GAG,6/12/2017,yes
+11822,Kirtland,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11823,Kirtland Hills,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11825,LaGrange,Municipality,Gas,Lorain,,25-143174G,25-0748-GA-GAG,8/21/2025,yes
+11826,Lakeline,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11827,Lakemore,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+11838,Leetonia,Municipality,Gas,Columbiana,Northeast Ohio Public Energy Council,,,,yes
+11840,Lewisburg,Municipality,Gas,Preble,Miami Valley Communications Council,,,,yes
+11842,Lexington,Municipality,Gas,Richland,Northeast Ohio Public Energy Council,,,,yes
+11845,Lincoln Heights,Municipality,Gas,Hamilton,,12-266G,12-2180-GA-GAG,8/27/2012,yes
+11847,Linndale,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11848,Lisbon,Municipality,Gas,Columbiana,,15-459G,15-1427-GA-GAG,9/10/2015,yes
+11857,Lordstown,Municipality,Gas,Trumbull,,09-155G,09-0524-GA-GAG,7/9/2009,yes
+11860,Louisville,Municipality,Gas,Stark,,26-145926G,25-1169-GA-GAG,1/17/2026,yes
+11871,Macedonia,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+11874,Madison,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+11876,Magnolia,Municipality,Gas,Stark,,17-585G,17-0208-GA-GAG,2/23/2017,yes
+11892,Marshallville,Municipality,Gas,Wayne,,09-164G,09-0868-GA-GAG,10/29/2009,yes
+11901,Mayfield,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11903,Mcarthur,Municipality,Gas,Vinton,,16-562G,16-2151-GA-GAG,12/2/2016,yes
+11919,Middlefield,Municipality,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+11927,Milan,Municipality,Gas,Erie,,03-059G,03-1576-GA-GAG,8/22/2003,yes
+11941,Mingo Junction,Municipality,Gas,Jefferson,,17-626G,17-2100-GA-GAG,11/15/2017,yes
+11943,Mogadore,Municipality,Gas,Summit,,04-092G,04-1411-GA-GAG,10/18/2004,yes
+11949,Moraine,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+11950,Moreland Hills,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11963,Mount Vernon,Municipality,Gas,Knox,,08-141G,08-1265-GA-GAG,1/20/2009,yes
+11966,Munroe Falls,Municipality,Gas,Summit,,02-005G,02-1673-GA-GAG,8/4/2002,yes
+11971,Navarre,Municipality,Gas,Stark,,04-082G,04-0953-GA-GAG,7/16/2004,yes
+11984,Newburgh Heights,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+11988,New Franklin,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+11991,New Lebanon,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+11993,New London,Municipality,Gas,Huron,,15-476G,15-1437-GA-GAG,10/23/2015,yes
+12003,Newtown,Municipality,Gas,Hamilton,,15-424G,15-0440-GA-GAG,3/30/2015,yes
+12006,New Waterford,Municipality,Gas,Columbiana,,16-508G,16-0578-GA-GAG,4/17/2016,yes
+12011,North Bend,Municipality,Gas,Hamilton,,14-359G,14-0885-GA-GAG,6/6/2014,yes
+12015,Northfield,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+12017,North Kingsville,Municipality,Gas,Ashtabula,Northeast Ohio Public Energy Council,,,,yes
+12020,North Perry,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+12021,North Randall,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+12028,Norwalk,Municipality,Gas,Huron,Northeast Ohio Public Energy Council,,,,yes
+12033,Oakwood,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+12034,Oakwood,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+12043,Orange,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+12050,Ottawa,Municipality,Gas,Putnam,,16-550G,16-1922-GA-GAG,10/22/2016,yes
+12051,Ottawa Hills,Municipality,Gas,Lucas,,12-248G,12-1121-GA-GAG,4/30/2012,yes
+12058,Pandora,Municipality,Gas,Putnam,,18-653G,18-0431-GA-GAG,4/12/2018,yes
+12070,Perry,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+12080,Plain City,Municipality,Gas,Madison,Northeast Ohio Public Energy Council,,,,yes
+12087,Poland,Municipality,Gas,Mahoning,,09-174G,09-1865-GA-GAG,1/14/2010,yes
+12089,Pomeroy,Municipality,Gas,Meigs,,09-167G,09-0962-GA-GAG,11/13/2009,yes
+12110,Reminderville,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+12114,Richfield,Municipality,Gas,Summit,Northeast Ohio Public Energy Council,,,,yes
+12122,Rittman,Municipality,Gas,Wayne,Northeast Ohio Public Energy Council,,,,yes
+12128,Rockford,Municipality,Gas,Mercer,,18-652G,18-0392-GA-GAG,4/11/2018,yes
+12140,Russia,Municipality,Gas,Shelby,,16-490G,15-2044-GA-GAG,1/4/2016,yes
+12144,Saint Clairsville,Municipality,Gas,Belmont,,10-200G,10-1258-GA-GAG,10/20/2010,yes
+12145,Saint Henry,Municipality,Gas,Mercer,,22-112208G,22-0674-GA-GAG,8/12/2022,yes
+12162,Shadyside,Municipality,Gas,Belmont,,15-413G,15-0041-GA-GAG,2/9/2015,yes
+12166,Shawnee Hills,Municipality,Gas,Delaware,,16-557G,16-2017-GA-GAG,11/13/2016,yes
+12169,Shelby,Municipality,Gas,Richland,,16-547G,16-1878-GA-GAG,10/17/2016,yes
+12174,Sidney,Municipality,Gas,Shelby,,16-486G,15-2040-GA-GAG,1/4/2016,yes
+12175,Silver Lake,Municipality,Gas,Summit,,02-008G,02-1678-GA-GAG,8/4/2002,yes
+12181,South Amherst,Municipality,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+12187,South Russell,Municipality,Gas,Geauga,Northeast Ohio Public Energy Council,,,,yes
+12208,Stratton,Municipality,Gas,Jefferson,,24-136082G,24-0989-GA-GAG,11/22/2024,yes
+12213,Sugar Bush Knolls,Municipality,Gas,Portage,Northeast Ohio Public Energy Council,,,,yes
+12218,Sunbury,Municipality,Gas,Delaware,,13-283G,12-3229-GA-GAG,1/16/2013,yes
+12230,Timberlake,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+12235,Toronto,Municipality,Gas,Jefferson,,22-116684G,22-1081-GA-GAG,12/21/2022,yes
+12239,Trotwood,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+12243,Uhrichsville,Municipality,Gas,Tuscarawas,,15-457G,15-1090-GA-GAG,8/10/2015,yes
+12244,Union,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+12249,Upper Sandusky,Municipality,Gas,Wyandot,,22-112015G,22-0676-GA-GAG,8/6/2022,yes
+12254,Valley View,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+12261,Vermilion,Municipality,Gas,Lorain,Northeast Ohio Public Energy Council,,,,yes
+12266,Waite Hill,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+12267,Wakeman,Municipality,Gas,Huron,,18-642G,18-0093-GA-GAG,2/12/2020,yes
+12268,Walbridge,Municipality,Gas,Wood,,16-512G,16-0739-GA-GAG,5/9/2016,yes
+12270,Walton Hills,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes
+12274,Warsaw,Municipality,Gas,Coshocton,,10-182G,10-0161-GA-GAG,3/18/2010,yes
+12288,West Alexandria,Municipality,Gas,Preble,,24-127940G,23-1157-GA-GAG,1/22/2024,yes
+12289,West Carrollton,Municipality,Gas,Montgomery,Miami Valley Communications Council,,,,yes
+12295,West Lafayette,Municipality,Gas,Coshocton,,20-001557G,20-1209-GA-GAG,7/27/2020,yes
+12302,West Milton,Municipality,Gas,Miami,,17-568G,16-2385-GA-GAG,1/14/2017,yes
+12313,Willard,Municipality,Gas,Huron,,15-422G,15-0422-GA-GAG,3/28/2015,yes
+12318,Willowick,Municipality,Gas,Lake,Northeast Ohio Public Energy Council,,,,yes
+12327,Woodmere,Municipality,Gas,Cuyahoga,Northeast Ohio Public Energy Council,,,,yes

@@ -821,5 +821,149 @@ class NearbyMapTests(unittest.TestCase):
         self.assertEqual(_coord_keys(nearby.get_json()), [])
 
 
+class PucoOverlayTests(unittest.TestCase):
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_crosswalk_flags_do_not_change_zones(self):
+        import puco_layer
+
+        region_path = os.path.join(ROOT, "data", "regions", "eastern_ohio_aep.json")
+        with open(region_path, "rb") as handle:
+            before = handle.read()
+        payload = puco_layer.load_queue_flags()
+        counts = payload["counts"]
+        self.assertEqual(counts["active_missing"], 13)
+        self.assertEqual(counts["nopec_admin"], 12)
+        self.assertEqual(counts["prospects"], 744)
+        self.assertEqual(counts["app_nopec_not_on_map"], 1)
+        self.assertEqual(len(load_queue()), 328)
+        self.assertEqual(payload["disclaimer"], puco_layer.DISCLAIMER)
+        self.assertEqual(payload["attribution"], "Source: PUCO Government Aggregation map")
+        active = [item["name"] for item in payload["flags"] if "active_missing" in item["groups"]]
+        self.assertIn("Kenwood / Symmes Township", active)
+        self.assertIn("Chillicothe", active)
+        self.assertEqual(len(active), 13)
+        nopec = [item for item in payload["flags"] if "nopec_admin" in item["groups"]]
+        self.assertEqual(len(nopec), 12)
+        self.assertTrue(all(item["action"].startswith("Flag only. Zone records were not changed.") for item in nopec))
+        self.assertIn(puco_layer.DISCLAIMER, nopec[0]["action"])
+        prospects = [item for item in payload["flags"] if item["kind"] == "prospect"]
+        self.assertEqual(len(prospects), 744)
+        self.assertEqual(prospects[0]["flag_label"], "possible prospects to research")
+        self.assertIn("14-848E", prospects[0]["listing"])
+        self.assertIn("Possible prospect to research.", prospects[0]["action"])
+        chillicothe = _zone("Chillicothe")
+        self.assertEqual(chillicothe["aggregationStatus"], "no_aggregation_verified")
+        self.assertIsNone(chillicothe["supplier"])
+        with open(region_path, "rb") as handle:
+            self.assertEqual(handle.read(), before)
+
+        page = self.client.get("/queue?puco=active_missing").get_data(as_text=True)
+        self.assertIn("13 app-active zones with no PUCO listing", page)
+        self.assertIn("12 NOPEC-vs-app administrator conflicts", page)
+        self.assertIn("744 possible prospects to research", page)
+        self.assertIn("Kenwood / Symmes Township", page)
+        self.assertIn("not applied to zones", page)
+        self.assertIn(puco_layer.DISCLAIMER, page)
+        prospects_page = self.client.get("/queue?puco=prospect").get_data(as_text=True)
+        self.assertIn("14-848E", prospects_page)
+        self.assertIn("possible prospects to research", prospects_page)
+
+    def test_snapshot_is_append_only_and_map_labels_certification(self):
+        import puco_layer
+
+        page = self.client.get("/map").get_data(as_text=True)
+        self.assertIn("PUCO certification only: not proof of an active program, supplier or rate", page)
+        self.assertIn("Source: PUCO Government Aggregation map", page)
+        self.assertIn('id="puco-electric"', page)
+        self.assertIn('id="puco-gas"', page)
+        self.assertIn("Own certificate", page)
+        with open(os.path.join(ROOT, ".gitignore"), encoding="utf-8") as handle:
+            self.assertIn("data/cache/", handle.read())
+
+        feature = {
+            "type": "Feature",
+            "properties": {
+                "OBJECTID": 2179,
+                "BoundaryType": "Municipality",
+                "CommunityName": "Solon",
+                "AggType": "Electric",
+                "CountyID": 65,
+                "AOGCertID": "01-044E",
+                "AOGCaseRef": "00-2317-EL-GAG",
+                "AOGCompany": "Northeast Ohio Public Energy Council",
+                "AOGIssueDate": "1/2/2001",
+                "CommCertID": None,
+                "CommCaseRef": None,
+                "CommCompany": None,
+                "CommIssueDate": None,
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[-81.5, 41.3], [-81.4, 41.3], [-81.4, 41.4], [-81.5, 41.4], [-81.5, 41.3]]],
+            },
+        }
+
+        class _Body:
+            def __init__(self, payload):
+                self.payload = payload
+
+            def read(self):
+                return json.dumps(self.payload).encode()
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args):
+                return False
+
+        class _Opener:
+            def open(self, request, timeout=None):
+                if "Ohio_County_Boundaries" in request.full_url:
+                    return _Body({"features": [{"attributes": {"CountyID": 65, "CountyName": "Cuyahoga"}}]})
+                return _Body({"type": "FeatureCollection", "features": [feature]})
+
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = os.path.join(tmp, "cache")
+            history = os.path.join(tmp, "history")
+            with patch.dict(os.environ, {"FORGE_PUCO_CACHE": cache, "FORGE_HISTORY_DIR": history}):
+                first = puco_layer.fetch_snapshot(opener=_Opener())
+                raw_path = os.path.join(cache, first["filename"])
+                with open(raw_path, "rb") as handle:
+                    raw_bytes = handle.read()
+                second = puco_layer.fetch_snapshot(opener=_Opener())
+                with open(raw_path, "rb") as handle:
+                    self.assertEqual(handle.read(), raw_bytes)
+                self.assertNotEqual(first["filename"], second["filename"])
+                with open(os.path.join(cache, "manifest.jsonl"), encoding="utf-8") as handle:
+                    manifest = [line for line in handle.read().splitlines() if line.strip()]
+                self.assertEqual(len(manifest), 2)
+                journal = history_store.journal_path()
+                with open(journal, encoding="utf-8") as handle:
+                    journal_text = handle.read()
+                self.assertNotIn("-81.5", journal_text)
+                self.assertNotIn("coordinates", journal_text)
+                events = [event for event in history_store.load_events(journal) if event["kind"] == "puco_snapshot"]
+                self.assertEqual(len(events), 2)
+                self.assertEqual(events[0]["feature_count"], 1)
+                self.assertEqual(events[0]["attribution"], "Source: PUCO Government Aggregation map")
+                body = self.client.get("/api/puco/aggregation").get_json()
+                self.assertTrue(body["ok"])
+                self.assertEqual(body["disclaimer"], puco_layer.DISCLAIMER)
+                self.assertEqual(body["attribution"], "Source: PUCO Government Aggregation map")
+                drawn = body["geojson"]["features"][0]
+                self.assertEqual(drawn["properties"]["council"], "nopec")
+                self.assertEqual(drawn["properties"]["county"], "Cuyahoga")
+                self.assertEqual(drawn["properties"]["aog_cert"], "01-044E")
+                self.assertEqual(drawn["properties"]["aog_case"], "00-2317-EL-GAG")
+                self.assertEqual(drawn["properties"]["aog_date"], "1/2/2001")
+                self.assertNotIn("rate", drawn["properties"])
+        self.assertEqual(puco_layer.council_id(""), "own")
+        self.assertEqual(puco_layer.council_id("Southeast Ohio Public Energy Council"), "sopec")
+        self.assertEqual(puco_layer.council_id("Miami Valley Communications Council"), "mvcc")
+        self.assertEqual(puco_layer.council_id("Some Other Council"), "other")
+
+
 if __name__ == "__main__":
     unittest.main()

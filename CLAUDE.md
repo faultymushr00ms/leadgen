@@ -143,6 +143,8 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 
 Keep a full history for the life of the project. Never discard old data. Writes for zones, rates, sources, research results, the investigation queue, and refresh/monitor output are append-only (`data/history/` and append-only queue rows). Superseded values are marked superseded with a timestamp and stay stored. Pruning or cleanup must not touch history.
 
+PUCO Government Aggregation polygons are fetched into the gitignored cache `data/cache/puco/`. Each fetch writes a new snapshot and leaves the older file in place. The geometry is not committed. The map credits `Source: PUCO Government Aggregation map`. A listing is certification only, not an active program, supplier, or rate.
+
 ## Branch
 
 All development: `claude/review-project-architecture-buf2P` on `faultymushr00ms/leadgen`

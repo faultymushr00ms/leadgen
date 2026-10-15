@@ -13,6 +13,7 @@
   .legend-row { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; margin: 4px 0; }
   .legend-swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
   .legend-swatch.hollow { background: transparent !important; border: 2px solid #ffb300; }
+  .legend-swatch.puco { border-radius: 2px; }
   .leaflet-popup-content-wrapper, .leaflet-popup-tip {
     background: #1a1d27; color: #e0e0e0;
     border: 1px solid #2a2d3a; box-shadow: none;
@@ -64,6 +65,21 @@
     <label class="layer-toggle" style="position:static;"><input id="layer-hamlets" type="checkbox"> Unincorporated places</label>
     <div id="overlay-layers" style="margin-top:6px;"></div>
 
+    <div class="stat-label" style="margin-top:14px;">PUCO Government Aggregation</div>
+    <p id="puco-disclaimer" style="font-size:0.75rem; color:#ffe082; margin:6px 0;">PUCO certification only: not proof of an active program, supplier or rate</p>
+    <label class="layer-toggle" style="position:static;"><input id="puco-electric" type="checkbox"> Electric</label>
+    <label class="layer-toggle" style="position:static;"><input id="puco-gas" type="checkbox"> Gas</label>
+    <div id="puco-legend">
+      <div class="legend-row"><span class="legend-swatch puco" style="background:#e8611a;"></span><span>NOPEC</span></div>
+      <div class="legend-row"><span class="legend-swatch puco" style="background:#ffb300;"></span><span>SOPEC</span></div>
+      <div class="legend-row"><span class="legend-swatch puco" style="background:#4dd0e1;"></span><span>MVCC</span></div>
+      <div class="legend-row"><span class="legend-swatch puco" style="background:#c5cae9;"></span><span>Own certificate</span></div>
+      <div class="legend-row"><span class="legend-swatch puco" style="background:#80cbc4;"></span><span>Other council</span></div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--forge-muted); margin:6px 0;">Solid fill is electric. Dashed outline is gas. Styled by council membership on the certificate.</p>
+    <p id="puco-attribution" style="font-size:0.75rem; color:var(--forge-muted);">Source: PUCO Government Aggregation map</p>
+    <div id="puco-status" style="font-size:0.75rem; color:var(--forge-muted);"></div>
+
     <div class="stat-label" style="margin-top:14px;">Legend</div>
     <div id="legend"></div>
     <div class="legend-row"><span class="legend-swatch hollow"></span><span>Hollow: possibly covered, not confirmed</span></div>
@@ -100,6 +116,7 @@
       layer.bindPopup(boundaryPopup(label, 'Census county subdivision. Not a program area.'));
     }
   });
+  var pucoGroup = L.layerGroup().addTo(map);
   var overlayGroup = L.layerGroup().addTo(map);
   var placeGroup = L.layerGroup().addTo(map);
   var zoneGroup = L.layerGroup().addTo(map);
@@ -109,6 +126,12 @@
   var overlayState = {};
   var placeMarkers = [];
   var zoneMarkers = [];
+  var pucoData = null;
+  var pucoElectric = null;
+  var pucoGas = null;
+  var pucoLoading = false;
+  var pucoCredited = false;
+  var pucoColors = {nopec:'#e8611a', sopec:'#ffb300', mvcc:'#4dd0e1', own:'#c5cae9', other:'#80cbc4'};
 
   function boundaryPopup(title, note) {
     var root = document.createElement('div');
@@ -441,9 +464,149 @@
     }, {enableHighAccuracy: false, maximumAge: 0, timeout: 10000});
   });
 
+  function pucoPopup(props) {
+    var root = document.createElement('div');
+    var title = document.createElement('strong');
+    title.textContent = (props.name || 'Community') + (props.boundary ? ' ' + props.boundary : '') + (props.agg ? ' · ' + props.agg : '');
+    root.appendChild(title);
+    function line(text) {
+      if (!text) return;
+      var row = document.createElement('div');
+      row.textContent = text;
+      root.appendChild(row);
+    }
+    if (props.county) line(props.county + ' County');
+    line(props.council_name ? 'Council: ' + props.council_name : 'Council: none on this polygon');
+    if (props.aog_cert) line('Council certificate: ' + props.aog_cert);
+    if (props.aog_case) line('Council case: ' + props.aog_case);
+    if (props.aog_date) line('Council issue date: ' + props.aog_date);
+    if (props.comm_cert) line('Community certificate: ' + props.comm_cert);
+    if (props.comm_case) line('Community case: ' + props.comm_case);
+    if (props.comm_date) line('Community issue date: ' + props.comm_date);
+    if (props.comm_company) line(props.comm_company);
+    var warn = document.createElement('div');
+    warn.style.marginTop = '6px';
+    warn.style.color = '#ffe082';
+    warn.textContent = (pucoData && pucoData.disclaimer) || 'PUCO certification only: not proof of an active program, supplier or rate';
+    root.appendChild(warn);
+    var source = document.createElement('div');
+    source.style.color = '#6b7280';
+    source.textContent = (pucoData && pucoData.attribution) || 'Source: PUCO Government Aggregation map';
+    root.appendChild(source);
+    return root;
+  }
+
+  function pucoStyle(feature, gas) {
+    var council = (feature.properties && feature.properties.council) || 'own';
+    var color = pucoColors[council] || '#c5cae9';
+    return {
+      color: color,
+      weight: gas ? 1.5 : 1,
+      fillColor: color,
+      fillOpacity: gas ? 0.12 : 0.28,
+      dashArray: gas ? '4 3' : null
+    };
+  }
+
+  function buildPucoLayers() {
+    var features = (pucoData.geojson && pucoData.geojson.features) || [];
+    pucoElectric = L.geoJSON({type:'FeatureCollection', features: features.filter(function (feature) {
+      return feature.properties && feature.properties.agg === 'Electric';
+    })}, {
+      style: function (feature) { return pucoStyle(feature, false); },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(pucoPopup(feature.properties || {}));
+      }
+    });
+    pucoGas = L.geoJSON({type:'FeatureCollection', features: features.filter(function (feature) {
+      return feature.properties && feature.properties.agg === 'Gas';
+    })}, {
+      style: function (feature) { return pucoStyle(feature, true); },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup(pucoPopup(feature.properties || {}));
+      }
+    });
+  }
+
+  function openPucoPopup(name) {
+    if (!name) return;
+    var host = null;
+    if (pucoElectric && pucoGroup.hasLayer(pucoElectric)) host = pucoElectric;
+    else if (pucoGas && pucoGroup.hasLayer(pucoGas)) host = pucoGas;
+    if (!host) return;
+    host.eachLayer(function (layer) {
+      var props = (layer.feature && layer.feature.properties) || {};
+      if (props.name === name && layer.getBounds) {
+        layer.openPopup();
+        map.fitBounds(layer.getBounds(), {maxZoom: 12, padding: [20, 20]});
+      }
+    });
+  }
+
+  function applyPucoLayers() {
+    var wantElectric = document.getElementById('puco-electric').checked;
+    var wantGas = document.getElementById('puco-gas').checked;
+    if (pucoElectric) {
+      if (wantElectric) pucoElectric.addTo(pucoGroup); else pucoGroup.removeLayer(pucoElectric);
+    }
+    if (pucoGas) {
+      if (wantGas) pucoGas.addTo(pucoGroup); else pucoGroup.removeLayer(pucoGas);
+    }
+    if ((wantElectric || wantGas) && !pucoCredited) {
+      map.attributionControl.addAttribution('Source: PUCO Government Aggregation map');
+      pucoCredited = true;
+    }
+    var params = new URLSearchParams(window.location.search);
+    if (wantElectric || wantGas) openPucoPopup(params.get('popup') || '');
+  }
+
+  function loadPuco() {
+    var wantElectric = document.getElementById('puco-electric').checked;
+    var wantGas = document.getElementById('puco-gas').checked;
+    if (!wantElectric && !wantGas) {
+      applyPucoLayers();
+      return;
+    }
+    if (pucoData) {
+      applyPucoLayers();
+      return;
+    }
+    if (pucoLoading) return;
+    pucoLoading = true;
+    var status = document.getElementById('puco-status');
+    status.textContent = 'Loading the PUCO aggregation map…';
+    fetch('/api/puco/aggregation').then(function (response) {
+      return response.json().then(function (body) {
+        if (!response.ok || body.ok === false) throw new Error(body.message || 'unavailable');
+        return body;
+      });
+    }).then(function (body) {
+      pucoData = body;
+      buildPucoLayers();
+      var count = body.feature_count != null ? body.feature_count : '';
+      status.textContent = count + ' polygons' + (body.fetched_at ? ' · fetched ' + body.fetched_at : '');
+      applyPucoLayers();
+    }).catch(function () {
+      status.textContent = 'The PUCO aggregation map could not be loaded.';
+      document.getElementById('puco-electric').checked = false;
+      document.getElementById('puco-gas').checked = false;
+    }).finally(function () {
+      pucoLoading = false;
+    });
+  }
+
+  document.getElementById('puco-electric').addEventListener('change', loadPuco);
+  document.getElementById('puco-gas').addEventListener('change', loadPuco);
+
   loadCounties();
   loadOverlays();
   loadMap('incorporated');
+  var pucoQuery = new URLSearchParams(window.location.search).get('puco') || '';
+  if (pucoQuery === 'electric' || pucoQuery === 'both' || pucoQuery === 'gas') {
+    if (pucoQuery !== 'gas') document.getElementById('puco-electric').checked = true;
+    if (pucoQuery === 'gas' || pucoQuery === 'both') document.getElementById('puco-gas').checked = true;
+    loadPuco();
+  }
 })();
 </script>
 {% endblock %}

@@ -196,3 +196,5 @@ Ohio Secretary of State data is public record. Google Maps API usage requires a 
 ## History
 
 Keep a full history for the life of the project and never discard old data. Zone, rate, source, research, investigation-queue, and refresh/monitor writes are append-only. Superseded values are marked with a timestamp and stay stored. Pruning or cleanup must not touch history.
+
+PUCO Government Aggregation polygons are fetched into the gitignored cache `data/cache/puco/`. Each fetch writes a new snapshot and leaves the older file in place. The geometry is not committed. Credit: Source: PUCO Government Aggregation map. A listing is certification only, not an active program, supplier, or rate.

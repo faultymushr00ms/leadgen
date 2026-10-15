@@ -9,6 +9,10 @@ data/*.xlsx
 output/
 models/
 
+# PUCO Government Aggregation geometry. No explicit license.
+# Fetched snapshots are append-only and stay in this cache.
+data/cache/
+
 # Python
 __pycache__/
 *.pyc

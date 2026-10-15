@@ -44,7 +44,7 @@ class DataLoadTests(unittest.TestCase):
 
     def test_all_zones_keep_forge_fields_and_gain_research(self):
         zones = forge_app._load_zones()
-        self.assertEqual(len(zones), 327)
+        self.assertEqual(len(zones), 323)
         self.assertTrue(all(zone.get("research") and zone.get("original") for zone in zones))
         streetsboro = _zone("Streetsboro")
         self.assertEqual(streetsboro["supplier"], "Dynegy")
@@ -76,12 +76,15 @@ class DataLoadTests(unittest.TestCase):
 
     def test_needs_call_and_conflict_stay_unresolved(self):
         wauseon = _zone("Wauseon")
-        self.assertEqual(wauseon["aggregationStatus"], "municipal_utility")
-        self.assertEqual(wauseon["status"], "stable")
+        self.assertEqual(wauseon["utility"], "Toledo Edison")
+        self.assertEqual(wauseon["aggregationStatus"], "confirmed_active_aggregation")
+        self.assertEqual(wauseon["status"], "verify")
         self.assertTrue(wauseon["research"]["status"]["unresolved"])
-        self.assertEqual(wauseon["research"]["status"]["verificationLabel"], "conflict")
+        self.assertEqual(wauseon["research"]["status"]["verificationLabel"], "needs call")
         self.assertFalse(wauseon["research"]["notEligible"])
         self.assertFalse(wauseon["card"]["hookAllowed"])
+        self.assertEqual(wauseon["research"]["future"]["rate_raw"], "11.09")
+        self.assertEqual(wauseon["research"]["current"]["rate_raw"], "")
         medina = _zone("Medina County")
         self.assertEqual(medina["research"]["status"]["verification"], "escalate-call")
         self.assertEqual(medina["research"]["status"]["verificationLabel"], "needs call")
@@ -97,36 +100,37 @@ class DataLoadTests(unittest.TestCase):
         zone = _zone("Archbold")
         self.assertEqual(zone["utility"], "Toledo Edison")
         self.assertEqual(zone["utilityParent"], "FirstEnergy")
-        self.assertEqual(zone["aggregationStatus"], "unresolved")
-        self.assertEqual(zone["futureUse"], "price_to_compare_analysis")
-        self.assertEqual(zone["status"], "verify")
-        self.assertIsNone(zone["supplier"])
-        self.assertIsNone(zone["currentRate"])
-        self.assertEqual(
-            zone["notes"],
-            "Removed from the municipal list 2026-10-15: not a municipal utility; Toledo Edison (FirstEnergy) serves Archbold; not on the AMP list.",
-        )
+        self.assertEqual(zone["aggregationStatus"], "confirmed_active_aggregation")
+        self.assertEqual(zone["futureUse"], "aggregation")
+        self.assertEqual(zone["status"], "stable")
+        self.assertEqual(zone["supplier"], "Dynegy")
+        self.assertEqual(zone["currentRate"], 9.03)
+        self.assertEqual(zone["termStart"], "2025-12")
+        self.assertEqual(zone["termEnd"], "2027-12")
+        self.assertIn("9.03", zone["notes"])
         self.assertNotIn("municipal_blacklist", zone["futureUse"])
         research = zone["research"]
         self.assertEqual(research["utility"], "Toledo Edison")
-        self.assertEqual(research["supplier"], "")
-        self.assertTrue(research["status"]["unresolved"])
+        self.assertEqual(research["supplier"], "Dynegy")
+        self.assertEqual(research["current"]["rate_raw"], "9.03")
+        self.assertFalse(research["status"]["unresolved"])
         self.assertFalse(research["notEligible"])
-        self.assertFalse(research["hookAllowed"])
+        self.assertTrue(research["hookAllowed"])
         card = zone["card"]
         self.assertTrue(card["ptc"]["applicable"])
         self.assertEqual(card["ptc"]["cents_per_kwh"], 11.26)
         self.assertEqual(card["ptc"]["utility"], "Toledo Edison")
         self.assertIn("2026-10-01", card["ptc"]["effective_start"])
         self.assertIn("2026-12-31", card["ptc"]["effective_end"])
-        self.assertFalse(card["currentSourced"])
-        self.assertEqual(card["supplier"], "")
+        self.assertTrue(card["currentSourced"])
+        self.assertEqual(card["supplier"], "Dynegy")
+        self.assertEqual(card["currentLabel"], "9.03")
         self.assertNotIn("Cannot sell", card["takeaway"])
         weekly = forge_app._compute_weekly(forge_app._load_zones())
         avoid_names = {item["name"] for item in weekly["avoid_list"]}
         unresolved_names = {item["name"] for item in weekly["unresolved_list"]}
         self.assertNotIn("Archbold", avoid_names)
-        self.assertIn("Archbold", unresolved_names)
+        self.assertNotIn("Archbold", unresolved_names)
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="", encoding="utf-8") as handle:
             original = next(row for row in csv.DictReader(handle) if row["orig_name"] == "Archbold")
         self.assertEqual(original["orig_aggregationStatus"], "")
@@ -254,28 +258,95 @@ class DataLoadTests(unittest.TestCase):
         self.assertEqual(missing.status_code, 404)
 
     def test_conflict_municipal_flags_stay_unresolved(self):
-        names = ("Wellsville", "Cortland", "Wauseon", "Coldwater", "Delphos", "Ada")
+        """The six former conflict towns are IOU aggregation. Wauseon's current rate is still a call."""
         weekly = forge_app._compute_weekly(forge_app._load_zones())
         avoid_names = {zone["name"] for zone in weekly["avoid_list"]}
         unresolved_names = {zone["name"] for zone in weekly["unresolved_list"]}
-        for name in names:
+        expected = {
+            "Wellsville": ("AEP Ohio", "9.56"),
+            "Cortland": ("Ohio Edison", "9.81"),
+            "Coldwater": ("AES Ohio", "9.08"),
+            "Delphos": ("AEP Ohio", "10.87"),
+            "Ada": ("AEP Ohio", "9.45"),
+        }
+        for name, (utility, rate) in expected.items():
             zone = _zone(name)
-            self.assertEqual(zone["aggregationStatus"], "municipal_utility")
-            self.assertEqual(zone["futureUse"], "municipal_blacklist")
-            self.assertIn("Cannot sell", zone["takeaway"])
-            self.assertIn(name, unresolved_names)
-            self.assertNotIn(name, avoid_names)
+            self.assertEqual(zone["utility"], utility)
+            self.assertEqual(zone["aggregationStatus"], "confirmed_active_aggregation")
+            self.assertEqual(zone["supplier"], "Dynegy")
+            self.assertEqual(zone["research"]["current"]["rate_raw"], rate)
             self.assertFalse(zone["research"]["notEligible"])
-            self.assertTrue(zone["research"]["status"]["unresolved"])
-            self.assertTrue(zone["card"]["municipalFlagUnconfirmed"])
-            self.assertNotIn("Cannot sell", zone["card"]["takeaway"])
-            self.assertEqual(zone["card"]["ptc"]["label"], "Price to Compare not assigned")
-            self.assertNotEqual(zone["card"]["supplier"], "Municipal (exempt from retail choice)")
-        weekly_page = self.client.get("/weekly").get_data(as_text=True)
-        self.assertIn("Municipal blacklist flag is not confirmed.", weekly_page)
-        hotspots = self.client.get("/hotspots").get_data(as_text=True)
-        self.assertIn("municipalFlagUnconfirmed", hotspots)
-        self.assertIn("Municipal blacklist flag is not confirmed.", hotspots)
+            self.assertFalse(zone["card"]["municipalFlagUnconfirmed"])
+            self.assertNotIn(name, avoid_names)
+            self.assertNotIn(name, unresolved_names)
+            self.assertTrue(zone["card"]["ptc"]["applicable"])
+        wauseon = _zone("Wauseon")
+        self.assertIn("Wauseon", unresolved_names)
+        self.assertNotIn("Wauseon", avoid_names)
+        self.assertEqual(wauseon["card"]["ptc"]["code"], "TE")
+        ripley = _zone("Ripley")
+        self.assertEqual(ripley["aggregationStatus"], "municipal_utility")
+        self.assertIn("Ripley", avoid_names)
+        self.assertNotIn("Franklin", [zone["name"] for zone in forge_app._load_zones() if zone["_source_file"] == "dayton_aes_suburbs"])
+        self.assertEqual(len([zone for zone in forge_app._load_zones() if zone["name"] == "Franklin"]), 1)
+        self.assertEqual(len([zone for zone in forge_app._load_zones() if zone["name"] == "Springboro"]), 1)
+
+    def test_misinfo_sweep_sells_the_corrected_towns(self):
+        plain = _zone("Plain Township")
+        self.assertEqual(plain["utility"], "AEP Ohio")
+        self.assertEqual(plain["aggregationStatus"], "confirmed_active_aggregation")
+        self.assertIn("NOPEC", plain["supplier"])
+        self.assertIsNone(plain["currentRate"])
+        self.assertEqual(plain["previousRate"], 8.26)
+        self.assertNotIn("shut down", (plain["hook"] or "").lower())
+        self.assertNotIn("shut down", plain["card"]["takeaway"].lower())
+
+        paulding = _zone("Paulding")
+        self.assertEqual(paulding["utility"], "AEP Ohio")
+        self.assertEqual(paulding["currentRate"], 9.7)
+        self.assertIn("Jason Vance", paulding["card"]["openQuestions"])
+        self.assertNotIn(paulding["name"], {zone["name"] for zone in forge_app._compute_weekly(forge_app._load_zones())["avoid_list"]})
+
+        mentor = _zone("Mentor")
+        self.assertEqual(mentor["card"]["utility"], "The Illuminating Company")
+        self.assertEqual(mentor["card"]["ptc"]["code"], "CEI")
+        self.assertEqual(mentor["card"]["ptc"]["cents_per_kwh"], 11.24)
+
+        canton = _zone("Canton")
+        self.assertEqual(canton["utility"], "AEP Ohio")
+        self.assertEqual(canton["card"]["ptc"]["code"], "AEP")
+        marion = _zone("Marion")
+        self.assertEqual(marion["utility"], "Ohio Edison")
+        self.assertEqual(marion["card"]["ptc"]["code"], "OE")
+
+        stow = _zone("Stow")
+        self.assertEqual(stow["card"]["supplier"], "Dynegy")
+        self.assertNotIn("NOPEC", stow["card"]["supplier"])
+        bay = _zone("Bay Village")
+        self.assertEqual(bay["card"]["futureLabel"], "10.16")
+        self.assertEqual(bay["research"]["current"]["rate_raw"], "")
+        self.assertEqual(bay["card"]["utility"], "The Illuminating Company")
+
+        stark = _zone("Stark County (Unincorporated / Remaining)")
+        self.assertIsNone(stark["currentRate"])
+        self.assertEqual(stark["research"]["current"]["rate_raw"], "")
+        self.assertEqual(_zone("Paris Township (Stark)")["supplier"], "NOPEC / NextEra Energy Services")
+
+        point = _zone("Russells Point")
+        self.assertEqual(point["currentRate"], 9.26)
+        self.assertEqual(point["supplier"], "Dynegy")
+        lakeview = _zone("Lakeview")
+        self.assertEqual(lakeview["aggregationStatus"], "municipal_utility")
+        self.assertTrue(lakeview["research"]["notEligible"])
+
+        mahoning = _zone("Springfield Township (Mahoning)")
+        self.assertNotEqual(mahoning["currentRate"], 10.59)
+        self.assertIn("NOPEC", mahoning["supplier"])
+        self.assertEqual(_zone("Mahoning County")["currentRate"], None)
+
+        notes = json.dumps(history_store.load_removal_notes())
+        for token in ("9.999", "9.94", "9.38", "10.59", "9.77", "Municipal Electric"):
+            self.assertNotIn(token, notes)
 
     def test_incorrect_history_is_removed_and_genuine_rates_stay(self):
         euclid = _zone("Euclid")
@@ -382,7 +453,7 @@ class RateChangeTests(unittest.TestCase):
         ]
         self.assertEqual(prior[0]["rate_raw"], "6.57")
         self.assertTrue(prior[0]["sourced"])
-        self.assertEqual(len(load_queue()), 329)
+        self.assertEqual(len(load_queue()), 323)
         westlake_queue = [row for row in load_queue() if row["zone"] == "Westlake"]
         self.assertEqual(len(westlake_queue), 2)
         self.assertTrue(westlake_queue[0]["superseded"])
@@ -541,7 +612,7 @@ class HistoryTests(unittest.TestCase):
                     if item.get("_history_key") == "Akron" and item.get("_source_file") == region
                 ]
                 self.assertEqual(len(loaded), 1)
-                self.assertEqual(len(forge_app._load_zones()), 327)
+                self.assertEqual(len(forge_app._load_zones()), 323)
                 self.assertTrue(loaded[0]["superseded"])
                 self.assertTrue(loaded[0]["superseded_at"])
                 self.assertEqual(loaded[0]["notes"], "second-note")
@@ -618,8 +689,9 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("Unresolved", wauseon)
         self.assertIn("not marked inactive", wauseon)
         self.assertIn("Verify before using", wauseon)
-        queue = self.client.get("/queue?verification=conflict").get_data(as_text=True)
+        queue = self.client.get("/queue?verification=escalate-call").get_data(as_text=True)
         self.assertIn("Wauseon", queue)
+        self.assertIn("888-682-2170", queue)
         self.assertIn("unresolved", queue)
         expiring = self.client.get("/expiring").get_data(as_text=True)
         self.assertIn("Heath / Newark", expiring)
@@ -627,10 +699,11 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("not proof", zip_page)
         self.assertIn("Streetsboro", zip_page)
         self.assertIn("Portage", zip_page)
-        ambiguous = self.client.get("/api/zip/45066")
-        body = ambiguous.get_json()
-        self.assertEqual(body["match_count"], 2)
-        self.assertIsNone(body["zone"])
+        resolved = self.client.get("/api/zip/45066")
+        body = resolved.get_json()
+        self.assertEqual(body["match_count"], 1)
+        self.assertEqual(body["zone"]["name"], "Springboro")
+        self.assertEqual(body["jurisdictions"][0]["utility"], "Duke Energy Ohio")
         self.assertIn("not proof", body["disclaimer"])
         self.assertEqual(self.client.get("/hotspots").status_code, 200)
         weekly = self.client.get("/weekly").get_data(as_text=True)
@@ -660,8 +733,10 @@ class AppBehaviorTests(unittest.TestCase):
         duke = sharonville["card"]["ptc"]
         self.assertEqual(duke["code"], "DUKE")
         self.assertEqual(duke["effective_end"], "2026-10-31")
-        self.assertEqual(duke["comparison"]["cents"], -1.1)
-        self.assertEqual(duke["comparison"]["percent"], -10.5)
+        self.assertIsNone(duke["comparison"])
+        self.assertEqual(sharonville["card"]["futureLabel"], "10.276")
+        self.assertEqual(sharonville["research"]["current"]["rate_raw"], "")
+        self.assertIn("City of Sharonville", sharonville["card"]["openQuestions"])
 
         centerville = _zone("Centerville")
         aes = centerville["card"]["ptc"]
@@ -676,9 +751,9 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertEqual(amherst["label"], "PTC not applicable")
         self.assertIsNone(amherst["comparison"])
         wauseon_ptc = _zone("Wauseon")["card"]["ptc"]
-        self.assertFalse(wauseon_ptc["applicable"])
-        self.assertEqual(wauseon_ptc["label"], "Price to Compare not assigned")
-        self.assertNotEqual(wauseon_ptc["label"], "PTC not applicable")
+        self.assertTrue(wauseon_ptc["applicable"])
+        self.assertEqual(wauseon_ptc["code"], "TE")
+        self.assertEqual(wauseon_ptc["cents_per_kwh"], 11.26)
         self.assertIsNone(wauseon_ptc["comparison"])
         coop = next(
             zone for zone in forge_app._load_zones()
@@ -696,11 +771,13 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertNotIn('class="no-print">Residential', card)
         duke_page = self.client.get("/card?file=cincinnati_duke&name=Sharonville").get_data(as_text=True)
         self.assertIn("2026-10-31", duke_page)
-        self.assertIn("-1.100¢ (-10.5%)", duke_page)
+        self.assertIn("10.276", duke_page)
+        self.assertNotIn("-1.100¢ (-10.5%)", duke_page)
         municipal = self.client.get("/card?file=ohio_municipal_utilities&name=Wauseon").get_data(as_text=True)
-        self.assertIn("Price to Compare not assigned", municipal)
-        self.assertIn("Municipal blacklist flag is not confirmed.", municipal)
-        self.assertIn(">Price to Compare not assigned</div>", municipal)
+        self.assertIn("Toledo Edison", municipal)
+        self.assertIn("11.26", municipal)
+        self.assertIn("11.09", municipal)
+        self.assertNotIn("Municipal blacklist flag is not confirmed.", municipal)
         self.assertNotIn("Aggregation current vs this residential PTC", municipal)
         hotspots = self.client.get("/hotspots").get_data(as_text=True)
         self.assertIn('id="bc-ptc"', hotspots)
@@ -1020,17 +1097,17 @@ class PucoOverlayTests(unittest.TestCase):
             before = handle.read()
         payload = puco_layer.load_queue_flags()
         counts = payload["counts"]
-        self.assertEqual(counts["active_missing"], 13)
+        self.assertEqual(counts["active_missing"], 16)
         self.assertEqual(counts["nopec_admin"], 12)
         self.assertEqual(counts["prospects"], 744)
         self.assertEqual(counts["app_nopec_not_on_map"], 1)
-        self.assertEqual(len(load_queue()), 329)
+        self.assertEqual(len(load_queue()), 323)
         self.assertEqual(payload["disclaimer"], puco_layer.DISCLAIMER)
         self.assertEqual(payload["attribution"], "Source: PUCO Government Aggregation map")
         active = [item["name"] for item in payload["flags"] if "active_missing" in item["groups"]]
         self.assertIn("Kenwood / Symmes Township", active)
         self.assertIn("Chillicothe", active)
-        self.assertEqual(len(active), 13)
+        self.assertEqual(len(active), 16)
         nopec = [item for item in payload["flags"] if "nopec_admin" in item["groups"]]
         self.assertEqual(len(nopec), 12)
         self.assertTrue(all(item["action"].startswith("Flag only. Zone records were not changed.") for item in nopec))
@@ -1041,13 +1118,15 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("14-848E", prospects[0]["listing"])
         self.assertIn("Possible prospect to research.", prospects[0]["action"])
         chillicothe = _zone("Chillicothe")
-        self.assertEqual(chillicothe["aggregationStatus"], "no_aggregation_verified")
-        self.assertIsNone(chillicothe["supplier"])
+        self.assertEqual(chillicothe["aggregationStatus"], "confirmed_active_aggregation")
+        self.assertEqual(chillicothe["supplier"], "AEP Energy")
+        self.assertIsNone(chillicothe["currentRate"])
+        self.assertIn("SOPEC", chillicothe["research"]["openQuestions"])
         with open(region_path, "rb") as handle:
             self.assertEqual(handle.read(), before)
 
         page = self.client.get("/queue?puco=active_missing").get_data(as_text=True)
-        self.assertIn("13 app-active zones with no PUCO listing", page)
+        self.assertIn("16 app-active zones with no PUCO listing", page)
         self.assertIn("12 NOPEC-vs-app administrator conflicts", page)
         self.assertIn("744 possible prospects to research", page)
         self.assertIn("Kenwood / Symmes Township", page)

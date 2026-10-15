@@ -882,6 +882,11 @@ def align_named_zones(zones: list[dict]) -> list[str]:
         )
         wyoming["hook"] = ""
         wyoming["status"] = "verify"
+        wyoming["aggregationStatus"] = "no_aggregation_verified"
+        wyoming["takeaway"] = (
+            "Wyoming's electric aggregation ended in July 2026. "
+            "Energy Alliances could not secure a price that guaranteed savings versus the Duke default."
+        )
         mark(wyoming)
 
     xenia = by_name.get("Xenia")

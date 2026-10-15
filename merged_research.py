@@ -78,6 +78,9 @@ def annotate(zone: dict) -> None:
             research["hookAllowed"] = False
             research["hook"] = None
         research["takeaway"] = _lifecycle_takeaway(lifecycle)
+    caveat = (zone.get("notes") or "").strip()
+    if "not in this program" in caveat and caveat not in (research.get("takeaway") or ""):
+        research["takeaway"] = ((research.get("takeaway") or "").rstrip() + " " + caveat).strip()
     if meta.get("unresolved"):
         info = research.setdefault("status", {})
         verification = meta.get("verification") or "escalate-call"

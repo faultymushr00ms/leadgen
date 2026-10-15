@@ -109,8 +109,14 @@
     {% if card.ptc %}
     <div class="panel" style="padding:12px 14px; margin-bottom:12px;">
       <div class="stat-label">Area Price to Compare · not a program rate</div>
-      <div style="margin-top:4px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong> as of {{ card.ptc.as_of }}</div>
+      <div style="margin-top:4px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong>
+        {% if card.ptc.effective_start %}effective {{ card.ptc.effective_start }} – {{ card.ptc.effective_end }}{% else %}as of {{ card.ptc.as_of }}{% endif %}
+        {% if card.ptc.accessed_at %}<span style="color:var(--forge-muted);">· accessed {{ card.ptc.accessed_at }}</span>{% endif %}
+      </div>
       <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.source }}</div>
+      {% if card.ptc.source_url %}
+      <div style="font-size:0.75rem; margin-top:4px;"><a href="{{ card.ptc.source_url }}" style="color:#4fc3f7;">{{ card.ptc.source_url }}</a></div>
+      {% endif %}
       <div style="font-size:0.75rem; color:var(--forge-muted);">Not compared with the aggregation rate. Different basis.</div>
     </div>
     {% endif %}

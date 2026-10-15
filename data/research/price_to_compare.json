@@ -1,7 +1,7 @@
 {
   "as_of": "2026-10",
   "unit": "cents_per_kwh",
-  "note": "October 2026 Price to Compare by investor-owned utility. Ohio Edison, AEP Ohio, Duke Energy Ohio, and AES Ohio rates match sourced rows in forge_corrected_dataset.csv. The Illuminating Company (11.24) and Toledo Edison (11.26) figures were supplied with the implementation request; the reconciliation dataset has no sourced Price to Compare row for those two utilities. 11.262 values in the dataset are SOPEC aggregation rates, not the Toledo Edison Price to Compare.",
+  "note": "October 2026 Price to Compare by investor-owned utility. Ohio Edison, AEP Ohio, Duke Energy Ohio, and AES Ohio rates match sourced rows in forge_corrected_dataset.csv. The Illuminating Company and Toledo Edison figures were checked on the PUCO Energy Choice Apples to Apples pages on 2026-10-15. Both official residential prices match the previously unsourced figures (11.24 and 11.26 cents/kWh), so those amounts were kept. 11.262 values in the dataset are SOPEC aggregation rates, not the Toledo Edison Price to Compare.",
   "rates": [
     {
       "code": "OE",
@@ -17,18 +17,28 @@
       "utility": "The Illuminating Company",
       "cents_per_kwh": 11.24,
       "as_of": "2026-10",
-      "source_url": null,
-      "source": "October 2026 Price to Compare supplied in the implementation request. No sourced row for 11.24 appears in the reconciliation dataset.",
-      "customer_class": ""
+      "effective_start": "2026-10-01",
+      "effective_end": "2026-12-31",
+      "accessed_at": "2026-10-15",
+      "value_changed": false,
+      "previous_unsourced_cents_per_kwh": 11.24,
+      "source_url": "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=6",
+      "source": "PUCO Energy Choice Ohio Apples to Apples, The Illuminating Company, residential Price to Compare. Page text accessed 2026-10-15: $0.1124 per kWh for October 1, 2026 through December 31, 2026. Confirms the previously unsourced 11.24 figure; the amount was not changed.",
+      "customer_class": "residential (RateCode=1 on the Energy Choice URL)"
     },
     {
       "code": "TE",
       "utility": "Toledo Edison",
       "cents_per_kwh": 11.26,
       "as_of": "2026-10",
-      "source_url": null,
-      "source": "October 2026 Price to Compare supplied in the implementation request. No sourced Toledo Edison Price to Compare row for 11.26 appears in the reconciliation dataset.",
-      "customer_class": ""
+      "effective_start": "2026-10-01",
+      "effective_end": "2026-12-31",
+      "accessed_at": "2026-10-15",
+      "value_changed": false,
+      "previous_unsourced_cents_per_kwh": 11.26,
+      "source_url": "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=3",
+      "source": "PUCO Energy Choice Ohio Apples to Apples, Toledo Edison, residential Price to Compare. Page text accessed 2026-10-15: $0.1126 per kWh for October 1, 2026 through December 31, 2026. Confirms the previously unsourced 11.26 figure; the amount was not changed.",
+      "customer_class": "residential (RateCode=1 on the Energy Choice URL)"
     },
     {
       "code": "AEP",

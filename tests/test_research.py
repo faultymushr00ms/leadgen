@@ -159,8 +159,29 @@ class RateChangeTests(unittest.TestCase):
         self.assertEqual(prior[0]["rate_raw"], "6.57")
         self.assertTrue(prior[0]["sourced"])
         self.assertEqual(len(load_queue()), 327)
-        ptc = {row["code"]: row["cents_per_kwh"] for row in load_ptc()["rates"]}
-        self.assertEqual(ptc, {"OE": 11.07, "CEI": 11.24, "TE": 11.26, "AEP": 10.19, "DUKE": 10.49, "AES": 10.86})
+        ptc_rows = {row["code"]: row for row in load_ptc()["rates"]}
+        self.assertEqual(
+            {code: row["cents_per_kwh"] for code, row in ptc_rows.items()},
+            {"OE": 11.07, "CEI": 11.24, "TE": 11.26, "AEP": 10.19, "DUKE": 10.49, "AES": 10.86},
+        )
+        cei = ptc_rows["CEI"]
+        self.assertEqual(
+            cei["source_url"],
+            "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=6",
+        )
+        self.assertEqual(cei["accessed_at"], "2026-10-15")
+        self.assertEqual(cei["effective_start"], "2026-10-01")
+        self.assertEqual(cei["effective_end"], "2026-12-31")
+        self.assertFalse(cei["value_changed"])
+        te = ptc_rows["TE"]
+        self.assertEqual(
+            te["source_url"],
+            "https://www.energychoice.ohio.gov/ApplesToApplesComparision.aspx?Category=Electric&RateCode=1&TerritoryId=3",
+        )
+        self.assertEqual(te["accessed_at"], "2026-10-15")
+        self.assertEqual(te["effective_start"], "2026-10-01")
+        self.assertEqual(te["effective_end"], "2026-12-31")
+        self.assertFalse(te["value_changed"])
 
 
 class MonitorTests(unittest.TestCase):
@@ -222,6 +243,10 @@ class AppBehaviorTests(unittest.TestCase):
         ptc = self.client.get("/ptc").get_data(as_text=True)
         for rate in ("11.07", "11.24", "11.26", "10.19", "10.49", "10.86"):
             self.assertIn(rate, ptc)
+        self.assertIn("TerritoryId=6", ptc)
+        self.assertIn("TerritoryId=3", ptc)
+        self.assertIn("2026-10-01", ptc)
+        self.assertIn("2026-10-15", ptc)
         card = self.client.get("/card?file=nopec_lorain_summit_portage&name=Streetsboro").get_data(as_text=True)
         self.assertIn("Current", card)
         self.assertIn("Prior", card)

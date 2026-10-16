@@ -17,7 +17,7 @@
   <div class="panel-header"><span>Nearby places</span><span>Census centroid</span></div>
   <table class="forge-table">
     <thead>
-      <tr><th>Place</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs this PTC</th>{% endif %}<th></th></tr>
+      <tr><th>Place</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs commercial default</th>{% endif %}<th></th></tr>
     </thead>
     <tbody>
       {% for item in nearby.places %}
@@ -41,7 +41,7 @@
   <div class="panel-header"><span>Nearby zones</span><span>Centroid distance</span></div>
   <table class="forge-table">
     <thead>
-      <tr><th>Zone</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs this PTC</th>{% endif %}<th></th></tr>
+      <tr><th>Zone</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs commercial default</th>{% endif %}<th></th></tr>
     </thead>
     <tbody>
       {% for item in nearby.zones %}

@@ -1433,10 +1433,12 @@ class TalkingPointTests(unittest.TestCase):
         self.assertEqual(talk["groups"][0]["label"], "Upcoming")
         self.assertEqual(talk["groups"][1]["label"], "Recent")
         sentences = " ".join(point["sentence"] for point in talk["points"])
-        self.assertIn("11.24", sentences)
+        self.assertIn("9.4503", sentences)
+        self.assertIn("GS default", sentences)
         self.assertIn("10.11", sentences)
         self.assertIn("June 2026", sentences)
         self.assertIn("8.38", sentences)
+        self.assertNotIn("11.24", sentences)
         self.assertTrue(all(point["sourceUrl"].startswith("http") and point["dateLabel"] for point in talk["points"]))
 
         page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
@@ -1447,7 +1449,9 @@ class TalkingPointTests(unittest.TestCase):
         self.assertLess(page.find('id="what-to-talk-about"'), page.find('id="battlecard-nearby"'))
         self.assertLess(page.find('id="battlecard-nearby"'), page.find('class="rate-grid'))
         self.assertLess(section.find("Upcoming"), section.find("Recent"))
-        self.assertIn("vs this PTC", page)
+        self.assertIn("vs commercial default", page)
+        self.assertLess(page.find('id="ptc-commercial"'), page.find('id="ptc-residential"'))
+        self.assertIn("11.24", page[page.find('id="ptc-residential"'):])
         self.assertIsNone(self.BANNED.search(_visible_text(section)))
 
         brookfield = _zone("Brookfield Township (Trumbull)")
@@ -1455,15 +1459,18 @@ class TalkingPointTests(unittest.TestCase):
         self.assertTrue(brook["lead"])
         self.assertIn("not a program in this town", brook["framing"])
         brook_text = " ".join(point["sentence"] for point in brook["points"])
-        self.assertIn("11.07", brook_text)
+        self.assertIn("9.3786", brook_text)
+        self.assertIn("GS default", brook_text)
         self.assertIn("10.14", brook_text)
+        self.assertNotIn("11.07", brook_text)
         self.assertGreaterEqual(len(brook["points"]), 2)
         brook_page = self.client.get(
             "/card?file=youngstown_warren&name=Brookfield%20Township%20(Trumbull)"
         ).get_data(as_text=True)
         brook_section = _talk_section(brook_page)
         self.assertNotIn("cleveland.com", brook_section)
-        self.assertIn("11.07", brook_section)
+        self.assertIn("9.3786", brook_section)
+        self.assertIn("11.07", brook_page[brook_page.find('id="ptc-residential"'):])
         self.assertLess(brook_page.find('id="what-to-talk-about"'), brook_page.find('class="rate-grid'))
         self.assertIsNone(self.BANNED.search(_visible_text(brook_section)))
 
@@ -1473,9 +1480,10 @@ class TalkingPointTests(unittest.TestCase):
         self.assertFalse(active["lead"])
         active_text = " ".join(point["sentence"] for point in active["points"])
         self.assertIn("9.03", active_text)
-        self.assertIn("11.26", active_text)
-        self.assertIn("2.230", active_text)
+        self.assertIn("9.431", active_text)
+        self.assertIn("0.401", active_text)
         arch_page = self.client.get("/card?file=ohio_municipal_utilities&name=Archbold").get_data(as_text=True)
+        self.assertIn("11.26", arch_page[arch_page.find('id="ptc-residential"'):])
         arch_section = _talk_section(arch_page)
         self.assertIn("talk-compact", arch_section)
         self.assertNotIn("talk-lead", arch_section)
@@ -1487,7 +1495,8 @@ class TalkingPointTests(unittest.TestCase):
         girard_section = _talk_section(girard)
         self.assertIn("11.46", girard_section)
         self.assertNotIn("6.88", girard_section)
-        self.assertIn("0.390", girard_section)
+        self.assertIn("2.081", girard_section)
+        self.assertIn("9.3786", girard_section)
         self.assertFalse(_zone("Girard")["card"]["talkingPoints"]["lead"])
         self.assertIsNone(self.BANNED.search(_visible_text(girard_section)))
 
@@ -1530,7 +1539,72 @@ class TalkingPointTests(unittest.TestCase):
     def test_hotspots_pane_has_the_section(self):
         page = self.client.get("/hotspots").get_data(as_text=True)
         self.assertIn('id="bc-talk"', page)
-        self.assertIn("vs this PTC", page)
+        self.assertIn("vs commercial default", page)
+        self.assertIn("max-width: 840px", page)
+        self.assertIn("min-width: 440px", page)
+        self.assertIn("max-width: 1100px", page)
+        self.assertNotIn("width: 360px", page)
+
+
+class CommercialDefaultTests(unittest.TestCase):
+    """Small-commercial tariff rate leads. Residential PTC stays a smaller line."""
+
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_salem_leads_with_sourced_gs_and_keeps_residential(self):
+        salem = _zone("Salem")
+        ptc = salem["card"]["ptc"]
+        self.assertEqual(ptc["customer_class"], "residential")
+        self.assertEqual(ptc["cents_per_kwh"], 11.07)
+        commercial = ptc["commercial"]
+        self.assertTrue(commercial["sourced"])
+        self.assertEqual(commercial["cents_per_kwh"], 9.3786)
+        self.assertEqual(commercial["schedule"], "GS")
+        self.assertEqual(commercial["energy_cents"], 7.2774)
+        self.assertEqual(commercial["capacity_cents"], 2.1012)
+        self.assertIn("firstenergycorp.com", commercial["source_url"])
+        self.assertIn("Rider GEN", commercial["source"])
+        page = self.client.get("/card?file=ne_ohio_firstenergy&name=Salem").get_data(as_text=True)
+        commercial_at = page.find('id="ptc-commercial"')
+        residential_at = page.find('id="ptc-residential"')
+        self.assertTrue(0 <= commercial_at < residential_at)
+        commercial_html = page[commercial_at:residential_at]
+        residential_html = page[residential_at:]
+        self.assertIn("9.3786", commercial_html)
+        self.assertIn("Commercial default", commercial_html)
+        self.assertNotIn("11.07", commercial_html)
+        self.assertIn("11.07", residential_html)
+        self.assertIn("Residential Price to Compare", residential_html)
+        self.assertIn("ptc-residential", page)
+        self.assertEqual(salem["currentRate"], 9.79)
+
+    def test_each_iou_is_sourced_or_pending_without_a_made_up_rate(self):
+        expected = {
+            "OE": ("Salem", 9.3786, "GS"),
+            "CEI": ("Westlake", 9.4503, "GS"),
+            "TE": ("Archbold", 9.431, "GS"),
+            "AEP": ("Canton", 9.806, "GS-NDM"),
+            "DUKE": ("Sharonville", None, ""),
+            "AES": ("Centerville", None, ""),
+        }
+        for code, (name, cents, schedule) in expected.items():
+            commercial = _zone(name)["card"]["ptc"]["commercial"]
+            self.assertEqual(commercial.get("code", code) if commercial["sourced"] else code, code)
+            if cents is None:
+                self.assertFalse(commercial["sourced"])
+                self.assertIsNone(commercial.get("cents_per_kwh"))
+            else:
+                self.assertTrue(commercial["sourced"], name)
+                self.assertEqual(commercial["cents_per_kwh"], cents)
+                self.assertEqual(commercial["schedule"], schedule)
+                self.assertTrue(commercial["source_url"].startswith("http"))
+        page = self.client.get("/card?file=cincinnati_duke&name=Sharonville").get_data(as_text=True)
+        commercial_html = page[page.find('id="ptc-commercial"'):page.find('id="ptc-residential"')]
+        self.assertIn("Pending", commercial_html)
+        self.assertIn("No sourced small-commercial default is on file", commercial_html)
+        self.assertNotIn("¢/kWh", commercial_html)
+        self.assertIn("10.49", page[page.find('id="ptc-residential"'):])
 
 
 def _talk_section(html: str) -> str:

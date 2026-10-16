@@ -32,6 +32,8 @@
   .talk-lead { box-shadow: inset 3px 0 0 var(--forge-orange); }
   .rate-secondary { margin-top: 0; }
   .rate-secondary .v { font-size: 1.2rem; }
+  .ptc-commercial-value { font-size: 1.55rem; font-weight: 650; letter-spacing: -0.02em; color: var(--forge-orange); line-height: 1.1; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .ptc-residential { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--forge-border); font-size: 0.82rem; }
   @media print {
     #sidebar, #topbar, .no-print { display: none !important; }
     html, body { overflow: visible !important; height: auto !important; display: block !important; background: #fff !important; color: #111 !important; }
@@ -71,13 +73,13 @@
       </div>
     </div>
 
-    {% set local_cents = card.ptc.cents_per_kwh if card.ptc.applicable else none %}
+    {% set local_cents = card.ptc.commercial.cents_per_kwh if card.ptc.commercial is defined and card.ptc.commercial.sourced else none %}
     {% set lead = card.talkingPoints and card.talkingPoints.lead %}
     {% if lead %}
       {% include "_talking.html" %}
       {% if nearby %}
       <div id="battlecard-nearby" class="panel" style="margin-bottom:12px;">
-        <div class="panel-header"><span>Nearby</span><span>Program rate versus this Price to Compare</span></div>
+        <div class="panel-header"><span>Nearby</span><span>Program rate versus this commercial default</span></div>
         {{ nearby_tables(nearby, local_cents) }}
       </div>
       {% endif %}
@@ -135,25 +137,43 @@
       {% include "_talking.html" %}
       {% if nearby %}
       <div id="battlecard-nearby" class="panel" style="margin-bottom:12px;">
-        <div class="panel-header"><span>Nearby</span><span>Program rate versus this Price to Compare</span></div>
+        <div class="panel-header"><span>Nearby</span><span>Program rate versus this commercial default</span></div>
         {{ nearby_tables(nearby, local_cents) }}
       </div>
       {% endif %}
     {% endif %}
 
     <div class="panel card-block">
-      <div class="stat-label">Residential Price to Compare</div>
       {% if not card.ptc.applicable %}
+      <div class="stat-label">Price to Compare</div>
       <div style="margin-top:6px; font-weight:650;">{{ card.ptc.label }}</div>
       <div style="font-size:0.78rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.reason }}</div>
       {% else %}
-      <div style="margin-top:6px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong>
-        <span style="color:var(--forge-muted);">· residential</span>
+      <div class="ptc-commercial" id="ptc-commercial">
+        <div class="stat-label">Commercial default</div>
+        {% if card.ptc.commercial is defined and card.ptc.commercial.sourced %}
+        <div class="ptc-commercial-value">{{ card.ptc.commercial.cents_per_kwh }}¢/kWh</div>
+        <div style="margin-top:4px;">{{ card.ptc.commercial.utility }} · {{ card.ptc.commercial.schedule_label }}</div>
+        <div style="font-size:0.82rem; margin-top:4px;">Effective {{ card.ptc.commercial.effective_start or '—' }}{% if card.ptc.commercial.effective_end %} – {{ card.ptc.commercial.effective_end }}{% endif %}</div>
+        <div style="font-size:0.75rem; color:var(--forge-muted); margin-top:4px;">{{ card.ptc.commercial.source }}</div>
+        {% if card.ptc.commercial.source_url %}
+        <div style="font-size:0.75rem; margin-top:4px;"><a href="{{ card.ptc.commercial.source_url }}" style="color:#4fc3f7;">{{ card.ptc.commercial.source_url }}</a></div>
+        {% endif %}
+        {% else %}
+        <div style="margin-top:6px;">{{ confidence({'kind': 'pending', 'tip': 'Pending', 'label': 'Pending'}) }}</div>
+        <div style="font-size:0.78rem; color:var(--forge-muted); margin-top:4px;">No sourced small-commercial default is on file for this utility.</div>
+        {% endif %}
       </div>
-      <div style="font-size:0.82rem; margin-top:4px;">Effective {{ card.ptc.effective_start or '—' }} – {{ card.ptc.effective_end or '—' }}{% if card.ptc.accessed_at %} · accessed {{ card.ptc.accessed_at }}{% endif %}</div>
-      {% if card.ptc.comparison %}
-      <div style="margin-top:6px; font-weight:650;">Aggregation current vs this residential PTC: {{ '%+.3f'|format(card.ptc.comparison.cents) }}¢ ({{ '%+.1f'|format(card.ptc.comparison.percent) }}%)</div>
-      {% endif %}
+      <div class="ptc-residential" id="ptc-residential">
+        <div class="stat-label">Residential Price to Compare</div>
+        <div style="margin-top:4px;">{{ card.ptc.utility }} <strong>{{ card.ptc.cents_per_kwh }}¢/kWh</strong>
+          <span style="color:var(--forge-muted);">· residential</span>
+        </div>
+        <div style="font-size:0.78rem; margin-top:4px; color:var(--forge-muted);">Effective {{ card.ptc.effective_start or '—' }} – {{ card.ptc.effective_end or '—' }}{% if card.ptc.accessed_at %} · accessed {{ card.ptc.accessed_at }}{% endif %}</div>
+        {% if card.ptc.comparison %}
+        <div style="margin-top:6px;">Aggregation current vs this residential PTC: {{ '%+.3f'|format(card.ptc.comparison.cents) }}¢ ({{ '%+.1f'|format(card.ptc.comparison.percent) }}%)</div>
+        {% endif %}
+      </div>
       {% endif %}
     </div>
 

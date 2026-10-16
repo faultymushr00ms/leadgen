@@ -31,7 +31,10 @@
   #zone-split { display: flex; flex: 1; overflow: hidden; }
 
   /* ── Table pane ── */
-  #zone-table-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  #zone-table-pane {
+    flex: 1 1 820px; max-width: 840px; min-width: 0;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
   #zone-table-wrap { flex: 1; overflow-y: auto; }
   #zone-table-wrap::-webkit-scrollbar { width: 4px; }
   #zone-table-wrap::-webkit-scrollbar-track { background: transparent; }
@@ -56,11 +59,25 @@
   .no-zones-row td { text-align: center; padding: 40px; color: var(--forge-muted); font-size: 0.85rem; }
 
   /* ── Battlecard pane ── */
+  /* Leave columns through the Δ% column visible. The pane takes the rest. */
   #battlecard-pane {
-    width: 360px; flex-shrink: 0;
+    flex: 1 1 520px;
+    width: auto;
+    min-width: 440px;
     border-left: 1px solid var(--forge-border);
     display: flex; flex-direction: column;
     overflow-y: auto;
+  }
+  @media (max-width: 1100px) {
+    #zone-split { flex-direction: column; }
+    #zone-table-pane { max-width: none; flex: 1 1 auto; min-height: 38vh; }
+    #battlecard-pane {
+      width: 100%;
+      min-width: 0;
+      max-height: 56vh;
+      border-left: none;
+      border-top: 1px solid var(--forge-border);
+    }
   }
   #battlecard-pane::-webkit-scrollbar { width: 4px; }
   #battlecard-pane::-webkit-scrollbar-track { background: transparent; }
@@ -292,7 +309,7 @@
         </div>
 
         <div class="bc-section" id="bc-ptc-section">
-          <div class="bc-section-label">Residential Price to Compare</div>
+          <div class="bc-section-label">Commercial default</div>
           <div id="bc-ptc" style="font-size:0.78rem; line-height:1.45;"></div>
         </div>
 
@@ -881,12 +898,13 @@ function loadNearby(zone) {
 }
 function versusLocalPtc(rate) {
   const ptc = selectedZone && selectedZone.card && selectedZone.card.ptc;
-  if (!ptc || !ptc.applicable || ptc.cents_per_kwh == null || rate === null || rate === undefined || rate === '') return '';
+  const commercial = ptc && ptc.commercial;
+  if (!commercial || !commercial.sourced || commercial.cents_per_kwh == null || rate === null || rate === undefined || rate === '') return '';
   const value = parseFloat(rate);
   if (!isFinite(value)) return '';
-  const gap = value - Number(ptc.cents_per_kwh);
+  const gap = value - Number(commercial.cents_per_kwh);
   const sign = gap > 0 ? '+' : '';
-  return sign + gap.toFixed(3) + '¢ vs this PTC';
+  return sign + gap.toFixed(3) + '¢ vs commercial default';
 }
 function renderNearby(box, nearby) {
   box.replaceChildren();
@@ -974,20 +992,40 @@ function renderResidentialPtc(card, zone) {
     host.innerHTML = '<strong>' + esc(ptc.label) + '</strong><div class="rate-sub">' + esc(ptc.reason || '') + '</div>';
     return;
   }
+  const commercial = ptc.commercial || {};
+  let commercialHtml;
+  if (commercial.sourced && commercial.cents_per_kwh != null) {
+    const link = commercial.source_url
+      ? '<div style="margin-top:4px;"><a href="' + esc(commercial.source_url) + '" style="color:#4fc3f7;">' + esc(commercial.source_url) + '</a></div>'
+      : '';
+    commercialHtml =
+      '<div style="font-size:1.25rem; font-weight:700; color:var(--forge-orange);">' + esc(String(commercial.cents_per_kwh)) + '¢/kWh</div>'
+      + '<div>' + esc(commercial.utility || ptc.utility || '') + ' · ' + esc(commercial.schedule_label || commercial.schedule || 'GS') + '</div>'
+      + '<div class="rate-sub">Effective ' + esc(commercial.effective_start || '—')
+      + (commercial.effective_end ? ' – ' + esc(commercial.effective_end) : '') + '</div>'
+      + '<div class="rate-sub">' + esc(commercial.source || '') + '</div>'
+      + link;
+  } else {
+    commercialHtml = markHtml({kind: 'pending', tip: 'Pending'})
+      + '<div class="rate-sub">No sourced small-commercial default is on file for this utility.</div>';
+  }
   const gap = ptc.comparison
-    ? '<div style="margin-top:6px; font-weight:650;">Aggregation current vs this residential PTC: '
+    ? '<div style="margin-top:6px;">Aggregation current vs this residential PTC: '
       + signedNumber(ptc.comparison.cents, 3) + '¢ (' + signedNumber(ptc.comparison.percent, 1) + '%)</div>'
-    : '<div class="rate-sub" style="margin-top:6px;">No sourced aggregation current rate to compare with this residential Price to Compare.</div>';
+    : '';
   const source = ptc.source_url
     ? '<div style="margin-top:4px;"><a href="' + esc(ptc.source_url) + '" style="color:#4fc3f7;">' + esc(ptc.source_url) + '</a></div>'
     : '';
-  host.innerHTML =
-    '<div>' + esc(ptc.utility || '') + ' <strong>' + esc(String(ptc.cents_per_kwh)) + '¢/kWh</strong> <span class="rate-sub">· residential</span></div>'
+  host.innerHTML = commercialHtml
+    + '<div class="ptc-residential" style="margin-top:10px; padding-top:8px; border-top:1px solid var(--forge-border);">'
+    + '<div class="bc-section-label">Residential Price to Compare</div>'
+    + '<div>' + esc(ptc.utility || '') + ' <strong>' + esc(String(ptc.cents_per_kwh)) + '¢/kWh</strong> <span class="rate-sub">· residential</span></div>'
     + '<div class="rate-sub">Effective ' + esc(ptc.effective_start || '—') + ' – ' + esc(ptc.effective_end || '—')
     + (ptc.accessed_at ? ' · accessed ' + esc(ptc.accessed_at) : '') + '</div>'
     + '<div class="rate-sub">' + esc(ptc.source || '') + '</div>'
     + source
-    + gap;
+    + gap
+    + '</div>';
 }
 function signedNumber(value, digits) {
   const number = Number(value);

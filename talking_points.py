@@ -41,6 +41,8 @@ _HOST_LABELS = {
     "sopec-oh.gov": "SOPEC",
     "dis.puc.state.oh.us": "PUCO DIS",
     "hoodline.com": "Hoodline",
+    "firstenergycorp.com": "Utility tariff",
+    "aepohio.com": "AEP Ohio tariff",
 }
 _BANNED = re.compile(
     r"needs call|not confirmed|not in sources|not marked inactive|verify before using|"
@@ -345,8 +347,8 @@ def _record_points(zone: dict, card: dict, existing: list) -> list:
                     origin="record",
                     horizon=when,
                 ))
-    ptc = card.get("ptc") or {}
-    if ptc.get("applicable") and ptc.get("cents_per_kwh") is not None and ptc.get("source_url"):
+    benchmark = _rate_benchmark(card.get("ptc") or {})
+    if benchmark:
         aggregation_live = any(
             point["scope"] == "town"
             and point["bucket"] == "fact"
@@ -354,54 +356,101 @@ def _record_points(zone: dict, card: dict, existing: list) -> list:
             and "last aggregation rate" not in point["sentence"].lower()
             for point in existing + points
         )
-        end = _parse_date(ptc.get("effective_end"))
-        start = _parse_date(ptc.get("effective_start"))
-        when = end or start
+        end = benchmark["end"]
+        when = benchmark["when"]
+        origin = "commercial" if benchmark["kind"] == "commercial" else "ptc"
+        timing = "upcoming" if benchmark["in_force"] else "recent"
         if when and (not aggregation_live or _is_lead(card)):
-            window = _window_phrase(ptc.get("effective_start"), ptc.get("effective_end"), full=True)
-            utility = _utility_subject(ptc.get("utility"))
-            sentence = f"{utility} residential Price to Compare is {_fmt_cents(ptc.get('cents_per_kwh'))}¢/kWh{window}."
+            utility = _utility_subject(benchmark["utility"])
+            if benchmark["kind"] == "commercial":
+                sentence = f"{utility} GS default is {_fmt_cents(benchmark['cents'])}¢/kWh{benchmark['window']}."
+            else:
+                sentence = f"{utility} residential Price to Compare is {_fmt_cents(benchmark['cents'])}¢/kWh{benchmark['window']}."
             points.append(_make_point(
-                timing="upcoming" if (end or when) >= AS_OF else "recent",
+                timing=timing,
                 bucket="fact",
                 scope="utility",
                 sentence=_one_sentence(sentence),
-                when=end or when,
-                source_url=ptc.get("source_url") or "",
+                when=when,
+                source_url=benchmark["source_url"],
                 confidence="confirmed",
-                origin="ptc",
+                origin=origin,
                 horizon=end or when,
             ))
         elif when and aggregation_live and not _is_lead(card):
             own = _own_rate(existing + points)
             if own is not None:
-                delta = own - float(ptc["cents_per_kwh"])
+                delta = own - float(benchmark["cents"])
                 direction = "under" if delta < 0 else "over"
+                noun = "GS default" if benchmark["kind"] == "commercial" else "residential Price to Compare"
                 sentence = (
                     f"That {_fmt_cents(own)}¢ rate is {abs(delta):.3f}¢ {direction} "
-                    f"{_utility_object(ptc.get('utility'))} residential Price to Compare of "
-                    f"{_fmt_cents(ptc.get('cents_per_kwh'))}¢/kWh."
+                    f"{_utility_object(benchmark['utility'])} {noun} of "
+                    f"{_fmt_cents(benchmark['cents'])}¢/kWh."
                 )
                 points.append(_make_point(
-                    timing="upcoming" if (end or when) >= AS_OF else "recent",
+                    timing=timing,
                     bucket="comparison",
                     scope="utility",
                     sentence=sentence,
-                    when=end or when,
-                    source_url=ptc.get("source_url") or "",
+                    when=when,
+                    source_url=benchmark["source_url"],
                     confidence="confirmed",
-                    origin="ptc",
+                    origin=origin,
                     horizon=end or when,
                 ))
     return points
 
 
+def _rate_benchmark(ptc: dict) -> dict | None:
+    """Commercial GS default when the tariff states one, otherwise residential PTC."""
+    commercial = ptc.get("commercial") or {}
+    if commercial.get("sourced") and commercial.get("cents_per_kwh") is not None and commercial.get("source_url"):
+        start = commercial.get("effective_start")
+        end = commercial.get("effective_end")
+        end_d = _parse_date(end)
+        start_d = _parse_date(start)
+        when = end_d or start_d
+        if when is None:
+            return None
+        return {
+            "kind": "commercial",
+            "cents": commercial.get("cents_per_kwh"),
+            "utility": commercial.get("utility") or ptc.get("utility") or "",
+            "source_url": commercial.get("source_url") or "",
+            "window": _window_phrase(start, end, full=True),
+            "end": end_d,
+            "when": when,
+            "in_force": end_d is None or end_d >= AS_OF,
+            "label": "GS default",
+        }
+    if ptc.get("applicable") and ptc.get("cents_per_kwh") is not None and ptc.get("source_url"):
+        end_d = _parse_date(ptc.get("effective_end"))
+        start_d = _parse_date(ptc.get("effective_start"))
+        when = end_d or start_d
+        if when is None:
+            return None
+        return {
+            "kind": "residential",
+            "cents": ptc.get("cents_per_kwh"),
+            "utility": ptc.get("utility") or "",
+            "source_url": ptc.get("source_url") or "",
+            "window": _window_phrase(ptc.get("effective_start"), ptc.get("effective_end"), full=True),
+            "end": end_d,
+            "when": when,
+            "in_force": (end_d or when) >= AS_OF,
+            "label": "Price to Compare",
+        }
+    return None
+
+
 def _context_points(zone: dict, card: dict, zones: list, existing: list) -> list:
-    ptc = card.get("ptc") or {}
-    if not ptc.get("applicable") or ptc.get("cents_per_kwh") is None:
+    benchmark = _rate_benchmark(card.get("ptc") or {})
+    if not benchmark:
         return []
-    local = float(ptc["cents_per_kwh"])
-    utility = ptc.get("utility") or "the utility"
+    local = float(benchmark["cents"])
+    utility = benchmark["utility"] or "the utility"
+    benchmark_label = benchmark["label"]
     county = _county_name(zone)
     points = []
     used_urls = {_first_url(point.get("sourceUrl")) for point in existing}
@@ -418,6 +467,7 @@ def _context_points(zone: dict, card: dict, zones: list, existing: list) -> list
                 other, local, utility, scope="county",
                 lead=f"{other_name}'s separate contract",
                 miles=None,
+                benchmark_label=benchmark_label,
             )
             if point and _rate_already_used(_cents_in(point["sentence"]), existing + points):
                 point = None
@@ -443,6 +493,7 @@ def _context_points(zone: dict, card: dict, zones: list, existing: list) -> list
             other, local, utility, scope="nearby",
             lead=f"Nearby {other.get('name')} ({item.get('miles')} mi)",
             miles=item.get("miles"),
+            benchmark_label=benchmark_label,
         )
         if not point:
             continue
@@ -458,7 +509,7 @@ def _context_points(zone: dict, card: dict, zones: list, existing: list) -> list
     return points
 
 
-def _comparison_point(other: dict, local: float, utility: str, scope: str, lead: str, miles) -> dict | None:
+def _comparison_point(other: dict, local: float, utility: str, scope: str, lead: str, miles, benchmark_label: str = "Price to Compare") -> dict | None:
     card = other.get("card") or {}
     if not card.get("currentSourced"):
         return None
@@ -478,12 +529,12 @@ def _comparison_point(other: dict, local: float, utility: str, scope: str, lead:
     if scope == "county":
         sentence = (
             f"{lead} with {supplier} is {_fmt_cents(rate)}¢/kWh{window}, "
-            f"{abs(delta):.3f}¢ {direction} this {utility} Price to Compare of {_fmt_cents(local)}¢."
+            f"{abs(delta):.3f}¢ {direction} this {utility} {benchmark_label} of {_fmt_cents(local)}¢."
         )
     else:
         sentence = (
             f"{lead} is on {supplier} at {_fmt_cents(rate)}¢/kWh{window}, "
-            f"{abs(delta):.3f}¢ {direction} this {utility} Price to Compare of {_fmt_cents(local)}¢."
+            f"{abs(delta):.3f}¢ {direction} this {utility} {benchmark_label} of {_fmt_cents(local)}¢."
         )
     verification = (card.get("verification") or "").strip()
     return _make_point(
@@ -514,7 +565,9 @@ def _make_point(*, timing, bucket, scope, sentence, when: date, source_url, conf
     if bucket == "question":
         chip = "Open item"
     elif bucket == "comparison" and scope == "utility":
-        chip = "Vs Price to Compare"
+        chip = "Vs commercial default" if origin == "commercial" else "Vs Price to Compare"
+    elif origin == "commercial":
+        chip = "Commercial default"
     else:
         chip = _CHIP.get(scope, "This town")
     mark = _display_mark(confidence, bucket)

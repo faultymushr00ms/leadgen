@@ -66,7 +66,7 @@
     <div id="overlay-layers" style="margin-top:6px;"></div>
 
     <div class="stat-label" style="margin-top:14px;">PUCO Government Aggregation</div>
-    <p id="puco-disclaimer" style="font-size:0.75rem; color:#ffe082; margin:6px 0;">PUCO certification only: not proof of an active program, supplier or rate</p>
+    <p id="puco-disclaimer" style="font-size:0.75rem; color:var(--forge-muted); margin:6px 0;">PUCO certification only: not proof of an active program, supplier or rate</p>
     <label class="layer-toggle" style="position:static;"><input id="puco-electric" type="checkbox"> Electric</label>
     <label class="layer-toggle" style="position:static;"><input id="puco-gas" type="checkbox"> Gas</label>
     <div id="puco-legend">
@@ -82,8 +82,8 @@
 
     <div class="stat-label" style="margin-top:14px;">Legend</div>
     <div id="legend"></div>
-    <div class="legend-row"><span class="legend-swatch hollow"></span><span>Hollow: possibly covered, not confirmed</span></div>
-    <div class="legend-row"><span class="legend-swatch" style="background:#ff5252; box-shadow:0 0 0 2px #ff5252;"></span><span>Unresolved / needs call. Not marked inactive.</span></div>
+    <div class="legend-row"><span class="legend-swatch hollow"></span><span>Hollow: may follow the township program</span></div>
+    <div class="legend-row"><span class="legend-swatch" style="background:#8b93a7;"></span><span>Pending</span></div>
 
     <p id="map-note" style="font-size:0.75rem; color:var(--forge-muted); margin-top:12px;"></p>
     <p id="overlay-note" style="font-size:0.75rem; color:var(--forge-muted);">{{ overlay_note }}</p>
@@ -150,10 +150,11 @@
     strong.textContent = feature.name;
     root.appendChild(strong);
     if (feature.unresolved) {
-      var warn = document.createElement('div');
-      warn.style.color = '#ff5252';
-      warn.textContent = 'Needs call. Not confirmed. This is not marked inactive.';
-      root.appendChild(warn);
+      var mark = document.createElement('div');
+      mark.className = 'conf-mark conf-pending';
+      mark.title = 'Pending';
+      mark.textContent = '— Pending';
+      root.appendChild(mark);
     }
     function row(label, value) {
       var line = document.createElement('div');
@@ -192,11 +193,11 @@
     (features || []).forEach(function (feature) {
       if (feature.lat == null || feature.lon == null) return;
       var marker = L.circleMarker([feature.lat, feature.lon], {
-        radius: feature.unresolved ? radius + 2 : radius,
-        color: feature.unresolved ? '#ff5252' : feature.color,
-        weight: feature.unresolved ? 3 : (feature.hollow ? 2 : 1),
+        radius: radius,
+        color: feature.color,
+        weight: feature.hollow ? 2 : 1,
         fillColor: feature.color,
-        fillOpacity: feature.hollow ? 0 : (feature.unresolved ? 0.25 : 0.9)
+        fillOpacity: feature.hollow ? 0 : 0.9
       });
       marker.featureData = feature;
       marker.bindPopup(popupFor(feature));
@@ -221,7 +222,10 @@
     if (county && (feature.counties || []).indexOf(county) === -1) return false;
     if (utility && (feature.utilities || []).indexOf(utility) === -1) return false;
     if (category && feature.category !== category) return false;
-    if (confidence && feature.verification !== confidence) return false;
+    if (confidence) {
+      var kind = feature.verification === 'confirmed' ? 'confirmed' : (feature.verification === 'likely' ? 'likely' : (feature.verification ? 'pending' : ''));
+      if (kind !== confidence) return false;
+    }
     if (expiring && !feature.expiring) return false;
     return true;
   }
@@ -230,6 +234,23 @@
     if (!payload) return;
     syncMarkers(placeMarkers, placeGroup, document.getElementById('layer-places').checked);
     syncMarkers(zoneMarkers, zoneGroup, document.getElementById('layer-zones').checked);
+  }
+
+  function fillConfidence(values) {
+    var select = document.getElementById('filter-confidence');
+    var current = select.value;
+    while (select.options.length > 1) select.remove(1);
+    var seen = {};
+    (values || []).forEach(function (value) {
+      var kind = value === 'confirmed' ? 'confirmed' : (value === 'likely' ? 'likely' : 'pending');
+      if (seen[kind]) return;
+      seen[kind] = true;
+      var option = document.createElement('option');
+      option.value = kind;
+      option.textContent = kind === 'confirmed' ? 'Confirmed' : (kind === 'likely' ? 'Likely' : 'Pending');
+      select.appendChild(option);
+    });
+    select.value = current;
   }
 
   function fillSelect(id, values, labeler) {
@@ -282,7 +303,7 @@
     fillSelect('filter-county', filters.counties || []);
     fillSelect('filter-utility', filters.utilities || []);
     fillSelect('filter-admin', filters.categories || []);
-    fillSelect('filter-confidence', filters.verifications || []);
+    fillConfidence(filters.verifications || []);
     addMarkers(data.places, placeGroup, placeMarkers, 5);
     addMarkers(data.zones, zoneGroup, zoneMarkers, 7);
     applyFilters();

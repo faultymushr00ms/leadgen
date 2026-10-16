@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% from "_voice.html" import confidence %}
 {% block title %}— Investigation queue{% endblock %}
 {% block topbar_title %}INVESTIGATION QUEUE{% endblock %}
-{% block topbar_sub %}{{ rows|length }} shown · {{ total }} baseline · needs-call is not inactive{% endblock %}
+{% block topbar_sub %}{{ rows|length }} shown · {{ total }} on file{% endblock %}
 {% block topbar_actions %}
 <a class="btn btn-ghost btn-sm {% if not verification %}active{% endif %}" href="/queue">All</a>
-<a class="btn btn-ghost btn-sm {% if verification == 'escalate-call' %}active{% endif %}" href="/queue?verification=escalate-call">Needs call</a>
-<a class="btn btn-ghost btn-sm {% if verification == 'conflict' %}active{% endif %}" href="/queue?verification=conflict">Conflict</a>
+<a class="btn btn-ghost btn-sm {% if verification == 'escalate-call' %}active{% endif %}" href="/queue?verification=escalate-call">Pending</a>
+<a class="btn btn-ghost btn-sm {% if verification == 'conflict' %}active{% endif %}" href="/queue?verification=conflict">Pending review</a>
 <a class="btn btn-ghost btn-sm {% if verification == 'likely' %}active{% endif %}" href="/queue?verification=likely">Likely</a>
 <a class="btn btn-ghost btn-sm {% if verification == 'confirmed' %}active{% endif %}" href="/queue?verification=confirmed">Confirmed</a>
 {% endblock %}
@@ -71,11 +72,6 @@
     </table>
   </div>
 
-  <div class="banner-alert banner-unresolved">
-    Escalate-call is shown as <strong>needs call</strong>. Conflict stays <strong>unresolved</strong>.
-    Neither status is treated as inactive, and neither overwrites the original FORGE record.
-  </div>
-
   <div class="panel">
     <table class="forge-table">
       <thead>
@@ -91,8 +87,6 @@
       </thead>
       <tbody>
         {% for row in rows %}
-        {% set label = 'needs call' if row.STATUS_verification == 'escalate-call' else row.STATUS_verification %}
-        {% set unresolved = row.STATUS_verification in ['escalate-call', 'conflict'] %}
         <tr>
           <td>{{ row.rank }}</td>
           <td>
@@ -100,13 +94,10 @@
             <div style="color:var(--forge-muted); font-size:0.72rem;">{{ row.utility }}</div>
           </td>
           <td style="color:var(--forge-orange); font-weight:700;">{{ row.trigger_score }}</td>
-          <td>
-            {{ label }}
-            {% if unresolved %}<div class="pill" style="color:#ffe082; border-color:rgba(255,179,0,0.4);">unresolved</div>{% endif %}
-          </td>
-          <td style="white-space:normal;">{{ row.STATUS_program }}</td>
-          <td>{{ row.STATUS_term }}</td>
-          <td style="white-space:normal; max-width:420px;">{{ row.exact_next_action }}{% if row.superseded %}<div style="color:var(--forge-gold);">Superseded {{ row.superseded_at }}</div>{% endif %}</td>
+          <td>{{ confidence(confidence_mark(row.STATUS_verification)) }}</td>
+          <td style="white-space:normal;">{{ program_label(row.STATUS_program) }}</td>
+          <td>{{ term_label(row.STATUS_term) }}</td>
+          <td style="white-space:normal; max-width:420px;">{{ row.exact_next_action | voice }}{% if row.superseded %}<div style="color:var(--forge-muted);">Superseded {{ row.superseded_at }}</div>{% endif %}</td>
         </tr>
         {% endfor %}
       </tbody>

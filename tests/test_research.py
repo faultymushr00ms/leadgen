@@ -4,6 +4,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -711,13 +712,15 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("Dynegy", card)
         self.assertNotIn("Route 303", card)
         wauseon = self.client.get("/card?file=ohio_municipal_utilities&name=Wauseon").get_data(as_text=True)
-        self.assertIn("Unresolved", wauseon)
-        self.assertIn("not marked inactive", wauseon)
-        self.assertIn("Verify before using", wauseon)
+        self.assertIn("Pending", wauseon)
+        self.assertIn("11.09", wauseon)
+        self.assertNotIn("not marked inactive", wauseon.lower())
+        self.assertNotIn("Verify before using", wauseon)
         queue = self.client.get("/queue?verification=escalate-call").get_data(as_text=True)
         self.assertIn("Wauseon", queue)
         self.assertIn("888-682-2170", queue)
-        self.assertIn("unresolved", queue)
+        self.assertIn("Pending", queue)
+        self.assertNotIn(">unresolved<", queue)
         expiring = self.client.get("/expiring").get_data(as_text=True)
         self.assertIn("Heath / Newark", expiring)
         zip_page = self.client.get("/counties?zip=44241&county=Portage").get_data(as_text=True)
@@ -1082,7 +1085,9 @@ class NearbyMapTests(unittest.TestCase):
         self.assertGreater(payload["counts"]["zones_unplaced"], 0)
 
         page = self.client.get("/map").get_data(as_text=True)
-        self.assertIn("Unresolved / needs call", page)
+        self.assertIn("Pending", page)
+        self.assertNotIn("Unresolved / needs call", page)
+        self.assertNotIn("Needs call. Not confirmed.", page)
         self.assertIn("Locate me", page)
         self.assertIn("OpenStreetMap", page)
         self.assertIn("County boundaries", page)
@@ -1173,7 +1178,8 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("11.73", kettering["card"]["futureNote"])
         card = self.client.get("/card?file=dayton_sw_ohio&name=Kettering").get_data(as_text=True)
         self.assertIn("Announced / Future", card)
-        self.assertIn("lifecycle: Active", card)
+        self.assertIn("Ending soon", card)
+        self.assertNotIn("lifecycle:", card)
         self.assertIn("11.53", card)
 
         worthington = _zone("Worthington")
@@ -1233,12 +1239,15 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("Silverton", hot)
         self.assertIn("10.49", hot)
         unverified = self.client.get("/unverified?q=Ashley").get_data(as_text=True)
-        self.assertIn("Single-source — not confirmed", unverified)
         self.assertIn("Ashley", unverified)
-        self.assertIn("not battlecard rates", unverified.lower())
+        self.assertIn("Seeking supplier", unverified)
+        self.assertNotIn("single-source", unverified.lower())
+        self.assertNotIn("not confirmed", unverified.lower())
         reminderville = self.client.get("/unverified?q=Reminderville").get_data(as_text=True)
-        self.assertIn("likely — no aggregation rate", reminderville)
-        self.assertIn("Not a battlecard rate", reminderville)
+        self.assertIn("Reminderville", reminderville)
+        self.assertIn("NOPEC/NextEra", reminderville)
+        self.assertNotIn("Not a battlecard rate", reminderville)
+        self.assertNotIn("single-source", reminderville.lower())
 
     def test_snapshot_is_append_only_and_map_labels_certification(self):
         import puco_layer
@@ -1333,6 +1342,79 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertEqual(puco_layer.council_id("Southeast Ohio Public Energy Council"), "sopec")
         self.assertEqual(puco_layer.council_id("Miami Valley Communications Council"), "mvcc")
         self.assertEqual(puco_layer.council_id("Some Other Council"), "other")
+
+
+class PresentationCopyTests(unittest.TestCase):
+    """Research-log phrasing stays in the data and stays off the screen."""
+
+    BANNED = (
+        "needs call",
+        "not confirmed",
+        "not marked inactive",
+        "verify before using",
+        "number not in sources",
+        "unresolved",
+        "escalate-call",
+        "forge recorded",
+        "single-source",
+    )
+    PAGES = (
+        "/hotspots",
+        "/hot-leads",
+        "/unverified",
+        "/unverified?q=Ashley",
+        "/queue",
+        "/queue?verification=escalate-call",
+        "/weekly",
+        "/expiring",
+        "/intel",
+        "/map",
+        "/counties?county=Cuyahoga",
+        "/card?file=ohio_municipal_utilities&name=Archbold",
+        "/card?file=cleveland_cuyahoga&name=Cleveland",
+        "/card?file=nopec_cuyahoga_suburbs&name=Westlake",
+        "/card?file=ne_ohio_firstenergy&name=Girard",
+        "/card?file=ohio_municipal_utilities&name=Wauseon",
+        "/card?file=sopec_columbus_suburbs&name=Powell",
+    )
+
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_research_log_phrases_do_not_render(self):
+        for path in self.PAGES:
+            page = self.client.get(path)
+            self.assertEqual(page.status_code, 200, path)
+            visible = _visible_text(page.get_data(as_text=True)).lower()
+            for phrase in self.BANNED:
+                self.assertNotIn(phrase, visible, f"{phrase} on {path}")
+
+    def test_unverified_rate_is_not_shown_as_current(self):
+        wauseon = _zone("Wauseon")
+        self.assertIn("not marked inactive", wauseon["research"]["takeaway"])
+        self.assertFalse(wauseon["card"]["currentSourced"])
+        self.assertEqual(wauseon["card"]["voice"]["currentText"], "—")
+        self.assertEqual(wauseon["card"]["voice"]["confidence"]["label"], "Pending")
+        self.assertNotIn("not marked inactive", wauseon["card"]["voice"]["takeaway"])
+        girard = _zone("Girard")
+        self.assertFalse(girard["card"]["currentSourced"])
+        self.assertEqual(girard["card"]["voice"]["currentText"], "—")
+        self.assertEqual(girard["card"]["voice"]["status"], "Rate pending")
+        page = self.client.get("/card?file=ne_ohio_firstenergy&name=Girard").get_data(as_text=True)
+        self.assertIn('class="v pending"', page)
+        self.assertIn("Rate pending", page)
+        streetsboro = _zone("Streetsboro")
+        self.assertTrue(streetsboro["card"]["currentSourced"])
+        self.assertEqual(streetsboro["card"]["voice"]["currentText"], "9.999¢")
+        self.assertEqual(streetsboro["card"]["voice"]["confidence"]["kind"], "hollow")
+
+
+def _visible_text(html: str) -> str:
+    html = re.sub(r"(?is)<script\b[^>]*>.*?</script>", " ", html)
+    html = re.sub(r"(?is)<style\b[^>]*>.*?</style>", " ", html)
+    html = re.sub(r"(?is)<!--.*?-->", " ", html)
+    html = re.sub(r"(?is)<[^>]+>", " ", html)
+    return re.sub(r"\s+", " ", html)
 
 
 if __name__ == "__main__":

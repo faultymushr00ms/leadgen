@@ -40,7 +40,7 @@ CATEGORIES = (
     ("other", "Other aggregation", "#90a4ae"),
     ("none", "No own program", "#6b7280"),
     ("municipal_coop", "Municipal or co-op", "#81c784"),
-    ("unresolved", "Unresolved / needs call", "#ff5252"),
+    ("unresolved", "Pending", "#8b93a7"),
 )
 CATEGORY_LABEL = {key: label for key, label, _color in CATEGORIES}
 CATEGORY_COLOR = {key: color for key, _label, color in CATEGORIES}
@@ -49,15 +49,15 @@ ANCHOR_PLACE = "Plotted at the Census Gazetteer place centroid. Not a municipal 
 ANCHOR_TOWNSHIP = "Plotted at the Census county-subdivision centroid. Not an aggregation boundary."
 ANCHOR_COUNTY = "Plotted at the Census county centroid. Not an aggregation boundary."
 NEAREST_NOTE = "Nearest city, village, or CDP by Census centroid. This is not a municipal boundary test."
-UNRESOLVED_NOTE = "Needs call. Not confirmed. This is not marked inactive."
+UNRESOLVED_NOTE = ""
 CITY_NOT_COVERED = "No own program. A city or village is not covered by a neighboring township or county program."
-POSSIBLY_NOTE = "Possibly covered by its containing township's program. Not confirmed for this place."
+POSSIBLY_NOTE = "May follow the township program."
 OUTSIDE_OHIO = "That location is outside the Ohio counties on file."
 LOCATE_BAD = "A location in Ohio is required."
 MAP_NOTE = (
-    "Points are Census centroids. They are not utility or aggregation boundaries. "
-    "A color is a program category from the research on file. "
-    "Unresolved records are marked needs-call and are not shown as confirmed coverage. "
+    "Points are Census centroids, not utility or aggregation boundaries. "
+    "Color is the program on file. "
+    "Pending records are not shown as confirmed coverage. "
     "County and township lines are boundaries only."
 )
 OVERLAY_NOTE = (

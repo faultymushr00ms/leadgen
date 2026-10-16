@@ -159,7 +159,7 @@
     <select id="filter-agg"     class="dark-input" onchange="applyFilters()">
       <option value="">All Agg Status</option>
       <option value="confirmed_active_aggregation">Confirmed Active</option>
-      <option value="unresolved">Unresolved</option>
+      <option value="unresolved">Pending</option>
       <option value="municipal_utility">Municipal Utility</option>
       <option value="electric_cooperative">Electric Co-op</option>
       <option value="no_aggregation_verified">No Aggregation</option>
@@ -174,7 +174,7 @@
       <option value="pain_coming">Pain Coming</option>
       <option value="stable">Stable</option>
       <option value="transition">Transition</option>
-      <option value="verify">Verify</option>
+      <option value="verify">Pending</option>
     </select>
     <select id="filter-future"  class="dark-input" onchange="applyFilters()">
       <option value="">All Future Use</option>
@@ -301,10 +301,10 @@
           <div id="bc-nearby" style="font-size:0.78rem; line-height:1.45;"></div>
         </div>
 
-        <div class="bc-section" id="bc-notes-section">
-          <div class="bc-section-label">Notes</div>
-          <div class="bc-notes" id="bc-notes"></div>
-        </div>
+        <details class="evidence" id="bc-notes-section" style="margin:0 12px 12px;">
+          <summary>Evidence &amp; notes</summary>
+          <div class="evidence-body" id="bc-notes"></div>
+        </details>
 
       </div>
 
@@ -343,19 +343,19 @@
             <div style="grid-column:1/-1;">
               <div class="stat-label mb-1">Utility Confidence</div>
               <select name="utilityConfidence" class="dark-input">
-                <option value="high">High — confirmed from PUCO or unambiguous</option>
-                <option value="medium">Medium — geographic assignment, not PUCO-verified</option>
-                <option value="low">Low — flagged as likely wrong, needs address check</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
               </select>
             </div>
             <div style="grid-column:1/-1;">
               <div class="stat-label mb-1">Aggregation Status</div>
               <select name="aggregationStatus" class="dark-input">
                 <option value="confirmed_active_aggregation">Confirmed Active Aggregation</option>
-                <option value="unresolved">Unresolved</option>
+                <option value="unresolved">Pending</option>
                 <option value="municipal_utility">Municipal Utility</option>
                 <option value="electric_cooperative">Electric Co-op</option>
-                <option value="no_aggregation_verified">No Aggregation Verified</option>
+                <option value="no_aggregation_verified">No aggregation</option>
                 <option value="address_dependent">Address Dependent</option>
               </select>
             </div>
@@ -392,7 +392,7 @@
                 <option value="pain_coming">Pain Coming</option>
                 <option value="stable">Stable</option>
                 <option value="transition">Transition</option>
-                <option value="verify">Verify</option>
+                <option value="verify">Pending</option>
               </select>
             </div>
             <div>
@@ -467,8 +467,8 @@ const CONF_ORDER    = { high:0, medium:1, low:2 };
 
 // ── Labels / display strings ─────────────────────────────────────────────────
 const AGG_LABELS = {
-  confirmed_active_aggregation: 'Confirmed Active',
-  unresolved:                   'Unresolved',
+  confirmed_active_aggregation: 'Active',
+  unresolved:                   'Pending',
   municipal_utility:            'Municipal Utility',
   electric_cooperative:         'Electric Co-op',
   no_aggregation_verified:      'No Aggregation',
@@ -485,7 +485,7 @@ const AGG_CSS = {
 const STATUS_LABELS = {
   rollover_dissolved: 'DISSOLVED', rollover: 'Rollover',
   pain_hit: 'Pain Hit', pain_coming: 'Pain Coming',
-  stable: 'Stable', transition: 'Transition', verify: 'Verify',
+  stable: 'Active', transition: 'Transition', verify: 'Pending',
 };
 const FU_LABELS = {
   aggregation:              'Aggregation',
@@ -550,8 +550,7 @@ function displayFuture(z) {
 }
 function futureUseBadge(z) {
   if (conflictMunicipal(z)) {
-    return '<span class="heat-badge heat-warm" style="font-size:0.65rem;">Unresolved</span>'
-      + '<div class="rate-sub">Municipal blacklist flag is not confirmed.</div>';
+    return '<span class="conf-mark conf-pending" title="Pending">— Pending</span>';
   }
   return fuBadge(z.futureUse);
 }
@@ -618,7 +617,7 @@ function renderTable() {
         class="${selectedZone && selectedZone.name === z.name ? 'active' : ''}">
       <td style="font-weight:600; color:#e0e0e0;">${esc(z.name)}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(z.region)}</td>
-      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.65rem;" title="Utility assignment unverified — check PUCO map"></i>' : ''}${z.card && z.card.utility && z.utility && z.card.utility !== z.utility ? ' <span title="Recorded utility ' + esc(z.utility) + ' differs from the sourced utility">†</span>' : ''}</td>
+      <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displayUtility(z))}${displayUtility(z) === z.utility && z.utilityConfidence === 'low' ? ' <span class="conf-mark conf-pending" title="Pending">—</span>' : ''}</td>
       <td>${aggBadge(displayAgg(z), true)}</td>
       <td style="text-align:right; font-weight:600; color:var(--forge-orange);">${sourcedRate(z)}</td>
       <td style="text-align:right; color:var(--forge-muted);">${sourcedPrior(z)}</td>
@@ -626,7 +625,7 @@ function renderTable() {
       <td style="color:var(--forge-muted); font-size:0.75rem;">${esc(displaySupplier(z) || '—')}</td>
       <td style="color:var(--forge-muted); font-size:0.75rem;">${fmtDate(z.termEnd)}</td>
       <td>${statusBadge(z.status)}</td>
-      <td>${confBadge(z.confidence)}</td>
+      <td>${confBadge(z.confidence, z)}</td>
     </tr>
   `).join('');
 }
@@ -645,10 +644,11 @@ function selectZone(name) {
   document.getElementById('bc-name').textContent = selectedZone.name;
   document.getElementById('bc-region').textContent = selectedZone.region;
   const card = selectedZone.card;
+  const spoken = (card && card.voice) || selectedZone.voice || null;
   document.getElementById('bc-badges').innerHTML =
-    aggBadge(displayAgg(selectedZone)) + ' ' +
-    statusBadge(selectedZone.status) + ' ' +
-    (card ? `<span class="heat-badge conf-medium" style="font-size:0.65rem;">${esc(card.verificationLabel)}</span>` : confBadge(selectedZone.confidence));
+    (spoken && spoken.status ? `<span class="status-label">${esc(spoken.status)}${spoken.statusDate ? ' ' + esc(spoken.statusDate) : ''}</span> ` : '') +
+    markHtml(spoken && spoken.confidence) + ' ' +
+    statusBadge(selectedZone.status);
 
   const alertEl = document.getElementById('bc-alert');
   const printLink = document.getElementById('bc-print-link');
@@ -656,8 +656,7 @@ function selectZone(name) {
     printLink.style.display = 'block';
     printLink.href = card.url;
     const bits = [];
-    if (card.notEligible) bits.push('<div class="banner-alert banner-block"><strong>NOT ELIGIBLE.</strong> Municipal utility or co-op.</div>');
-    if (card.unresolved) bits.push('<div class="banner-alert banner-unresolved"><strong>Unresolved — ' + esc(card.verificationLabel) + '.</strong> Not marked inactive.</div>');
+    if (spoken && spoken.notEligible) bits.push('<div class="card-note">Municipal utility or electric cooperative.</div>');
     alertEl.innerHTML = bits.join('');
     alertEl.style.display = bits.length ? 'block' : 'none';
   } else {
@@ -674,9 +673,12 @@ function selectZone(name) {
       <div class="rate-sub">${label}</div>
       <div class="rate-sub">${note}</div>
     </div>`;
-    let html = cell('Current', card.currentSourced ? esc(card.currentLabel) + '¢' : '—', card.currentSourced ? 'sourced' : 'unsourced hidden');
-    html += cell('Prior', card.priorSourced ? esc(card.priorLabel) + '¢' : (card.priorLabel ? esc(card.priorLabel) + '¢' : '—'), card.priorSourced ? 'sourced' : 'FORGE recorded');
-    html += cell('Historical', card.historicalSourced ? esc(card.historicalLabel) + '¢' : '—', card.historicalCapture ? ('capture ' + esc(card.historicalCapture)) : '');
+    const currentText = spoken && spoken.currentText ? spoken.currentText : '—';
+    const priorText = spoken && spoken.priorText ? spoken.priorText : '—';
+    const historicalText = spoken && spoken.historicalText ? spoken.historicalText : '—';
+    let html = cell(spoken && spoken.currentCaption ? spoken.currentCaption : 'Current', esc(currentText), spoken && spoken.currentPending ? 'Pending' : '');
+    html += cell('Prior', esc(priorText), '');
+    html += cell('Historical', esc(historicalText), card.historicalCapture ? esc(card.historicalCapture) : '');
     if (card.changePrior) {
       html += `<div class="rate-change-badge ${card.changePrior.percent > 0 ? 'rate-up' : 'rate-down'}">${card.changePrior.percent > 0 ? '▲' : '▼'} ${Math.abs(card.changePrior.percent)}% vs prior</div>`;
     }
@@ -693,9 +695,11 @@ function selectZone(name) {
 
   // Term / supplier
   const utilConf = selectedZone.utilityConfidence || 'medium';
-  const utilConfIcon = utilConf === 'low'
-    ? ' <i class="bi bi-exclamation-triangle-fill" style="color:#f59e0b; font-size:0.7rem;" title="Utility assignment unverified — check PUCO map"></i>'
-    : utilConf === 'medium' ? ' <i class="bi bi-question-circle" style="color:var(--forge-muted); font-size:0.65rem;" title="Utility assigned by geography, not PUCO-verified"></i>' : '';
+  const utilConfIcon = utilConf === 'high'
+    ? ''
+    : ' ' + markHtml(utilConf === 'medium'
+        ? {kind:'hollow', tip:'Likely'}
+        : {kind:'pending', tip:'Pending'});
   document.getElementById('bc-term-kv').innerHTML = `
     <div class="bc-kv-item">
       <div class="kv-label">Utility</div>
@@ -719,44 +723,21 @@ function selectZone(name) {
     </div>
   `;
 
-  document.getElementById('bc-takeaway').textContent = (card && card.takeaway) ? card.takeaway : (selectedZone.takeaway || '—');
+  document.getElementById('bc-takeaway').textContent = (spoken && spoken.takeaway) ? spoken.takeaway : '—';
 
   const hookSection = document.getElementById('bc-hook-section');
-  if (card && !card.hookAllowed) {
+  if (spoken && spoken.hook) {
     hookSection.style.display = '';
-    document.getElementById('bc-hook').textContent = 'Verify before using.';
-  } else if (card && card.hook) {
-    hookSection.style.display = '';
-    document.getElementById('bc-hook').textContent = card.hook;
-  } else if (!card && selectedZone.hook) {
-    hookSection.style.display = '';
-    document.getElementById('bc-hook').textContent = selectedZone.hook;
+    document.getElementById('bc-hook').textContent = spoken.hook;
   } else {
     hookSection.style.display = 'none';
   }
 
   const notesSection = document.getElementById('bc-notes-section');
-  const noteBits = [];
-  if (conflictMunicipal(selectedZone)) {
-    noteBits.push('Municipal blacklist flag is not confirmed.');
-  }
-  if (selectedZone.notes) {
-    noteBits.push(card ? ('Notes: ' + selectedZone.notes) : selectedZone.notes);
-  }
-  if (card && card.removalNotes && card.removalNotes.length) {
-    noteBits.push(card.removalNotes.map(function (note) {
-      return [note.zone, note.field, note.note, note.date, note.reason].join(' | ');
-    }).join(' '));
-  }
-  if (card && card.rejectedRenewal) {
-    noteBits.push('Rejected renewal ' + card.rejectedRenewal.rate + '¢/kWh. ' + (card.rejectedRenewal.note || ''));
-  }
-  if (card && card.noGasAggregation) {
-    noteBits.push('No gas aggregation.');
-  }
+  const noteBits = (spoken && spoken.evidence) ? spoken.evidence.slice() : [];
   if (noteBits.length) {
     notesSection.style.display = '';
-    document.getElementById('bc-notes').textContent = noteBits.join(' ');
+    document.getElementById('bc-notes').textContent = noteBits.join('\n');
   } else {
     notesSection.style.display = 'none';
   }
@@ -836,8 +817,17 @@ function aggBadge(val, compact) {
 function statusBadge(val) {
   return `<span class="heat-badge status-${val}" style="font-size:0.65rem;">${STATUS_LABELS[val] || val}</span>`;
 }
-function confBadge(val) {
-  return `<span class="heat-badge conf-${val}" style="font-size:0.65rem; text-transform:uppercase;">${val}</span>`;
+function markHtml(mark) {
+  if (!mark) return '<span class="conf-mark conf-pending" title="Pending">— Pending</span>';
+  const glyph = mark.kind === 'solid' ? '●' : (mark.kind === 'hollow' ? '○' : '—');
+  const word = mark.kind === 'pending' ? ' Pending' : '';
+  return `<span class="conf-mark conf-${mark.kind}" title="${esc(mark.tip || 'Pending')}">${glyph}${word}</span>`;
+}
+function confBadge(val, zone) {
+  if (zone && zone.voice && zone.voice.confidence) return markHtml(zone.voice.confidence);
+  const kind = val === 'high' ? 'solid' : (val === 'medium' ? 'hollow' : 'pending');
+  const tip = kind === 'solid' ? 'Confirmed' : (kind === 'hollow' ? 'Likely' : 'Pending');
+  return markHtml({kind: kind, tip: tip});
 }
 function fuBadge(val) {
   return `<span class="heat-badge ${FU_CSS[val] || ''}" style="font-size:0.65rem;">${FU_LABELS[val] || val}</span>`;
@@ -884,8 +874,9 @@ function signedNumber(value, digits) {
   return number > 0 ? '+' + text : text;
 }
 function sourcedRate(z) {
-  if (z.card && z.card.currentSourced) return esc(z.card.currentLabel) + '¢';
-  return '<span style="color:var(--forge-border)" title="FORGE recorded value is unsourced and is not shown as current">—</span>';
+  const spoken = (z.card && z.card.voice) || z.voice;
+  if (spoken && !spoken.currentPending && spoken.currentText && spoken.currentText !== '—') return esc(spoken.currentText);
+  return '<span class="conf-mark conf-pending" title="Pending">—</span>';
 }
 function sourcedPrior(z) {
   if (z.card && z.card.priorSourced) return esc(z.card.priorLabel) + '¢';

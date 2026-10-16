@@ -1,0 +1,21 @@
+field,type,non_null,distinct,example
+OBJECTID,esriFieldTypeOID,1217,1217,3
+BoundaryType,esriFieldTypeString,1217,3,County
+BoundaryTypeID,esriFieldTypeInteger,1217,3,2
+CommunityName,esriFieldTypeString,1217,609,Fairfield
+AggType,esriFieldTypeString,1217,2,Electric
+CountyID,esriFieldTypeInteger,1217,84,2
+TownshipID,esriFieldTypeInteger,441,279,1297
+MunicipalityID,esriFieldTypeInteger,704,425,15
+AOGCertIntID,esriFieldTypeInteger,514,6,10441
+AOGCertID,esriFieldTypeString,514,6,01-044E
+AOGCaseRef,esriFieldTypeString,514,6,00-2317-EL-GAG
+AOGCompany,esriFieldTypeString,514,3,Northeast Ohio Public Energy Council
+AOGIssueDate,esriFieldTypeString,514,5,1/2/2001
+CommCertIntID,esriFieldTypeInteger,719,719,148481
+CommCertID,esriFieldTypeString,719,719,14-848E
+CommCaseRef,esriFieldTypeString,719,719,14-1096-EL-GAG
+CommCompany,esriFieldTypeString,719,472,Fairfield County Commissioners
+CommIssueDate,esriFieldTypeString,719,499,7/18/2014
+SHAPE_Length,esriFieldTypeDouble,1217,752,218845.55987016085
+SHAPE_Area,esriFieldTypeDouble,1217,752,2231097241.9745636

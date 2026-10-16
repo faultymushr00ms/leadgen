@@ -1,0 +1,62 @@
+{% macro nearby_tables(nearby) %}
+{% if nearby %}
+<div class="nearby-block" style="margin-top:10px;">
+  {% if nearby.origin %}
+  <div style="padding:8px 12px; font-size:0.82rem;">
+    <strong>{{ nearby.origin.name }}</strong>
+    · {{ nearby.origin.status }}
+    {% if nearby.origin.supplier %} · {{ nearby.origin.supplier }}{% endif %}
+    {% if nearby.origin.rate %} · {{ nearby.origin.rate }}¢{% endif %}
+    {% if nearby.origin.ptc %} · {{ nearby.origin.ptc }}{% endif %}
+    {% if nearby.origin.card_url %}
+      · <a href="{{ nearby.origin.card_url }}" style="color:var(--forge-orange);">{{ nearby.origin.card_label or 'Battlecard' }}</a>
+    {% endif %}
+    {% if nearby.origin.detail %}<div style="color:var(--forge-muted); margin-top:4px;">{{ nearby.origin.detail }}</div>{% endif %}
+  </div>
+  {% endif %}
+  <div class="panel-header"><span>Nearby places</span><span>Census centroid</span></div>
+  <table class="forge-table">
+    <thead>
+      <tr><th>Place</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in nearby.places %}
+      <tr>
+        <td>{{ item.name }} <span class="pill">{{ item.type }}</span></td>
+        <td>{{ '%.1f'|format(item.miles) }}</td>
+        <td>{{ item.status }}{% if item.detail %}<div style="color:var(--forge-muted); font-size:0.75rem;">{{ item.detail }}</div>{% endif %}</td>
+        <td>{{ item.supplier or '—' }}</td>
+        <td>{% if item.rate %}{{ item.rate }}¢{% else %}—{% endif %}</td>
+        <td>{{ item.ptc or '—' }}</td>
+        <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">{{ item.card_label or 'Battlecard' }}</a>{% endif %}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">No nearby city, village, or CDP with a Census coordinate.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="panel-header"><span>Nearby zones</span><span>Centroid distance</span></div>
+  <table class="forge-table">
+    <thead>
+      <tr><th>Zone</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in nearby.zones %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ '%.1f'|format(item.miles) }}</td>
+        <td>{{ item.status }}{% if item.detail %}<div style="color:var(--forge-muted); font-size:0.75rem;">{{ item.detail }}</div>{% endif %}</td>
+        <td>{{ item.supplier or '—' }}</td>
+        <td>{% if item.rate %}{{ item.rate }}¢{% else %}—{% endif %}</td>
+        <td>{{ item.ptc or '—' }}</td>
+        <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">Battlecard</a>{% endif %}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">No anchored zone is nearby.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if nearby.note %}<div style="padding:8px 12px; font-size:0.75rem; color:var(--forge-muted);">{{ nearby.note }}</div>{% endif %}
+</div>
+{% endif %}
+{% endmacro %}

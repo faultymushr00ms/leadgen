@@ -1,0 +1,139 @@
+rank,community,county,utility,supplier,agg_rate,term_end,PTC_c_kWh,agg_minus_PTC,lifecycle,confidence,bucket,why
+1,Silverton,Hamilton,Duke Energy Ohio,Dynegy (expired),9.15,2026-05,Duke Energy Ohio 10.49,-1.34,ended,unverified (baseline only),1 ended program,residents back on utility default; last aggregation rate shown
+2,Tuscarawas Twp,Stark,Ohio Edison,None (program ended May 2026),none,2026-05,Ohio Edison 11.07,,ended (2026-05; trustees ended program on market conditions),single-source,1 ended program,residents back on utility default; last aggregation rate shown
+3,Delaware (City),Delaware,Ohio Edison / AEP Ohio,Dynegy (expired),9.28,2026-06,AEP Ohio 10.19 / Ohio Edison 11.07,-0.91 / -1.79,ended,likely,1 ended program,residents back on utility default; last aggregation rate shown
+4,Williamsburg,Clermont,Duke Energy Ohio,Dynegy (expired),9.38,2026-07,Duke Energy Ohio 10.49,-1.11,ended,unverified (baseline only),1 ended program,residents back on utility default; last aggregation rate shown
+5,Wyoming,Hamilton,Duke Energy Ohio,None (Dynegy ended Jul 2026),9.97,2026-07,Duke Energy Ohio 10.49,-0.52,ended (2026-07; no offer guaranteed savings vs Duke default),likely,1 ended program,residents back on utility default; last aggregation rate shown
+6,Hilliard,Franklin,AEP Ohio,Dynegy (expired),9.59,2026-09,AEP Ohio 10.19,-0.60,ended,single-source,1 ended program,residents back on utility default; last aggregation rate shown
+7,Bexley,Franklin,AEP Ohio,None (Dynegy program paused),,,AEP Ohio 10.19,,ended,unverified (baseline only),1 ended program,residents back on utility default; last aggregation rate shown
+8,Westlake,Cuyahoga,CEI,None (Dynegy term ended Jun 2026),none (last 8.38; rejected 10.11),,CEI 11.24,,ended (2026-06; city rejected 10.11¢ long-term offer; certificate 03-099E still open),confirmed,1 ended program,residents back on utility default; last aggregation rate shown
+9,Zanesville,Muskingum,AEP Ohio,,10.19,,AEP Ohio 10.19,+0.00,ended,unverified (baseline only),1 ended program,residents back on utility default; last aggregation rate shown
+10,Plain City,Madison,AEP Ohio,NOPEC/NextEra,unconfirmed (NOPEC AEP Standard 10.499 if enrolled),2027-06,AEP Ohio 10.19,,rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed),likely,2 seeking supplier / rate pending,rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed)
+11,Powell,Delaware,AEP Ohio,NOPEC/NextEra,unconfirmed (baseline 9.99 unsourced),2029-06,AEP Ohio 10.19,,rate pending (NOPEC selected Jun 2026; plan of operation not finalized),likely,2 seeking supplier / rate pending,rate pending (NOPEC selected Jun 2026; plan of operation not finalized)
+12,Ashley,Delaware,AEP Ohio,,,,AEP Ohio 10.19,,seeking supplier,single-source,2 seeking supplier / rate pending,seeking supplier
+13,Augusta Twp,Carroll,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 23-1153-EL-GAG recently certified; no supplier found
+14,Centerburg,Knox,AEP Ohio,,,,AEP Ohio 10.19,,rate pending,single-source,2 seeking supplier / rate pending,rate pending
+15,Darke County,Darke,,,,,n/a (utility not established),,seeking supplier,single-source,2 seeking supplier / rate pending,seeking supplier
+16,Frazeysburg,Muskingum,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 25-1198-EL-GAG recently certified; no supplier found
+17,Lincoln Heights,Hamilton,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 24-0224-EL-GAG recently certified; no supplier found
+18,Reily Twp,Butler,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 23-1089-EL-GAG recently certified; no supplier found
+19,Rutland (Village),Meigs,AEP Ohio,,,,AEP Ohio 10.19,,rate pending,single-source,2 seeking supplier / rate pending,rate pending
+20,Twin Twp,Preble,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 24-0036-EL-GAG recently certified; no supplier found
+21,West Alexandria,Preble,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 23-1155-EL-GAG recently certified; no supplier found
+22,West Mansfield,Logan,,,,,n/a (utility not established),,certified but not launched,escalate-call,2 seeking supplier / rate pending,PUCO case 24-1047-EL-GAG recently certified; no supplier found
+23,Cincinnati,Hamilton,Duke Energy Ohio,Dynegy,10.44,2026-11,Duke Energy Ohio 10.49,-0.05,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-11
+24,Sharonville,Hamilton,Duke Energy Ohio,Dynegy (current) -> WGL Energy (from Nov 2026),9.39,2026-11,Duke Energy Ohio 10.49,-1.10,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-11
+25,Ada,Hardin,Ada Municipal Electric,Dynegy,9.45,2026-12,n/a (utility not established),,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+26,Allen County,Allen,AEP Ohio,Dynegy,9.78,2026-12,AEP Ohio 10.19,-0.41,active,likely,3 contract expires <=6 mo,term ends 2026-12
+27,Auglaize County,Auglaize,AES Ohio / AEP Ohio,Dynegy,9.09,2026-12,AEP Ohio 10.19 / AES Ohio 10.86,-1.10 / -1.77,active,likely,3 contract expires <=6 mo,term ends 2026-12
+28,Beaver Township Twp,Mahoning,Ohio Edison,Dynegy,10.399,2026-12,Ohio Edison 11.07,-0.67,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+29,Beavercreek,Greene,AES Ohio,Constellation,8.699,2026-12,AES Ohio 10.86,-2.16,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+30,Brookville,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+31,Cardington,Morrow,,Dynegy,8.85,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+32,Cardington Twp,Morrow,,Dynegy,8.85,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+33,Centerville,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+34,Chester Township Twp,Geauga,CEI,Dynegy,10.399,2026-12,CEI 11.24,-0.84,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+35,Clark County,Clark,Ohio Edison,Dynegy,8.89,2026-12,Ohio Edison 11.07,-2.18,active,likely,3 contract expires <=6 mo,term ends 2026-12
+36,Clay Twp,Montgomery,,Dynegy,9.09,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+37,Clayton,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+38,Clinton County,Clinton,AES Ohio / Duke Energy Ohio,Dynegy,8.98,2026-12,Duke Energy Ohio 10.49 / AES Ohio 10.86,-1.51 / -1.88,active,likely,3 contract expires <=6 mo,term ends 2026-12
+39,Eaton,Preble,AES Ohio / Duke Energy Ohio,Constellation,9.049,2026-12,Duke Energy Ohio 10.49 / AES Ohio 10.86,-1.44 / -1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+40,Englewood,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+41,Erie County,Erie,Ohio Edison,Dynegy,8.88,2026-12,Ohio Edison 11.07,-2.19,active,confirmed,3 contract expires <=6 mo,term ends 2026-12
+42,Fairborn,Greene,Ohio Edison / AES Ohio,Constellation,9.049,2026-12,Ohio Edison 11.07 / AES Ohio 10.86,-2.02 / -1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+43,Fairfield County,Fairfield,AEP Ohio,Constellation,9.468,2026-12,AEP Ohio 10.19,-0.72,active,likely,3 contract expires <=6 mo,term ends 2026-12
+44,Fayette,Fulton,,Dynegy,9.78,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+45,Fredericktown,Knox,,Dynegy,9.63,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+46,Germantown,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+47,Golf Manor,Hamilton,Duke Energy Ohio,Dynegy,9.79,2026-12,Duke Energy Ohio 10.49,-0.70,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+48,Greene County,Greene,Toledo Edison / AES Ohio,Dynegy,9.36,2026-12,Toledo Edison 11.26 / AES Ohio 10.86,-1.90 / -1.50,active,confirmed,3 contract expires <=6 mo,term ends 2026-12
+49,Hanover Township Twp,Butler,Duke Energy Ohio,Direct Energy,10.29,2026-12,Duke Energy Ohio 10.49,-0.20,active,likely,3 contract expires <=6 mo,term ends 2026-12
+50,Hanover Township Twp,Columbiana,Ohio Edison,Dynegy,10.29,2026-12,Ohio Edison 11.07,-0.78,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+51,Heath / Newark,Licking,AEP Ohio,Dynegy (Newark only),10.29,2026-12,AEP Ohio 10.19,+0.10,"active for Newark; Heath eligibility disputed (Dynegy page excludes it, county page lists it)",conflict,3 contract expires <=6 mo,term ends 2026-12
+52,Henry County,Henry,Toledo Edison,Dynegy,8.96,2026-12,Toledo Edison 11.26,-2.30,active,likely,3 contract expires <=6 mo,term ends 2026-12
+53,Kettering,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+54,Lakeview / Indian Lake Area,Logan,AEP Ohio,Dynegy,9.26,2026-12,AEP Ohio 10.19,-0.93,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+55,Lemon Township,Butler,Duke Energy Ohio,Constellation,8.846,2026-12,Duke Energy Ohio 10.49,-1.64,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+56,Lewisburg,Preble,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+57,Liberty Twp,Hancock,,Dynegy,9.26,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+58,Licking County / Pataskala,Licking,AEP Ohio,Dynegy,10.29,2026-12,AEP Ohio 10.19,+0.10,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+59,Logan County,Logan,AES Ohio,Dynegy,9.26,2026-12,AES Ohio 10.86,-1.60,active,likely,3 contract expires <=6 mo,term ends 2026-12
+60,Louisville,Stark,AEP Ohio,Dynegy,10.29,2026-12,AEP Ohio 10.19,+0.10,active,likely,3 contract expires <=6 mo,term ends 2026-12
+61,Madison County,Madison,Ohio Edison / AES Ohio / AEP Ohio,Dynegy,9.47,2026-12,AEP Ohio 10.19 / Ohio Edison 11.07 / AES Ohio 10.86,-0.72 / -1.60 / -1.39,active,confirmed,3 contract expires <=6 mo,term ends 2026-12
+62,Madison Township,Lake,CEI,Dynegy,10.399,2026-12,CEI 11.24,-0.84,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+63,Madison Twp,Clark,,Dynegy,9.47,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+64,Madison Twp,Columbiana,,Dynegy,9.47,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+65,Madison Twp,Franklin,,Dynegy,9.47,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+66,Marlboro Twp,Stark,,Dynegy,8.99,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+67,Mercer County,Mercer,AES Ohio,Dynegy,9.45,2026-12,AES Ohio 10.86,-1.41,active,likely,3 contract expires <=6 mo,term ends 2026-12
+68,Miami County,Miami,AES Ohio,Dynegy,9.59,2026-12,AES Ohio 10.86,-1.27,active,likely,3 contract expires <=6 mo,term ends 2026-12
+69,Miamisburg,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+70,Middletown,Butler,AES Ohio,Dynegy,9.29,2026-12,AES Ohio 10.86,-1.57,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+71,Milford,Clermont,Duke Energy Ohio,Constellation,8.499,2026-12,Duke Energy Ohio 10.49,-1.99,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+72,Monroe,Butler,AES Ohio / Duke Energy Ohio,Constellation,9.049,2026-12,Duke Energy Ohio 10.49 / AES Ohio 10.86,-1.44 / -1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+73,Monroe Township Twp,Ashtabula,Ohio Edison,Dynegy,10.399,2026-12,Ohio Edison 11.07,-0.67,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+74,Monroe Twp,Clermont,,Dynegy,9.59,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+75,Moraine,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+76,Morrow County,Morrow,AEP Ohio / Ohio Edison (mixed),Dynegy,8.87,2026-12,AEP Ohio 10.19 / Ohio Edison 11.07,-1.32 / -2.20,"active (townships Canaan, Gilead, Perry, Washington only)",confirmed,3 contract expires <=6 mo,term ends 2026-12
+77,Mount Vernon,Knox,,Dynegy,9.63,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+78,Muskingum County,Muskingum,AEP Ohio,Constellation,9.266,2026-12,AEP Ohio 10.19,-0.92,active,likely,3 contract expires <=6 mo,term ends 2026-12
+79,New Lebanon,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+80,Oakwood,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,likely,3 contract expires <=6 mo,term ends 2026-12
+81,Osnaburg Twp,Stark,,Dynegy,7.95,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+82,Oxford Township (Butler Co),Butler,Duke Energy Ohio,Constellation,8.731,2026-12,Duke Energy Ohio 10.49,-1.76,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+83,Pleasant Twp,Franklin,,Dynegy,9.47,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+84,Pleasant Twp,Marion,,Dynegy,9.47,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+85,Preble County,Preble,AES Ohio,Dynegy,9.39,2026-12,AES Ohio 10.86,-1.47,active,likely,3 contract expires <=6 mo,term ends 2026-12
+86,Putnam County,Putnam,AEP Ohio,Direct Energy,9.2,2026-12,AEP Ohio 10.19,-0.99,active,likely,3 contract expires <=6 mo,term ends 2026-12
+87,Richland County,Richland,Ohio Edison / AEP Ohio,Dynegy,8.89,2026-12,AEP Ohio 10.19 / Ohio Edison 11.07,-1.30 / -2.18,active,likely,3 contract expires <=6 mo,term ends 2026-12
+88,Rushcreek Twp,Logan,,Dynegy,8.99,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+89,Rushsylvania,Logan,,Dynegy,8.99,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+90,Russell Township Twp,Geauga,CEI,Dynegy,10.399,2026-12,CEI 11.24,-0.84,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+91,Sandusky County,Sandusky,Toledo Edison / Ohio Edison / AEP Ohio,Dynegy,8.76,2026-12,AEP Ohio 10.19 / Toledo Edison 11.26 / Ohio Edison 11.07,-1.43 / -2.50 / -2.31,active,likely,3 contract expires <=6 mo,term ends 2026-12
+92,Seneca County,Seneca,AEP Ohio,Dynegy,9.31,2026-12,AEP Ohio 10.19,-0.88,active,likely,3 contract expires <=6 mo,term ends 2026-12
+93,Seven Mile,Butler,Duke Energy Ohio,Constellation,9.096,2026-12,Duke Energy Ohio 10.49,-1.39,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+94,South Lebanon,Warren,Duke Energy Ohio,Dynegy,9.09,2026-12,Duke Energy Ohio 10.49,-1.40,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+95,Trotwood,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+96,Troy,Miami,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+97,Tuscarawas County,Tuscarawas,AEP Ohio,Dynegy,9.71,2026-12,AEP Ohio 10.19,-0.48,active,likely,3 contract expires <=6 mo,term ends 2026-12
+98,Union,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+99,Union Twp,Licking,,Dynegy,9.59,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+100,Van Wert County,Van Wert,AES Ohio / AEP Ohio,Dynegy,9.34,2026-12,AEP Ohio 10.19 / AES Ohio 10.86,-0.85 / -1.52,active,likely,3 contract expires <=6 mo,term ends 2026-12
+101,Vandalia,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+102,Waldo,Marion,,Dynegy,9.06,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+103,Warsaw,Coshocton,,Dynegy,9.36,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+104,Washington County,Washington,AEP Ohio,Constellation,9.84,2026-12,AEP Ohio 10.19,-0.35,active,likely,3 contract expires <=6 mo,term ends 2026-12
+105,Wayne County,Wayne,AEP Ohio,Dynegy,9.56,2026-12,AEP Ohio 10.19,-0.63,active,likely,3 contract expires <=6 mo,term ends 2026-12
+106,West Carrollton,Montgomery,AES Ohio,Constellation,9.049,2026-12,AES Ohio 10.86,-1.81,active,confirmed,3 contract expires <=6 mo,term ends 2026-12; next: Dynegy 11.53 (Dec 2026-Dec 2029; 11.73 renewable)
+107,West Chester Township,Butler,Duke Energy Ohio,Dynegy,9.299,2026-12,Duke Energy Ohio 10.49,-1.19,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2026-12
+108,West Twp,Columbiana,,Dynegy,9.26,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+109,Weston,Wood,,Dynegy,9.35,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+110,Williams County,Williams,Toledo Edison,Dynegy,8.78,2026-12,Toledo Edison 11.26,-2.48,active,likely,3 contract expires <=6 mo,term ends 2026-12
+111,Winchester,Adams,,Dynegy,9.19,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+112,Wood County,Wood,Toledo Edison,Dynegy,8.78,2026-12,Toledo Edison 11.26,-2.48,active,likely,3 contract expires <=6 mo,term ends 2026-12
+113,York Twp,Sandusky,,Dynegy,9.34,2026-12,n/a (utility not established),,active,single-source,3 contract expires <=6 mo,term ends 2026-12
+114,Aurora,Portage,Ohio Edison,Dynegy,9.59,2027-04,Ohio Edison 11.07,-1.48,active,unverified (baseline only),3 contract expires <=6 mo,term ends 2027-04
+115,Hardin County,Hardin,AEP Ohio,Dynegy,8.99,2027-05,AEP Ohio 10.19,-1.20,active,likely,4 new community not in app,rate confidence likely
+116,Hocking County,Hocking,AEP Ohio,Dynegy,9.97,2027-05,AEP Ohio 10.19,-0.22,active,likely,4 new community not in app,rate confidence likely
+117,Ottawa County,Ottawa,Toledo Edison / Ohio Edison,Dynegy,8.89,2027-05,Toledo Edison 11.26 / Ohio Edison 11.07,-2.37 / -2.18,active,likely,4 new community not in app,rate confidence likely
+118,Upper Arlington,Franklin,AEP Ohio,AEP Energy,11.162,2027-05,AEP Ohio 10.19,+0.97,active,likely,4 new community not in app,rate confidence likely
+119,Albany,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+120,Amesville,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+121,Athens County (Unincorporated),Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+122,Belpre,Washington,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+123,Buchtel,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+124,Chauncey,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+125,Chesterhill,Morgan,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+126,Glenford,Perry,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+127,Jacksonville,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+128,Lowell,Washington,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+129,New Straitsville,Perry,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+130,Racine,Meigs,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+131,Rio Grande,Gallia,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+132,Shawnee,Perry,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+133,Somerset,Perry,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+134,Trimble,Athens,AEP Ohio,AEP Energy,11.262,2027-06,AEP Ohio 10.19,+1.07,active,likely,4 new community not in app,rate confidence likely
+135,Liberty Township Twp,Butler,Duke Energy Ohio,Constellation,10.099,2027-07,Duke Energy Ohio 10.49,-0.39,active,likely,4 new community not in app,rate confidence likely
+136,Fulton County,Fulton,Toledo Edison,Dynegy,9.03,2027-12,Toledo Edison 11.26,-2.23,active,likely,4 new community not in app,rate confidence likely
+137,Huron County,Huron,Ohio Edison,Dynegy,8.92,2027-12,Ohio Edison 11.07,-2.15,active,likely,4 new community not in app,rate confidence likely
+138,Fayette County,Fayette,AES Ohio,Dynegy,10.29,2028-06,AES Ohio 10.86,-0.57,active,likely,4 new community not in app,rate confidence likely

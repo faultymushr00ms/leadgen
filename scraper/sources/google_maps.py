@@ -91,8 +91,9 @@ class GoogleMapsSource(BaseSource):
     name = "Google Maps"
 
     def fetch(self) -> List[RawLead]:
+        from forge_config import key_is_configured
         api_key = os.getenv("GOOGLE_MAPS_API_KEY", "").strip()
-        if not api_key:
+        if not key_is_configured(api_key):
             print(f"  [Google Maps] No API key found — skipping. "
                   "Add GOOGLE_MAPS_API_KEY to .env to enable this source.")
             return []

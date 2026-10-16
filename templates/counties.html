@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% from "_nearby.html" import nearby_tables %}
+{% block title %}— Counties{% endblock %}
+{% block topbar_title %}COUNTIES{% endblock %}
+{% block topbar_sub %}Jurisdiction browser · ZIP is not eligibility{% endblock %}
+{% block topbar_actions %}
+<a class="btn btn-ghost btn-sm" href="/intel">NOPEC glance</a>
+<a class="btn btn-ghost btn-sm" href="/ptc">Price to Compare</a>
+{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center;">
+    <form method="get" action="/counties" autocomplete="off" style="display:flex; gap:8px; align-items:center;">
+      <select name="county" class="dark-input" autocomplete="off" style="max-width:240px;" onchange="this.form.submit()">
+        {% for group in groups %}
+        <option value="{{ group.county }}" {% if group.county == selected %}selected{% endif %}>{{ group.county }} ({{ group.count }})</option>
+        {% endfor %}
+      </select>
+    </form>
+    <form role="search" method="post" action="/counties" autocomplete="off" style="display:flex; gap:8px; align-items:center;">
+      <label for="place-lookup" class="stat-label" style="margin:0;">ZIP or place</label>
+      <input id="place-lookup" type="search" name="q" value="{{ lookup_value }}"
+             class="dark-input" maxlength="81" enterkeyhint="search"
+             autocomplete="off" spellcheck="false" autocapitalize="off" autocorrect="off"
+             aria-label="ZIP or place name" placeholder="ZIP or place name"
+             style="max-width:220px; -webkit-text-security: none;">
+      {% if selected %}<input type="hidden" name="county" value="{{ selected }}">{% endif %}
+      <button class="btn btn-forge btn-sm" type="submit">Look up</button>
+    </form>
+    <button id="locate-me" class="btn btn-ghost btn-sm" type="button">Locate me</button>
+  </div>
+  <div id="locate-result" class="panel" style="display:none; margin-bottom:14px; padding:12px 14px;"></div>
+
+  <div class="banner-alert banner-note">{{ disclaimer }}</div>
+
+  {% if lookup_error %}
+  <div class="banner-alert banner-unresolved">{{ lookup_error }}</div>
+  {% endif %}
+
+  {% if zip_result %}
+  <div class="panel" style="margin-bottom:14px; padding:12px 14px;">
+    <div class="stat-label">ZIP {{ zip_result.zip }}</div>
+    {% if not zip_result.found %}
+      <div style="margin-top:6px;">{{ zip_result.message }}</div>
+    {% else %}
+      <div style="margin-top:6px; font-size:0.85rem;">{{ zip_result.message }}</div>
+      {% if zip_result.match_count != 1 %}
+      <div class="banner-alert banner-unresolved" style="margin-top:8px;">
+        {{ zip_result.match_count }} zone records use this name. The ZIP does not say which jurisdiction applies.
+      </div>
+      {% endif %}
+      <table class="forge-table" style="margin-top:8px;">
+        <thead>
+          <tr><th>Mapped zone name</th><th>Jurisdiction</th><th>County</th><th>Utility</th><th>Verification</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for item in zip_result.jurisdictions %}
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.jurisdiction }}</td>
+            <td>{{ item.county or '—' }}</td>
+            <td>{{ item.utility or '—' }}</td>
+            <td>{{ item.verification or '—' }}</td>
+            <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">Card</a>{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6">The ZIP map names “{{ zip_result.zone_name }}”, and no zone record has that name.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if place_hits %}
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header"><span>Places</span><span>{{ place_hits|length }}</span></div>
+    <table class="forge-table">
+      <thead>
+        <tr><th>Place</th><th>Type</th><th>Counties</th><th>Townships</th><th>Coverage</th></tr>
+      </thead>
+      <tbody>
+        {% for place in place_hits %}
+        <tr>
+          <td>{{ place.name }}</td>
+          <td>{{ place.type }}</td>
+          <td>{% for county in place.counties %}{{ county.name }}{% if county.share %} {{ county.share }}%{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}</td>
+          <td>{% for township in place.townships %}{{ township.name }} township ({{ township.county }}, {{ township.role }}){% if not loop.last %}; {% endif %}{% else %}—{% endfor %}</td>
+          <td>{{ place.coverage.label }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% for place in place_hits[:4] %}
+      {% if place.nearby %}
+      <div class="panel-header"><span>Near {{ place.name }}</span></div>
+      {{ nearby_tables(place.nearby) }}
+      {% endif %}
+    {% endfor %}
+    {% if place_hits|length > 4 %}
+    <div style="padding:8px 12px; font-size:0.75rem; color:var(--forge-muted);">Nearby is shown for the first four matches.</div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if current %}
+  <div class="panel">
+    <div class="panel-header">
+      <span>{{ current.county }} County</span>
+      <span>{{ current.count }} zones</span>
+    </div>
+    <table class="forge-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Utility</th>
+          <th>Program</th>
+          <th>Verification</th>
+          <th>Current (sourced)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for zone in current.zones %}
+        {% set card = zone.card %}
+        <tr>
+          <td>
+            {{ card.jurisdiction if card else zone.name }}
+            {% if card and card.unresolved %}<span class="pill" style="margin-left:6px; color:#ffe082; border-color:rgba(255,179,0,0.4);">unresolved</span>{% endif %}
+          </td>
+          <td>{{ card.utility if card else zone.utility }}</td>
+          <td>{{ card.program if card else '—' }}</td>
+          <td>{{ card.verificationLabel if card else '—' }}</td>
+          <td>{% if card and card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}</td>
+          <td>{% if card %}<a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var button = document.getElementById('locate-me');
+  var out = document.getElementById('locate-result');
+  function line(parent, label, value) {
+    var row = document.createElement('div');
+    var name = document.createElement('span');
+    name.className = 'stat-label';
+    name.textContent = label + ' ';
+    row.appendChild(name);
+    row.appendChild(document.createTextNode(value || '—'));
+    parent.appendChild(row);
+  }
+  function table(parent, title, rows) {
+    var heading = document.createElement('div');
+    heading.className = 'stat-label';
+    heading.style.marginTop = '10px';
+    heading.textContent = title;
+    parent.appendChild(heading);
+    (rows || []).forEach(function (item) {
+      var row = document.createElement('div');
+      row.style.fontSize = '0.82rem';
+      row.style.marginTop = '4px';
+      var bits = [item.name, item.miles != null ? item.miles.toFixed(1) + ' mi' : '', item.status || '', item.supplier || '', item.rate ? item.rate + '¢' : '', item.ptc || ''];
+      row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+      if (item.card_url) {
+        row.appendChild(document.createTextNode(' · '));
+        var link = document.createElement('a');
+        link.href = item.card_url;
+        link.style.color = 'var(--forge-orange)';
+        link.textContent = item.card_label || 'Battlecard';
+        row.appendChild(link);
+      }
+      parent.appendChild(row);
+    });
+  }
+  function render(data) {
+    out.style.display = 'block';
+    out.replaceChildren();
+    if (!data || data.ok === false || data.inside_ohio === false) {
+      out.textContent = (data && data.message) || 'Location lookup failed.';
+      return;
+    }
+    var title = document.createElement('div');
+    title.className = 'stat-label';
+    title.textContent = 'Your location';
+    out.appendChild(title);
+    line(out, 'County', data.county);
+    line(out, 'Township', data.township ? (data.township + (data.township_county ? ' (' + data.township_county + ')' : '')) : 'No county-subdivision polygon contains this point.');
+    if (data.nearest_place) {
+      line(out, 'Nearest place', data.nearest_place.name + ' · ' + (data.nearest_place.type || '') + (data.nearest_place.miles != null ? ' · ' + data.nearest_place.miles.toFixed(1) + ' mi' : ''));
+      if (data.nearest_place.detail) {
+        var note = document.createElement('div');
+        note.style.color = 'var(--forge-muted)';
+        note.style.fontSize = '0.75rem';
+        note.textContent = data.nearest_place.detail;
+        out.appendChild(note);
+      }
+    }
+    table(out, 'Nearby places', data.nearby_places);
+    table(out, 'Nearby zones', data.nearby_zones);
+    if (data.message) {
+      var msg = document.createElement('div');
+      msg.style.marginTop = '8px';
+      msg.style.color = 'var(--forge-muted)';
+      msg.style.fontSize = '0.75rem';
+      msg.textContent = data.message;
+      out.appendChild(msg);
+    }
+  }
+  button.addEventListener('click', function () {
+    out.style.display = 'block';
+    if (!navigator.geolocation) {
+      out.textContent = 'This browser does not provide location. Nothing was sent.';
+      return;
+    }
+    out.textContent = 'Asking for location permission…';
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      fetch('/api/locate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lat: pos.coords.latitude, lon: pos.coords.longitude})
+      }).then(function (response) { return response.json(); }).then(render).catch(function () {
+        out.textContent = 'Location lookup failed.';
+      });
+    }, function () {
+      out.textContent = 'Location permission was denied. Nothing was sent.';
+    }, {enableHighAccuracy: false, maximumAge: 0, timeout: 10000});
+  });
+})();
+</script>
+{% endblock %}

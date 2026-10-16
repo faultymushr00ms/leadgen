@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}— NOPEC at a glance{% endblock %}
+{% block topbar_title %}NOPEC AT A GLANCE{% endblock %}
+{% block topbar_sub %}Research overlay · accessed {{ glance.accessedAt }}{% endblock %}
+{% block topbar_actions %}
+<a class="btn btn-ghost btn-sm" href="/counties">Counties / ZIP</a>
+<a class="btn btn-ghost btn-sm" href="/ptc">Price to Compare</a>
+<a class="btn btn-ghost btn-sm" href="/queue">Investigation queue</a>
+{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div class="banner-alert banner-note">
+    Counts below are computed from the reconciliation dataset, not from the original FORGE supplier field.
+    A NOPEC community-map listing is the recorded source for most of these rows. Verification is often
+    <strong>likely</strong>, which is not the same as confirmed. A regional price is not treated as proof for every member.
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+    <div class="panel" style="padding:12px 16px; min-width:140px;">
+      <div class="stat-label">NOPEC administrator</div>
+      <div class="stat-number">{{ glance.count }}</div>
+    </div>
+    {% for label, count in glance.verifications.items() %}
+    <div class="panel" style="padding:12px 16px; min-width:120px;">
+      <div class="stat-label">{{ 'needs call' if label == 'escalate-call' else label }}</div>
+      <div class="stat-number" style="font-size:1.4rem;">{{ count }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header">Published NOPEC prices on the corrected rows</div>
+    <table class="forge-table">
+      <thead>
+        <tr>
+          <th>Rate</th>
+          <th>Utility</th>
+          <th>Term</th>
+          <th>Basis</th>
+          <th>Zones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for group in glance.groups %}
+        <tr>
+          <td style="color:var(--forge-orange); font-weight:700;">{{ group.rate }}{% if group.rate != '(no current rate)' %}¢{% endif %}</td>
+          <td>{{ group.utility or '—' }}</td>
+          <td>{{ group.term or '—' }}</td>
+          <td>{{ group.basis or '—' }}</td>
+          <td>{{ group.count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header">Where the recorded rate is not the 10.399 / 10.499 / 10.599 block</div>
+    <div style="padding:12px 14px; font-size:0.82rem; line-height:1.5;">
+      {% for group in glance.groups if group.rate not in ['10.399', '10.499', '10.599'] %}
+        <div style="margin-bottom:8px;">
+          <strong style="color:var(--forge-gold);">{{ group.rate }}{% if group.rate != '(no current rate)' %}¢{% endif %}</strong>
+          · {{ group.utility or 'utility not stated' }}
+          · {{ group.names | join(', ') }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">Sources recorded on these rows</div>
+    <div style="padding:12px 14px; font-size:0.78rem; line-height:1.6;">
+      {% for url in glance.sources %}
+        <div><a href="{{ url }}" style="color:#4fc3f7;">{{ url }}</a></div>
+      {% endfor %}
+      <div style="color:var(--forge-muted); margin-top:8px;">Accessed {{ glance.accessedAt }}. Effective term is on each row, separate from the access date.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -36,6 +36,7 @@ Layout classes: `.panel`, `.forge-table`, `.btn-forge`, `.btn-ghost`, `.dark-inp
 
 ```
 app.py                          # Flask app, all routes and API endpoints
+history_store.py                # Append-only journal; pruning must not touch data/history/
 templates/
   base.html                     # Dark sidebar layout, CDN includes, CSS vars
   hotspots.html                 # Zone intelligence cockpit (most complex)
@@ -137,6 +138,14 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 3. **NEVER include** DNC (do-not-call) records anywhere in the codebase or output
 4. **NEVER store or use** third-party service credentials (Salesforce, LinkedIn, etc.)
 5. **data/regions/*.json** files ARE safe to commit — they contain publicly sourced market intelligence only
+
+## History (permanent)
+
+Keep genuine past data for the life of the project: real prior and historical rates, contracts, suppliers, sources, and superseded values that were once true. Those writes are append-only (`data/history/` and append-only queue rows). A genuine superseded value is marked superseded with a timestamp and stays stored.
+
+Data proven incorrect is deleted, not kept as superseded history. That includes wrong classifications and unsourced values contradicted by verified sources. Log only a one-line removal note: zone, field, `removed incorrect value`, date, and reason. The note must not contain the removed value. Genuine expired rates stay. Pruning or cleanup must not wipe `data/history/`.
+
+PUCO Government Aggregation polygons are fetched into the gitignored cache `data/cache/puco/`. Each fetch writes a new snapshot and leaves the older file in place. The geometry is not committed. The map credits `Source: PUCO Government Aggregation map`. A listing is certification only, not an active program, supplier, or rate.
 
 ## Branch
 

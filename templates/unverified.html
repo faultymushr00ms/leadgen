@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}— Unverified leads{% endblock %}
+{% block topbar_title %}UNVERIFIED LEADS{% endblock %}
+{% block topbar_sub %}{{ groups|length }} communities · single-source adds, not confirmed{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div class="banner-alert banner-unresolved">
+    <strong>Single-source — not confirmed.</strong>
+    One-source adds stay here. Likely adds that name a supplier but have no aggregation rate stay here too.
+    They are not battlecard rates. Do not quote them as a current aggregation price.
+  </div>
+
+  {% if questions %}
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header"><span>Unresolved questions with no zone yet</span><span>{{ questions|length }}</span></div>
+    <table class="forge-table">
+      <thead><tr><th>Community</th><th>County</th><th>Question</th></tr></thead>
+      <tbody>
+        {% for item in questions %}
+        <tr>
+          <td>{{ item.community }}</td>
+          <td>{{ item.county }}</td>
+          <td style="white-space:normal;">{{ item.question }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <form method="get" action="/unverified" style="margin-bottom:10px;">
+    <input class="dark-input" type="text" name="q" value="{{ q }}" placeholder="Filter community or county" style="max-width:320px;">
+  </form>
+
+  <div class="panel">
+    <div class="panel-header"><span>Flagged single-source adds</span><span>{{ groups|length }}</span></div>
+    <div class="scrollable">
+      <table class="forge-table">
+        <thead>
+          <tr><th>Community</th><th>County</th><th>Fields</th><th>Flag</th></tr>
+        </thead>
+        <tbody>
+          {% for group in groups %}
+          <tr>
+            <td>{{ group.community }}</td>
+            <td>{{ group.county }}</td>
+            <td style="white-space:normal;">
+              {% for field in group.fields %}
+              <div><strong>{{ field.field }}</strong> {{ field.value }}</div>
+              {% endfor %}
+            </td>
+            <td style="white-space:normal; color:#ffe082;">{{ group.flag }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

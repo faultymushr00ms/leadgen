@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}— Price to Compare{% endblock %}
+{% block topbar_title %}PRICE TO COMPARE{% endblock %}
+{% block topbar_sub %}October 2026 · cents/kWh{% endblock %}
+{% block topbar_actions %}
+<a class="btn btn-ghost btn-sm" href="/intel">NOPEC glance</a>
+<a class="btn btn-ghost btn-sm" href="/counties">Counties / ZIP</a>
+{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div class="banner-alert banner-note">{{ ptc.note }}</div>
+  <div class="panel" style="margin-bottom:14px;">
+    <div class="panel-header">Reference Price to Compare · as of {{ ptc.as_of }}</div>
+    <table class="forge-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Utility</th>
+          <th>¢/kWh</th>
+          <th>Effective</th>
+          <th>Accessed</th>
+          <th>Customer class</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in ptc.rates %}
+        <tr>
+          <td>{{ row.code }}</td>
+          <td>{{ row.utility }}</td>
+          <td style="color:var(--forge-orange); font-weight:700;">{{ row.cents_per_kwh }}</td>
+          <td>{% if row.effective_start %}{{ row.effective_start }} – {{ row.effective_end }}{% else %}{{ row.as_of }}{% endif %}</td>
+          <td>{{ row.accessed_at or '—' }}</td>
+          <td>{{ row.customer_class or '—' }}</td>
+          <td style="white-space:normal; max-width:420px;">
+            {{ row.source }}
+            {% if row.source_url %}
+              <div><a href="{{ row.source_url }}" style="color:#4fc3f7;">{{ row.source_url }}</a></div>
+            {% endif %}
+            {% if row.previous_source %}
+              <div style="margin-top:4px;">Earlier source note kept: {{ row.previous_source }}</div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">Zones whose researched current basis is Price to Compare</div>
+    <table class="forge-table">
+      <thead>
+        <tr><th>Jurisdiction</th><th>County</th><th>Utility</th><th>Rate</th><th>Source</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for zone in defaults %}
+        {% set card = zone.card %}
+        <tr>
+          <td>{{ card.jurisdiction }}</td>
+          <td>{{ card.county }}</td>
+          <td>{{ card.utility }}</td>
+          <td>{{ card.currentLabel }}¢</td>
+          <td style="white-space:normal; max-width:360px;"><a href="{{ card.currentSource }}" style="color:#4fc3f7;">{{ card.currentSource }}</a></td>
+          <td><a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

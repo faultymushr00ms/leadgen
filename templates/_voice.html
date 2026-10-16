@@ -1,0 +1,13 @@
+{% macro confidence(mark) -%}
+{%- if mark -%}
+<span class="conf-mark conf-{{ mark.kind }}" title="{{ mark.tip }}">{% if mark.kind == 'solid' %}●{% elif mark.kind == 'hollow' %}○{% else %}— <span class="conf-word">Pending</span>{% endif %}</span>
+{%- else -%}
+<span class="conf-mark conf-pending" title="Pending">— <span class="conf-word">Pending</span></span>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro status_pill(voice) -%}
+{%- if voice and voice.status -%}
+<span class="status-label">{{ voice.status }}{% if voice.statusDate %} {{ voice.statusDate }}{% endif %}</span>
+{%- endif -%}
+{%- endmacro %}

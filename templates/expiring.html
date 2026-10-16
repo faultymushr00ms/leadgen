@@ -1,13 +1,10 @@
 {% extends "base.html" %}
+{% from "_voice.html" import confidence %}
 {% block title %}— Expiring{% endblock %}
 {% block topbar_title %}EXPIRING &amp; HOTSPOTS{% endblock %}
-{% block topbar_sub %}Term watch from the research status · queue score beside it{% endblock %}
+{% block topbar_sub %}Terms coming due{% endblock %}
 {% block content %}
 <div class="research-page">
-  <div class="banner-alert banner-note">
-    Expired is a dated term, not an error. Needs-call and conflict rows in this list stay unresolved.
-  </div>
-
   <div class="panel" style="margin-bottom:14px;">
     <div class="panel-header">
       <span>Term watch</span>
@@ -32,14 +29,12 @@
         <tr>
           <td>
             {{ card.jurisdiction }}
-            {% if card.unresolved %}<span class="pill" style="margin-left:6px; color:#ffe082; border-color:rgba(255,179,0,0.4);">unresolved</span>{% endif %}
-            {% if card.termStatus == 'expired' %}<span class="pill" style="margin-left:6px;">expired</span>{% endif %}
           </td>
           <td>{{ card.county }}</td>
-          <td>{{ card.termStatus }}</td>
+          <td>{{ card.voice.status or term_label(card.termStatus) }}{% if card.voice.statusDate %} {{ card.voice.statusDate }}{% endif %}</td>
           <td>{{ card.currentEnd or '—' }}</td>
           <td>{% if card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}</td>
-          <td>{{ card.verificationLabel }}</td>
+          <td>{{ confidence(card.voice.confidence) }}</td>
           <td>{{ entry.triggerScore or '—' }}</td>
           <td><a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a></td>
         </tr>
@@ -63,12 +58,9 @@
         <tr>
           <td style="color:var(--forge-orange); font-weight:700;">{{ entry.score }}</td>
           <td><a href="{{ card.url }}" style="color:#e0e0e0;">{{ card.jurisdiction }}</a></td>
-          <td>
-            {{ card.verificationLabel }}
-            {% if card.unresolved %}<span class="pill" style="margin-left:6px; color:#ffe082; border-color:rgba(255,179,0,0.4);">unresolved</span>{% endif %}
-          </td>
-          <td>{{ card.program }}</td>
-          <td style="white-space:normal; max-width:460px;">{{ entry.item.exact_next_action }}</td>
+          <td>{{ confidence(card.voice.confidence) }}</td>
+          <td>{{ program_label(card.program) }}</td>
+          <td style="white-space:normal; max-width:460px;">{{ entry.item.exact_next_action | voice }}</td>
         </tr>
         {% endfor %}
       </tbody>

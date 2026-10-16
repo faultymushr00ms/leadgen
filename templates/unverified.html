@@ -1,31 +1,32 @@
 {% extends "base.html" %}
-{% block title %}— Unverified leads{% endblock %}
-{% block topbar_title %}UNVERIFIED LEADS{% endblock %}
-{% block topbar_sub %}{{ groups|length }} communities · single-source adds, not confirmed{% endblock %}
+{% from "_voice.html" import confidence %}
+{% block title %}— Additions{% endblock %}
+{% block topbar_title %}ADDITIONS{% endblock %}
+{% block topbar_sub %}{{ groups|length }} communities · pending a second look{% endblock %}
 {% block content %}
 <div class="research-page">
-  <div class="banner-alert banner-unresolved">
-    <strong>Single-source — not confirmed.</strong>
-    One-source adds stay here. Likely adds that name a supplier but have no aggregation rate stay here too.
-    They are not battlecard rates. Do not quote them as a current aggregation price.
-  </div>
+  <p style="color:var(--forge-muted); font-size:0.82rem; margin:0 0 12px;">
+    These additions stay off the battlecard until the rate is on file.
+  </p>
 
   {% if questions %}
-  <div class="panel" style="margin-bottom:14px;">
-    <div class="panel-header"><span>Unresolved questions with no zone yet</span><span>{{ questions|length }}</span></div>
-    <table class="forge-table">
-      <thead><tr><th>Community</th><th>County</th><th>Question</th></tr></thead>
-      <tbody>
-        {% for item in questions %}
-        <tr>
-          <td>{{ item.community }}</td>
-          <td>{{ item.county }}</td>
-          <td style="white-space:normal;">{{ item.question }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  <details class="evidence" style="margin-bottom:14px;">
+    <summary>Evidence &amp; notes · {{ questions|length }}</summary>
+    <div class="evidence-body">
+      <table class="forge-table">
+        <thead><tr><th>Community</th><th>County</th><th>Note</th></tr></thead>
+        <tbody>
+          {% for item in questions %}
+          <tr>
+            <td>{{ item.community }}</td>
+            <td>{{ item.county }}</td>
+            <td style="white-space:normal;">{{ item.question | voice }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
   {% endif %}
 
   <form method="get" action="/unverified" style="margin-bottom:10px;">
@@ -33,11 +34,11 @@
   </form>
 
   <div class="panel">
-    <div class="panel-header"><span>Flagged single-source adds</span><span>{{ groups|length }}</span></div>
+    <div class="panel-header"><span>Communities</span><span>{{ groups|length }}</span></div>
     <div class="scrollable">
       <table class="forge-table">
         <thead>
-          <tr><th>Community</th><th>County</th><th>Fields</th><th>Flag</th></tr>
+          <tr><th>Community</th><th>County</th><th>Fields</th><th></th></tr>
         </thead>
         <tbody>
           {% for group in groups %}
@@ -46,10 +47,12 @@
             <td>{{ group.county }}</td>
             <td style="white-space:normal;">
               {% for field in group.fields %}
-              <div><strong>{{ field.field }}</strong> {{ field.value }}</div>
+              <div><strong>{{ field.field }}</strong>
+                {% if field.field == 'lifecycle' %}{{ lifecycle_label(field.value) }}{% else %}{{ field.value | voice }}{% endif %}
+              </div>
               {% endfor %}
             </td>
-            <td style="white-space:normal; color:#ffe082;">{{ group.flag }}</td>
+            <td>{{ confidence(confidence_mark(none, group.confidence)) }}</td>
           </tr>
           {% endfor %}
         </tbody>

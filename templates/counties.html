@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_voice.html" import confidence %}
 {% from "_nearby.html" import nearby_tables %}
 {% block title %}— Counties{% endblock %}
 {% block topbar_title %}COUNTIES{% endblock %}
@@ -60,7 +61,7 @@
             <td>{{ item.jurisdiction }}</td>
             <td>{{ item.county or '—' }}</td>
             <td>{{ item.utility or '—' }}</td>
-            <td>{{ item.verification or '—' }}</td>
+            <td>{{ confidence(confidence_mark(item.verification)) }}</td>
             <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">Card</a>{% endif %}</td>
           </tr>
           {% else %}
@@ -126,11 +127,10 @@
         <tr>
           <td>
             {{ card.jurisdiction if card else zone.name }}
-            {% if card and card.unresolved %}<span class="pill" style="margin-left:6px; color:#ffe082; border-color:rgba(255,179,0,0.4);">unresolved</span>{% endif %}
           </td>
           <td>{{ card.utility if card else zone.utility }}</td>
-          <td>{{ card.program if card else '—' }}</td>
-          <td>{{ card.verificationLabel if card else '—' }}</td>
+          <td>{{ card.voice.status if card and card.voice and card.voice.status else (program_label(card.program) if card else '—') }}</td>
+          <td>{% if card and card.voice %}{{ confidence(card.voice.confidence) }}{% else %}—{% endif %}</td>
           <td>{% if card and card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}</td>
           <td>{% if card %}<a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a>{% endif %}</td>
         </tr>

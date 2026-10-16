@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_voice.html" import confidence %}
 {% block title %}— NOPEC at a glance{% endblock %}
 {% block topbar_title %}NOPEC AT A GLANCE{% endblock %}
 {% block topbar_sub %}Research overlay · accessed {{ glance.accessedAt }}{% endblock %}
@@ -9,11 +10,7 @@
 {% endblock %}
 {% block content %}
 <div class="research-page">
-  <div class="banner-alert banner-note">
-    Counts below are computed from the reconciliation dataset, not from the original FORGE supplier field.
-    A NOPEC community-map listing is the recorded source for most of these rows. Verification is often
-    <strong>likely</strong>, which is not the same as confirmed. A regional price is not treated as proof for every member.
-  </div>
+  <p style="color:var(--forge-muted); font-size:0.82rem; margin:0 0 14px;">Counts are from the reconciliation. A community listing is not a rate for every member.</p>
 
   <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
     <div class="panel" style="padding:12px 16px; min-width:140px;">
@@ -22,7 +19,7 @@
     </div>
     {% for label, count in glance.verifications.items() %}
     <div class="panel" style="padding:12px 16px; min-width:120px;">
-      <div class="stat-label">{{ 'needs call' if label == 'escalate-call' else label }}</div>
+      <div class="stat-label">{{ confidence(confidence_mark(label)) }}</div>
       <div class="stat-number" style="font-size:1.4rem;">{{ count }}</div>
     </div>
     {% endfor %}

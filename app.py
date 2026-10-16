@@ -18,6 +18,7 @@ from forge_config import env_is_configured, pipeline_argv
 import history_store
 import merged_research
 import place_index
+import presentation
 import puco_layer
 import territory
 import zone_intel
@@ -46,6 +47,7 @@ def _load_zones() -> list:
             zones.extend(file_zones)
     zone_intel.attach_research(zones)
     zones = history_store.apply_zone_history(zones)
+    presentation.attach(zones)
     zones.sort(key=lambda z: (
         STATUS_SORT.get(z.get("status", "verify"), 9),
         -(z.get("rateChange") or 0),
@@ -130,7 +132,15 @@ def inject_globals():
     return {
         "now": datetime.now().strftime("%a %b %d  %H:%M"),
         "active": "",
+        "confidence_mark": presentation.confidence_mark,
+        "lifecycle_label": presentation.lifecycle_label,
+        "program_label": presentation.program_label,
+        "term_label": presentation.term_label,
+        "source_links": presentation.source_links,
     }
+
+
+app.jinja_env.filters["voice"] = presentation.polish
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────────

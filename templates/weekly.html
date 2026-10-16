@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_voice.html" import confidence %}
 {% block title %}— Weekly{% endblock %}
 {% block topbar_title %}WEEKLY PRIORITY LIST{% endblock %}
 {% block topbar_sub %}Field prep — what to call this week{% endblock %}
@@ -173,8 +174,8 @@
     </button>
     {% endif %}
     {% if unresolved_list %}
-    <button class="tab-btn" data-tab="unresolved" style="color:#ffe082;border-color:rgba(255,179,0,0.4);">
-      Unresolved <span class="count-pill ms-1" style="background:rgba(255,179,0,0.15);color:#ffe082;padding:1px 6px;border-radius:8px;font-size:0.62rem;">{{ unresolved_list|length }}</span>
+    <button class="tab-btn" data-tab="unresolved">
+      Pending <span class="count-pill ms-1">{{ unresolved_list|length }}</span>
     </button>
     {% endif %}
     <button class="tab-btn" data-tab="avoid">
@@ -184,13 +185,10 @@
 
   {% if unresolved_list %}
   <div class="section-block" data-section="unresolved">
-    <div class="section-header" style="color:#ffe082;border-color:rgba(255,179,0,0.35);">
-      <i class="bi bi-telephone" style="color:#ffb300;"></i>
-      Unresolved — needs a call or sources conflict
-      <span class="count-pill" style="background:rgba(255,179,0,0.15);color:#ffe082;">{{ unresolved_list|length }}</span>
-    </div>
-    <div style="font-size:0.72rem;color:var(--forge-muted);margin:-8px 0 12px;padding-left:2px;">
-      These rows are not marked inactive. Do not pitch from the old FORGE hook.
+    <div class="section-header">
+      <i class="bi bi-telephone"></i>
+      Pending
+      <span class="count-pill">{{ unresolved_list|length }}</span>
     </div>
     {% for z in unresolved_list %}{{ _zone_card(z) }}{% endfor %}
   </div>
@@ -316,29 +314,22 @@
         <span class="heat-badge heat-pain mb-1" style="font-size:0.65rem;">PAIN COMING</span>
       {% elif status == 'transition' %}
         <span class="heat-badge heat-warm mb-1" style="font-size:0.65rem;">TRANSITION</span>
-      {% elif status == 'verify' %}
-        <span class="heat-badge heat-cooling mb-1" style="font-size:0.65rem;">VERIFY</span>
       {% endif %}
-      {% if z.card and z.card.municipalFlagUnconfirmed %}
-        <span class="heat-badge heat-warm mb-1" style="font-size:0.65rem;">UNRESOLVED</span>
+      {% if z.voice %}
+        {{ confidence(z.voice.confidence) }}
       {% endif %}
       <div class="zone-name">{{ z.name }}</div>
       <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
-      {% if z.card and z.card.municipalFlagUnconfirmed %}
-      <div style="font-size:0.68rem;color:#ffe082;margin-top:4px;">Municipal blacklist flag is not confirmed.</div>
-      {% endif %}
     </div>
     <div class="zone-right">
       <!-- Rate info: sourced current only. FORGE rateChange is not a verified delta. -->
-      {% if z.card and z.card.currentSourced %}
-        <div class="rate-current">{{ z.card.currentLabel }}¢ <span style="font-size:0.62rem;color:var(--forge-muted);">current</span></div>
-        {% if z.card.changePrior %}
+      {% if z.voice and not z.voice.currentPending %}
+        <div class="rate-current">{{ z.voice.currentText }}</div>
+        {% if z.card and z.card.changePrior %}
           <div class="rate-pct">{{ '%+.1f'|format(z.card.changePrior.percent) }}% vs prior</div>
         {% endif %}
-      {% elif z.card %}
-        <div class="rate-current" style="color:var(--forge-muted);">no sourced current</div>
-      {% elif z.currentRate %}
-        <div class="rate-current">{{ z.currentRate }}¢</div>
+      {% else %}
+        <div class="rate-current" style="color:var(--forge-muted);">—</div>
       {% endif %}
       <!-- Term dates from the sourced current term when research is attached. -->
       {% if z.card and (z.card.currentStart or z.card.currentEnd) %}
@@ -359,52 +350,32 @@
         <div style="font-size:0.68rem;color:var(--forge-muted);">{{ z.supplier }}</div>
       {% endif %}
       <!-- Confidence -->
-      <div style="font-size:0.62rem;color:var(--forge-muted);text-transform:uppercase;letter-spacing:0.5px;">
-        {% if z.confidence == 'high' %}<span style="color:#81c784;">● high</span>
-        {% elif z.confidence == 'medium' %}<span style="color:#ffb300;">● medium</span>
-        {% else %}<span style="color:var(--forge-muted);">● low</span>{% endif %}
-      </div>
+      {% if z.voice and z.voice.status %}<div style="margin-top:4px;"><span class="status-label">{{ z.voice.status }}{% if z.voice.statusDate %} {{ z.voice.statusDate }}{% endif %}</span></div>{% endif %}
     </div>
   </div>
 
-  <!-- Hook box. Escalate-call and conflict rows get no pitch. -->
-  {% if z.card and z.card.hookAllowed and z.card.hook %}
+  <!-- Field opener is shown only when a sourced line is allowed. -->
+  {% if z.voice and z.voice.hook %}
   <div class="hook-box">
     <div class="hook-label"><i class="bi bi-chat-quote me-1"></i>Field opener</div>
-    <div class="hook-text">{{ z.card.hook }}</div>
-    <button class="copy-btn" data-hook="{{ z.card.hook | e }}" onclick="copyHook(this, this.dataset.hook)">
+    <div class="hook-text">{{ z.voice.hook }}</div>
+    <button class="copy-btn" data-hook="{{ z.voice.hook | e }}" onclick="copyHook(this, this.dataset.hook)">
       <i class="bi bi-clipboard"></i>
     </button>
   </div>
-  {% elif z.card and not z.card.hookAllowed %}
+  {% elif z.voice and z.voice.takeaway %}
   <div class="hook-box">
-    <div class="hook-label">Verify before using</div>
-    <div class="hook-text">No field opener. Verification is {{ z.card.verificationLabel }}.</div>
-  </div>
-  {% elif z.hook %}
-  <div class="hook-box">
-    <div class="hook-label"><i class="bi bi-chat-quote me-1"></i>Sales Hook</div>
-    <div class="hook-text">{{ z.hook }}</div>
-    <button class="copy-btn" onclick="copyHook(this, {{ z.hook | tojson }})">
-      <i class="bi bi-clipboard"></i>
-    </button>
+    <div class="hook-text">{{ z.voice.takeaway }}</div>
   </div>
   {% endif %}
 
-  <!-- Notes toggle -->
-  {% if z.notes or z.takeaway %}
-  <div class="notes-toggle" onclick="toggleNotesBody(this)">
-    <i class="bi bi-chevron-right" style="font-size:0.7rem;transition:transform 0.2s;"></i>
-    <span>Notes &amp; context</span>
-  </div>
-  <div class="notes-body">
-    {% if z.card and z.card.municipalFlagUnconfirmed %}
-    <div style="color:#ffe082;margin-bottom:6px;">Municipal blacklist flag is not confirmed.</div>
-    {% endif %}
-    {% if z.card and z.card.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.card.takeaway }}</div>
-    {% elif z.takeaway %}<div style="color:#e0e0e0;margin-bottom:6px;">{{ z.takeaway }}</div>{% endif %}
-    {% if z.notes %}<div><span style="color:var(--forge-muted);">FORGE recorded notes:</span> {{ z.notes }}</div>{% endif %}
-  </div>
+  {% if z.voice and z.voice.evidence %}
+  <details class="evidence" style="margin-top:8px;">
+    <summary>Evidence &amp; notes</summary>
+    <div class="evidence-body">
+      {% for line in z.voice.evidence %}<div>{{ line }}</div>{% endfor %}
+    </div>
+  </details>
   {% endif %}
 </div>
 {% endmacro %}

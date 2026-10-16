@@ -5042,7 +5042,7 @@
     "merged_confirmed.json|Madison Township (Richland)": {},
     "cincinnati_duke_suburbs.json|Madison Township (Butler Co)": {},
     "youngstown_warren.json|Mahoning County": {
-      "question": "Unresolved question. misinfo: orig_currentRate / orig_hook: No county-wide program found; 10.59 unsourced (matches Fostoria rate). PUCO layer shows Mahoning County cert w/ NOPEC AOG - membership not on NOPEC map. from misinfo_sweep_2026-10-15.csv Phone number not in sources (community clerk / fiscal officer).",
+      "question": "Unresolved question. No county-wide aggregation rate is on file. Confirm whether the county certificate is active, or whether supply is only through the townships. Phone number not in sources (community clerk / fiscal officer).",
       "unresolved": true,
       "verification": "escalate-call"
     },

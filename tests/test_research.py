@@ -376,6 +376,31 @@ class DataLoadTests(unittest.TestCase):
             if row["origin"] == "rate_ledger.csv" and row["zone"] == "Euclid" and row["supplier"] == "NOPEC"
         ]
         self.assertEqual(ledger, [])
+        stark = [
+            row for row in load_rate_ledger()
+            if row["origin"] == "rate_ledger.csv"
+            and row["zone"] == "Stark County (Unincorporated / Remaining)"
+            and row["rate_raw"] == "9.77"
+        ]
+        self.assertEqual(stark, [])
+        self.assertEqual(_zone("Fostoria")["currentRate"], 10.59)
+        self.assertEqual(_zone("Madison Township (Butler Co)")["research"]["current"]["rate_raw"], "9.77")
+        westlake = _zone("Westlake")
+        self.assertEqual(westlake["research"]["prior"]["rate_raw"], "8.38")
+        self.assertEqual(westlake["research"]["historical"]["rate_raw"], "4.77")
+        self.assertNotIn("10.59", _zone("Mahoning County")["card"]["openQuestions"])
+        with open(os.path.join(ROOT, "data", "history", "journal.jsonl"), encoding="utf-8") as handle:
+            journal = handle.read()
+        self.assertNotIn("municipal list", journal.lower())
+        self.assertNotIn("Archbold", journal)
+        with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="", encoding="utf-8") as handle:
+            stored = {row["orig_name"]: row for row in csv.DictReader(handle)}
+        for name in ("Ada", "Wellsville", "Cortland", "Wauseon", "Coldwater", "Delphos", "Fremont"):
+            self.assertNotIn("Exempt from Ohio retail", stored[name]["orig_notes"])
+            self.assertNotIn("owned electric utility", stored[name]["orig_notes"])
+        self.assertEqual(stored["Green"]["PRIOR_rate"], "9.24")
+        self.assertEqual(stored["Fostoria"]["CURRENT_rate"], "10.59")
+        self.assertEqual(stored["Madison Township (Butler Co)"]["CURRENT_rate"], "9.77")
 
 
 class RateChangeTests(unittest.TestCase):

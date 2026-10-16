@@ -1,0 +1,63 @@
+{
+  "as_of": "2026-10-16",
+  "unit": "cents_per_kwh",
+  "note": "Small-commercial default generation from the utility tariff. Each figure is the tariff's stated energy charge plus its stated capacity charge for the small-commercial schedule. Other riders are not added. Duke Energy Ohio and AES Ohio have no commercial figure here because the apples-to-apples page for those schedules still prints the residential Price to Compare, and no separate commercial total was taken from a tariff.",
+  "rates": [
+    {
+      "code": "OE",
+      "utility": "Ohio Edison",
+      "schedule": "GS",
+      "schedule_label": "General Service - Secondary (GS)",
+      "cents_per_kwh": 9.3786,
+      "energy_cents": 7.2774,
+      "capacity_cents": 2.1012,
+      "effective_start": "2026-06-01",
+      "effective_end": "",
+      "accessed_at": "2026-10-16",
+      "source_url": "https://www.firstenergycorp.com/content/dam/customer/Customer%20Choice/Files/Ohio/tariffs/OE-2026-Electric-Service.pdf",
+      "source": "Ohio Edison Electric Service tariff, Rider GEN, effective June 1, 2026. GS capacity 2.1012¢/kWh plus GS energy 7.2774¢/kWh."
+    },
+    {
+      "code": "CEI",
+      "utility": "The Illuminating Company",
+      "schedule": "GS",
+      "schedule_label": "General Service - Secondary (GS)",
+      "cents_per_kwh": 9.4503,
+      "energy_cents": 7.2774,
+      "capacity_cents": 2.1729,
+      "effective_start": "2026-06-01",
+      "effective_end": "",
+      "accessed_at": "2026-10-16",
+      "source_url": "https://www.firstenergycorp.com/content/dam/customer/Customer%20Choice/Files/Ohio/tariffs/CEI-2026-Electric-Service.pdf",
+      "source": "The Illuminating Company Electric Service tariff, Rider GEN, effective June 1, 2026. GS capacity 2.1729¢/kWh plus GS energy 7.2774¢/kWh."
+    },
+    {
+      "code": "TE",
+      "utility": "Toledo Edison",
+      "schedule": "GS",
+      "schedule_label": "General Service - Secondary (GS)",
+      "cents_per_kwh": 9.431,
+      "energy_cents": 7.2774,
+      "capacity_cents": 2.1536,
+      "effective_start": "2026-06-01",
+      "effective_end": "",
+      "accessed_at": "2026-10-16",
+      "source_url": "https://www.firstenergycorp.com/content/dam/customer/Customer%20Choice/Files/Ohio/tariffs/TE-2026-Electric-Service.pdf",
+      "source": "Toledo Edison Electric Service tariff, Rider GEN, effective June 1, 2026. GS capacity 2.1536¢/kWh plus GS energy 7.2774¢/kWh."
+    },
+    {
+      "code": "AEP",
+      "utility": "AEP Ohio",
+      "schedule": "GS-NDM",
+      "schedule_label": "General Service non-demand (GS-1 / GS-NDM)",
+      "cents_per_kwh": 9.806,
+      "energy_cents": 7.508,
+      "capacity_cents": 2.298,
+      "effective_start": "2026-06-01",
+      "effective_end": "",
+      "accessed_at": "2026-10-16",
+      "source_url": "https://www.aepohio.com/lib/docs/ratesandtariffs/Ohio/June_2026_AEP_Ohio_Tariff_Book.pdf",
+      "source": "AEP Ohio tariff book, Generation Energy Rider and Generation Capacity Rider, effective June 1, 2026. GS-NDM energy 7.508¢/kWh plus capacity 2.298¢/kWh."
+    }
+  ]
+}

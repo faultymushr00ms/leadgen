@@ -1,4 +1,4 @@
-{% macro nearby_tables(nearby) %}
+{% macro nearby_tables(nearby, local_cents=none) %}
 {% if nearby %}
 <div class="nearby-block" style="margin-top:10px;">
   {% if nearby.origin %}
@@ -17,7 +17,7 @@
   <div class="panel-header"><span>Nearby places</span><span>Census centroid</span></div>
   <table class="forge-table">
     <thead>
-      <tr><th>Place</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th><th></th></tr>
+      <tr><th>Place</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs commercial default</th>{% endif %}<th></th></tr>
     </thead>
     <tbody>
       {% for item in nearby.places %}
@@ -28,17 +28,20 @@
         <td>{{ item.supplier or '—' }}</td>
         <td>{% if item.rate %}{{ item.rate }}¢{% else %}—{% endif %}</td>
         <td>{{ item.ptc or '—' }}</td>
+        {% if local_cents is not none %}
+        <td>{% if item.rate %}{{ '%+.3f'|format(item.rate|float - local_cents) }}¢{% else %}—{% endif %}</td>
+        {% endif %}
         <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">{{ item.card_label or 'Battlecard' }}</a>{% endif %}</td>
       </tr>
       {% else %}
-      <tr><td colspan="7">No nearby city, village, or CDP with a Census coordinate.</td></tr>
+      <tr><td colspan="{{ 8 if local_cents is not none else 7 }}">No nearby city, village, or CDP with a Census coordinate.</td></tr>
       {% endfor %}
     </tbody>
   </table>
   <div class="panel-header"><span>Nearby zones</span><span>Centroid distance</span></div>
   <table class="forge-table">
     <thead>
-      <tr><th>Zone</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th><th></th></tr>
+      <tr><th>Zone</th><th>Miles</th><th>Aggregation</th><th>Supplier</th><th>Current rate</th><th>Residential PTC</th>{% if local_cents is not none %}<th>vs commercial default</th>{% endif %}<th></th></tr>
     </thead>
     <tbody>
       {% for item in nearby.zones %}
@@ -49,10 +52,13 @@
         <td>{{ item.supplier or '—' }}</td>
         <td>{% if item.rate %}{{ item.rate }}¢{% else %}—{% endif %}</td>
         <td>{{ item.ptc or '—' }}</td>
+        {% if local_cents is not none %}
+        <td>{% if item.rate %}{{ '%+.3f'|format(item.rate|float - local_cents) }}¢{% else %}—{% endif %}</td>
+        {% endif %}
         <td>{% if item.card_url %}<a href="{{ item.card_url }}" style="color:var(--forge-orange);">Battlecard</a>{% endif %}</td>
       </tr>
       {% else %}
-      <tr><td colspan="7">No anchored zone is nearby.</td></tr>
+      <tr><td colspan="{{ 8 if local_cents is not none else 7 }}">No anchored zone is nearby.</td></tr>
       {% endfor %}
     </tbody>
   </table>

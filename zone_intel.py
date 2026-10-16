@@ -30,6 +30,7 @@ DATASET_PATH = os.path.join(RESEARCH_DIR, "forge_corrected_dataset.csv")
 LEDGER_PATH = os.path.join(RESEARCH_DIR, "rate_ledger.csv")
 QUEUE_PATH = os.path.join(RESEARCH_DIR, "investigation_queue.csv")
 PTC_PATH = os.path.join(RESEARCH_DIR, "price_to_compare.json")
+COMMERCIAL_PTC_PATH = os.path.join(RESEARCH_DIR, "commercial_ptc.json")
 MONITOR_QUEUE_PATH = os.path.join(RESEARCH_DIR, "monitor_additions.csv")
 CORRECTIONS_PATH = os.path.join(RESEARCH_DIR, "corrections.jsonl")
 
@@ -680,6 +681,8 @@ def attach_research(zones: list) -> list:
         zone["card"] = build_card(zone)
         for field, value in before.items():
             zone[field] = value
+    import talking_points
+    talking_points.attach(zones)
     return zones
 
 
@@ -759,6 +762,55 @@ def residential_rate_gap(aggregation_rate, ptc_cents) -> dict | None:
     }
 
 
+def load_commercial_ptc() -> dict:
+    if not os.path.exists(COMMERCIAL_PTC_PATH):
+        return {"rates": []}
+    with open(COMMERCIAL_PTC_PATH, encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def commercial_for_code(code: str | None) -> dict | None:
+    """A sourced small-commercial default, or nothing. Never a guessed rate."""
+    if not code:
+        return None
+    for row in load_commercial_ptc().get("rates") or []:
+        if row.get("code") != code:
+            continue
+        if row.get("cents_per_kwh") is None:
+            return None
+        if not is_externally_sourced(row.get("source_url")):
+            return None
+        return row
+    return None
+
+
+def _commercial_block(code: str | None, utility: str) -> dict:
+    row = commercial_for_code(code)
+    if not row:
+        return {
+            "sourced": False,
+            "schedule": "",
+            "label": "Pending",
+            "utility": utility,
+        }
+    return {
+        "sourced": True,
+        "code": row.get("code"),
+        "utility": row.get("utility") or utility,
+        "schedule": row.get("schedule") or "",
+        "schedule_label": row.get("schedule_label") or row.get("schedule") or "",
+        "cents_per_kwh": row.get("cents_per_kwh"),
+        "energy_cents": row.get("energy_cents"),
+        "capacity_cents": row.get("capacity_cents"),
+        "effective_start": row.get("effective_start") or "",
+        "effective_end": row.get("effective_end") or "",
+        "accessed_at": row.get("accessed_at") or "",
+        "source": row.get("source") or "",
+        "source_url": row.get("source_url") or "",
+        "customer_class": "commercial",
+    }
+
+
 def residential_ptc_for_card(zone: dict) -> dict:
     """PTC block for a battlecard. Does not rewrite stored rates."""
     research = zone.get("research") or {}
@@ -799,6 +851,7 @@ def residential_ptc_for_card(zone: dict) -> dict:
         "source": row.get("source") or "",
         "source_url": row.get("source_url") or "",
         "comparison": comparison,
+        "commercial": _commercial_block(row.get("code"), row.get("utility") or ""),
     }
 
 

@@ -110,6 +110,11 @@
   .bc-kv-item .kv-val   { font-size: 0.82rem; color: #e0e0e0; }
 
   .bc-notes { font-size: 0.78rem; color: var(--forge-muted); line-height: 1.5; }
+  #bc-talk-section.talk-lead { box-shadow: inset 3px 0 0 var(--forge-orange); }
+  .talk-line { margin-top: 8px; line-height: 1.4; }
+  .talk-chip { display: inline-block; margin-right: 6px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--forge-border); color: var(--forge-muted); font-size: 0.65rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .talk-meta { margin-top: 2px; color: var(--forge-muted); font-size: 0.72rem; }
+  .talk-meta a { color: #4fc3f7; text-decoration: none; }
 
   /* ── Agg Status badges ── */
   .agg-confirmed  { background: rgba(46,125,50,0.18);  color: #81c784; border: 1px solid rgba(46,125,50,0.35); }
@@ -271,6 +276,16 @@
           </button>
         </div>
 
+        <div class="bc-section" id="bc-talk-section" style="display:none;">
+          <div class="bc-section-label">What to talk about</div>
+          <div id="bc-talk" style="font-size:0.78rem; line-height:1.45;"></div>
+        </div>
+
+        <div class="bc-section" id="bc-nearby-section" style="display:none;">
+          <div class="bc-section-label">Nearby</div>
+          <div id="bc-nearby" style="font-size:0.78rem; line-height:1.45;"></div>
+        </div>
+
         <div class="bc-section" id="bc-rate-section">
           <div class="bc-section-label">Rate Story</div>
           <div class="rate-story" id="bc-rate-story"></div>
@@ -294,11 +309,6 @@
         <div class="bc-section" id="bc-hook-section">
           <div class="bc-section-label">Field Opener</div>
           <div class="bc-hook" id="bc-hook"></div>
-        </div>
-
-        <div class="bc-section" id="bc-nearby-section" style="display:none;">
-          <div class="bc-section-label">Nearby</div>
-          <div id="bc-nearby" style="font-size:0.78rem; line-height:1.45;"></div>
         </div>
 
         <details class="evidence" id="bc-notes-section" style="margin:0 12px 12px;">
@@ -733,23 +743,124 @@ function selectZone(name) {
     hookSection.style.display = 'none';
   }
 
-  const notesSection = document.getElementById('bc-notes-section');
-  const noteBits = (spoken && spoken.evidence) ? spoken.evidence.slice() : [];
-  if (noteBits.length) {
-    notesSection.style.display = '';
-    document.getElementById('bc-notes').textContent = noteBits.join('\n');
-  } else {
-    notesSection.style.display = 'none';
-  }
+  fillNotes(spoken, card);
 
   document.getElementById('battlecard-empty').style.display   = 'none';
   document.getElementById('battlecard-content').style.display = 'flex';
+  renderTalking(card);
+  placeTalking(card);
   loadNearby(selectedZone);
 
   // Scroll battlecard to top
   document.getElementById('battlecard-pane').scrollTop = 0;
 }
 
+function fillNotes(spoken, card) {
+  const notesSection = document.getElementById('bc-notes-section');
+  const box = document.getElementById('bc-notes');
+  box.replaceChildren();
+  ((spoken && spoken.evidence) || []).forEach(function (line) {
+    const div = document.createElement('div');
+    div.textContent = line;
+    box.appendChild(div);
+  });
+  const evidence = (card && card.talkingPoints && card.talkingPoints.evidence) || [];
+  evidence.forEach(function (item) {
+    const div = document.createElement('div');
+    div.style.marginTop = '6px';
+    div.appendChild(document.createTextNode((item.chip || '') + ' · ' + (item.dateLabel || '') + ' · '));
+    const link = document.createElement('a');
+    link.href = item.sourceUrl || '#';
+    link.textContent = item.sourceLabel || 'Source';
+    div.appendChild(link);
+    if (item.quote) {
+      const quote = document.createElement('div');
+      quote.textContent = '“' + item.quote + '”';
+      div.appendChild(quote);
+    }
+    box.appendChild(div);
+  });
+  notesSection.style.display = box.childNodes.length ? '' : 'none';
+}
+function renderTalking(card) {
+  const section = document.getElementById('bc-talk-section');
+  const box = document.getElementById('bc-talk');
+  const talk = card && card.talkingPoints;
+  box.replaceChildren();
+  if (!talk) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  if (talk.intro) {
+    const intro = document.createElement('div');
+    intro.style.marginBottom = '6px';
+    intro.textContent = talk.intro;
+    box.appendChild(intro);
+  }
+  if (talk.framing) {
+    const frame = document.createElement('div');
+    frame.style.color = 'var(--forge-muted)';
+    frame.style.marginBottom = '6px';
+    frame.textContent = talk.framing;
+    box.appendChild(frame);
+  }
+  if (!(talk.points || []).length) {
+    const empty = document.createElement('div');
+    empty.style.color = 'var(--forge-muted)';
+    empty.textContent = 'No dated item with a source is on file for this town.';
+    box.appendChild(empty);
+  }
+  (talk.groups || []).forEach(function (group) {
+    const label = document.createElement('div');
+    label.className = 'stat-label';
+    label.style.marginTop = '8px';
+    label.textContent = group.label;
+    box.appendChild(label);
+    (group.points || []).forEach(function (point) {
+      const row = document.createElement('div');
+      row.className = 'talk-line';
+      row.appendChild(markNode(point.mark));
+      const chip = document.createElement('span');
+      chip.className = 'talk-chip';
+      chip.textContent = point.chip || '';
+      row.appendChild(chip);
+      row.appendChild(document.createTextNode(point.sentence || ''));
+      const meta = document.createElement('div');
+      meta.className = 'talk-meta';
+      meta.appendChild(document.createTextNode((point.dateLabel || '') + ' · '));
+      const link = document.createElement('a');
+      link.href = point.sourceUrl || '#';
+      link.textContent = point.sourceLabel || 'Source';
+      meta.appendChild(link);
+      row.appendChild(meta);
+      box.appendChild(row);
+    });
+  });
+}
+function markNode(mark) {
+  const span = document.createElement('span');
+  const kind = (mark && mark.kind) || 'hollow';
+  span.className = 'conf-mark conf-' + kind;
+  span.title = (mark && mark.tip) || 'Likely';
+  span.textContent = kind === 'solid' ? '●' : (kind === 'hollow' ? '○' : '— Pending');
+  span.style.marginRight = '6px';
+  return span;
+}
+function placeTalking(card) {
+  const talk = document.getElementById('bc-talk-section');
+  const nearby = document.getElementById('bc-nearby-section');
+  const rate = document.getElementById('bc-rate-section');
+  const lead = !!(card && card.talkingPoints && card.talkingPoints.lead);
+  talk.classList.toggle('talk-lead', lead);
+  if (lead) {
+    rate.parentNode.insertBefore(talk, rate);
+    rate.parentNode.insertBefore(nearby, rate);
+  } else {
+    rate.parentNode.insertBefore(talk, rate.nextSibling);
+    rate.parentNode.insertBefore(nearby, talk.nextSibling);
+  }
+}
 let nearbyToken = 0;
 function loadNearby(zone) {
   const token = ++nearbyToken;
@@ -768,6 +879,15 @@ function loadNearby(zone) {
     if (token === nearbyToken) box.textContent = 'Nearby lookup failed.';
   });
 }
+function versusLocalPtc(rate) {
+  const ptc = selectedZone && selectedZone.card && selectedZone.card.ptc;
+  if (!ptc || !ptc.applicable || ptc.cents_per_kwh == null || rate === null || rate === undefined || rate === '') return '';
+  const value = parseFloat(rate);
+  if (!isFinite(value)) return '';
+  const gap = value - Number(ptc.cents_per_kwh);
+  const sign = gap > 0 ? '+' : '';
+  return sign + gap.toFixed(3) + '¢ vs this PTC';
+}
 function renderNearby(box, nearby) {
   box.replaceChildren();
   if (!nearby) {
@@ -777,7 +897,8 @@ function renderNearby(box, nearby) {
   function addItem(item) {
     const row = document.createElement('div');
     row.style.marginTop = '4px';
-    const bits = [item.name, item.miles != null ? Number(item.miles).toFixed(1) + ' mi' : '', item.status || '', item.supplier || '', item.rate ? item.rate + '¢' : '', item.ptc || ''];
+    const gap = versusLocalPtc(item.rate);
+    const bits = [item.name, item.miles != null ? Number(item.miles).toFixed(1) + ' mi' : '', item.status || '', item.supplier || '', item.rate ? item.rate + '¢' : '', item.ptc || '', gap];
     row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
     if (item.card_url) {
       row.appendChild(document.createTextNode(' · '));

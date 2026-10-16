@@ -1409,6 +1409,138 @@ class PresentationCopyTests(unittest.TestCase):
         self.assertEqual(streetsboro["card"]["voice"]["confidence"]["kind"], "hollow")
 
 
+class TalkingPointTests(unittest.TestCase):
+    """Sourced talking points on the battlecard, with research-log wording kept off them."""
+
+    BANNED = re.compile(
+        r"needs call|not confirmed|not in sources|not marked inactive|verify before using|"
+        r"\bverify\b|\bunconfirmed\b|\bescalate\b|\bunresolved\b|single-source|forge recorded",
+        re.I,
+    )
+
+    def setUp(self):
+        self.client = forge_app.app.test_client()
+
+    def test_ended_active_and_no_program_towns(self):
+        westlake = _zone("Westlake")
+        self.assertIsNone(westlake["currentRate"])
+        self.assertEqual(westlake["previousRate"], 8.38)
+        talk = westlake["card"]["talkingPoints"]
+        self.assertTrue(talk["lead"])
+        self.assertIn("ended", talk["intro"].lower())
+        self.assertGreaterEqual(len(talk["points"]), 2)
+        self.assertLessEqual(len(talk["points"]), 4)
+        self.assertEqual(talk["groups"][0]["label"], "Upcoming")
+        self.assertEqual(talk["groups"][1]["label"], "Recent")
+        sentences = " ".join(point["sentence"] for point in talk["points"])
+        self.assertIn("11.24", sentences)
+        self.assertIn("10.11", sentences)
+        self.assertIn("June 2026", sentences)
+        self.assertIn("8.38", sentences)
+        self.assertTrue(all(point["sourceUrl"].startswith("http") and point["dateLabel"] for point in talk["points"]))
+
+        page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
+        section = _talk_section(page)
+        self.assertIn("cleveland.com", section)
+        self.assertIn("What to talk about", section)
+        self.assertLess(page.find('id="what-to-talk-about"'), page.find('class="rate-grid'))
+        self.assertLess(page.find('id="what-to-talk-about"'), page.find('id="battlecard-nearby"'))
+        self.assertLess(page.find('id="battlecard-nearby"'), page.find('class="rate-grid'))
+        self.assertLess(section.find("Upcoming"), section.find("Recent"))
+        self.assertIn("vs this PTC", page)
+        self.assertIsNone(self.BANNED.search(_visible_text(section)))
+
+        brookfield = _zone("Brookfield Township (Trumbull)")
+        brook = brookfield["card"]["talkingPoints"]
+        self.assertTrue(brook["lead"])
+        self.assertIn("not a program in this town", brook["framing"])
+        brook_text = " ".join(point["sentence"] for point in brook["points"])
+        self.assertIn("11.07", brook_text)
+        self.assertIn("10.14", brook_text)
+        self.assertGreaterEqual(len(brook["points"]), 2)
+        brook_page = self.client.get(
+            "/card?file=youngstown_warren&name=Brookfield%20Township%20(Trumbull)"
+        ).get_data(as_text=True)
+        brook_section = _talk_section(brook_page)
+        self.assertNotIn("cleveland.com", brook_section)
+        self.assertIn("11.07", brook_section)
+        self.assertLess(brook_page.find('id="what-to-talk-about"'), brook_page.find('class="rate-grid'))
+        self.assertIsNone(self.BANNED.search(_visible_text(brook_section)))
+
+        archbold = _zone("Archbold")
+        self.assertEqual(archbold["currentRate"], 9.03)
+        active = archbold["card"]["talkingPoints"]
+        self.assertFalse(active["lead"])
+        active_text = " ".join(point["sentence"] for point in active["points"])
+        self.assertIn("9.03", active_text)
+        self.assertIn("11.26", active_text)
+        self.assertIn("2.230", active_text)
+        arch_page = self.client.get("/card?file=ohio_municipal_utilities&name=Archbold").get_data(as_text=True)
+        arch_section = _talk_section(arch_page)
+        self.assertIn("talk-compact", arch_section)
+        self.assertNotIn("talk-lead", arch_section)
+        self.assertLess(arch_page.find('class="rate-grid'), arch_page.find('id="what-to-talk-about"'))
+        self.assertLess(arch_page.find('id="what-to-talk-about"'), arch_page.find('id="battlecard-nearby"'))
+        self.assertIsNone(self.BANNED.search(_visible_text(arch_section)))
+
+        girard = self.client.get("/card?file=ne_ohio_firstenergy&name=Girard").get_data(as_text=True)
+        girard_section = _talk_section(girard)
+        self.assertIn("11.46", girard_section)
+        self.assertNotIn("6.88", girard_section)
+        self.assertIn("0.390", girard_section)
+        self.assertFalse(_zone("Girard")["card"]["talkingPoints"]["lead"])
+        self.assertIsNone(self.BANNED.search(_visible_text(girard_section)))
+
+    def test_banned_phrases_stay_off_every_town_and_files_stay_put(self):
+        paths = [
+            "data/regions/nopec_cuyahoga_suburbs.json",
+            "data/regions/ne_ohio_firstenergy.json",
+            "data/regions/ohio_municipal_utilities.json",
+            "data/regions/youngstown_warren.json",
+        ]
+        before = {}
+        for path in paths:
+            with open(os.path.join(ROOT, path), "rb") as handle:
+                before[path] = hashlib.sha256(handle.read()).hexdigest()
+        zones = forge_app._load_zones()
+        for path in paths:
+            with open(os.path.join(ROOT, path), "rb") as handle:
+                self.assertEqual(before[path], hashlib.sha256(handle.read()).hexdigest())
+        for zone in zones:
+            talk = (zone.get("card") or {}).get("talkingPoints") or {}
+            blob = " ".join(
+                [talk.get("intro") or "", talk.get("framing") or ""]
+                + [
+                    " ".join([
+                        point.get("sentence") or "",
+                        point.get("chip") or "",
+                        point.get("quote") or "",
+                        point.get("confidenceTitle") or "",
+                    ])
+                    for point in talk.get("points") or []
+                ]
+            )
+            self.assertIsNone(self.BANNED.search(blob), zone.get("name"))
+            points = talk.get("points") or []
+            self.assertLessEqual(len(points), 4, zone.get("name"))
+            for point in points:
+                self.assertTrue(point["sourceUrl"].startswith("http"), zone.get("name"))
+                self.assertTrue(point["dateLabel"], zone.get("name"))
+
+    def test_hotspots_pane_has_the_section(self):
+        page = self.client.get("/hotspots").get_data(as_text=True)
+        self.assertIn('id="bc-talk"', page)
+        self.assertIn("vs this PTC", page)
+
+
+def _talk_section(html: str) -> str:
+    start = html.find('id="what-to-talk-about"')
+    end = html.find("<!-- /what-to-talk-about -->")
+    if start < 0 or end < start:
+        raise AssertionError("talking-points section missing")
+    return html[start:end]
+
+
 def _visible_text(html: str) -> str:
     html = re.sub(r"(?is)<script\b[^>]*>.*?</script>", " ", html)
     html = re.sub(r"(?is)<style\b[^>]*>.*?</style>", " ", html)

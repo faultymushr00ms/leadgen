@@ -680,6 +680,8 @@ def attach_research(zones: list) -> list:
         zone["card"] = build_card(zone)
         for field, value in before.items():
             zone[field] = value
+    import talking_points
+    talking_points.attach(zones)
     return zones
 
 

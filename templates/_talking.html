@@ -1,0 +1,33 @@
+{% from "_voice.html" import confidence %}
+{% set talk = card.talkingPoints %}
+{% if talk %}
+<section id="what-to-talk-about" class="panel card-block talk-panel {% if talk.lead %}talk-lead{% else %}talk-compact{% endif %}">
+  <div class="talk-kicker">What to talk about</div>
+  {% if talk.intro %}<p class="talk-intro">{{ talk.intro }}</p>{% endif %}
+  {% if talk.framing %}<p class="talk-frame">{{ talk.framing }}</p>{% endif %}
+  {% if talk.groups %}
+    {% for group in talk.groups %}
+    <div class="talk-group">
+      <div class="talk-group-label">{{ group.label }}</div>
+      <ul class="talk-list">
+        {% for point in group.points %}
+        <li class="talk-item">
+          {{ confidence(point.mark) }}
+          <div class="talk-body">
+            <div class="talk-line">
+              <span class="talk-chip">{{ point.chip }}</span>
+              <span>{{ point.sentence }}</span>
+            </div>
+            <div class="talk-meta">{{ point.dateLabel }} · <a href="{{ point.sourceUrl }}">{{ point.sourceLabel }}</a></div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p class="talk-frame">No dated item with a source is on file for this town.</p>
+  {% endif %}
+</section>
+<!-- /what-to-talk-about -->
+{% endif %}

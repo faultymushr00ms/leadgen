@@ -19,6 +19,19 @@
   .hook-box { background: rgba(255,179,0,0.07); border: 1px solid rgba(255,179,0,0.2); border-radius: 8px; padding: 12px 14px; color: #ffe082; font-size: 0.95rem; line-height: 1.45; }
   .card-block { padding: 12px 14px; margin-bottom: 12px; }
   .card-block + .card-block { margin-top: 0; }
+  .talk-kicker, .talk-group-label, .rate-kicker { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--forge-muted); }
+  .talk-intro { margin: 8px 0 0; font-size: 0.95rem; line-height: 1.45; }
+  .talk-frame { margin: 6px 0 0; color: var(--forge-muted); font-size: 0.84rem; line-height: 1.45; }
+  .talk-group { margin-top: 10px; }
+  .talk-list { list-style: none; margin: 0; padding: 0; }
+  .talk-item { display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; }
+  .talk-line { font-size: 0.92rem; line-height: 1.4; }
+  .talk-chip { display: inline-block; margin-right: 6px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--forge-border); color: var(--forge-muted); font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 1px; }
+  .talk-meta { margin-top: 2px; font-size: 0.75rem; color: var(--forge-muted); }
+  .talk-meta a { color: #4fc3f7; text-decoration: none; }
+  .talk-lead { box-shadow: inset 3px 0 0 var(--forge-orange); }
+  .rate-secondary { margin-top: 0; }
+  .rate-secondary .v { font-size: 1.2rem; }
   @media print {
     #sidebar, #topbar, .no-print { display: none !important; }
     html, body { overflow: visible !important; height: auto !important; display: block !important; background: #fff !important; color: #111 !important; }
@@ -58,7 +71,20 @@
       </div>
     </div>
 
-    <div class="rate-grid">
+    {% set local_cents = card.ptc.cents_per_kwh if card.ptc.applicable else none %}
+    {% set lead = card.talkingPoints and card.talkingPoints.lead %}
+    {% if lead %}
+      {% include "_talking.html" %}
+      {% if nearby %}
+      <div id="battlecard-nearby" class="panel" style="margin-bottom:12px;">
+        <div class="panel-header"><span>Nearby</span><span>Program rate versus this Price to Compare</span></div>
+        {{ nearby_tables(nearby, local_cents) }}
+      </div>
+      {% endif %}
+    {% endif %}
+
+    {% if lead %}<div class="rate-kicker">Rate record</div>{% endif %}
+    <div class="rate-grid{% if lead %} rate-secondary{% endif %}">
       <div class="rate-cell">
         <div class="k">{{ spoken.currentCaption or 'Current' }}</div>
         {% if spoken.currentPending %}
@@ -105,6 +131,16 @@
     </div>
     {% endif %}
 
+    {% if not lead %}
+      {% include "_talking.html" %}
+      {% if nearby %}
+      <div id="battlecard-nearby" class="panel" style="margin-bottom:12px;">
+        <div class="panel-header"><span>Nearby</span><span>Program rate versus this Price to Compare</span></div>
+        {{ nearby_tables(nearby, local_cents) }}
+      </div>
+      {% endif %}
+    {% endif %}
+
     <div class="panel card-block">
       <div class="stat-label">Residential Price to Compare</div>
       {% if not card.ptc.applicable %}
@@ -134,19 +170,21 @@
       <div style="margin-top:6px;"><span class="stat-label">Administrator</span> {{ card.administrator or '—' }}</div>
     </div>
 
-    {% if nearby %}
-    <div class="panel" style="margin-bottom:12px;">
-      <div class="panel-header"><span>Nearby</span><span>Surrounding communities</span></div>
-      {{ nearby_tables(nearby) }}
-    </div>
-    {% endif %}
-
     <details class="evidence">
       <summary>Evidence &amp; notes</summary>
       <div class="evidence-body">
         {% for line in spoken.evidence %}
         <div>{{ line }}</div>
         {% endfor %}
+        {% if card.talkingPoints %}
+          {% for item in card.talkingPoints.evidence %}
+          <div>
+            <span class="stat-label">{{ item.chip }}</span> {{ item.dateLabel }}
+            · <a href="{{ item.sourceUrl }}" style="color:#4fc3f7;">{{ item.sourceLabel }}</a>
+            {% if item.quote %}<div>“{{ item.quote }}”</div>{% endif %}
+          </div>
+          {% endfor %}
+        {% endif %}
         {% if queue_item and queue_item.exact_next_action %}
         <div>{{ queue_item.exact_next_action | voice }}</div>
         {% endif %}

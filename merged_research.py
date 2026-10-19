@@ -136,6 +136,56 @@ def load_unverified_leads() -> list[dict]:
     return rows
 
 
+_LEAD_FIELDS = ["community", "county", "field", "value", "confidence", "sources", "notes", "flag"]
+
+
+def _lead_key(row: dict) -> tuple:
+    return (
+        (row.get("community") or "").casefold(),
+        (row.get("county") or "").casefold(),
+        (row.get("field") or "").casefold(),
+        (row.get("sources") or "").strip(),
+    )
+
+
+def append_unverified_rows(rows: list[dict]) -> int:
+    """Append lead rows. A community and source already on file is left as it is."""
+    global _unverified_cache
+    os.makedirs(os.path.dirname(UNVERIFIED_PATH), exist_ok=True)
+    existing = set()
+    if os.path.exists(UNVERIFIED_PATH) and os.path.getsize(UNVERIFIED_PATH):
+        with open(UNVERIFIED_PATH, newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                existing.add(_lead_key(row))
+    added = []
+    for row in rows:
+        cleaned = {key: (row.get(key) or "").strip() for key in _LEAD_FIELDS}
+        if not cleaned["community"] or not cleaned["sources"]:
+            continue
+        key = _lead_key(cleaned)
+        if key in existing:
+            continue
+        existing.add(key)
+        added.append(cleaned)
+    if not added:
+        return 0
+    write_header = not os.path.exists(UNVERIFIED_PATH) or os.path.getsize(UNVERIFIED_PATH) == 0
+    needs_break = False
+    if not write_header:
+        with open(UNVERIFIED_PATH, "rb") as handle:
+            handle.seek(-1, os.SEEK_END)
+            needs_break = handle.read(1) not in (b"\n", b"\r")
+    with open(UNVERIFIED_PATH, "a", newline="", encoding="utf-8") as handle:
+        if needs_break:
+            handle.write("\n")
+        writer = csv.DictWriter(handle, fieldnames=_LEAD_FIELDS, lineterminator="\n")
+        if write_header:
+            writer.writeheader()
+        writer.writerows(added)
+    _unverified_cache = None
+    return len(added)
+
+
 def unverified_groups() -> list[dict]:
     grouped: dict[tuple, dict] = {}
     for row in load_unverified_leads():

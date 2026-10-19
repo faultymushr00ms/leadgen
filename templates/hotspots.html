@@ -118,7 +118,8 @@
     overflow: hidden;
   }
   #zone-split.pane-collapsed #battlecard-content,
-  #zone-split.pane-collapsed #bc-edit-form {
+  #zone-split.pane-collapsed #bc-edit-form,
+  #zone-split.pane-collapsed #place-fallback {
     visibility: hidden;
     position: absolute;
     pointer-events: none;
@@ -189,6 +190,11 @@
     font-size: 0.75rem; color: var(--forge-border); margin-top: 6px; line-height: 1.5;
   }
   #battlecard-content { display: none; flex-direction: column; }
+  #place-fallback { display: none; flex-direction: column; }
+  #place-fallback a { color: var(--forge-orange); text-decoration: none; word-break: break-all; }
+  #place-fallback .pf-line { margin-top: 4px; font-size: 0.78rem; line-height: 1.45; }
+  #place-fallback .pf-muted { color: var(--forge-muted); font-size: 0.75rem; margin-top: 6px; line-height: 1.45; }
+  .place-hit td { cursor: pointer; }
 
   .bc-header { padding: 16px; border-bottom: 1px solid var(--forge-border); }
   .bc-zone-name { font-size: 1.2rem; font-weight: 700; color: var(--forge-orange); line-height: 1.2; margin-bottom: 3px; }
@@ -275,7 +281,7 @@
   <div id="filter-bar">
     <input id="search-input" type="search" name="forge-zone-filter" class="dark-input"
            autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Search zones"
-           placeholder="&#xF52A;  Search zone, region, notes…"
+           placeholder="&#xF52A;  Search zone, place, region…"
            oninput="applyFilters()">
     <select id="filter-region"  class="dark-input" onchange="applyFilters()"><option value="">All Regions</option></select>
     <select id="filter-utility" class="dark-input" onchange="applyFilters()"><option value="">All Utilities</option></select>
@@ -442,6 +448,8 @@
 
       </div>
 
+      <div id="place-fallback"></div>
+
       <!-- Edit form -->
       <div id="bc-edit-form" style="display:none; flex-direction:column; gap:0;">
         <div style="padding:12px 16px; border-bottom:1px solid var(--forge-border); display:flex; justify-content:space-between; align-items:center;">
@@ -593,6 +601,12 @@ let filteredZones = [...ALL_ZONES];
 let sortKey = 'status';
 let sortAsc = true;
 let selectedZone = null;
+let placeHits = [];
+let placeQuery = '';
+let placeTimer = null;
+let placeToken = 0;
+let placeLookupPending = false;
+let selectedPlaceGeoid = '';
 
 // ── Status / agg sort priority ──────────────────────────────────────────────
 const STATUS_ORDER  = { pain_hit:0, pain_coming:1, transition:2, verify:3, stable:4 };
@@ -663,10 +677,91 @@ function applyFilters() {
     return true;
   });
 
+  if (q !== placeQuery) {
+    placeHits = [];
+    placeQuery = q;
+    placeLookupPending = false;
+  }
   sortZones();
   renderTable();
-  document.getElementById('match-count').textContent =
-    filteredZones.length + ' / ' + ALL_ZONES.length + ' zones';
+  updateMatchCount();
+  schedulePlaceFallback();
+}
+
+function updateMatchCount() {
+  let text = filteredZones.length + ' / ' + ALL_ZONES.length + ' zones';
+  if (!filteredZones.length && placeHits.length) {
+    text += ' · ' + placeHits.length + (placeHits.length === 1 ? ' place' : ' places');
+  }
+  document.getElementById('match-count').textContent = text;
+}
+
+function schedulePlaceFallback() {
+  clearTimeout(placeTimer);
+  const q = document.getElementById('search-input').value.trim();
+  if (filteredZones.length > 0 || q.length < 3) {
+    const wasPlace = document.getElementById('place-fallback').style.display === 'flex';
+    placeHits = [];
+    placeLookupPending = false;
+    hidePlaceCard();
+    if (wasPlace && selectedZone && filteredZones.some(zone => zone.name === selectedZone.name)) {
+      selectZone(selectedZone.name);
+    } else if (wasPlace) {
+      document.getElementById('battlecard-content').style.display = 'none';
+      document.getElementById('bc-edit-form').style.display = 'none';
+      document.getElementById('battlecard-empty').style.display = 'flex';
+      collapseBattlecard();
+    }
+    renderTable();
+    updateMatchCount();
+    return;
+  }
+  placeLookupPending = true;
+  renderTable();
+  updateMatchCount();
+  placeTimer = setTimeout(function () { fetchPlaceFallback(q); }, 280);
+}
+
+function fetchPlaceFallback(q) {
+  const token = ++placeToken;
+  fetch('/api/lookup', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({q: q})
+  }).then(function (response) { return response.json(); }).then(function (data) {
+    if (token !== placeToken) return;
+    const current = document.getElementById('search-input').value.trim();
+    if (current.toLowerCase() !== q.toLowerCase() || filteredZones.length > 0) return;
+    placeLookupPending = false;
+    placeHits = (data && data.ok && data.kind === 'place' && data.places) || [];
+    renderTable();
+    updateMatchCount();
+    if (placeHits.length === 1) showPlaceCard(placeHits[0]);
+    else if (placeHits.length > 1) showPlaceChooser(placeHits);
+    else hidePlaceCard();
+  }).catch(function () {
+    if (token !== placeToken) return;
+    placeLookupPending = false;
+    placeHits = [];
+    renderTable();
+    updateMatchCount();
+  });
+}
+
+function hidePlaceCard() {
+  const pane = document.getElementById('place-fallback');
+  pane.style.display = 'none';
+  pane.replaceChildren();
+  selectedPlaceGeoid = '';
+}
+
+function openPlacePane() {
+  document.getElementById('battlecard-empty').style.display = 'none';
+  document.getElementById('battlecard-content').style.display = 'none';
+  document.getElementById('bc-edit-form').style.display = 'none';
+  document.getElementById('place-fallback').style.display = 'flex';
+  document.getElementById('battlecard-pane').scrollTop = 0;
+  expandBattlecard();
 }
 
 function conflictMunicipal(z) {
@@ -739,9 +834,14 @@ function sortVal(z, key) {
 function renderTable() {
   const tbody = document.getElementById('zone-tbody');
   if (filteredZones.length === 0) {
+    if (placeHits.length) {
+      renderPlaceRows(tbody);
+      return;
+    }
+    const message = placeLookupPending ? 'Looking up places…' : 'No zones match the current filters';
     tbody.innerHTML = `<tr class="no-zones-row"><td colspan="11">
       <i class="bi bi-search" style="font-size:1.5rem; display:block; margin-bottom:8px;"></i>
-      No zones match the current filters
+      ${message}
     </td></tr>`;
     return;
   }
@@ -764,8 +864,345 @@ function renderTable() {
   `).join('');
 }
 
+function renderPlaceRows(tbody) {
+  tbody.replaceChildren();
+  placeHits.forEach(function (place) {
+    const card = place.fallback || {};
+    const tr = document.createElement('tr');
+    tr.className = 'place-hit' + (place.geoid === selectedPlaceGeoid ? ' active' : '');
+    tr.dataset.geoid = place.geoid || '';
+    const county = card.county_line || '';
+    const service = ((card.service || {}).lines || []).map(function (line) { return line.label; }).slice(0, 2).join(', ');
+    const cells = [
+      place.name || '',
+      county,
+      service || '—',
+      'Not a zone',
+      '—', '—', '—', '—', '—',
+      place.type || '',
+      '—',
+    ];
+    cells.forEach(function (text, index) {
+      const td = document.createElement('td');
+      if (index === 0) td.style.cssText = 'font-weight:600; color:#e0e0e0;';
+      else td.style.cssText = 'color:var(--forge-muted); font-size:0.75rem;';
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+    tr.addEventListener('click', function () { showPlaceCard(place); });
+    tbody.appendChild(tr);
+  });
+}
+
+function countyText(card) {
+  const counties = card.counties || [];
+  if (!counties.length) return 'County is not on file.';
+  return counties.map(function (item) {
+    return item.name + (item.share ? ' · ' + item.share + '% of 2020 population' : '');
+  }).join('; ');
+}
+
+function addLine(parent, text) {
+  const row = document.createElement('div');
+  row.className = 'pf-line';
+  row.textContent = text;
+  parent.appendChild(row);
+  return row;
+}
+
+function addLink(parent, href, label) {
+  if (!href) return;
+  parent.appendChild(document.createTextNode(' · '));
+  const link = document.createElement('a');
+  link.href = href;
+  link.textContent = label || 'Battlecard';
+  parent.appendChild(link);
+}
+
+function showPlaceChooser(places) {
+  selectedPlaceGeoid = '';
+  const pane = document.getElementById('place-fallback');
+  pane.replaceChildren();
+  const header = document.createElement('div');
+  header.className = 'bc-header';
+  const title = document.createElement('div');
+  title.className = 'bc-zone-name';
+  title.textContent = 'Several places match';
+  const hint = document.createElement('div');
+  hint.className = 'bc-region';
+  hint.textContent = 'Select one. A place without a zone stays off the zone list.';
+  header.appendChild(title);
+  header.appendChild(hint);
+  pane.appendChild(header);
+  const section = document.createElement('div');
+  section.className = 'bc-section';
+  places.forEach(function (place) {
+    const card = place.fallback || {};
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-ghost btn-sm';
+    button.style.cssText = 'display:block; width:100%; text-align:left; margin-top:6px;';
+    const bits = [place.name, card.county_line, place.type].filter(Boolean);
+    button.textContent = bits.join(' · ');
+    button.addEventListener('click', function () { showPlaceCard(place); });
+    section.appendChild(button);
+  });
+  pane.appendChild(section);
+  openPlacePane();
+  renderTable();
+}
+
+function showPlaceCard(place) {
+  const card = place.fallback;
+  if (!card) return;
+  selectedPlaceGeoid = place.geoid || '';
+  const pane = document.getElementById('place-fallback');
+  pane.replaceChildren();
+
+  const header = document.createElement('div');
+  header.className = 'bc-header';
+  const title = document.createElement('div');
+  title.className = 'bc-zone-name';
+  title.textContent = card.name || place.name || '';
+  const region = document.createElement('div');
+  region.className = 'bc-region';
+  region.textContent = [card.county_line, card.type].filter(Boolean).join(' · ');
+  const badges = document.createElement('div');
+  badges.className = 'bc-badges';
+  const badge = document.createElement('span');
+  badge.className = 'heat-badge agg-none';
+  badge.style.fontSize = '0.65rem';
+  badge.textContent = card.headline || 'Not a zone on file.';
+  badges.appendChild(badge);
+  header.appendChild(title);
+  header.appendChild(region);
+  header.appendChild(badges);
+  pane.appendChild(header);
+
+  const county = document.createElement('div');
+  county.className = 'bc-section';
+  const countyLabel = document.createElement('div');
+  countyLabel.className = 'bc-section-label';
+  countyLabel.textContent = 'County';
+  county.appendChild(countyLabel);
+  addLine(county, countyText(card));
+  pane.appendChild(county);
+
+  const service = card.service || {};
+  const electric = document.createElement('div');
+  electric.className = 'bc-section';
+  const electricLabel = document.createElement('div');
+  electricLabel.className = 'bc-section-label';
+  electricLabel.textContent = 'Electric service';
+  electric.appendChild(electricLabel);
+  if (service.intro) {
+    const intro = document.createElement('div');
+    intro.className = 'pf-muted';
+    intro.style.marginTop = '0';
+    intro.textContent = service.intro;
+    electric.appendChild(intro);
+  }
+  (service.lines || []).forEach(function (line) {
+    addLine(electric, line.plain || line.label || '');
+  });
+  if (!(service.lines || []).length) addLine(electric, 'No utility is listed in the place index.');
+  if (service.callout) {
+    const callout = document.createElement('div');
+    callout.className = 'pf-line';
+    callout.style.marginTop = '8px';
+    callout.textContent = service.callout;
+    electric.appendChild(callout);
+  }
+  if (service.note) {
+    const note = document.createElement('div');
+    note.className = 'pf-muted';
+    note.textContent = service.note;
+    electric.appendChild(note);
+  }
+  pane.appendChild(electric);
+
+  const near = document.createElement('div');
+  near.className = 'bc-section';
+  const nearLabel = document.createElement('div');
+  nearLabel.className = 'bc-section-label';
+  nearLabel.textContent = 'Nearby zones';
+  near.appendChild(nearLabel);
+  const townLabel = document.createElement('div');
+  townLabel.className = 'stat-label';
+  townLabel.textContent = 'Townships';
+  near.appendChild(townLabel);
+  const townships = card.townships || [];
+  if (!townships.length) addLine(near, card.empty_townships || 'No containing or adjacent township is on file.');
+  townships.forEach(function (item) {
+    const row = document.createElement('div');
+    row.className = 'pf-line';
+    const bits = [item.label, item.county, item.role, item.zone_name, item.program, item.status, item.supplier, item.rate ? item.rate + '¢' : ''];
+    row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+    addLink(row, item.card_url, 'Battlecard');
+    near.appendChild(row);
+  });
+  const zoneLabel = document.createElement('div');
+  zoneLabel.className = 'stat-label';
+  zoneLabel.style.marginTop = '8px';
+  zoneLabel.textContent = 'Closest zones';
+  near.appendChild(zoneLabel);
+  const zones = card.zones || [];
+  if (!zones.length) addLine(near, card.empty_zones || 'No anchored zone is nearby.');
+  zones.forEach(function (item) {
+    const row = document.createElement('div');
+    row.className = 'pf-line';
+    const bits = [
+      item.name,
+      item.miles != null ? Number(item.miles).toFixed(1) + ' mi' : '',
+    ];
+    if (item.program && (!item.supplier || item.program.toLowerCase() !== item.supplier.toLowerCase())) {
+      bits.push(item.program);
+    }
+    bits.push(item.supplier, item.rate ? item.rate + '¢' : '', item.status);
+    row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+    addLink(row, item.card_url, 'Battlecard');
+    near.appendChild(row);
+  });
+  if (card.nearby_note) {
+    const note = document.createElement('div');
+    note.className = 'pf-muted';
+    note.textContent = card.nearby_note;
+    near.appendChild(note);
+  }
+  pane.appendChild(near);
+
+  const towns = document.createElement('div');
+  towns.className = 'bc-section';
+  const townsLabel = document.createElement('div');
+  townsLabel.className = 'bc-section-label';
+  townsLabel.textContent = 'Nearby towns';
+  towns.appendChild(townsLabel);
+  const townRows = card.towns || [];
+  if (!townRows.length) addLine(towns, card.empty_towns || 'No nearby towns are on file.');
+  townRows.forEach(function (item) {
+    const row = document.createElement('div');
+    row.className = 'pf-line';
+    const bits = [
+      item.name,
+      item.type,
+      item.miles != null ? Number(item.miles).toFixed(1) + ' mi' : '',
+      item.status,
+      item.supplier,
+      item.rate ? item.rate + '¢' : '',
+    ];
+    row.appendChild(document.createTextNode(bits.filter(Boolean).join(' · ')));
+    addLink(row, item.card_url, 'Battlecard');
+    towns.appendChild(row);
+  });
+  pane.appendChild(towns);
+
+  const web = document.createElement('div');
+  web.className = 'bc-section';
+  const webLabel = document.createElement('div');
+  webLabel.className = 'bc-section-label';
+  webLabel.textContent = 'Web lookup';
+  web.appendChild(webLabel);
+  const hint = document.createElement('div');
+  hint.className = 'pf-muted';
+  hint.style.marginTop = '0';
+  hint.textContent = 'Optional. Results stay unverified leads and are not written into zone data.';
+  web.appendChild(hint);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'btn btn-forge btn-sm';
+  button.style.marginTop = '8px';
+  button.textContent = 'Search the web for this place';
+  const results = document.createElement('div');
+  results.id = 'place-web-results';
+  button.addEventListener('click', function () { searchPlaceWeb(card, button, results); });
+  web.appendChild(button);
+  web.appendChild(results);
+  renderWebLeads(results, card.web_leads || [], card.web_note || '');
+  pane.appendChild(web);
+
+  openPlacePane();
+  renderTable();
+}
+
+function renderWebLeads(box, leads, note) {
+  box.replaceChildren();
+  if (!(leads || []).length) return;
+  const label = document.createElement('div');
+  label.className = 'stat-label';
+  label.style.marginTop = '10px';
+  label.textContent = 'Unverified leads';
+  box.appendChild(label);
+  leads.forEach(function (lead) {
+    const row = document.createElement('div');
+    row.className = 'pf-line';
+    const title = document.createElement('div');
+    title.textContent = lead.title || 'Untitled lead';
+    row.appendChild(title);
+    if (lead.snippet) {
+      const snippet = document.createElement('div');
+      snippet.className = 'pf-muted';
+      snippet.textContent = lead.snippet;
+      row.appendChild(snippet);
+    }
+    if (lead.url && /^https?:\/\//i.test(lead.url)) {
+      const link = document.createElement('a');
+      link.href = lead.url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = lead.url;
+      row.appendChild(link);
+    }
+    const tag = document.createElement('div');
+    tag.className = 'pf-muted';
+    tag.textContent = lead.label || 'Unverified lead';
+    row.appendChild(tag);
+    box.appendChild(row);
+  });
+  if (note) {
+    const foot = document.createElement('div');
+    foot.className = 'pf-muted';
+    foot.textContent = note;
+    box.appendChild(foot);
+  }
+}
+
+function searchPlaceWeb(card, button, results) {
+  button.disabled = true;
+  const prior = button.textContent;
+  button.textContent = 'Searching…';
+  fetch('/api/place-web', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({geoid: card.geoid || ''})
+  }).then(function (response) { return response.json(); }).then(function (data) {
+    button.disabled = false;
+    button.textContent = prior;
+    if (!data || data.ok === false) {
+      results.replaceChildren();
+      addLine(results, (data && data.message) || 'The web lookup did not return results.');
+      return;
+    }
+    renderWebLeads(results, data.leads || [], data.note || data.message || '');
+    if (!(data.leads || []).length) {
+      const empty = document.createElement('div');
+      empty.className = 'pf-muted';
+      empty.textContent = data.message || 'The web lookup did not return results.';
+      results.appendChild(empty);
+    }
+  }).catch(function () {
+    button.disabled = false;
+    button.textContent = prior;
+    results.replaceChildren();
+    const empty = document.createElement('div');
+    empty.className = 'pf-muted';
+    empty.textContent = 'The web lookup did not return results.';
+    results.appendChild(empty);
+  });
+}
+
 // ── Battlecard ────────────────────────────────────────────────────────────────
 function selectZone(name) {
+  hidePlaceCard();
   selectedZone = ALL_ZONES.find(z => z.name === name);
   if (!selectedZone) return;
 
@@ -1323,6 +1760,7 @@ fetch('/api/regions').then(r => r.json()).then(files => { regionFiles = files; }
 
 function startEditMode() {
   if (!selectedZone) return;
+  hidePlaceCard();
   isNewZone = false;
   populateEditForm(selectedZone);
   document.getElementById('battlecard-empty').style.display = 'none';
@@ -1333,6 +1771,7 @@ function startEditMode() {
 }
 
 function startNewZone() {
+  hidePlaceCard();
   isNewZone = true;
   populateEditForm({
     name:'', region:'', utility:'', utilityParent:null, utilityConfidence:'medium', aggregationStatus:'no_aggregation_verified',
@@ -1517,6 +1956,24 @@ function renderZipToast(data) {
     const name = data.zone.name;
     btn.addEventListener('click', () => selectZoneByName(name));
     body.appendChild(btn);
+  } else {
+    const places = data.places || [];
+    const named = places.find(function (place) {
+      return (place.name || '').toLowerCase() === (data.zone_name || '').toLowerCase();
+    });
+    const choices = named ? [named] : places.slice(0, 4);
+    choices.forEach(function (place) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = choices.length === 1 ? 'Open place card' : ('Open ' + (place.name || 'place'));
+      btn.style.cssText = 'margin-top:8px;width:100%;background:var(--forge-orange);border:none;color:#fff;border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;';
+      btn.addEventListener('click', function () {
+        document.getElementById('zip-toast').style.display = 'none';
+        document.getElementById('search-input').value = place.name || '';
+        applyFilters();
+      });
+      body.appendChild(btn);
+    });
   }
 }
 

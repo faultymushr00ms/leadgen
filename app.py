@@ -17,6 +17,7 @@ from flask import Flask, jsonify, render_template, redirect, request, send_file
 from forge_config import env_is_configured, pipeline_argv
 import history_store
 import merged_research
+import place_fallback
 import place_index
 import presentation
 import puco_layer
@@ -506,10 +507,21 @@ def api_lookup():
     return jsonify(payload), status
 
 
+@app.route("/api/place-web", methods=["POST"])
+def api_place_web():
+    """Optional web lookup for one indexed place. Results are unverified leads."""
+    data = request.get_json(silent=True) or {}
+    geoid = data.get("geoid") if isinstance(data, dict) else ""
+    payload, status = place_fallback.lookup_web_by_geoid(geoid)
+    return jsonify(payload), status
+
+
 def _with_nearby(places: list, zones: list) -> list:
-    """Attach nearest places and zones. Coordinates stay off this payload."""
+    """Attach nearest places, zones, and a place card. Coordinates stay off this payload."""
+    active = [zone for zone in zones if not zone.get("superseded")]
     for place in places:
         place["nearby"] = territory.nearby_for_geoid(place.get("geoid") or "", zones, place.get("name") or "")
+        place["fallback"] = place_fallback.build(place, active)
     return places
 
 

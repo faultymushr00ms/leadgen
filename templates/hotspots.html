@@ -28,11 +28,11 @@
   #search-input { min-width: 180px !important; max-width: 240px !important; }
 
   /* ── Zone split ── */
-  #zone-split { display: flex; flex: 1; overflow: hidden; }
+  #zone-split { display: flex; flex: 1; overflow: hidden; min-width: 0; }
 
   /* ── Table pane ── */
   #zone-table-pane {
-    flex: 1 1 820px; max-width: 840px; min-width: 0;
+    flex: 1 1 auto; min-width: 0;
     display: flex; flex-direction: column; overflow: hidden;
   }
   #zone-table-wrap { flex: 1; overflow-y: auto; }
@@ -58,26 +58,108 @@
   #zone-table tbody tr.active { background: rgba(232,97,26,0.14); }
   .no-zones-row td { text-align: center; padding: 40px; color: var(--forge-muted); font-size: 0.85rem; }
 
+  /* ── Drag handle between the table and the battlecard ── */
+  #pane-resizer {
+    flex: 0 0 8px;
+    width: 8px;
+    cursor: col-resize;
+    background: transparent;
+    position: relative;
+    z-index: 5;
+    touch-action: none;
+  }
+  #pane-resizer::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 3px;
+    width: 2px;
+    background: transparent;
+  }
+  #pane-resizer:hover,
+  #pane-resizer.dragging { background: rgba(232, 97, 26, 0.16); }
+  #pane-resizer:hover::before,
+  #pane-resizer.dragging::before { background: rgba(232, 97, 26, 0.85); }
+  #pane-toggle {
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 22px;
+    padding: 0;
+    border: 1px solid var(--forge-border);
+    border-radius: 4px;
+    background: var(--forge-panel);
+    color: var(--forge-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; line-height: 1;
+  }
+  #pane-toggle:hover { color: var(--forge-orange); border-color: var(--forge-orange); }
+  body.pane-dragging, body.pane-dragging * { cursor: col-resize !important; user-select: none !important; }
+
   /* ── Battlecard pane ── */
-  /* Leave columns through the Δ% column visible. The pane takes the rest. */
+  /* Width is restored from localStorage when a zone is open. Empty state stays slim. */
   #battlecard-pane {
-    flex: 1 1 520px;
-    width: auto;
-    min-width: 440px;
+    flex: 0 0 auto;
+    width: 440px;
+    min-width: 280px;
+    max-width: 70vw;
     border-left: 1px solid var(--forge-border);
     display: flex; flex-direction: column;
     overflow-y: auto;
   }
+  #zone-split.pane-collapsed #battlecard-pane {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    overflow: hidden;
+  }
+  #zone-split.pane-collapsed #battlecard-empty {
+    padding: 14px 4px;
+    justify-content: flex-start;
+  }
+  #zone-split.pane-collapsed #battlecard-empty .empty-icon {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  #zone-split.pane-collapsed #battlecard-empty .empty-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  #zone-split.pane-collapsed #battlecard-empty .empty-hint { display: none; }
   @media (max-width: 1100px) {
     #zone-split { flex-direction: column; }
-    #zone-table-pane { max-width: none; flex: 1 1 auto; min-height: 38vh; }
-    #battlecard-pane {
+    #pane-resizer { display: none; }
+    #zone-table-pane { flex: 1 1 auto; min-height: 38vh; }
+    #battlecard-pane,
+    #zone-split.pane-collapsed #battlecard-pane {
       width: 100%;
+      flex-basis: auto;
       min-width: 0;
+      max-width: none;
       max-height: 56vh;
+      overflow-y: auto;
       border-left: none;
       border-top: 1px solid var(--forge-border);
     }
+    #zone-split.pane-collapsed #battlecard-empty {
+      padding: 30px;
+      justify-content: center;
+    }
+    #zone-split.pane-collapsed #battlecard-empty .empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+    #zone-split.pane-collapsed #battlecard-empty .empty-title {
+      writing-mode: horizontal-tb;
+      transform: none;
+      font-size: 0.85rem;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+    #zone-split.pane-collapsed #battlecard-empty .empty-hint { display: block; }
   }
   #battlecard-pane::-webkit-scrollbar { width: 4px; }
   #battlecard-pane::-webkit-scrollbar-track { background: transparent; }
@@ -86,6 +168,15 @@
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     color: var(--forge-muted); padding: 30px; text-align: center;
+  }
+  #battlecard-empty .empty-icon {
+    font-size: 2.5rem; margin-bottom: 12px; color: var(--forge-border);
+  }
+  #battlecard-empty .empty-title {
+    font-size: 0.85rem; font-weight: 600; color: var(--forge-muted);
+  }
+  #battlecard-empty .empty-hint {
+    font-size: 0.75rem; color: var(--forge-border); margin-top: 6px; line-height: 1.5;
   }
   #battlecard-content { display: none; flex-direction: column; }
 
@@ -240,7 +331,7 @@
   </div>
 
   <!-- Main split -->
-  <div id="zone-split">
+  <div id="zone-split" class="pane-collapsed">
 
     <!-- Table pane -->
     <div id="zone-table-pane">
@@ -266,12 +357,18 @@
       </div>
     </div>
 
+    <div id="pane-resizer" role="separator" aria-orientation="vertical" aria-label="Resize battlecard">
+      <button type="button" id="pane-toggle" aria-label="Expand battlecard" title="Expand battlecard" aria-expanded="false">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+    </div>
+
     <!-- Battlecard pane -->
     <div id="battlecard-pane">
       <div id="battlecard-empty">
-        <i class="bi bi-map" style="font-size:2.5rem; margin-bottom:12px; color:var(--forge-border);"></i>
-        <div style="font-size:0.85rem; font-weight:600; color:var(--forge-muted);">Select a zone</div>
-        <div style="font-size:0.75rem; color:var(--forge-border); margin-top:6px; line-height:1.5;">
+        <i class="bi bi-map empty-icon"></i>
+        <div class="empty-title">Select a zone</div>
+        <div class="empty-hint">
           Click any row to open<br>the zone battlecard
         </div>
       </div>
@@ -768,8 +865,9 @@ function selectZone(name) {
   placeTalking(card);
   loadNearby(selectedZone);
 
-  // Scroll battlecard to top
+  // Scroll battlecard to top and restore the saved pane width
   document.getElementById('battlecard-pane').scrollTop = 0;
+  expandBattlecard();
 }
 
 function fillNotes(spoken, card) {
@@ -1063,12 +1161,148 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// ── Battlecard pane width ─────────────────────────────────────────────────────
+const PANE_WIDTH_KEY = 'forge.hotspots.battlecardWidth';
+const PANE_MIN = 280;
+const PANE_MAX_RATIO = 0.7;
+const PANE_DEFAULT = 440;
+const PANE_COLLAPSED = 48;
+let battlecardWidth = PANE_DEFAULT;
+
+function clampPaneWidth(px) {
+  const max = Math.max(PANE_MIN, Math.round(window.innerWidth * PANE_MAX_RATIO));
+  return Math.round(Math.min(max, Math.max(PANE_MIN, px)));
+}
+
+function battlecardStacked() {
+  return window.matchMedia('(max-width: 1100px)').matches;
+}
+
+function setPanePx(px) {
+  const pane = document.getElementById('battlecard-pane');
+  pane.style.width = px + 'px';
+  pane.style.flexBasis = px + 'px';
+  pane.style.flexGrow = '0';
+  pane.style.flexShrink = '0';
+}
+
+function clearPanePx() {
+  const pane = document.getElementById('battlecard-pane');
+  pane.style.width = '';
+  pane.style.flexBasis = '';
+  pane.style.flexGrow = '';
+  pane.style.flexShrink = '';
+}
+
+function syncPaneToggle() {
+  const split = document.getElementById('zone-split');
+  const toggle = document.getElementById('pane-toggle');
+  const open = !split.classList.contains('pane-collapsed') || battlecardStacked();
+  const icon = toggle.querySelector('i');
+  icon.className = 'bi ' + (open ? 'bi-chevron-right' : 'bi-chevron-left');
+  const label = open ? 'Collapse battlecard' : 'Expand battlecard';
+  toggle.title = label;
+  toggle.setAttribute('aria-label', label);
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  const handle = document.getElementById('pane-resizer');
+  const shown = split.classList.contains('pane-collapsed') ? PANE_COLLAPSED : clampPaneWidth(battlecardWidth);
+  handle.setAttribute('aria-valuemin', String(PANE_MIN));
+  handle.setAttribute('aria-valuemax', String(Math.round(window.innerWidth * PANE_MAX_RATIO)));
+  handle.setAttribute('aria-valuenow', String(shown));
+}
+
+function layoutBattlecardPane() {
+  const split = document.getElementById('zone-split');
+  if (battlecardStacked()) {
+    clearPanePx();
+    syncPaneToggle();
+    return;
+  }
+  if (split.classList.contains('pane-collapsed')) setPanePx(PANE_COLLAPSED);
+  else setPanePx(clampPaneWidth(battlecardWidth));
+  syncPaneToggle();
+}
+
+function expandBattlecard() {
+  document.getElementById('zone-split').classList.remove('pane-collapsed');
+  layoutBattlecardPane();
+}
+
+function collapseBattlecard() {
+  document.getElementById('zone-split').classList.add('pane-collapsed');
+  layoutBattlecardPane();
+}
+
+function initBattlecardPane() {
+  try {
+    const stored = parseInt(localStorage.getItem(PANE_WIDTH_KEY), 10);
+    if (Number.isFinite(stored)) battlecardWidth = stored;
+  } catch (err) { /* storage unavailable */ }
+
+  const split = document.getElementById('zone-split');
+  const handle = document.getElementById('pane-resizer');
+  const toggle = document.getElementById('pane-toggle');
+  let dragging = false;
+  let dragMoved = false;
+  let dragStartX = 0;
+
+  toggle.addEventListener('pointerdown', (e) => e.stopPropagation());
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (battlecardStacked()) return;
+    if (split.classList.contains('pane-collapsed')) expandBattlecard();
+    else collapseBattlecard();
+  });
+
+  handle.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('#pane-toggle')) return;
+    if (battlecardStacked()) return;
+    dragging = true;
+    dragMoved = false;
+    dragStartX = e.clientX;
+    handle.classList.add('dragging');
+    handle.setPointerCapture(e.pointerId);
+    document.body.classList.add('pane-dragging');
+    e.preventDefault();
+  });
+
+  handle.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    if (!dragMoved && Math.abs(e.clientX - dragStartX) < 3) return;
+    dragMoved = true;
+    split.classList.remove('pane-collapsed');
+    const right = split.getBoundingClientRect().right;
+    setPanePx(clampPaneWidth(right - e.clientX));
+  });
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    document.body.classList.remove('pane-dragging');
+    if (!dragMoved) {
+      layoutBattlecardPane();
+      return;
+    }
+    battlecardWidth = clampPaneWidth(parseInt(document.getElementById('battlecard-pane').style.width, 10));
+    setPanePx(battlecardWidth);
+    try { localStorage.setItem(PANE_WIDTH_KEY, String(battlecardWidth)); } catch (err) {}
+    syncPaneToggle();
+  }
+  handle.addEventListener('pointerup', endDrag);
+  handle.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', layoutBattlecardPane);
+  layoutBattlecardPane();
+}
+
 // ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initDropdowns();
   sortZones();
   renderTable();
   document.getElementById('match-count').textContent = ALL_ZONES.length + ' zones';
+  initBattlecardPane();
 });
 
 // ── Edit / Add Zone ───────────────────────────────────────────────────────────
@@ -1085,6 +1319,7 @@ function startEditMode() {
   document.getElementById('battlecard-content').style.display = 'none';
   document.getElementById('bc-edit-form').style.display = 'flex';
   document.getElementById('battlecard-pane').scrollTop = 0;
+  expandBattlecard();
 }
 
 function startNewZone() {
@@ -1101,6 +1336,7 @@ function startNewZone() {
   document.getElementById('battlecard-content').style.display = 'none';
   document.getElementById('bc-edit-form').style.display = 'flex';
   document.getElementById('battlecard-pane').scrollTop = 0;
+  expandBattlecard();
 }
 
 function populateEditForm(z) {
@@ -1136,8 +1372,11 @@ function cancelEdit() {
   document.getElementById('bc-edit-form').style.display = 'none';
   if (selectedZone && !isNewZone) {
     document.getElementById('battlecard-content').style.display = 'flex';
+    expandBattlecard();
   } else {
+    isNewZone = false;
     document.getElementById('battlecard-empty').style.display = 'flex';
+    collapseBattlecard();
   }
 }
 

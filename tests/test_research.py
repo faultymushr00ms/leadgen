@@ -1540,10 +1540,23 @@ class TalkingPointTests(unittest.TestCase):
         page = self.client.get("/hotspots").get_data(as_text=True)
         self.assertIn('id="bc-talk"', page)
         self.assertIn("vs commercial default", page)
-        self.assertIn("max-width: 840px", page)
-        self.assertIn("min-width: 440px", page)
         self.assertIn("max-width: 1100px", page)
         self.assertNotIn("width: 360px", page)
+
+    def test_hotspots_battlecard_pane_is_resizable(self):
+        page = self.client.get("/hotspots").get_data(as_text=True)
+        self.assertIn('id="pane-resizer"', page)
+        self.assertIn('id="pane-toggle"', page)
+        self.assertIn("cursor: col-resize", page)
+        self.assertIn("forge.hotspots.battlecardWidth", page)
+        self.assertIn("pane-collapsed", page)
+        self.assertIn("const PANE_MIN = 280", page)
+        self.assertIn("const PANE_MAX_RATIO = 0.7", page)
+        self.assertIn("max-width: 70vw", page)
+        self.assertIn("localStorage.getItem(PANE_WIDTH_KEY)", page)
+        self.assertIn("localStorage.setItem(PANE_WIDTH_KEY", page)
+        self.assertNotIn("max-width: 840px", page)
+        self.assertNotIn("min-width: 440px", page)
 
 
 class CommercialDefaultTests(unittest.TestCase):

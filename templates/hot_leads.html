@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from "_voice.html" import confidence %}
-{% block title %}— Hot leads{% endblock %}
-{% block topbar_title %}HOT LEADS{% endblock %}
+{% block title %}— Hot Zones{% endblock %}
+{% block topbar_title %}HOT ZONES{% endblock %}
 {% block topbar_sub %}{{ rows|length }} communities · residential Price to Compare and aggregation{% endblock %}
 {% block content %}
 <div class="research-page">
@@ -10,7 +10,7 @@
     agg−PTC is negative when the aggregation rate is below that default.
   </p>
   <div class="panel">
-    <div class="panel-header"><span>Ranked hot leads</span><span>{{ rows|length }}</span></div>
+    <div class="panel-header"><span>Ranked hot zones</span><span>{{ rows|length }}</span></div>
     <div class="scrollable">
       <table class="forge-table">
         <thead>

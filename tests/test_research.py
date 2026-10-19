@@ -1234,6 +1234,12 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("Ohio Edison", plain["notes"])
 
         hot = self.client.get("/hot-leads").get_data(as_text=True)
+        self.assertIn("Hot Zones", hot)
+        self.assertIn("HOT ZONES", hot)
+        self.assertIn("Ranked hot zones", hot)
+        self.assertNotIn("Hot leads", hot)
+        self.assertNotIn("HOT LEADS", hot)
+        self.assertNotIn("hot leads", hot)
         self.assertIn("Residential Price to Compare", hot)
         self.assertIn("agg−PTC", hot)
         self.assertIn("Silverton", hot)

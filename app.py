@@ -28,23 +28,29 @@ load_dotenv()
 app = Flask(__name__)
 OUTPUT_DIR = "output"
 REGIONS_DIR = os.path.join("data", "regions")
+GAS_DIR = os.path.join("data", "gas")
 
 STATUS_SORT = {"rollover_dissolved": 0, "rollover": 1, "pain_hit": 2, "pricing_updated": 3, "pain_coming": 4, "transition": 5, "verify": 6, "stable": 7}
 
 
-def _load_zones() -> list:
+def _load_zones(commodity: str = "electric") -> list:
     zones = []
-    if not os.path.exists(REGIONS_DIR):
-        return zones
-    for fname in sorted(os.listdir(REGIONS_DIR)):
-        if fname.endswith(".json"):
-            region_key = fname[:-5]  # strip .json
-            with open(os.path.join(REGIONS_DIR, fname)) as f:
-                file_zones = json.load(f)
-            for z in file_zones:
-                z["_source_file"] = region_key
-                z["_history_key"] = z.get("name")
-            zones.extend(file_zones)
+    dirs = [(REGIONS_DIR, "electric"), (GAS_DIR, "gas")]
+    for data_dir, dir_commodity in dirs:
+        if commodity != "all" and dir_commodity != commodity:
+            continue
+        if not os.path.exists(data_dir):
+            continue
+        for fname in sorted(os.listdir(data_dir)):
+            if fname.endswith(".json"):
+                region_key = fname[:-5]
+                with open(os.path.join(data_dir, fname)) as f:
+                    file_zones = json.load(f)
+                for z in file_zones:
+                    z["_source_file"] = region_key
+                    z["_history_key"] = z.get("name")
+                    z.setdefault("commodity", dir_commodity)
+                zones.extend(file_zones)
     zone_intel.attach_research(zones)
     zones = history_store.apply_zone_history(zones)
     presentation.attach(zones)

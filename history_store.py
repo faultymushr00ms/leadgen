@@ -35,6 +35,9 @@ DERIVED_ZONE_KEYS = {
     "history",
     "superseded",
     "superseded_at",
+    "displayRateChange",
+    "previousRateNeedsCheck",
+    "rateDelta",
 }
 
 

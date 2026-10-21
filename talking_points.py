@@ -15,6 +15,7 @@ from datetime import date
 from urllib.parse import urlparse
 
 import presentation
+import rate_change
 import territory
 import zone_intel
 
@@ -333,7 +334,13 @@ def _record_points(zone: dict, card: dict, existing: list) -> list:
         if not _rate_already_used(card.get("priorLabel"), existing + points):
             window = _prior_window(card.get("priorTerm") or "")
             who = supplier or "The prior supplier"
-            sentence = f"The last aggregation rate on file is {who} at {_fmt_cents(card.get('priorLabel'))}¢/kWh{window}."
+            clause = rate_change.matching_percent_clause(
+                zone, card.get("priorLabel"), card.get("currentLabel"),
+            )
+            sentence = (
+                f"The last aggregation rate on file is {who} at "
+                f"{_fmt_cents(card.get('priorLabel'))}¢/kWh{window}{clause}."
+            )
             when = _parse_date(card.get("priorTerm")) or _last_date_in(card.get("priorTerm") or "")
             if when:
                 points.append(_make_point(

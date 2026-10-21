@@ -215,6 +215,8 @@
   .rate-up   { color: var(--heat-hot);  background: rgba(229,57,53,0.15); }
   .rate-down { color: #64b5f6;          background: rgba(21,101,192,0.15); }
   .rate-flat { color: var(--forge-muted); background: var(--forge-border); }
+  .prior-unverified { font-size: 0.62rem; color: var(--forge-muted); line-height: 1.2; font-weight: 500; }
+  .rate-delta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
 
   .bc-takeaway {
     background: rgba(232,97,26,0.08); border: 1px solid rgba(232,97,26,0.2);
@@ -271,6 +273,7 @@
   /* Rate change colors in table */
   .chg-up   { color: var(--heat-hot); font-weight: 600; }
   .chg-down { color: #64b5f6; font-weight: 600; }
+  .chg-flat { color: var(--forge-muted); font-weight: 600; }
 </style>
 {% endblock %}
 
@@ -361,7 +364,7 @@
               <th style="width:130px" onclick="sortBy('aggregationStatus')">Agg Status <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:72px; text-align:right" onclick="sortBy('currentRate')">Current <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:72px; text-align:right" onclick="sortBy('previousRate')">Prev <span class="sort-icon bi bi-chevron-expand"></span></th>
-              <th style="width:64px; text-align:right" onclick="sortBy('rateChange')">Δ% <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:78px; text-align:right" onclick="sortBy('rateChange')">Δ% <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:170px" onclick="sortBy('supplier')">Supplier <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:88px" onclick="sortBy('termEnd')">Term End <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:110px" onclick="sortBy('status')">Status <span class="sort-icon bi bi-chevron-expand"></span></th>
@@ -827,6 +830,10 @@ function sortVal(z, key) {
   if (key === 'status')            return STATUS_ORDER[z.status] ?? 9;
   if (key === 'aggregationStatus') return AGG_ORDER[displayAgg(z)] ?? 9;
   if (key === 'confidence')        return CONF_ORDER[z.confidence] ?? 9;
+  if (key === 'rateChange') {
+    const percent = z.displayRateChange;
+    return percent === null || percent === undefined ? null : percent;
+  }
   return z[key];
 }
 
@@ -1250,14 +1257,12 @@ function selectZone(name) {
     let html = cell(spoken && spoken.currentCaption ? spoken.currentCaption : 'Current', esc(currentText), spoken && spoken.currentPending ? 'Pending' : '');
     html += cell('Prior', esc(priorText), '');
     html += cell('Historical', esc(historicalText), card.historicalCapture ? esc(card.historicalCapture) : '');
-    if (card.changePrior) {
-      html += `<div class="rate-change-badge ${card.changePrior.percent > 0 ? 'rate-up' : 'rate-down'}">${card.changePrior.percent > 0 ? '▲' : '▼'} ${Math.abs(card.changePrior.percent)}% vs prior</div>`;
-    }
+    html += rateDeltaMarkup(selectedZone);
     document.getElementById('bc-rate-story').innerHTML = html;
     renderResidentialPtc(card, selectedZone);
-  } else if (selectedZone.currentRate !== null || selectedZone.previousRate !== null) {
+  } else if (selectedZone.currentRate !== null || selectedZone.previousRate !== null || rateDeltaMarkup(selectedZone)) {
     rateSection.style.display = '';
-    document.getElementById('bc-rate-story').innerHTML = `<div class="rate-sub">No research overlay on this zone.</div>`;
+    document.getElementById('bc-rate-story').innerHTML = `<div class="rate-sub">No research overlay on this zone.</div>${rateDeltaMarkup(selectedZone)}`;
     renderResidentialPtc(card, selectedZone);
   } else {
     rateSection.style.display = 'none';
@@ -1587,17 +1592,25 @@ function sourcedPrior(z) {
   return '<span style="color:var(--forge-border)">—</span>';
 }
 function sourcedChange(z) {
-  if (!z.card || !z.card.changePrior) return '<span style="color:var(--forge-border)">—</span>';
-  return fmtChg(z.card.changePrior.percent);
+  const delta = z.rateDelta;
+  if (!delta || delta.percent === null || delta.percent === undefined) {
+    return '<span style="color:var(--forge-border)">—</span>';
+  }
+  const cls = delta.direction === 'up' ? 'chg-up' : delta.direction === 'down' ? 'chg-down' : 'chg-flat';
+  return `<span class="${cls}">${esc(delta.text)}</span>`;
+}
+function rateDeltaMarkup(z) {
+  const delta = z && z.rateDelta;
+  if (!delta || delta.percent === null || delta.percent === undefined) return '';
+  const cls = delta.direction === 'up' ? 'rate-up' : delta.direction === 'down' ? 'rate-down' : 'rate-flat';
+  let html = `<div class="rate-delta-wrap"><div class="rate-change-badge ${cls}">${esc(delta.text)} vs prior</div>`;
+  if (delta.previousRateNeedsCheck) {
+    html += '<div class="prior-unverified">unverified prior rate</div>';
+  }
+  return html + '</div>';
 }
 function fmtRate(r) {
   return r !== null && r !== undefined ? r.toFixed(2) + '¢' : '<span style="color:var(--forge-border)">—</span>';
-}
-function fmtChg(p) {
-  if (p === null || p === undefined) return '<span style="color:var(--forge-border)">—</span>';
-  const cls = p > 0 ? 'chg-up' : p < 0 ? 'chg-down' : '';
-  const sym = p > 0 ? '+' : '';
-  return `<span class="${cls}">${sym}${p}%</span>`;
 }
 function fmtDate(d) {
   if (!d) return '<span style="color:var(--forge-border)">—</span>';

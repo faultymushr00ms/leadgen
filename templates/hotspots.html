@@ -362,7 +362,7 @@
               <th style="width:170px" onclick="sortBy('region')">Region <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:160px" onclick="sortBy('utility')">Utility <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:130px" onclick="sortBy('aggregationStatus')">Agg Status <span class="sort-icon bi bi-chevron-expand"></span></th>
-              <th style="width:72px; text-align:right" onclick="sortBy('currentRate')">Current <span class="sort-icon bi bi-chevron-expand"></span></th>
+              <th style="width:108px; text-align:right" onclick="sortBy('currentRate')">Current <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:72px; text-align:right" onclick="sortBy('previousRate')">Prev <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:78px; text-align:right" onclick="sortBy('rateChange')">Δ% <span class="sort-icon bi bi-chevron-expand"></span></th>
               <th style="width:170px" onclick="sortBy('supplier')">Supplier <span class="sort-icon bi bi-chevron-expand"></span></th>
@@ -834,6 +834,10 @@ function sortVal(z, key) {
     const percent = z.displayRateChange;
     return percent === null || percent === undefined ? null : percent;
   }
+  if (key === 'currentRate') {
+    const bd = z.businessDefault;
+    if (bd && bd.applies) return bd.cents == null ? null : bd.cents;
+  }
   return z[key];
 }
 
@@ -1246,16 +1250,30 @@ function selectZone(name) {
   const rateSection = document.getElementById('bc-rate-section');
   if (card) {
     rateSection.style.display = '';
-    const cell = (label, value, note) => `<div class="rate-box">
-      <div class="rate-val" style="color:${label === 'Current' ? 'var(--forge-orange)' : 'var(--forge-muted)'}; font-size:1rem;">${value}</div>
+    const cell = (label, value, note) => {
+      const accent = label === 'Current' || (label && label.indexOf('business default') !== -1);
+      return `<div class="rate-box">
+      <div class="rate-val" style="color:${accent ? 'var(--forge-orange)' : 'var(--forge-muted)'}; font-size:1rem;">${value}</div>
       <div class="rate-sub">${label}</div>
       <div class="rate-sub">${note}</div>
     </div>`;
+    };
     const currentText = spoken && spoken.currentText ? spoken.currentText : '—';
     const priorText = spoken && spoken.priorText ? spoken.priorText : '—';
     const historicalText = spoken && spoken.historicalText ? spoken.historicalText : '—';
-    let html = cell(spoken && spoken.currentCaption ? spoken.currentCaption : 'Current', esc(currentText), spoken && spoken.currentPending ? 'Pending' : '');
-    html += cell('Prior', esc(priorText), '');
+    const bd = selectedZone.businessDefault;
+    let html;
+    if (bd && bd.applies) {
+      const value = bd.sourced ? esc(bd.text) + ' <span class="default-tag">default</span>' : '—';
+      let note = bd.sourced ? esc(bd.detail || 'Generation only') : 'No sourced commercial default on file';
+      if (bd.sourced && bd.effectiveLabel) note += '<br>Effective ' + esc(bd.effectiveLabel);
+      if (bd.sourced && bd.source) note += '<br>' + esc(bd.source);
+      if (bd.sourceUrl) note += '<br><a href="' + esc(bd.sourceUrl) + '" style="color:#4fc3f7;">Tariff</a>';
+      html = cell(bd.caption || 'Local business default (generation only)', value, note);
+    } else {
+      html = cell(spoken && spoken.currentCaption ? spoken.currentCaption : 'Current', esc(currentText), spoken && spoken.currentPending ? 'Pending' : '');
+    }
+    html += cell('Prior', esc(priorText), spoken && spoken.priorNote ? esc(spoken.priorNote) : '');
     html += cell('Historical', esc(historicalText), card.historicalCapture ? esc(card.historicalCapture) : '');
     html += rateDeltaMarkup(selectedZone);
     document.getElementById('bc-rate-story').innerHTML = html;
@@ -1299,10 +1317,11 @@ function selectZone(name) {
     </div>
   `;
 
-  document.getElementById('bc-takeaway').textContent = (spoken && spoken.takeaway) ? spoken.takeaway : '—';
+  const takeaway = (spoken && spoken.takeaway) ? spoken.takeaway : '—';
+  document.getElementById('bc-takeaway').textContent = takeaway;
 
   const hookSection = document.getElementById('bc-hook-section');
-  if (spoken && spoken.hook) {
+  if (spoken && spoken.hook && spoken.hook !== takeaway) {
     hookSection.style.display = '';
     document.getElementById('bc-hook').textContent = spoken.hook;
   } else {
@@ -1583,6 +1602,14 @@ function signedNumber(value, digits) {
   return number > 0 ? '+' + text : text;
 }
 function sourcedRate(z) {
+  const bd = z.businessDefault;
+  if (bd && bd.applies) {
+    if (!bd.sourced || bd.cents == null) return '<span style="color:var(--forge-border)">—</span>';
+    const title = 'Local business default (generation only)'
+      + (bd.effectiveLabel ? '. Effective ' + bd.effectiveLabel : '')
+      + (bd.source ? '. ' + bd.source : '');
+    return `<span title="${esc(title)}">${esc(bd.text)} <span class="default-tag">default</span></span>`;
+  }
   const spoken = (z.card && z.card.voice) || z.voice;
   if (spoken && !spoken.currentPending && spoken.currentText && spoken.currentText !== '—') return esc(spoken.currentText);
   return '<span class="conf-mark conf-pending" title="Pending">—</span>';
@@ -1603,7 +1630,8 @@ function rateDeltaMarkup(z) {
   const delta = z && z.rateDelta;
   if (!delta || delta.percent === null || delta.percent === undefined) return '';
   const cls = delta.direction === 'up' ? 'rate-up' : delta.direction === 'down' ? 'rate-down' : 'rate-flat';
-  let html = `<div class="rate-delta-wrap"><div class="rate-change-badge ${cls}">${esc(delta.text)} vs prior</div>`;
+  const baseline = delta.baseline || 'prior';
+  let html = `<div class="rate-delta-wrap"><div class="rate-change-badge ${cls}">${esc(delta.text)} vs ${esc(baseline)}</div>`;
   if (delta.previousRateNeedsCheck) {
     html += '<div class="prior-unverified">unverified prior rate</div>';
   }

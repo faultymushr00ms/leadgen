@@ -326,13 +326,16 @@
       <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
     </div>
     <div class="zone-right">
-      {% if z.voice and not z.voice.currentPending %}
+      {% set bd = z.businessDefault if z.businessDefault is defined else none %}
+      {% if bd and bd.applies and bd.sourced %}
+        <div class="rate-current">{{ bd.text }} <span class="default-tag">default</span></div>
+      {% elif z.voice and not z.voice.currentPending %}
         <div class="rate-current">{{ z.voice.currentText }}</div>
       {% else %}
         <div class="rate-current" style="color:var(--forge-muted);">—</div>
       {% endif %}
       {% if z.rateDelta and z.rateDelta.percent is not none %}
-        <div class="rate-pct rate-pct-{{ z.rateDelta.direction }}">{{ z.rateDelta.text }} vs prior</div>
+        <div class="rate-pct rate-pct-{{ z.rateDelta.direction }}">{{ z.rateDelta.text }} vs {{ z.rateDelta.baseline or 'prior' }}</div>
         {% if z.rateDelta.previousRateNeedsCheck %}
           <div class="prior-unverified">unverified prior rate</div>
         {% endif %}

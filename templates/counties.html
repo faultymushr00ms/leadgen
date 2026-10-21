@@ -131,7 +131,12 @@
           <td>{{ card.utility if card else zone.utility }}</td>
           <td>{{ card.voice.status if card and card.voice and card.voice.status else (program_label(card.program) if card else '—') }}</td>
           <td>{% if card and card.voice %}{{ confidence(card.voice.confidence) }}{% else %}—{% endif %}</td>
-          <td>{% if card and card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}</td>
+          <td>
+            {% set bd = card.businessDefault if card and card.businessDefault is defined else none %}
+            {% if bd and bd.applies %}
+              {% if bd.sourced %}{{ bd.text }} <span class="default-tag">default</span>{% else %}—{% endif %}
+            {% elif card and card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}
+          </td>
           <td>{% if card %}<a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a>{% endif %}</td>
         </tr>
         {% endfor %}

@@ -1,0 +1,846 @@
+{
+  "as_of": "2026-10-21",
+  "intro": "Lines for a live call. Every percent below is a number a publisher printed, with the dates and what it measures. Match the line to the account: default supply, aggregation price, total bill, or capacity charge. A figure with one publisher is marked single source. Where a filing printed a new rate and no publisher stated a percent, the rate is in the note and there is no percent to quote.",
+  "figures": [
+    {
+      "id": "te-ptc-35",
+      "percent_as_published": "35%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Toledo Edison",
+      "customer_class": "residential",
+      "period_label": "April 2025 to April 1, 2026",
+      "from_value": "PUCO chart: $0.0738/kWh for April 1–May 31, 2025",
+      "to_value": "9.99¢/kWh effective April 1, 2026 (EnergyBot). PUCO chart: $0.0999/kWh for April 1–May 31, 2026",
+      "detail": "EnergyBot’s year-over-year table states 35% for Toledo Edison. The PUCO chart lists those prices and does not state a percent.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date. The article describes the April 2025 to April 2026 comparison.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        },
+        {
+          "title": "Toledo Edison's Price to Compare historical chart",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. The page does not show a publication date and does not state 35%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/historical-ptc-chart-toledo-edison",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "te-bill-13-3",
+      "percent_as_published": "13.3%",
+      "measure": "Total residential bill",
+      "utility": "Toledo Edison",
+      "customer_class": "residential, 750 kWh per month",
+      "period_label": "June 1, 2025 price-to-compare reset versus the previous price to compare",
+      "from_value": "Previous Price to Compare $0.073772/kWh",
+      "to_value": "Price to Compare $0.095224/kWh. Bill impact $16.09",
+      "detail": "FirstEnergy states a 13.3% total-bill impact. Quote 13.3% as the bill. The same page lists the Price to Compare levels beside it.",
+      "sources": [
+        {
+          "title": "Understanding Rising Energy Supply Prices",
+          "publisher": "FirstEnergy",
+          "date": "2025-06-20",
+          "date_note": "Page last modified June 20, 2025.",
+          "url": "https://www.firstenergycorp.com/help/oh-understanding-rising-energy-supply-prices.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "te-apr-3",
+      "percent_as_published": "3.10%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Toledo Edison",
+      "customer_class": "residential",
+      "period_label": "April 1, 2026 adjustment",
+      "from_value": "",
+      "to_value": "9.99¢/kWh effective April 1, 2026",
+      "detail": "The same EnergyBot table calls the April 1, 2026 move 3.10%. It prints the new price and does not print the prior price in that row.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "cei-ptc-37",
+      "percent_as_published": "37%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "The Illuminating Company",
+      "customer_class": "residential",
+      "period_label": "April 2025 to April 1, 2026",
+      "from_value": "PUCO chart: $0.0719/kWh for April 1–May 31, 2025",
+      "to_value": "9.88¢/kWh effective April 1, 2026 (EnergyBot). PUCO chart: $0.0988/kWh for April 1–May 31, 2026",
+      "detail": "EnergyBot states 37% for The Illuminating Company, the largest of the three FirstEnergy Ohio year-over-year figures in that table. The PUCO chart lists the prices and does not state 37%.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date. The article describes the April 2025 to April 2026 comparison.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        },
+        {
+          "title": "Illuminating Company's Price to Compare historical chart",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. The page does not state 37%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/historical-ptc-chart-illuminating-company",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "cei-bill-12-5",
+      "percent_as_published": "12.5%",
+      "measure": "Total residential bill",
+      "utility": "The Illuminating Company",
+      "customer_class": "residential, 750 kWh per month",
+      "period_label": "June 1, 2025 price-to-compare reset versus the previous price to compare",
+      "from_value": "Previous Price to Compare $0.071872/kWh",
+      "to_value": "Price to Compare $0.091107/kWh. Bill impact $14.42",
+      "detail": "FirstEnergy states a 12.5% total-bill impact. Quote 12.5% as the bill.",
+      "sources": [
+        {
+          "title": "Understanding Rising Energy Supply Prices",
+          "publisher": "FirstEnergy",
+          "date": "2025-06-20",
+          "date_note": "Page last modified June 20, 2025.",
+          "url": "https://www.firstenergycorp.com/help/oh-understanding-rising-energy-supply-prices.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "cei-jun-27",
+      "percent_as_published": "27%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "The Illuminating Company",
+      "customer_class": "residential",
+      "period_label": "Into the June 1, 2025 standard-offer rate",
+      "from_value": "7.19¢/kWh",
+      "to_value": "9.11¢/kWh",
+      "detail": "Grid Shopper’s May 2025 update table states 27% for this step. The PUCO chart lists $0.0719 for April 1–May 31, 2025 and $0.0911 for June 1–June 30, 2025, and does not state 27%.",
+      "sources": [
+        {
+          "title": "NOPEC Standard Program Rate Set to Increase by 40% in June 2025",
+          "publisher": "Grid Shopper",
+          "date": "2025-04-09",
+          "date_note": "Published April 9, 2025. The utility table is labeled as a May 2025 update.",
+          "url": "https://gridshopper.com/blog/nopec-rate-increase",
+          "states_percent": true
+        },
+        {
+          "title": "Illuminating Company's Price to Compare historical chart",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. The page does not state 27%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/historical-ptc-chart-illuminating-company",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "cei-apr-4",
+      "percent_as_published": "4%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "The Illuminating Company",
+      "customer_class": "residential",
+      "period_label": "April 1, 2026 adjustment",
+      "from_value": "",
+      "to_value": "9.88¢/kWh effective April 1, 2026",
+      "detail": "EnergyBot’s April 1, 2026 row states 4%.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "nopec-40",
+      "percent_as_published": "40%",
+      "measure": "Aggregation rate (NOPEC standard program)",
+      "utility": "The Illuminating Company, Ohio Edison, and AEP Ohio communities in NOPEC",
+      "customer_class": "NOPEC standard-program customers",
+      "period_label": "June 1, 2025",
+      "from_value": "6.399¢/kWh",
+      "to_value": "8.929¢/kWh",
+      "detail": "Grid Shopper states a 40% standard-program increase and both rates. NOPEC’s own June 2025 community letter, as posted by Bainbridge Township, confirms the 8.929¢ price through the December 2025 meter read and does not state 40% or the prior price.",
+      "sources": [
+        {
+          "title": "NOPEC Standard Program Rate Set to Increase by 40% in June 2025",
+          "publisher": "Grid Shopper",
+          "date": "2025-04-09",
+          "url": "https://gridshopper.com/blog/nopec-rate-increase",
+          "states_percent": true
+        },
+        {
+          "title": "Latest NOPEC Rates (community letter from Chuck Keiper)",
+          "publisher": "NOPEC, posted by Bainbridge Township",
+          "date": "2025-04",
+          "date_note": "Letter covers the June 2025 meter read. The PDF confirms 8.929¢/kWh and does not state 40%.",
+          "url": "https://bainbridgetwp.com/wp-content/uploads/sites/4/2025/04/Latest-NOPEC-Rates.pdf",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "oe-ptc-31",
+      "percent_as_published": "31%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Ohio Edison",
+      "customer_class": "residential",
+      "period_label": "April 2025 to April 1, 2026",
+      "from_value": "PUCO chart: $0.0743/kWh for April 1–May 31, 2025",
+      "to_value": "9.7¢/kWh effective April 1, 2026 (EnergyBot). PUCO chart: $0.0970/kWh for April 1–May 31, 2026",
+      "detail": "EnergyBot’s year-over-year table states 31% for Ohio Edison. The PUCO chart lists the prices and does not state 31%.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Edison's Price to Compare historical chart",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. The page does not state 31%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/historical-ptc-chart-ohio-edison",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "oe-bill-11-8",
+      "percent_as_published": "11.8%",
+      "measure": "Total residential bill",
+      "utility": "Ohio Edison",
+      "customer_class": "residential, 750 kWh per month",
+      "period_label": "June 1, 2025 price-to-compare reset versus the previous price to compare",
+      "from_value": "Previous Price to Compare $0.074335/kWh",
+      "to_value": "Price to Compare $0.093461/kWh. Bill impact $14.34",
+      "detail": "FirstEnergy states an 11.8% total-bill impact. Quote 11.8% as the bill.",
+      "sources": [
+        {
+          "title": "Understanding Rising Energy Supply Prices",
+          "publisher": "FirstEnergy",
+          "date": "2025-06-20",
+          "date_note": "Page last modified June 20, 2025.",
+          "url": "https://www.firstenergycorp.com/help/oh-understanding-rising-energy-supply-prices.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "oe-jun-26",
+      "percent_as_published": "26%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Ohio Edison",
+      "customer_class": "residential",
+      "period_label": "Into the June 1, 2025 standard-offer rate",
+      "from_value": "7.43¢/kWh",
+      "to_value": "9.35¢/kWh",
+      "detail": "Grid Shopper’s May 2025 update table states 26%. The PUCO chart lists $0.0743 for April 1–May 31, 2025 and $0.0935 for June 1–June 30, 2025, and does not state 26%.",
+      "sources": [
+        {
+          "title": "NOPEC Standard Program Rate Set to Increase by 40% in June 2025",
+          "publisher": "Grid Shopper",
+          "date": "2025-04-09",
+          "date_note": "Published April 9, 2025. The utility table is labeled as a May 2025 update.",
+          "url": "https://gridshopper.com/blog/nopec-rate-increase",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Edison's Price to Compare historical chart",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. The page does not state 26%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/historical-ptc-chart-ohio-edison",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "oe-apr-4",
+      "percent_as_published": "4%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Ohio Edison",
+      "customer_class": "residential",
+      "period_label": "April 1, 2026 adjustment",
+      "from_value": "",
+      "to_value": "9.7¢/kWh effective April 1, 2026",
+      "detail": "EnergyBot’s April 1, 2026 row states 4%.",
+      "sources": [
+        {
+          "title": "Ohio Edison, Toledo Edison, & The Illuminating Company See PTC Rate Increase",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date.",
+          "url": "https://www.energybot.com/blog/first-energy-companies-see-default-rate-increase-ahead-of-summer.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "aep-36",
+      "percent_as_published": "36%",
+      "measure": "Price to Compare / Standard Service Offer (utility default supply)",
+      "utility": "AEP Ohio",
+      "customer_class": "residential",
+      "period_label": "June 1, 2025, versus April 1–May 31, 2025",
+      "from_value": "7.32¢/kWh (Grid Shopper). EnergyBot: around $0.0732/kWh",
+      "to_value": "9.97¢/kWh (Grid Shopper). EnergyBot: approximately $0.0997/kWh. PUCO alert: $0.0997/kWh",
+      "detail": "The Office of the Ohio Consumers’ Counsel, Grid Shopper, and EnergyBot each state 36% for this June 1, 2025 step. The OCC page does not print the cents. The PUCO alert prints the new rate and does not state 36%. Later quarters in 2025 moved again; this percent is the June 1 step.",
+      "sources": [
+        {
+          "title": "AEP Ohio Rate Increase 25-0392-EL-AIR",
+          "publisher": "Office of the Ohio Consumers' Counsel",
+          "date": "2026-04-01",
+          "date_note": "The page’s update is the April 1, 2026 PUCO order. The 36% sentence is on that page and is not given its own date.",
+          "url": "https://www.occ.ohio.gov/factsheet/aep-ohio-rate-increase-25-0392-el-air",
+          "states_percent": true
+        },
+        {
+          "title": "NOPEC Standard Program Rate Set to Increase by 40% in June 2025",
+          "publisher": "Grid Shopper",
+          "date": "2025-04-09",
+          "date_note": "Published April 9, 2025. The AEP row is in the May 2025 update table.",
+          "url": "https://gridshopper.com/blog/nopec-rate-increase",
+          "states_percent": true
+        },
+        {
+          "title": "AEP Ohio Electricity Rates Rise with the Temperatures this Summer",
+          "publisher": "EnergyBot",
+          "date": "2026-10-21",
+          "date_note": "Accessed this day. The page byline matched the access date. The article describes the June 1, 2025 step.",
+          "url": "https://www.energybot.com/blog/aep-ohio-electricity-rates-rise-this-summer.html",
+          "states_percent": true
+        },
+        {
+          "title": "PUCO alerts AEP Ohio customers to upcoming price changes",
+          "publisher": "PUCO",
+          "date": "2025-04-30",
+          "date_note": "States the new rate of $0.0997/kWh. Does not state 36%.",
+          "url": "https://puco.ohio.gov/wps/portal/gov/puco/news/puco-alerts-aep-ohio-customers-to-upcoming-price-changes",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "aep-0-9",
+      "percent_as_published": "0.9%",
+      "measure": "Standard Service Offer generation rate",
+      "utility": "AEP Ohio",
+      "customer_class": "residential SSO, illustrated at 1,000 kWh",
+      "period_label": "June 1, 2026 through May 31, 2027, versus the previous generation rate",
+      "from_value": "",
+      "to_value": "$0.1012/kWh. About $1.81 per month at 1,000 kWh",
+      "detail": "AEP Ohio states a 0.9% difference from the previous rate. The page does not print the previous rate. This is a separate, smaller step from the June 2025 jump.",
+      "sources": [
+        {
+          "title": "Rate Change for Customers on AEP Ohio’s Standard Service Offer",
+          "publisher": "AEP Ohio (Ohio Power Wire)",
+          "date": "2026-06-05",
+          "date_note": "The page shows no byline date. The earliest visible comment is June 5, 2026.",
+          "url": "https://www.aepohiowire.com/sso-generation-rate-increase/",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "duke-30",
+      "percent_as_published": "30%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Duke Energy Ohio",
+      "customer_class": "residential",
+      "period_label": "June 1, 2025, versus the then-current price to compare",
+      "from_value": "$0.080174/kWh (EnergyChoiceMatters). Grid Shopper: 8.02¢/kWh. PUCO chart: $0.0802/kWh for May 2025",
+      "to_value": "$0.104450/kWh (EnergyChoiceMatters). Grid Shopper’s filing-based figure: 10.45¢/kWh. PUCO chart: $0.1045/kWh for June 2025",
+      "detail": "EnergyChoiceMatters states 30% from the rider update. Grid Shopper’s May 2, 2025 headline states 30%; the body, written before Duke’s final announcement, says about 30%. The PUCO chart lists the June and May prices and does not state 30%.",
+      "sources": [
+        {
+          "title": "Duke Ohio Residential Electric Price To Compare Increasing 30%; Small Commercial Rate DM Increasing 22%",
+          "publisher": "EnergyChoiceMatters",
+          "date": "2025-05-01",
+          "url": "https://www.energychoicematters.com/stories/20250501b.html",
+          "states_percent": true
+        },
+        {
+          "title": "Duke Ohio Price to Compare set to increase 30% in June 2025",
+          "publisher": "Grid Shopper",
+          "date": "2025-05-02",
+          "url": "https://gridshopper.com/blog/duke-procurement-auction",
+          "states_percent": true
+        },
+        {
+          "title": "Duke Energy's Price to Compare historical chart for electricity",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Chart accessed this day. Lists May 2025 at $0.0802 and June 2025 at $0.1045. Does not state 30%.",
+          "url": "https://puco.ohio.gov/wps/portal/gov/puco/utilities/electricity/resources/historical-ptc-chart-duke-electricity",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "duke-6",
+      "percent_as_published": "a little over 6%",
+      "measure": "Price to Compare (utility default supply)",
+      "utility": "Duke Energy Ohio",
+      "customer_class": "residential, non-PIPP",
+      "period_label": "June 1, 2026 versus May 2026",
+      "from_value": "10.0819¢/kWh (ElectricityRates.com). About 10.08¢/kWh (Ohio Energy Ratings)",
+      "to_value": "10.7016¢/kWh on June 1, 2026 (ElectricityRates.com). About 10.70¢/kWh (Ohio Energy Ratings)",
+      "detail": "ElectricityRates.com states a little over a 6% increase. Ohio Energy Ratings states about 6–7% for the same step. The ElectricityRates.com table shows later 2026 months at different prices, so the percent is the June 1 step.",
+      "sources": [
+        {
+          "title": "Duke Energy Ohio Rate Increase: June 2026 Price to Compare Guide",
+          "publisher": "ElectricityRates.com",
+          "date": "2026-06-29",
+          "date_note": "Updated June 29, 2026.",
+          "url": "https://electricityrates.com/resources/duke-energy-rate-increase-june-2026/",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Price to Compare Round Up",
+          "publisher": "Ohio Energy Ratings",
+          "date": "2026-06-08",
+          "url": "https://www.ohenergyratings.com/blog/ohio-price-to-compare-round-up/",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "duke-dm-22",
+      "percent_as_published": "22%",
+      "measure": "Small-commercial default supply (Rate DM, first 2,800 kWh, riders RE, RC, AER, and SCR)",
+      "utility": "Duke Energy Ohio",
+      "customer_class": "Rate DM secondary, small",
+      "period_label": "June 1, 2025",
+      "from_value": "$0.089594/kWh",
+      "to_value": "$0.109549/kWh",
+      "detail": "EnergyChoiceMatters states 22% for this commercial block. A later Ohio Commercial Energy note says about 22% and cites this article, so it is not counted as a second independent source.",
+      "sources": [
+        {
+          "title": "Duke Ohio Residential Electric Price To Compare Increasing 30%; Small Commercial Rate DM Increasing 22%",
+          "publisher": "EnergyChoiceMatters",
+          "date": "2025-05-01",
+          "url": "https://www.energychoicematters.com/stories/20250501b.html",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "cincy-agg-49",
+      "percent_as_published": "49%",
+      "measure": "Aggregation rate (City of Cincinnati municipal aggregation)",
+      "utility": "Duke Energy Ohio delivery; Dynegy supply",
+      "customer_class": "Cincinnati aggregation customers",
+      "period_label": "May 2025",
+      "from_value": "7.19¢/kWh",
+      "to_value": "10.73¢/kWh",
+      "detail": "Grid Shopper states that Dynegy announced a 49% increase for the city aggregation and prints both rates.",
+      "sources": [
+        {
+          "title": "Duke Ohio Price to Compare set to increase 30% in June 2025; Cincinnati Municipal Aggregation Rate Increasing by 49%",
+          "publisher": "Grid Shopper",
+          "date": "2025-05-02",
+          "url": "https://gridshopper.com/blog/duke-procurement-auction",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "duke-capacity-2-8",
+      "percent_as_published": "about 2.8×",
+      "measure": "Capacity charge on pass-through supply",
+      "utility": "Duke Energy Ohio (DEOK zone)",
+      "customer_class": "pass-through or index-plus-capacity accounts whose tag did not change",
+      "period_label": "June 1, 2025, 2025/26 delivery year versus 2024/25",
+      "from_value": "The page says Duke’s zone had been $96.24/MW-day the year before",
+      "to_value": "2025/26 clearing price $269.92/MW-day",
+      "detail": "Ohio Commercial Energy states the capacity line rose about 2.8-fold in Duke’s zone, against more than ninefold outside that zone. This is the capacity line on a pass-through product, not a residential price to compare.",
+      "sources": [
+        {
+          "title": "How the 2025 PJM Capacity Jump Reached Ohio Bills",
+          "publisher": "Ohio Commercial Energy",
+          "date": "2026-09-27",
+          "date_note": "Updated September 27, 2026.",
+          "url": "https://ohiocommercialenergy.com/articles/rising-pjm-capacity-charges-ohio-commercial-electric-bills-summer-2025",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "aes-15",
+      "percent_as_published": "15%",
+      "measure": "Standard Offer Rate energy rate (default supply; described as generally equal to the price to compare)",
+      "utility": "AES Ohio",
+      "customer_class": "standard non-PIPP residential and secondary",
+      "period_label": "June 1, 2026 through May 31, 2027, versus the then-current rate",
+      "from_value": "$0.0945004/kWh (EnergyChoiceMatters). About 9.4¢/kWh (Ohio Energy Ratings)",
+      "to_value": "$0.1085600/kWh (EnergyChoiceMatters). 10.856¢/kWh (Ohio Energy Ratings)",
+      "detail": "EnergyChoiceMatters states 15%. Ohio Energy Ratings states about 15% for the same step. Primary customers are a separate 15% step on that EnergyChoiceMatters page, from $0.0920827 to $0.1057875.",
+      "sources": [
+        {
+          "title": "Residential, Small Commercial Default Service Rates Increasing 15% At Dayton Power & Light",
+          "publisher": "EnergyChoiceMatters",
+          "date": "2026-04-15",
+          "url": "https://www.energychoicematters.com/stories/20260415c.html",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Price to Compare Round Up",
+          "publisher": "Ohio Energy Ratings",
+          "date": "2026-06-08",
+          "url": "https://www.ohenergyratings.com/blog/ohio-price-to-compare-round-up/",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "aes-7-5",
+      "percent_as_published": "7.5%",
+      "measure": "Total residential bill for a typical SSO customer",
+      "utility": "AES Ohio",
+      "customer_class": "residential SSO, 1,000 kWh per month",
+      "period_label": "Beginning June 1, 2026, for one year",
+      "from_value": "",
+      "to_value": "Typical residential Price to Compare $0.109/kWh. Bill impact $14.06",
+      "detail": "AES Ohio states a $14.06 or 7.5% increase. Quote 7.5% as the typical bill. The 15% figure above is the standard-offer energy rate.",
+      "sources": [
+        {
+          "title": "Understanding energy supply",
+          "publisher": "AES Ohio",
+          "date": "2026-10-21",
+          "date_note": "Page accessed this day. It describes the June 1, 2026 rate and does not show a byline date.",
+          "url": "https://www.aes-ohio.com/energy-supply",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "valley-15",
+      "percent_as_published": "nearly 15%",
+      "measure": "Residential electric bill",
+      "utility": "Youngstown-area utilities in the PUCO Ohio Utility Rate Survey",
+      "customer_class": "residential electric, July bill",
+      "period_label": "Year into July 2026",
+      "from_value": "",
+      "to_value": "Average July electric bill of $200, as WFMJ reported the survey",
+      "detail": "WFMJ states that electric bills in the Valley rose nearly 15% over the year. The same story’s 10.6% figure mixes gas, electricity, and telephone and is not an electric quote.",
+      "sources": [
+        {
+          "title": "Valley utility bills expected to increase 10.6% since last year",
+          "publisher": "WFMJ",
+          "date": "2026-08-06",
+          "url": "https://www.wfmj.com/news/local-news/valley-utility-bills-expected-to-increase-10-6-since-last-year/article_0f194635-3173-483c-9f3f-b8238a2a6e38.html",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Utility Rate Survey",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Survey page accessed this day. It is the dataset WFMJ cites. The page does not state nearly 15%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/ohio-utility-rate-survey",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "pjm-833",
+      "percent_as_published": "833%",
+      "measure": "PJM capacity auction clearing price",
+      "utility": "PJM, including Ohio’s ATSI, AEP, Dayton, and DEOK zones at the RTO price",
+      "customer_class": "wholesale capacity price, passed through by suppliers and default-service auctions",
+      "period_label": "2025/26 delivery year versus 2024/25",
+      "from_value": "$28.92/MW-day for much of PJM in 2024/25",
+      "to_value": "$269.92/MW-day for much of PJM in 2025/26",
+      "detail": "Industrial Info states an 833% increase and quotes PJM’s two prices. The Ohio Capital Journal states more than 830% for last year’s auction. IEEFA states almost nine-fold for the same price pair and does not state 833%. This is the capacity price, not a retail bill.",
+      "sources": [
+        {
+          "title": "Chickens Come Home to Roost: PJM Capacity Prices Soar Over 800%",
+          "publisher": "Industrial Info Resources",
+          "date": "2024-09-11",
+          "url": "https://www.industrialinfo.com/news/article/chickens-come-home-to-roost-pjm-capacity-prices-soar-over-800--334423",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio electric bills likely to keep going up after latest PJM auction",
+          "publisher": "Ohio Capital Journal",
+          "date": "2025-07-29",
+          "url": "https://ohiocapitaljournal.com/2025/07/29/get-used-to-it-ohio-electric-bills-likely-to-keep-going-up-after-latest-pjm-auction/",
+          "states_percent": true
+        },
+        {
+          "title": "Projected data center growth spurs PJM capacity prices by factor of 10",
+          "publisher": "IEEFA",
+          "date": "2025-07-30",
+          "date_note": "States almost nine-fold for 2024/25 to 2025/26. Does not state 833%.",
+          "url": "https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10",
+          "states_percent": false
+        },
+        {
+          "title": "2025/2026 Base Residual Auction Report",
+          "publisher": "PJM",
+          "date": "2024-07-30",
+          "date_note": "Auction results posted July 30, 2024. The report lists $269.92 versus $28.92 for Rest of RTO and does not state 833%.",
+          "url": "https://www.pjm.com/-/media/DotCom/markets-ops/rpm/rpm-auction-info/2025-2026/2025-2026-base-residual-auction-report.pdf",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "pjm-22",
+      "percent_as_published": "22%",
+      "measure": "PJM capacity auction clearing price",
+      "utility": "PJM, all zones including Ohio",
+      "customer_class": "wholesale capacity price",
+      "period_label": "2026/27 delivery year versus 2025/26",
+      "from_value": "$269.92/MW-day (2025/26 RTO price)",
+      "to_value": "$329.17/MW-day, the cap, for every zone in 2026/27",
+      "detail": "IEEFA states another 22% for 2026/27. PJM’s July 22, 2025 release prints both prices and does not state 22%.",
+      "sources": [
+        {
+          "title": "Projected data center growth spurs PJM capacity prices by factor of 10",
+          "publisher": "IEEFA",
+          "date": "2025-07-30",
+          "url": "https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10",
+          "states_percent": true
+        },
+        {
+          "title": "PJM Auction Procures 134,311 MW of Generation Resources; Supply Responds to Price Signal",
+          "publisher": "PJM Inside Lines",
+          "date": "2025-07-22",
+          "date_note": "Prints $329.17 versus $269.92. Does not state 22%.",
+          "url": "https://insidelines.pjm.com/pjm-auction-procures-134311-mw-of-generation-resources-supply-responds-to-price-signal/",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "pjm-bill",
+      "percent_as_published": "1.5–5%",
+      "measure": "Retail bill effect PJM expects from the capacity cap",
+      "utility": "PJM footprint, including Ohio",
+      "customer_class": "some retail customers, depending on how suppliers pass wholesale costs through",
+      "period_label": "2026/27 delivery year versus the prior year",
+      "from_value": "$269.92/MW-day (2025/26 RTO)",
+      "to_value": "$329.17/MW-day cap for 2026/27",
+      "detail": "PJM says it would expect the cap price to translate to a year-over-year increase of 1.5–5% in some customers’ bills. The Ohio Capital Journal reports that same range. PJM also says some areas could see a drop where the capacity price fell. Ohio cleared at the RTO price in both auctions.",
+      "sources": [
+        {
+          "title": "PJM Auction Procures 134,311 MW of Generation Resources; Supply Responds to Price Signal",
+          "publisher": "PJM Inside Lines",
+          "date": "2025-07-22",
+          "url": "https://insidelines.pjm.com/pjm-auction-procures-134311-mw-of-generation-resources-supply-responds-to-price-signal/",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio electric bills likely to keep going up after latest PJM auction",
+          "publisher": "Ohio Capital Journal",
+          "date": "2025-07-29",
+          "url": "https://ohiocapitaljournal.com/2025/07/29/get-used-to-it-ohio-electric-bills-likely-to-keep-going-up-after-latest-pjm-auction/",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "pjm-ninefold",
+      "percent_as_published": "more than ninefold",
+      "measure": "Capacity charge on pass-through supply",
+      "utility": "Ohio zones other than Duke Energy Ohio",
+      "customer_class": "pass-through accounts whose capacity tag did not change",
+      "period_label": "June 1, 2025",
+      "from_value": "2024/25 price $28.92/MW-day outside Duke’s zone",
+      "to_value": "2025/26 price $269.92/MW-day. The page illustrates a 200 kW tag moving from about $2,100 a year to about $19,700",
+      "detail": "Ohio Commercial Energy states the capacity line rose more than ninefold outside Duke’s zone. Quote it as the capacity line on a pass-through product. Duke’s zone is the separate 2.8× figure.",
+      "sources": [
+        {
+          "title": "How the 2025 PJM Capacity Jump Reached Ohio Bills",
+          "publisher": "Ohio Commercial Energy",
+          "date": "2026-09-27",
+          "date_note": "Updated September 27, 2026.",
+          "url": "https://ohiocommercialenergy.com/articles/rising-pjm-capacity-charges-ohio-commercial-electric-bills-summer-2025",
+          "states_percent": true
+        }
+      ]
+    },
+    {
+      "id": "ohio-12",
+      "percent_as_published": "12%",
+      "measure": "Statewide average residential electric bill",
+      "utility": "Investor-owned utilities in the PUCO Ohio Utility Rate Survey",
+      "customer_class": "residential default service at 900 kWh. Excludes municipal aggregation and customers who chose a supplier",
+      "period_label": "July 2026 versus July 2025",
+      "from_value": "",
+      "to_value": "Signal Ohio’s city readings for July include Cleveland $189, Dayton $188, Akron $184, Columbus $198.53, Toledo $175, and Cincinnati $171",
+      "detail": "Signal Ohio states that July bills are 12% higher than last year, from the Ohio Utility Rate Survey. The PUCO survey page does not itself state 12%.",
+      "sources": [
+        {
+          "title": "Electric bills hit new highs across Ohio, state data shows",
+          "publisher": "Signal Ohio",
+          "date": "2026-08-03",
+          "url": "https://signalohio.org/electric-bills-hit-new-highs-across-ohio-state-data-shows/",
+          "states_percent": true
+        },
+        {
+          "title": "Ohio Utility Rate Survey",
+          "publisher": "PUCO",
+          "date": "2026-10-21",
+          "date_note": "Survey page accessed this day. Does not state 12%.",
+          "url": "https://puco.ohio.gov/utilities/electricity/resources/ohio-utility-rate-survey",
+          "states_percent": false
+        }
+      ]
+    },
+    {
+      "id": "ohio-62",
+      "percent_as_published": "62%",
+      "measure": "Statewide average residential electric bill",
+      "utility": "Investor-owned utilities in the PUCO Ohio Utility Rate Survey",
+      "customer_class": "residential default service at 900 kWh. Excludes municipal aggregation and customers who chose a supplier",
+      "period_label": "July 2026 versus 2015",
+      "from_value": "",
+      "to_value": "",
+      "detail": "The same Signal Ohio article states July bills are 62% higher than 2015. It is a decade comparison, kept here so it is not confused with the one-year 12%.",
+      "sources": [
+        {
+          "title": "Electric bills hit new highs across Ohio, state data shows",
+          "publisher": "Signal Ohio",
+          "date": "2026-08-03",
+          "url": "https://signalohio.org/electric-bills-hit-new-highs-across-ohio-state-data-shows/",
+          "states_percent": true
+        }
+      ]
+    }
+  ],
+  "areas": [
+    {
+      "id": "greater-toledo",
+      "name": "Greater Toledo",
+      "quote": "Greater Toledo: Toledo Edison’s default price to compare was up 35% from April 2025 to April 2026.",
+      "utility_lock": ["Toledo Edison"],
+      "counties": ["Lucas", "Wood", "Fulton", "Henry", "Williams", "Defiance", "Ottawa", "Sandusky"],
+      "figure_ids": ["te-ptc-35", "te-bill-13-3", "te-apr-3"],
+      "notes": [
+        "No separate Toledo-area aggregation percent turned up in the sources reviewed."
+      ]
+    },
+    {
+      "id": "greater-cleveland",
+      "name": "Greater Cleveland",
+      "quote": "Greater Cleveland: The Illuminating Company’s default price to compare was up 37% from April 2025 to April 2026.",
+      "utility_lock": ["Illuminating"],
+      "counties": ["Cuyahoga", "Lake", "Geauga", "Lorain", "Ashtabula", "Erie"],
+      "figure_ids": ["cei-ptc-37", "cei-bill-12-5", "cei-jun-27", "nopec-40", "oe-ptc-31", "oe-bill-11-8", "cei-apr-4"],
+      "notes": [
+        "NOPEC’s standard program price for Illuminating Company and Ohio Edison communities is 9.999¢/kWh for the June 2026 through September 2026 meter read, versus 8.999¢/kWh. Cleveland 19 (March 24, 2026) and EnergyChoiceMatters (March 19, 2026) printed the prices. Neither stated a percent.",
+        "Lorain County includes Ohio Edison accounts. Use the Ohio Edison lines on this card for those accounts.",
+        "WFMJ’s August 6, 2026 ranking for Cleveland mixes gas, electricity, and telephone. That combined percent is not quoted here."
+      ]
+    },
+    {
+      "id": "columbus",
+      "name": "Columbus",
+      "quote": "Columbus: AEP Ohio’s price to compare jumped 36% on June 1, 2025.",
+      "utility_lock": [],
+      "counties": ["Franklin", "Delaware", "Fairfield", "Licking", "Pickaway", "Madison", "Union"],
+      "figure_ids": ["aep-36", "aep-0-9"],
+      "notes": [
+        "Upper Arlington’s SOPEC FAQ prints a June 2026 green aggregation rate of 11.162¢/kWh and a brown rate of 10.927¢/kWh, against 9.756¢/kWh through May 2026. The page does not state a percent. https://www.upperarlingtonoh.gov/m/faq?cat=48"
+      ]
+    },
+    {
+      "id": "cincinnati",
+      "name": "Cincinnati",
+      "quote": "Cincinnati: Duke Energy Ohio’s residential price to compare rose 30% in June 2025 and a little over 6% again in June 2026.",
+      "utility_lock": ["Duke Energy"],
+      "counties": ["Hamilton", "Butler", "Clermont", "Warren"],
+      "figure_ids": ["duke-30", "duke-6", "duke-dm-22", "cincy-agg-49", "duke-capacity-2-8"],
+      "notes": [
+        "A Duke distribution case aimed at 2027 is pending. Published descriptions of the bill impact do not agree, so no distribution percent is quoted here."
+      ]
+    },
+    {
+      "id": "dayton",
+      "name": "Dayton",
+      "quote": "Dayton: AES Ohio’s standard-offer supply rate is up 15% for the year starting June 2026. The utility puts the typical residential bill impact at 7.5%.",
+      "utility_lock": ["AES Ohio"],
+      "counties": ["Montgomery", "Greene", "Miami", "Preble", "Champaign"],
+      "figure_ids": ["aes-15", "aes-7-5"],
+      "notes": [
+        "The City of Dayton lists the SOPEC aggregation rate at $0.0871/kWh from June 2025 to June 2026 and $0.10691/kWh from June 2026 to May 2027. The city page does not state a percent. https://www.daytonohio.gov/155/Electric-Power-Aggregation",
+        "WFMJ’s August 6, 2026 ranking for Dayton mixes gas, electricity, and telephone. That combined percent is not quoted here."
+      ]
+    },
+    {
+      "id": "akron",
+      "name": "Akron",
+      "quote": "Akron: Ohio Edison’s default price to compare was up 31% from April 2025 to April 2026.",
+      "utility_lock": [],
+      "counties": ["Summit", "Medina", "Portage"],
+      "figure_ids": ["oe-ptc-31", "oe-bill-11-8", "oe-jun-26", "nopec-40", "oe-apr-4"],
+      "notes": [
+        "On March 26, 2025 the City of Akron said its Dynegy aggregation price would be 9.24¢/kWh from May 2025 through June 2026, against a prior program price of 4.97¢/kWh, and that an average residential user could expect about $40 a month more. The city did not state a percent. https://akronohio.gov/news_detail_T17_R279.php",
+        "WFMJ’s August 6, 2026 ranking for Akron mixes gas, electricity, and telephone. That combined percent is not quoted here."
+      ]
+    },
+    {
+      "id": "youngstown-warren",
+      "name": "Youngstown / Warren",
+      "quote": "Youngstown and Warren: Ohio Edison’s price to compare was up 31% from April 2025 to April 2026. Valley electric bills were up nearly 15% over the year into July 2026.",
+      "utility_lock": [],
+      "counties": ["Mahoning", "Trumbull", "Columbiana"],
+      "figure_ids": ["oe-ptc-31", "valley-15", "oe-bill-11-8", "oe-jun-26", "oe-apr-4"],
+      "notes": [
+        "In the same August 6, 2026 WFMJ story, 10.6% is gas, electricity, and telephone together. The electric line is the nearly 15% figure.",
+        "No separate City of Youngstown aggregation percent turned up in the sources reviewed."
+      ]
+    },
+    {
+      "id": "canton-stark",
+      "name": "Canton / Stark",
+      "quote": "Canton and Stark County: on Ohio Edison, the price to compare was up 31% from April 2025 to April 2026. On AEP Ohio, it jumped 36% in June 2025.",
+      "utility_lock": [],
+      "counties": ["Stark"],
+      "figure_ids": ["oe-ptc-31", "aep-36", "oe-bill-11-8", "oe-jun-26", "nopec-40"],
+      "notes": [
+        "Constellation’s January 22, 2025 opt-out letter for the City of Canton sets 7.965¢/kWh from March 2025 through March 2026 and names Ohio Power (AEP Ohio) as the utility. It does not state a percent change. https://www.constellation.com/content/dam/constellation/Governmental%20Aggregation/Ohio/60793-Canton-Toolkit.pdf",
+        "Stark County is split. Use the Ohio Edison lines or the AEP Ohio line according to the account."
+      ]
+    },
+    {
+      "id": "ohio",
+      "name": "Ohio",
+      "quote": "Ohio: PJM capacity prices for 2025/26 cleared 833% above the prior delivery year. For 2026/27, PJM expects a 1.5–5% effect on some retail bills. July 2026 utility-default bills ran 12% above July 2025.",
+      "utility_lock": [],
+      "counties": [],
+      "figure_ids": ["pjm-833", "pjm-bill", "pjm-22", "pjm-ninefold", "ohio-12", "ohio-62"],
+      "notes": [
+        "PJM’s 2025 annual report prints the 2026/27 auction at $329.17/MW-day and the 2027/28 auction at the $333.44/MW-day cap. The report leaves the percent change between those two prices unstated. https://services.pjm.com/annualreport2025/markets/",
+        "Accounts outside the eight metros use this statewide card."
+      ]
+    }
+  ]
+}

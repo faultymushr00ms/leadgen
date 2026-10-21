@@ -63,6 +63,9 @@
     <div class="panel card-block">
       <div class="card-name">{{ card.jurisdiction }}</div>
       <div class="card-meta">{{ card.county }} County · {{ card.utility }}</div>
+      {% if card.marketArea %}
+      <div class="card-note"><a href="{{ card.marketArea.url }}" style="color:var(--forge-gold); text-decoration:none;">Market increases · {{ card.marketArea.name }}</a></div>
+      {% endif %}
       {% if spoken.notEligible %}
       <p class="card-note">Municipal utility or electric cooperative.</p>
       {% endif %}

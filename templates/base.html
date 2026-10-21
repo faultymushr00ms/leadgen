@@ -37,6 +37,7 @@
       padding: 16px 0;
       flex-shrink: 0;
       z-index: 100;
+      overflow-y: auto;
     }
     .sidebar-logo {
       color: var(--forge-orange);
@@ -231,6 +232,9 @@
     </a>
     <a class="nav-item {% if active == 'intel' %}active{% endif %}" href="/intel">
       <i class="bi bi-lightning"></i><span>Intel</span>
+    </a>
+    <a class="nav-item {% if active == 'market' %}active{% endif %}" href="/market-increases">
+      <i class="bi bi-graph-up-arrow"></i><span>Market</span>
     </a>
     <a class="nav-item {% if active == 'weekly' %}active{% endif %}" href="/weekly">
       <i class="bi bi-list-stars"></i><span>Weekly</span>

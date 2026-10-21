@@ -24,6 +24,8 @@ from collections import defaultdict
 from datetime import date, datetime, timezone
 from urllib.parse import quote
 
+import rate_change
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 RESEARCH_DIR = os.path.join(ROOT, "data", "research")
 DATASET_PATH = os.path.join(RESEARCH_DIR, "forge_corrected_dataset.csv")
@@ -179,7 +181,7 @@ def comparable_change(
     if other == 0:
         return {"comparable": False, "reason": "zero_baseline", "cents": None, "percent": None}
     cents = round(current - other, 3)
-    percent = round((current - other) / other * 100, 1)
+    percent = rate_change.percent_change(current, other)
     return {
         "comparable": True,
         "reason": "ok",
@@ -551,6 +553,8 @@ def build_card(zone: dict) -> dict:
         "futureStart": future.get("termStart") or "",
         "futureEnd": future.get("termEnd") or "",
         "futureSource": future.get("source") or "",
+        "rateDelta": rate_change.describe(zone),
+        "previousRateNeedsCheck": rate_change.previous_rate_needs_check(zone),
         "changePrior": research.get("changeVsPrior") if (research.get("changeVsPrior") or {}).get("comparable") else None,
         "changeHistorical": research.get("changeVsHistorical") if (research.get("changeVsHistorical") or {}).get("comparable") else None,
         "changeFuture": research.get("changeVsFuture") if (research.get("changeVsFuture") or {}).get("comparable") else None,
@@ -751,11 +755,12 @@ def residential_rate_gap(aggregation_rate, ptc_cents) -> dict | None:
     """
     current = parse_rate(aggregation_rate)
     other = parse_rate(ptc_cents)
-    if current is None or other is None or other == 0:
+    percent = rate_change.percent_change(current, other)
+    if percent is None:
         return None
     return {
         "cents": round(current - other, 3),
-        "percent": round((current - other) / other * 100, 1),
+        "percent": percent,
         "customer_class": "residential",
         "aggregation_rate": current,
         "ptc_rate": other,

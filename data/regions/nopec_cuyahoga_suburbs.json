@@ -3,7 +3,7 @@
     "name": "Westlake",
     "region": "Cleveland / Cuyahoga County",
     "utility": "Ohio Edison",
-    "aggregationStatus": "confirmed_active_aggregation",
+    "aggregationStatus": "address_dependent",
     "currentRate": 9.999,
     "previousRate": 7.0,
     "rateChange": 42.8,
@@ -16,7 +16,7 @@
     "hook": "Westlake is on NOPEC \u2014 that rate goes up to nearly 10\u00a2 in June. Any tenants or locations in Crocker Park area we should look at?",
     "futureUse": "aggregation",
     "notes": "Ohio Edison territory. Strong retail and professional services corridor. NOPEC standard rate 8.999\u00a2 \u2192 9.999\u00a2 June 2026.",
-    "lastVerified": "2026-06-04",
+    "lastVerified": "2026-10-22",
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "low"

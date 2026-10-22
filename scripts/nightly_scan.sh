@@ -39,6 +39,18 @@ echo "[setup] Python: $($PYTHON --version 2>&1)"
 REPORT_FILE="$REPORT_DIR/scan_${DATE}.md"
 ACTION_NEEDED=0
 
+# ── Step 0: Data consistency audit (local, zero network) ─────────────────────
+echo ""
+echo "[audit] Running data consistency audit..."
+if "$PYTHON" "$PROJECT_DIR/scripts/data_audit.py" --verbose ; then
+    echo "[audit] OK — no HIGH findings"
+else
+    EXIT_CODE=$?
+    echo "[audit] ACTION NEEDED (exit $EXIT_CODE) — data consistency issues found"
+    echo "[audit] Review data/reports/audit_${DATE}.md and data/research/investigation_queue.csv"
+    ACTION_NEEDED=1
+fi
+
 # ── Step 1: Aggregation monitor ───────────────────────────────────────────────
 echo ""
 echo "[monitor] Running aggregation monitor..."

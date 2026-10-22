@@ -157,7 +157,7 @@
     "name": "Powell",
     "region": "Columbus / AEP Ohio",
     "utility": "AEP Ohio",
-    "aggregationStatus": "confirmed_active_aggregation",
+    "aggregationStatus": "address_dependent",
     "currentRate": 11.162,
     "previousRate": 9.756,
     "rateChange": 14.4,
@@ -170,7 +170,7 @@
     "hook": "Powell is on SOPEC \u2014 the rate goes over 11\u00a2 in June. A lot of the newer commercial development out there is still on the program.",
     "futureUse": "aggregation",
     "notes": "AEP Ohio territory. SOPEC member. Green rate 9.756\u00a2 \u2192 11.162\u00a2 June 2026. Growing Columbus exurb in Delaware County with expanding retail and commercial presence.",
-    "lastVerified": "2026-05-01",
+    "lastVerified": "2026-10-22",
     "sourceUrl": null,
     "utilityParent": "AEP",
     "utilityConfidence": "high"

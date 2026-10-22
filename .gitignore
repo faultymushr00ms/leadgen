@@ -18,3 +18,4 @@ venv/
 logs/
 data/reports/
 data/cache/page_hashes.json
+data/research/investigation_queue.csv

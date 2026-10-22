@@ -1,16 +1,16 @@
 [
   {
     "name": "Brunswick",
-    "region": "Akron / Summit County",
+    "region": "Medina County / NE Ohio",
     "utility": "Ohio Edison",
     "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": 9.999,
     "previousRate": 8.999,
     "rateChange": 11.1,
     "supplier": "NOPEC",
-    "termStart": "2026-01-01",
+    "termStart": "2026-06-01",
     "termEnd": "2026-12-31",
-    "status": "pain_coming",
+    "status": "pricing_updated",
     "confidence": "high",
     "takeaway": "Brunswick is a NOPEC member on Ohio Edison \u2014 NOPEC rate hits 9.999\u00a2 in June 2026 (up from 8.999\u00a2, +11.1%). Same pain story as the rest of NOPEC territory.",
     "hook": "Brunswick is on NOPEC \u2014 that rate just moved to 9.999 cents in June. Do you know if those accounts are still enrolled in the program or if they opted out?",
@@ -19,7 +19,7 @@
     "lastVerified": "2026-06-01",
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
-    "utilityConfidence": "medium"
+    "utilityConfidence": "high"
   },
   {
     "name": "Medina City",

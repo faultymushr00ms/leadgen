@@ -190,3 +190,61 @@ Ohio Secretary of State data is public record. Google Maps API usage requires a 
 - **Scraping:** `requests`, `beautifulsoup4`, optionally Google Maps API
 - **Config:** YAML
 - **Output:** CSV (upgradeable to a simple web dashboard later)
+
+
+---
+
+## History
+
+Keep genuine past data for the life of the project: real prior and historical rates, contracts, suppliers, sources, and superseded values that were once true. Those writes are append-only. A genuine superseded value is marked with a timestamp and stays stored.
+
+Data proven incorrect is deleted, not kept as superseded history. That includes wrong classifications and unsourced values contradicted by verified sources. Log only a one-line removal note: zone, field, "removed incorrect value", date, and reason. The note must not contain the removed value. Genuine expired rates stay. Pruning or cleanup must not wipe history.
+
+PUCO Government Aggregation polygons are fetched into the gitignored cache `data/cache/puco/`. Each fetch writes a new snapshot and leaves the older file in place. The geometry is not committed. Credit: Source: PUCO Government Aggregation map. A listing is certification only, not an active program, supplier, or rate.
+
+## Nightly Scan
+
+Runs the aggregation monitor and rate refresh against NE Ohio zones daily at 6:30 AM.
+
+### Run by hand
+```bash
+bash scripts/nightly_scan.sh
+```
+
+### Check last report
+```bash
+cat data/reports/scan-$(date +%F).md
+```
+
+### Check logs
+```bash
+tail -f logs/scan-$(date +%F).log
+```
+
+### Schedule with launchd (macOS)
+
+1. Copy `com.forge.nightlyscan.plist` to `~/Library/LaunchAgents/`
+2. Open it and replace all three `REPLACE_WITH_FULL_PATH` with your actual project path (e.g. `/Users/sky/leadgen`)
+3. Load it:
+```bash
+launchctl load ~/Library/LaunchAgents/com.forge.nightlyscan.plist
+```
+
+4. Check status:
+```bash
+launchctl list | grep forge
+```
+
+5. Unload:
+```bash
+launchctl unload ~/Library/LaunchAgents/com.forge.nightlyscan.plist
+```
+
+`StartCalendarInterval` catches up missed runs if the Mac was asleep at 6:30 AM.
+
+### What it does
+- Scans for new Ohio aggregation communities (exits 1 + logs ACTION NEEDED if found)
+- Refreshes stored source URLs for NE Ohio zones — flags rate/supplier disagreements
+- Writes `data/reports/scan_YYYY-MM-DD.md` every run
+- Never writes to `data/regions/*.json` — all findings go to the investigation queue
+

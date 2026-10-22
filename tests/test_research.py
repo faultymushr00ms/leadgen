@@ -833,10 +833,12 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertEqual(westlake["research"]["historical"]["rate_raw"], "4.77")
         self.assertNotIn("supersededResearch", westlake["research"])
         card = westlake["card"]
+        self.assertIn("11.24", westlake["research"]["hook"])
         self.assertEqual(
             card["hook"],
-            "Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).",
+            "Program ended June 2026, businesses now on CEI default 9.45¢, up 12.8% from Dynegy 8.38¢",
         )
+        self.assertNotIn("11.24", card["hook"])
         self.assertNotIn("NOPEC", card["hook"])
         self.assertTrue(card["noGasAggregation"])
         self.assertEqual(card["rejectedRenewal"]["rate"], "10.11")
@@ -846,7 +848,8 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIsNone(card["ptc"]["comparison"])
         self.assertEqual(card["ptc"]["cents_per_kwh"], 11.24)
         page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
-        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).", page)
+        self.assertIn("Program ended June 2026, businesses now on CEI default 9.45¢, up 12.8% from Dynegy 8.38¢", page)
+        self.assertNotIn("residents default to CEI PTC 11.24", page)
         self.assertNotIn("FORGE recorded history, unsourced", page)
         self.assertIn("No gas aggregation.", page)
         self.assertIn("10.11", page)
@@ -856,7 +859,8 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertNotIn("9.999", page)
         self.assertNotIn("8.999", page)
         weekly = self.client.get("/weekly").get_data(as_text=True)
-        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c", weekly)
+        self.assertIn("Program ended June 2026, businesses now on CEI default 9.45¢, up 12.8% from Dynegy 8.38¢", weekly)
+        self.assertNotIn("residents default to CEI PTC 11.24", weekly)
         self.assertNotIn("Westlake is on NOPEC", weekly)
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="") as handle:
             stored = [row for row in csv.DictReader(handle) if row["orig_name"] == "Westlake"]

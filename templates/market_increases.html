@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}— Market Increases{% endblock %}
+{% block head %}
+<style>
+  .market-jump { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .market-jump a {
+    color: #d5d8e0; text-decoration: none; border: 1px solid var(--forge-border);
+    border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; background: var(--forge-panel);
+  }
+  .market-jump a:hover { border-color: var(--forge-orange); color: var(--forge-orange); }
+  .market-card { margin-bottom: 16px; scroll-margin-top: 12px; }
+  .market-quote {
+    margin: 0; padding: 14px 16px; background: rgba(255,179,0,0.07);
+    border-bottom: 1px solid rgba(255,179,0,0.2); color: #ffe082;
+    font-size: 1.02rem; line-height: 1.45;
+  }
+  .market-kicker {
+    display: block; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--forge-gold); margin-bottom: 4px;
+  }
+  .market-figure { padding: 14px 16px; border-top: 1px solid var(--forge-border); }
+  .market-figure-top { display: flex; gap: 16px; align-items: flex-start; }
+  .market-pct {
+    flex: 0 0 168px; font-size: 1.45rem; font-weight: 700; letter-spacing: -0.03em;
+    color: var(--forge-orange); line-height: 1.1; font-variant-numeric: tabular-nums;
+  }
+  .market-measure { font-size: 0.92rem; line-height: 1.4; }
+  .market-meta { margin-top: 4px; color: var(--forge-muted); font-size: 0.78rem; line-height: 1.45; }
+  .market-detail { margin: 8px 0 0; font-size: 0.84rem; line-height: 1.45; }
+  .market-source { margin-top: 8px; font-size: 0.78rem; line-height: 1.4; }
+  .market-source a { color: #4fc3f7; word-break: break-all; }
+  .market-notes { padding: 0 16px 14px; }
+  .market-notes p { margin: 8px 0 0; color: var(--forge-muted); font-size: 0.8rem; line-height: 1.45; word-break: break-word; }
+  .single-source { border-color: rgba(255,179,0,0.35); color: #ffe082; }
+</style>
+{% endblock %}
+{% block topbar_title %}MARKET INCREASES{% endblock %}
+{% block topbar_sub %}Quote the line that matches the account{% endblock %}
+{% block topbar_actions %}
+<a class="btn btn-ghost btn-sm" href="/intel">Intel</a>
+<a class="btn btn-ghost btn-sm" href="/ptc">Price to Compare</a>
+{% endblock %}
+{% block content %}
+<div class="research-page">
+  <div class="banner-alert banner-note">{{ report.intro }}</div>
+  <div class="market-jump">
+    {% for area in report.areas %}
+    <a href="#{{ area.id }}">{{ area.name }}</a>
+    {% endfor %}
+  </div>
+  {% for area in report.areas %}
+  <section class="panel market-card" id="{{ area.id }}">
+    <div class="panel-header">
+      <span>{{ area.name }}</span>
+      <span>{{ area.figures|length }} figure{% if area.figures|length != 1 %}s{% endif %}</span>
+    </div>
+    <p class="market-quote"><span class="market-kicker">On a call</span>{{ area.quote }}</p>
+    {% for figure in area.figures %}
+    <div class="market-figure">
+      <div class="market-figure-top">
+        <div class="market-pct">{{ figure.percent_as_published }}</div>
+        <div>
+          <div class="market-measure">{{ figure.measure }}</div>
+          <div class="market-meta">
+            {{ figure.utility }} · {{ figure.customer_class }}<br>
+            {{ figure.period_label }}
+            {% if figure.single_source %}<span class="pill single-source">Single source</span>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% if figure.from_value or figure.to_value %}
+      <p class="market-detail">
+        {% if figure.from_value %}From {{ figure.from_value }}.{% endif %}
+        {% if figure.to_value %} To {{ figure.to_value }}.{% endif %}
+      </p>
+      {% endif %}
+      {% if figure.detail %}<p class="market-detail">{{ figure.detail }}</p>{% endif %}
+      {% for source in figure.sources %}
+      <div class="market-source">
+        <strong>{{ source.publisher }}</strong> · {{ source.date }} · {{ source.title }}
+        {% if source.date_note %}<div class="market-meta">{{ source.date_note }}</div>{% endif %}
+        <div><a href="{{ source.url }}">{{ source.url }}</a></div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    {% if area.notes %}
+    <div class="market-notes">
+      {% for note in area.notes %}<p>{{ note }}</p>{% endfor %}
+    </div>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

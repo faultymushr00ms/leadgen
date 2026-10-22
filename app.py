@@ -17,6 +17,7 @@ from flask import Flask, jsonify, render_template, redirect, request, send_file
 from forge_config import env_is_configured, pipeline_argv
 import business_default
 import history_store
+import market_increases
 import merged_research
 import place_fallback
 import place_index
@@ -606,6 +607,15 @@ def _queue_view():
     baseline = zone_intel.load_queue()
     additions = zone_intel.load_monitor_additions()
     return baseline, additions
+
+
+@app.route("/market-increases")
+def market_increases_page():
+    return render_template(
+        "market_increases.html",
+        active="market",
+        report=market_increases.load(),
+    )
 
 
 @app.route("/intel")

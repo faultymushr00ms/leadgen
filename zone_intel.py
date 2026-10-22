@@ -24,6 +24,7 @@ from collections import defaultdict
 from datetime import date, datetime, timezone
 from urllib.parse import quote
 
+import market_increases
 import rate_change
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -503,10 +504,18 @@ def build_card(zone: dict) -> dict:
     status = research.get("status") or {}
     source_file = zone.get("_source_file") or ""
     name = zone.get("name") or ""
+    utility = research.get("utilityDetail") or research.get("utility") or zone.get("utility") or ""
+    area = market_increases.match_area(research.get("county") or "", utility)
     return {
         "name": name,
         "sourceFile": source_file,
         "url": "/card?file=" + quote(source_file) + "&name=" + quote(name),
+        "marketArea": {
+            "id": area["id"],
+            "name": area["name"],
+            "url": area["url"],
+            "quote": area["quote"],
+        },
         "jurisdiction": research.get("jurisdiction") or name,
         "county": research.get("county") or "",
         "utility": research.get("utilityDetail") or research.get("utility") or zone.get("utility") or "",

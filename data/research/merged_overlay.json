@@ -5386,7 +5386,7 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "Village page, May 2026, says eligible accounts enrolled in NOPEC's standard program and quotes 9.999¢ through September. The page does not post the price after that. The community map lists electric and gas. No rate is stored.",
+        "detail": "Village page, May 2026, says eligible accounts enrolled in NOPEC's standard program and quotes 9.999¢ through September. The page does not post the price after that. NOPEC's May 14, 2026 notice names the village and does not state the cents. The community map lists electric and gas. No rate is stored.",
         "endedDate": "",
         "reason": "",
         "sources": "https://www.plaincityohio.gov/residents/gaselectricaggregation.php https://www.nopec.org/communities/community-map",
@@ -5419,10 +5419,10 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "City page posts 9.99¢ fixed from September 2026 through November 2026, then the NOPEC standard price. That price is not stored. A third source was not among the pages checked on October 22, 2026.",
+        "detail": "City page posts 9.99¢ fixed from September 2026 through November 2026, then the NOPEC standard price. That price is not stored. The Delaware Gazette on June 3, 2026, the Delaware Source on June 17, 2026, and Ordinance 2026-12 do not state 9.99¢. The price after November 2026 is not on the city page.",
         "endedDate": "",
         "reason": "",
-        "sources": "https://www.cityofpowell.us/Residents/Electric-Aggregation https://www.nopec.org/communities/community-map",
+        "sources": "https://www.cityofpowell.us/Residents/Electric-Aggregation https://www.delgazette.com/2026/06/03/powell-selects-aggregation-partner/ https://www.nopec.org/communities/community-map",
         "confidence": "likely",
         "raw": "rate pending (city page posts a three-month price; not stored)"
       },

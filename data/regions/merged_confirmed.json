@@ -630,10 +630,10 @@
     "termEnd": null,
     "status": "verify",
     "confidence": "medium",
-    "takeaway": "Plain City's village page, May 2026, says eligible accounts enrolled in NOPEC's standard program. The page quotes a price through September and does not post the price after that. The community map lists electric and gas. No rate is stored.",
-    "hook": "Plain City's village page says NOPEC enrolled eligible accounts. No rate is stored after the September quote on that page.",
+    "takeaway": "Plain City's village page, May 2026, says eligible accounts enrolled in NOPEC's standard program and quotes 9.999¢ through September, plus an optional 12-month fixed 9.79¢. The page does not post the price after September. NOPEC's May 14, 2026 enrollment notice names Plain City and does not state the cents. The community map lists electric and gas, member since 2026. No rate is stored. The missing fact is the price after September 2026.",
+    "hook": "Plain City's village page quotes a standard price through September and does not post the price after that. No rate is stored.",
     "futureUse": "aggregation",
-    "notes": "Voters approved November 2025. Village page accessed 2026-10-22: May 2026 update says enrollment letters, opt-out May 14 through June 3, standard program, and a price through September. The page does not post the later price. Community map lists electric and gas. AEP and Ohio Edison both appear on the village page. No rate stored.",
+    "notes": "Voters approved November 2025. Village page accessed 2026-10-22: May 2026 update says enrollment letters, opt-out May 14 through June 3, standard program, and a price through September. The page does not post the later price. Community map lists electric and gas. AEP and Ohio Edison both appear on the village page. No rate stored. Local check, October 22, 2026: The price after September 2026.",
     "lastVerified": "2026-10-22",
     "sourceUrl": "https://www.plaincityohio.gov/residents/gaselectricaggregation.php"
   },
@@ -1180,12 +1180,12 @@
     "termEnd": "2028-05",
     "status": "stable",
     "confidence": "medium",
-    "takeaway": "Charlestown Township is stored as Dynegy at 10.32¢/kWh through May 2028. The 2026 annual report lists the township for electric and gas. The community map accessed October 22, 2026 does not list it. The Dynegy price was left in place.",
-    "hook": "Charlestown is stored as Dynegy at 10.32¢ through May 2028. The annual report lists NOPEC; the October 22 map does not.",
+    "takeaway": "Dynegy's Charlestown Township page says residents and businesses are charged 10.32¢ per kWh, term September 2026 through May 2028, traditional price as the default. The township announcements page says residents can call Dynegy to sign up. September 14, 2026 minutes say NOPEC filed a complaint with PUCO about the township switching providers, and they print Dynegy at 10.2 for 20 months and NOPEC at 10.3, which is not the same figure as 10.32¢. The community map accessed October 22, 2026 does not list the township. The May 19, 2026 annual report still names it for electric and gas. The file stays Dynegy at 10.32¢ through May 2028. The missing fact is a township document that states 10.32¢.",
+    "hook": "Charlestown's Dynegy page shows 10.32¢ from September 2026 through May 2028. Township minutes say they switched and NOPEC complained. The October 22 map does not list the township.",
     "futureUse": "aggregation",
-    "notes": "Dynegy price left in place. 2026 annual report natural-gas-and-electric roster includes Charlestown Township. The community map accessed 2026-10-22 does not list it. PUCO case 26-0280-EL-GAG is certification only.",
+    "notes": "Dynegy price left in place. 2026 annual report natural-gas-and-electric roster includes Charlestown Township. The community map accessed 2026-10-22 does not list it. PUCO case 26-0280-EL-GAG is certification only. Local check, October 22, 2026: A township document that states 10.32¢. The minutes' 10.2 figure is not the same number.",
     "lastVerified": "2026-10-22",
-    "sourceUrl": "https://dis.puc.state.oh.us/CaseRecord.aspx?CaseNo=26-0280-EL-GAG"
+    "sourceUrl": "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Charlestown-Township-Portage"
   },
   {
     "name": "Eaton",

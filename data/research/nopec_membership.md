@@ -4,10 +4,10 @@ Accessed 2026-10-22. Hypothesis checked: Ashtabula County is the only major acti
 
 A zone is confirmed still on NOPEC electric only when three sources agree: the community map (electric or electric and gas), the annual report electric roster (both-service or electric-only), and one independent source. The independent source is a city or village page, or the January 24, 2026 Tribune Chronicle quote that NOPEC townships cover all of Lake, Geauga, and Ashtabula counties. That quote is not used for cities, villages, or Portage. A PUCO listing is certification only and is not the third source. Two NOPEC-owned pages keep the label and flag the zone.
 
-Confirmed still NOPEC electric: 35
-Flagged, label kept: 61
+Confirmed still NOPEC electric on the earlier three-source rule: 35
+The 61-zone "flagged, label kept" bucket is not the end state. The October 22, 2026 local-source pass opened a city, village, or township page for each of those zones and for the other unresolved NOPEC rows. Stored rates were not changed. Each zone's status and the single missing fact are in `data/research/nopec_zone_pass.md`.
 Changed off NOPEC electric: 1
-Added Ashtabula communities that were missing from the zone file: 33 (27 townships confirmed, 6 villages flagged).
+Added Ashtabula communities that were missing from the zone file: 33 (27 townships confirmed on the Tribune quote, 6 villages carried into the local-source pass).
 
 Sources:
 - Community map: https://www.nopec.org/communities/community-map
@@ -53,7 +53,9 @@ Sources:
 - Williamsfield Township — third source https://www.tribtoday.com/news/local-news/2026/01/cog-hears-from-energy-council-rep/
 - Windsor Township — third source https://www.tribtoday.com/news/local-news/2026/01/cog-hears-from-energy-council-rep/
 
-## Flagged, label kept
+## Earlier flagged list, superseded by the local-source pass
+
+The rows below were the October 22 membership sort. They are not the current card text. Current status and the missing fact for each zone are in `data/research/nopec_zone_pass.md`.
 
 - Ashtabula — Map and 2026 annual report only. No separate local notice on October 22, 2026.
 - Austintown Township — On the electric roster. File price 8.99¢ left in place. No township notice for that price.

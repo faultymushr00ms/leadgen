@@ -33,7 +33,12 @@
           <td>{{ card.county }}</td>
           <td>{{ card.voice.status or term_label(card.termStatus) }}{% if card.voice.statusDate %} {{ card.voice.statusDate }}{% endif %}</td>
           <td>{{ card.currentEnd or '—' }}</td>
-          <td>{% if card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}</td>
+          <td>
+            {% set bd = card.businessDefault if card.businessDefault is defined else none %}
+            {% if bd and bd.applies %}
+              {% if bd.sourced %}{{ bd.text }} <span class="default-tag">default</span>{% else %}—{% endif %}
+            {% elif card.currentSourced %}{{ card.currentLabel }}¢{% else %}—{% endif %}
+          </td>
           <td>{{ confidence(card.voice.confidence) }}</td>
           <td>{{ entry.triggerScore or '—' }}</td>
           <td><a href="{{ card.url }}" style="color:var(--forge-orange);">Card</a></td>

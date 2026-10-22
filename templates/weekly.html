@@ -74,7 +74,11 @@
   }
   .rate-old { color:var(--forge-muted); text-decoration:line-through; }
   .rate-new { color:#ef5350; font-weight:700; }
-  .rate-pct { color:#ef5350; font-size:0.68rem; }
+  .rate-pct { font-size:0.68rem; font-weight:650; }
+  .rate-pct-up { color: var(--heat-hot); }
+  .rate-pct-down { color: #64b5f6; }
+  .rate-pct-flat { color: var(--forge-muted); }
+  .prior-unverified { font-size:0.62rem; color:var(--forge-muted); }
   .rate-current { color:#81c784; font-weight:600; font-size:0.78rem; }
 
   /* Term dates */
@@ -322,14 +326,19 @@
       <div class="zone-meta">{% if z.card %}{{ z.card.county }} County &middot; {{ z.card.utility }}{% else %}{{ z.region }} &middot; {{ z.utility }}{% endif %}</div>
     </div>
     <div class="zone-right">
-      <!-- Rate info: sourced current only. FORGE rateChange is not a verified delta. -->
-      {% if z.voice and not z.voice.currentPending %}
+      {% set bd = z.businessDefault if z.businessDefault is defined else none %}
+      {% if bd and bd.applies and bd.sourced %}
+        <div class="rate-current">{{ bd.text }} <span class="default-tag">default</span></div>
+      {% elif z.voice and not z.voice.currentPending %}
         <div class="rate-current">{{ z.voice.currentText }}</div>
-        {% if z.card and z.card.changePrior %}
-          <div class="rate-pct">{{ '%+.1f'|format(z.card.changePrior.percent) }}% vs prior</div>
-        {% endif %}
       {% else %}
         <div class="rate-current" style="color:var(--forge-muted);">—</div>
+      {% endif %}
+      {% if z.rateDelta and z.rateDelta.percent is not none %}
+        <div class="rate-pct rate-pct-{{ z.rateDelta.direction }}">{{ z.rateDelta.text }} vs {{ z.rateDelta.baseline or 'prior' }}</div>
+        {% if z.rateDelta.previousRateNeedsCheck %}
+          <div class="prior-unverified">unverified prior rate</div>
+        {% endif %}
       {% endif %}
       <!-- Term dates from the sourced current term when research is attached. -->
       {% if z.card and (z.card.currentStart or z.card.currentEnd) %}

@@ -405,3 +405,4 @@
 {"zone": "Conneaut", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
 {"zone": "Cleveland", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-22", "reason": "unsourced prior contradicted by the city rate table for the term that just ended"}
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
+{"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}

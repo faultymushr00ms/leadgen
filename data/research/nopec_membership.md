@@ -120,3 +120,21 @@ Sources:
 ## Changed off NOPEC electric
 
 - Cleveland — SOPEC / AEP Energy 10.457¢ Aug 2026–Jul 2027. NOPEC roster lists Cleveland for gas only.
+
+## Statewide pass, accessed 2026-10-22
+
+Rates were left in place. Cards now say what the pages actually show.
+
+- Reynoldsburg — confirmed electric member. City page, map, and annual report. File stays 10.499¢, the AEP standard. The city page does not restate the cents. Opt-out is by letter.
+- Springfield (Clark County) — confirmed electric member. City NOPEC resources page, map, and annual report. File stays the Ohio Edison standard, 10.399¢ variable through June 2027. The city page does not restate the cents.
+- Plain Township (Stark) — confirmed electric member. Township page, map, and NOPEC enrollment notice. File has no current price. Meters can be AEP Ohio or Ohio Edison.
+- North Canton — confirmed member. City page, map, and annual report. City page posts 9.399¢ for January–May 2026 and 9.999¢ for June–August 2026. File current stays 10.399¢. The city page does not restate September.
+- Powell — city page posts 9.99¢ fixed September–November 2026, then the standard price. Map lists electric. The price is not stored. A third source was not among the pages checked.
+- Plain City — village page says accounts enrolled and quotes 9.999¢ through September. Map lists electric and gas. No later price is stored.
+- Lancaster — map and annual report. File stays 10.499¢. No city notice of the cents.
+- Massillon — map and annual report. File stays 10.399¢ from June 2026, prior 8.999¢. No September city notice.
+- Tiffin — map and annual report, electric and gas. No resident rate on file. A September 2026 council item was a proposal.
+- Paris Township (Stark) — map and annual report, electric. No rate stored. Utility is not a single assignment.
+- Canfield — city file stays Dynegy 8.66¢. Township page, map, and annual report put Canfield Township on NOPEC at 10.39¢ for September 2026–June 2027. The old township figure was removed from the city note.
+- Copley Township — electric file stays Dynegy 9.94¢. Map and annual report list NOPEC for gas only.
+- Charlestown Township — Dynegy 10.32¢ left in place. Annual report lists electric and gas. The October 22 map does not list the township.

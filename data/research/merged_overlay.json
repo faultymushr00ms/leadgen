@@ -5262,8 +5262,8 @@
         "raw": "active"
       },
       "question": "Unresolved question. rate: 10.399. Other claims kept: 9.999 [news_council_sweep; http://northcantonohio.gov/m/newsflash/Home/Detail/516] term_end: 2026-08. Other claims kept: 2027-06 [baseline,supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
-      "verification": "conflict"
+      "unresolved": false,
+      "verification": "likely"
     },
     "ohio_electric_cooperatives.json|North Central Electric": {},
     "nopec_cuyahoga_suburbs.json|North Olmsted": {},
@@ -5340,8 +5340,8 @@
     },
     "ne_ohio_firstenergy.json|Paris Township (Stark)": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] rate: 10.131. Other claims kept: 10.399 [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] term_end: 2027-06. Other claims kept: 2027-12 [gov_records_sweep; PUCO ArcGIS] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
-      "verification": "conflict"
+      "unresolved": false,
+      "verification": "likely"
     },
     "cleveland_cuyahoga.json|Parma": {},
     "nopec_cuyahoga_suburbs.json|Parma Heights": {},
@@ -5386,12 +5386,12 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed",
+        "detail": "Village page, May 2026, says eligible accounts enrolled in NOPEC's standard program and quotes 9.999¢ through September. The page does not post the price after that. The community map lists electric and gas. No rate is stored.",
         "endedDate": "",
         "reason": "",
         "sources": "https://www.plaincityohio.gov/residents/gaselectricaggregation.php https://www.nopec.org/communities/community-map",
         "confidence": "likely",
-        "raw": "rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed)"
+        "raw": "rate pending (village page quotes a price through September; later price not posted)"
       },
       "question": "Unresolved question. rate: unconfirmed (NOPEC AEP Standard 10.499 if enrolled). RE-RESEARCHED 2026-10-15.  | Other claims kept: 10.499 [supplier_sweep] lifecycle: rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed). RE-RESEARCHED 2026-10-15. Being a NOPEC member does not prove an active program. The 10.499 figure is NOPEC's generic AEP Standard price, not a Plain City contract. | Other claims kept: active [supplier_sweep]; certified Phone: NOPEC 855-667-3201; Plain City village office (number not in sources)",
       "unresolved": true,
@@ -5409,8 +5409,8 @@
         "raw": "active (NOPEC member since 2026; prior Dynegy program ended May 2026)"
       },
       "question": "Unresolved question. rate: 10.399 (NOPEC OE Standard, Sep 2026-Jun 2027) for OE accounts; AEP-area rate unverified. RE-RESEARCHED 2026-10-15.  | Other claims kept: 10.399 [supplier_sweep] Phone: NOPEC 855-667-3201 (the township asks people not to call Township Hall about accounts) The township page lists both AEP Ohio and Ohio Edison. The AEP-area NOPEC price is unverified. Phone: NOPEC 855-667-3201.",
-      "unresolved": true,
-      "verification": "escalate-call"
+      "unresolved": false,
+      "verification": "likely"
     },
     "remaining_ohio_markets.json|Poland Township": {},
     "nw_central_ohio.json|Port Clinton": {},
@@ -5419,12 +5419,12 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "NOPEC selected Jun 2026; plan of operation not finalized",
+        "detail": "City page posts 9.99¢ fixed from September 2026 through November 2026, then the NOPEC standard price. That price is not stored. A third source was not among the pages checked on October 22, 2026.",
         "endedDate": "",
         "reason": "",
-        "sources": "https://www.delgazette.com/2026/06/03/powell-selects-aggregation-partner/ https://www.nopec.org/communities/community-map",
+        "sources": "https://www.cityofpowell.us/Residents/Electric-Aggregation https://www.nopec.org/communities/community-map",
         "confidence": "likely",
-        "raw": "rate pending (NOPEC selected Jun 2026; plan of operation not finalized)"
+        "raw": "rate pending (city page posts a three-month price; not stored)"
       },
       "question": "Unresolved question. rate: unconfirmed (baseline 9.99 unsourced). RE-RESEARCHED 2026-10-15.  | Other claims kept: 9.99 [baseline,supplier_sweep] Phone: NOPEC 855-667-3201; City of Powell (number not in sources)",
       "unresolved": true,

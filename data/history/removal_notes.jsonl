@@ -349,3 +349,59 @@
 {"zone": "Waynesville", "field": "takeaway", "note": "removed incorrect value", "date": "2026-10-15", "reason": "sales line named the wrong utility"}
 {"zone": "Ontario", "field": "takeaway", "note": "removed incorrect value", "date": "2026-10-15", "reason": "sales line named the wrong utility"}
 {"zone": "Fremont", "field": "takeaway", "note": "removed incorrect value", "date": "2026-10-15", "reason": "sales line named the wrong utility"}
+{"zone": "Mentor", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Willoughby", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Eastlake", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Wickliffe", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Lake County (NOPEC Group)", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Chardon / Geauga County", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "North Olmsted", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Middleburg Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Brook Park", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Broadview Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Seven Hills", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Garfield Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Maple Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Mayfield Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Highland Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Lyndhurst", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "University Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Rocky River", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Fairview Park", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Olmsted Falls", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Bedford Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Warrensville Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Twinsburg", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Parma Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Beachwood", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Independence", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Bedford", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Brecksville", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Pepper Pike", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Parma", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Strongsville", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Solon", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "North Royalton", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Berea", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Avon", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Avon Lake", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "North Ridgeville", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Sheffield Lake", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Sheffield Village", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Barberton", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Norton", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Willoughby Hills", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Mentor-on-the-Lake", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Madison Township", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Bainbridge Township", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Newbury Township", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Springfield Township (Mahoning)", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Jackson Township (Mahoning)", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Coitsville Township", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Kent / Portage County", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Elyria", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Ashtabula", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Geneva", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Conneaut", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-21", "reason": "placeholder prior contradicted by the verified NOPEC standard term"}
+{"zone": "Cleveland", "field": "previousRate", "note": "removed incorrect value", "date": "2026-10-22", "reason": "unsourced prior contradicted by the city rate table for the term that just ended"}
+{"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}

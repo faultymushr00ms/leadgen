@@ -45,7 +45,7 @@ class DataLoadTests(unittest.TestCase):
 
     def test_all_zones_keep_forge_fields_and_gain_research(self):
         zones = forge_app._load_zones()
-        self.assertEqual(len(zones), 393)
+        self.assertEqual(len(zones), 394)
         self.assertTrue(all(zone.get("research") and zone.get("original") for zone in zones))
         streetsboro = _zone("Streetsboro")
         self.assertEqual(streetsboro["supplier"], "Dynegy")
@@ -638,7 +638,7 @@ class HistoryTests(unittest.TestCase):
                     if item.get("_history_key") == "Akron" and item.get("_source_file") == region
                 ]
                 self.assertEqual(len(loaded), 1)
-                self.assertEqual(len(forge_app._load_zones()), 393)
+                self.assertEqual(len(forge_app._load_zones()), 394)
                 self.assertTrue(loaded[0]["superseded"])
                 self.assertTrue(loaded[0]["superseded_at"])
                 self.assertEqual(loaded[0]["notes"], "second-note")
@@ -735,7 +735,7 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("not proof", body["disclaimer"])
         self.assertEqual(self.client.get("/hotspots").status_code, 200)
         weekly = self.client.get("/weekly").get_data(as_text=True)
-        self.assertIn("Streetsboro — Dynegy at 9.999", weekly)
+        self.assertIn("Streetsboro is Dynegy at 9.999", weekly)
         self.assertNotIn("still on the NOPEC program", weekly)
 
     def test_battlecard_shows_residential_ptc_gap(self):
@@ -835,7 +835,7 @@ class AppBehaviorTests(unittest.TestCase):
         card = westlake["card"]
         self.assertEqual(
             card["hook"],
-            "Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).",
+            "Westlake aggregation ended in June 2026. The last Dynegy price was 8.38¢. Accounts are on utility default service unless they signed their own supply.",
         )
         self.assertNotIn("NOPEC", card["hook"])
         self.assertTrue(card["noGasAggregation"])
@@ -846,7 +846,7 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIsNone(card["ptc"]["comparison"])
         self.assertEqual(card["ptc"]["cents_per_kwh"], 11.24)
         page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
-        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c (Oct 1 to Dec 31 2026).", page)
+        self.assertIn("Westlake aggregation ended in June 2026. The last Dynegy price was 8.38¢.", page)
         self.assertNotIn("FORGE recorded history, unsourced", page)
         self.assertIn("No gas aggregation.", page)
         self.assertIn("10.11", page)
@@ -856,7 +856,7 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertNotIn("9.999", page)
         self.assertNotIn("8.999", page)
         weekly = self.client.get("/weekly").get_data(as_text=True)
-        self.assertIn("Westlake has no aggregation, residents default to CEI PTC 11.24 c", weekly)
+        self.assertIn("Westlake aggregation ended in June 2026. The last Dynegy price was 8.38¢", weekly)
         self.assertNotIn("Westlake is on NOPEC", weekly)
         with open(os.path.join(ROOT, "data", "research", "forge_corrected_dataset.csv"), newline="") as handle:
             stored = [row for row in csv.DictReader(handle) if row["orig_name"] == "Westlake"]
@@ -1167,7 +1167,7 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("possible prospects to research", prospects_page)
 
     def test_merged_research_lifecycle_hot_leads_and_unverified(self):
-        self.assertEqual(len(forge_app._load_zones()), 393)
+        self.assertEqual(len(forge_app._load_zones()), 394)
         kettering = _zone("Kettering")
         self.assertEqual(kettering["supplier"], "Constellation")
         self.assertEqual(kettering["currentRate"], 9.049)

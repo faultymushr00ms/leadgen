@@ -312,7 +312,10 @@ def _zone_bits(zone: dict) -> dict:
     status = research.get("status") or {}
     sourced = bool(card.get("currentSourced") if card else current.get("sourced"))
     rate = ""
-    if sourced:
+    default = zone.get("businessDefault") or {}
+    if default.get("applies"):
+        rate = default.get("exact") or ""
+    elif sourced:
         rate = str(card.get("currentLabel") or current.get("rate_raw") or "")
     ptc = card.get("ptc") if card else None
     if not ptc:

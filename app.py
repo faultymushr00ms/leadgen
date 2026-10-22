@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, redirect, request, send_file
 
 from forge_config import env_is_configured, pipeline_argv
+import business_default
 import history_store
 import merged_research
 import place_fallback
@@ -57,6 +58,7 @@ def _load_zones(commodity: str = "electric") -> list:
     zones = history_store.apply_zone_history(zones)
     presentation.attach(zones)
     rate_change.annotate_zones(zones)
+    business_default.apply(zones)
     zones.sort(key=lambda z: rate_change.sort_key(z, STATUS_SORT))
     return zones
 
@@ -357,7 +359,7 @@ def _zone_payload():
         return None
     for key in (
         "_source_file", "_history_key", "research", "original", "card", "history",
-        "displayRateChange", "previousRateNeedsCheck", "rateDelta",
+        "displayRateChange", "previousRateNeedsCheck", "rateDelta", "businessDefault", "voice",
     ):
         data.pop(key, None)
     return data

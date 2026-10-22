@@ -19,3 +19,6 @@ __pycache__/
 *.pyo
 .venv/
 venv/
+logs/
+data/reports/
+data/cache/page_hashes.json

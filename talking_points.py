@@ -14,6 +14,7 @@ import re
 from datetime import date
 from urllib.parse import urlparse
 
+import business_default
 import presentation
 import rate_change
 import territory
@@ -78,10 +79,11 @@ def attach(zones: list) -> None:
 def for_zone(zone: dict, zones: list, news: list | None = None) -> dict:
     news = _load_news() if news is None else news
     card = zone.get("card") or {}
-    lead = _is_lead(card)
+    info = business_default.display_for(zone)
+    lead = _is_lead(card) or bool(info.get("applies"))
     points = []
     points.extend(_news_points(zone, card, news))
-    points.extend(_record_points(zone, card, points))
+    points.extend(_record_points(zone, card, points, info))
     if _needs_context(points):
         points.extend(_context_points(zone, card, zones, points))
     points = _dedupe(points)
@@ -91,7 +93,7 @@ def for_zone(zone: dict, zones: list, news: list | None = None) -> dict:
     town_news = any(point.get("origin") == "news" for point in points)
     return {
         "lead": lead,
-        "intro": _intro(lead, card, town_news, points),
+        "intro": _intro(lead, card, town_news, points, info),
         "framing": _framing(town_news, points, lead),
         "points": points,
         "groups": groups,
@@ -122,7 +124,9 @@ def _is_lead(card: dict) -> bool:
     return False
 
 
-def _intro(lead: bool, card: dict, town_news: bool, points: list) -> str:
+def _intro(lead: bool, card: dict, town_news: bool, points: list, info: dict | None = None) -> str:
+    if info and info.get("applies") and info.get("headline"):
+        return info["headline"]
     if not lead or not points:
         return ""
     lifecycle = ((card.get("lifecycle") or {}).get("status") or "")
@@ -285,7 +289,7 @@ def _news_sentence(name, event, when, supplier, rate, rate_text, term) -> str:
     return ""
 
 
-def _record_points(zone: dict, card: dict, existing: list) -> list:
+def _record_points(zone: dict, card: dict, existing: list, info: dict | None = None) -> list:
     research = zone.get("research") or {}
     name = card.get("jurisdiction") or zone.get("name") or ""
     supplier = _clean_supplier(card.get("supplier") or "")
@@ -371,6 +375,12 @@ def _record_points(zone: dict, card: dict, existing: list) -> list:
             utility = _utility_subject(benchmark["utility"])
             if benchmark["kind"] == "commercial":
                 sentence = f"{utility} GS default is {_fmt_cents(benchmark['cents'])}¢/kWh{benchmark['window']}."
+                if info and info.get("applies") and info.get("movement") and info.get("priorText"):
+                    whose = info.get("supplier") or "the last aggregation"
+                    sentence = (
+                        f"{utility} GS default is {_fmt_cents(benchmark['cents'])}¢/kWh"
+                        f"{benchmark['window']}, {info['movement']} from {whose} {info['priorText']}¢."
+                    )
             else:
                 sentence = f"{utility} residential Price to Compare is {_fmt_cents(benchmark['cents'])}¢/kWh{benchmark['window']}."
             points.append(_make_point(

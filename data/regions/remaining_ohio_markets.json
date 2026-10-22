@@ -1,7 +1,7 @@
 [
   {
     "name": "Brunswick",
-    "region": "Akron / Summit County",
+    "region": "Medina County / NE Ohio",
     "utility": "Ohio Edison",
     "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": 10.399,
@@ -12,14 +12,14 @@
     "termEnd": "2027-06",
     "status": "pricing_updated",
     "confidence": "high",
-    "takeaway": "Brunswick is on the NOPEC standard program at 10.399¢/kWh, variable, from the September 2026 meter read through the June 2027 meter read. No early termination fee. The prior standard price was 9.999¢ for the June through August 2026 meter reads. Eligible residential and small-business accounts are enrolled unless they opted out or chose a fixed term (12-month 10.299¢, 24-month 10.599¢). Larger mercantile accounts are outside the aggregation.",
-    "hook": "Brunswick small accounts on the NOPEC default are at 10.399¢ through the June 2027 meter read, no exit fee, up from 9.999¢. Ask whether the larger meters opted out.",
+    "takeaway": "Brunswick is listed as a NOPEC electric member on the community map, accessed October 22, 2026, and in the 2026 annual report. The posted member price is 10.399¢/kWh through the June 2027 meter read, no exit fee. A separate city or township notice was not among the pages checked that day. This is the city program, not the Medina County Dynegy aggregation. Larger mercantile accounts are outside this price.",
+    "hook": "Brunswick is on NOPEC's member map at 10.399¢ through June 2027. A separate local notice was not among the pages checked on October 22, 2026. Larger meters are outside this price.",
     "futureUse": "aggregation",
-    "notes": "NOPEC standard 10.399¢/kWh variable, September 2026 through June 2027 meter reads, no exit fee. Prior standard price 9.999¢ for June through August 2026 meter reads. Ohio Edison territory. Medina County. Part of the Medina County aggregation program at 9.50¢/kWh through June 2028. Accounts that opted out are on the higher standard offer rate.",
-    "lastVerified": "2026-10-21",
+    "notes": "NOPEC standard 10.399¢/kWh variable, September 2026 through June 2027 meter reads, no exit fee. Prior standard price 9.999¢ for June through August 2026 meter reads. Ohio Edison. Brunswick is its own NOPEC member. It is not the Medina County Dynegy program.",
+    "lastVerified": "2026-10-22",
     "sourceUrl": "https://www.nopec.org/residents/pricingrates/electric-pricing",
     "utilityParent": "FirstEnergy",
-    "utilityConfidence": "medium"
+    "utilityConfidence": "high"
   },
   {
     "name": "Medina City",
@@ -56,11 +56,11 @@
     "termEnd": "2027-06",
     "status": "pricing_updated",
     "confidence": "medium",
-    "takeaway": "Elyria is a NOPEC electric member. Accounts on the standard program are at 10.399¢/kWh, variable, from the September 2026 meter read through the June 2027 meter read. No early termination fee. The prior standard price was 9.999¢ for the June through August 2026 meter reads. Eligible residential and small-business accounts are enrolled unless they opted out or chose a fixed term (12-month 10.299¢, 24-month 10.599¢). Larger mercantile accounts are outside the aggregation.",
-    "hook": "Elyria small accounts on the NOPEC default are at 10.399¢ through the June 2027 meter read, no exit fee, up from 9.999¢. Ask whether the larger meters opted out.",
+    "takeaway": "Elyria is listed as a NOPEC electric member on the community map, accessed October 22, 2026, and in the 2026 annual report. The posted member price is 10.399¢/kWh through the June 2027 meter read, no exit fee. A separate city or township notice was not among the pages checked that day. Larger mercantile accounts are outside this price.",
+    "hook": "Elyria is on NOPEC's member map at 10.399¢ through June 2027. A separate local notice was not among the pages checked on October 22, 2026. Larger meters are outside this price.",
     "futureUse": "address_check",
     "notes": "NOPEC standard 10.399¢/kWh variable, September 2026 through June 2027 meter reads, no exit fee. Prior standard price 9.999¢ for June through August 2026 meter reads. Ohio Edison territory. Lorain County seat. NOPEC territory — verify address-level enrollment.",
-    "lastVerified": "2026-10-21",
+    "lastVerified": "2026-10-22",
     "sourceUrl": "https://www.nopec.org/residents/pricingrates/electric-pricing",
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "medium"

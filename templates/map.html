@@ -20,6 +20,23 @@
   }
   .leaflet-popup-content { margin: 10px 12px; font-size: 0.8rem; line-height: 1.4; }
   .leaflet-container a.leaflet-popup-close-button { color: #e0e0e0; }
+  .zone-chooser-popup .leaflet-popup-content { margin: 8px 10px 10px; width: 220px; }
+  .zone-chooser-kicker {
+    font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase;
+    color: #6b7280; margin: 0 16px 6px 0;
+  }
+  .zone-chooser-list { max-height: 240px; overflow: auto; }
+  .zone-chooser-item {
+    display: block; width: 100%; text-align: left; background: transparent;
+    border: 0; border-top: 1px solid #2a2d3a; color: #e0e0e0;
+    padding: 7px 2px; cursor: pointer; font: inherit;
+  }
+  .zone-chooser-item:hover,
+  .zone-chooser-item:focus { color: #e8611a; outline: none; }
+  .zone-chooser-name { display: block; font-weight: 600; font-size: 0.82rem; }
+  .zone-chooser-hint { display: block; color: #9aa0a6; font-size: 0.72rem; font-weight: 400; margin-top: 1px; }
+  .zone-chooser-item:hover .zone-chooser-hint,
+  .zone-chooser-item:focus .zone-chooser-hint { color: #ffb300; }
   #map-filters { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 12px; }
   #map-filters label { font-size: 0.68rem; color: var(--forge-muted); text-transform: uppercase; letter-spacing: 0.6px; }
 </style>
@@ -93,6 +110,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
+<script src="{{ url_for('static', filename='zone_chooser.js') }}"></script>
 <script>
 (function () {
   var map = L.map('map', {zoomControl: true}).setView([40.25, -82.75], 7);
@@ -529,23 +547,145 @@
     };
   }
 
+  var chooserPopup = null;
+
+  function zoneRecords() {
+    return (payload && payload.zones) || [];
+  }
+
+  function eachVisibleCommunity(fn) {
+    [pucoElectric, pucoGas].forEach(function (group) {
+      if (!group || !pucoGroup.hasLayer(group)) return;
+      group.eachLayer(fn);
+    });
+  }
+
+  function communityHits(latlng, clickedLayer) {
+    var features = [];
+    var layers = [];
+    eachVisibleCommunity(function (layer) {
+      if (!layer || !layer.feature || !layer.feature.geometry) return;
+      if (layer !== clickedLayer && layer.getBounds && !layer.getBounds().contains(latlng)) return;
+      features.push(layer.feature);
+      layers.push(layer);
+    });
+    var hits = ForgeZoneChooser.featuresAtPoint(features, latlng.lng, latlng.lat);
+    hits.forEach(function (hit) { hit.layer = layers[hit.index]; });
+    if (clickedLayer && !hits.some(function (hit) { return hit.layer === clickedLayer; })) {
+      var props = (clickedLayer.feature && clickedLayer.feature.properties) || {};
+      hits.push({
+        index: -1,
+        layer: clickedLayer,
+        name: props.name || 'Community',
+        boundary: props.boundary || '',
+        agg: props.agg || '',
+        county: props.county || '',
+        area: clickedLayer.feature && clickedLayer.feature.geometry
+          ? ForgeZoneChooser.geometryArea(clickedLayer.feature.geometry) : 0,
+        properties: props
+      });
+      hits.sort(ForgeZoneChooser.compareHits);
+    }
+    return hits;
+  }
+
+  function dismissChooser() {
+    if (!chooserPopup) return;
+    var popup = chooserPopup;
+    chooserPopup = null;
+    map.closePopup(popup);
+  }
+
+  function openChosen(hit, latlng, hits) {
+    var described = ForgeZoneChooser.describeHit(hit, zoneRecords(), hits);
+    if (described.cardUrl) {
+      window.location.assign(described.cardUrl);
+      return;
+    }
+    dismissChooser();
+    if (hit.layer && hit.layer.openPopup) hit.layer.openPopup(latlng);
+  }
+
+  function showChooser(latlng, hits) {
+    var root = document.createElement('div');
+    root.className = 'zone-chooser';
+    var kicker = document.createElement('div');
+    kicker.className = 'zone-chooser-kicker';
+    kicker.textContent = hits.length + ' zones here';
+    root.appendChild(kicker);
+    var list = document.createElement('div');
+    list.className = 'zone-chooser-list';
+    list.setAttribute('role', 'menu');
+    list.setAttribute('aria-label', 'Zones here');
+    var zones = zoneRecords();
+    hits.forEach(function (hit) {
+      var described = ForgeZoneChooser.describeHit(hit, zones, hits);
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'zone-chooser-item';
+      button.setAttribute('role', 'menuitem');
+      var name = document.createElement('span');
+      name.className = 'zone-chooser-name';
+      name.textContent = described.label;
+      button.appendChild(name);
+      if (described.hint) {
+        var hint = document.createElement('span');
+        hint.className = 'zone-chooser-hint';
+        hint.textContent = described.hint;
+        button.appendChild(hint);
+      }
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openChosen(hit, latlng, hits);
+      });
+      list.appendChild(button);
+    });
+    root.appendChild(list);
+    dismissChooser();
+    chooserPopup = L.popup({
+      className: 'zone-chooser-popup',
+      closeButton: true,
+      autoClose: true,
+      closeOnClick: true,
+      maxWidth: 260,
+      minWidth: 200
+    }).setLatLng(latlng).setContent(root);
+    chooserPopup.openOn(map);
+    var first = list.querySelector('button');
+    if (first) first.focus();
+  }
+
+  function onCommunityClick(event) {
+    if (event && event.originalEvent) L.DomEvent.stop(event.originalEvent);
+    var hits = communityHits(event.latlng, event.target);
+    if (ForgeZoneChooser.chooseAction(hits) === 'open') {
+      var layer = (hits[0] && hits[0].layer) || event.target;
+      if (layer && layer.openPopup) layer.openPopup(event.latlng);
+      return;
+    }
+    showChooser(event.latlng, hits);
+  }
+
+  function attachCommunityPopup(feature, layer) {
+    layer.bindPopup(pucoPopup(feature.properties || {}));
+    layer.off('click', layer._openPopup);
+    layer.on('click', onCommunityClick);
+  }
+
   function buildPucoLayers() {
     var features = (pucoData.geojson && pucoData.geojson.features) || [];
     pucoElectric = L.geoJSON({type:'FeatureCollection', features: features.filter(function (feature) {
       return feature.properties && feature.properties.agg === 'Electric';
     })}, {
       style: function (feature) { return pucoStyle(feature, false); },
-      onEachFeature: function (feature, layer) {
-        layer.bindPopup(pucoPopup(feature.properties || {}));
-      }
+      onEachFeature: attachCommunityPopup
     });
     pucoGas = L.geoJSON({type:'FeatureCollection', features: features.filter(function (feature) {
       return feature.properties && feature.properties.agg === 'Gas';
     })}, {
       style: function (feature) { return pucoStyle(feature, true); },
-      onEachFeature: function (feature, layer) {
-        layer.bindPopup(pucoPopup(feature.properties || {}));
-      }
+      onEachFeature: attachCommunityPopup
     });
   }
 
@@ -618,6 +758,18 @@
 
   document.getElementById('puco-electric').addEventListener('change', loadPuco);
   document.getElementById('puco-gas').addEventListener('change', loadPuco);
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') dismissChooser();
+  });
+  document.addEventListener('click', function (event) {
+    if (!chooserPopup) return;
+    var holder = chooserPopup.getElement && chooserPopup.getElement();
+    if (holder && holder.contains(event.target)) return;
+    dismissChooser();
+  });
+  map.on('popupclose', function (event) {
+    if (event.popup === chooserPopup) chooserPopup = null;
+  });
 
   loadCounties();
   loadOverlays();

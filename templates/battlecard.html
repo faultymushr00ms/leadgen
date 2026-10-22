@@ -90,10 +90,21 @@
     {% endif %}
 
     {% if lead %}<div class="rate-kicker">Rate record</div>{% endif %}
+    {% set bd = card.businessDefault if card.businessDefault is defined else none %}
     <div class="rate-grid{% if lead %} rate-secondary{% endif %}">
-      <div class="rate-cell">
+      <div class="rate-cell"{% if bd and bd.applies %} id="business-default"{% endif %}>
         <div class="k">{{ spoken.currentCaption or 'Current' }}</div>
-        {% if spoken.currentPending %}
+        {% if bd and bd.applies %}
+          {% if bd.sourced %}
+            <div class="v">{{ bd.text }} <span class="default-tag">default</span></div>
+            <div class="s">{{ bd.detail }}{% if bd.effectiveLabel %}<br>Effective {{ bd.effectiveLabel }}{% endif %}</div>
+            {% if bd.source %}<div class="s">{{ bd.source }}</div>{% endif %}
+            {% if bd.sourceUrl %}<div class="s"><a href="{{ bd.sourceUrl }}" style="color:#4fc3f7;">Tariff</a></div>{% endif %}
+          {% else %}
+            <div class="v pending">—</div>
+            <div class="s">No sourced commercial default is on file</div>
+          {% endif %}
+        {% elif spoken.currentPending %}
           <div class="v pending">—</div>
           <div class="s">Pending</div>
         {% else %}
@@ -104,13 +115,14 @@
       <div class="rate-cell">
         <div class="k">Prior</div>
         <div class="v{% if spoken.priorText == '—' %} pending{% endif %}">{{ spoken.priorText }}</div>
+        {% if spoken.priorNote %}<div class="s">{{ spoken.priorNote }}</div>{% endif %}
         {% if card.priorSourced and card.priorTerm %}<div class="s">{{ card.priorTerm }}</div>{% endif %}
         {% if card.rateDelta and card.rateDelta.percent is not none %}
           <div class="s">
             {% if card.rateDelta.cents is not none %}{{ '%+.3f'|format(card.rateDelta.cents) }}¢ ({% endif %}
             <span class="delta-{{ card.rateDelta.direction }}">{{ card.rateDelta.text }}</span>
             {% if card.rateDelta.cents is not none %}){% endif %}
-            vs prior
+            vs {{ card.rateDelta.baseline or 'prior' }}
           </div>
           {% if card.rateDelta.previousRateNeedsCheck %}
             <div class="s prior-unverified">unverified prior rate</div>
@@ -190,10 +202,10 @@
     </div>
 
     {% if spoken.takeaway %}
-    <div class="takeaway-box" style="margin-bottom:12px;">{{ spoken.takeaway }}</div>
+    <div class="takeaway-box" id="sales-headline" style="margin-bottom:12px;">{{ spoken.takeaway }}</div>
     {% endif %}
 
-    {% if spoken.hook %}
+    {% if spoken.hook and spoken.hook != spoken.takeaway %}
     <div class="hook-box" style="margin-bottom:12px;">“{{ spoken.hook }}”</div>
     {% endif %}
 

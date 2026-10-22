@@ -120,6 +120,32 @@ def _fetch(zones, limit: int | None) -> tuple[list, list]:
     return observations, notes
 
 
+NE_OHIO_COUNTIES = {
+    "lorain", "cuyahoga", "medina", "summit", "portage",
+    "lake", "geauga", "ashtabula", "trumbull", "mahoning",
+}
+
+NE_OHIO_FILES = {
+    "cleveland_cuyahoga", "nopec_cuyahoga_suburbs", "nopec_lorain_summit_portage",
+    "lake_geauga_nopec", "akron_summit_medina", "youngstown_warren",
+    "ne_ohio_firstenergy", "remaining_ohio_markets",
+}
+
+REGION_PRESETS = {
+    "ne_ohio": NE_OHIO_FILES,
+}
+
+
+def _filter_zones(zones: list, region: str | None) -> list:
+    if not region:
+        return zones
+    preset = REGION_PRESETS.get(region.lower())
+    if preset:
+        return [z for z in zones if z.get("_source_file") in preset]
+    return [z for z in zones if region.lower() in (z.get("region") or "").lower()
+            or region.lower() in (z.get("name") or "").lower()]
+
+
 def main(argv: list[str] | None = None) -> dict:
     parser = argparse.ArgumentParser(description="Report-only source refresh. Appends history and does not overwrite zone data.")
     parser.add_argument("--observations", help="JSON list of {zone, region, rate, supplier, source_url, accessed_at}")
@@ -127,9 +153,10 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--limit", type=int, default=None, help="Max sourced pages to fetch")
     parser.add_argument("--report", default=None, help="Also copy the JSON report here. An existing file is kept.")
     parser.add_argument("--puco", action="store_true", help="Fetch a new PUCO aggregation snapshot into the local cache")
+    parser.add_argument("--region", default=None, help="Filter to a region preset (e.g. ne_ohio) or region name substring")
     args = parser.parse_args(argv)
 
-    zones = _load_zones()
+    zones = _filter_zones(_load_zones(), args.region)
     observations = []
     notes = []
     if args.observations:

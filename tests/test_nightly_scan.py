@@ -173,6 +173,7 @@ class TestReportWriting(unittest.TestCase):
             lines.append("")
         lines.append(f"Zones scanned: 42 | Observations: 5 | Diffs: {len(added_items)}")
         lines.append(f"\nLog: logs/scan_{today}.log")
+        lines.append(f"Audit: data/reports/audit_{today}.md")
 
         with open(report_file, "w") as f:
             f.write("\n".join(lines) + "\n")
@@ -184,6 +185,7 @@ class TestReportWriting(unittest.TestCase):
             content = open(path).read()
             self.assertIn("No changes detected", content)
             self.assertNotIn("Changes Detected", content)
+            self.assertIn("Audit: data/reports/audit_2026-10-22.md", content)
 
     def test_changes_in_report(self):
         with tempfile.TemporaryDirectory() as tmp:

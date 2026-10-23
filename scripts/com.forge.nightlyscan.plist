@@ -9,10 +9,14 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>REPLACE_WITH_FULL_PATH/scripts/nightly_scan.sh</string>
+        <string>/Users/sky/leadgen/leadgen/scripts/nightly_scan.sh</string>
     </array>
 
-    <!-- Run daily at 6:30 AM local time -->
+    <!--
+      6:30 AM local time. If the Mac is asleep at 6:30, launchd starts the
+      job once when the Mac wakes (StartCalendarInterval). A long sleep does
+      not replay one run for each missed day.
+    -->
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
@@ -21,17 +25,22 @@
         <integer>30</integer>
     </dict>
 
-    <!-- Catch up if Mac was asleep when the job was due -->
     <key>RunAtLoad</key>
     <false/>
 
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
     <key>StandardOutPath</key>
-    <string>REPLACE_WITH_FULL_PATH/logs/launchd_stdout.log</string>
+    <string>/Users/sky/leadgen/leadgen/logs/launchd_stdout.log</string>
 
     <key>StandardErrorPath</key>
-    <string>REPLACE_WITH_FULL_PATH/logs/launchd_stderr.log</string>
+    <string>/Users/sky/leadgen/leadgen/logs/launchd_stderr.log</string>
 
     <key>WorkingDirectory</key>
-    <string>REPLACE_WITH_FULL_PATH</string>
+    <string>/Users/sky/leadgen/leadgen</string>
 </dict>
 </plist>

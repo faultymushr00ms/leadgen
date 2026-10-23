@@ -20,5 +20,7 @@ __pycache__/
 .venv/
 venv/
 logs/
+# Generated scan and audit reports. Published to the reports branch by
+# scripts/publish_reports.py. Do not commit these on main.
 data/reports/
 data/cache/page_hashes.json

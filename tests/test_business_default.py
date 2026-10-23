@@ -52,7 +52,8 @@ class BusinessDefaultTests(unittest.TestCase):
         self.assertFalse(westlake["voice"]["currentPending"])
         self.assertEqual(westlake["card"]["hook"], WESTLAKE)
         self.assertEqual(westlake["card"]["takeaway"], WESTLAKE)
-        self.assertIn("11.24", westlake["research"]["hook"])
+        self.assertIn("8.38", westlake["research"]["hook"])
+        self.assertNotIn("11.24", westlake["research"]["hook"])
         self.assertEqual(westlake["card"]["ptc"]["cents_per_kwh"], 11.24)
         self.assertEqual(westlake["card"]["ptc"]["customer_class"], "residential")
 
@@ -60,8 +61,9 @@ class BusinessDefaultTests(unittest.TestCase):
             stored = next(row for row in json.load(handle) if row["name"] == "Westlake")
         self.assertIsNone(stored["currentRate"])
         self.assertEqual(stored["previousRate"], 8.38)
-        self.assertIn("11.24", stored["hook"])
-        self.assertIn("11.24", stored["takeaway"])
+        self.assertIn("8.38", stored["hook"])
+        self.assertNotIn("9.4503", stored["hook"])
+        self.assertNotIn("11.24", stored["takeaway"])
 
     def test_card_table_and_weekly_lead_with_the_business_default(self):
         page = self.client.get("/card?file=nopec_cuyahoga_suburbs&name=Westlake").get_data(as_text=True)
@@ -122,7 +124,7 @@ class BusinessDefaultTests(unittest.TestCase):
 
         kent = _zone("Kent / Portage County")
         self.assertFalse(kent["businessDefault"]["applies"])
-        self.assertEqual(kent["displayRateChange"], 48.6)
+        self.assertEqual(kent["displayRateChange"], 4.0)
 
         brookfield = _zone("Brookfield Township (Trumbull)")
         self.assertEqual(brookfield["businessDefault"]["cents"], 9.3786)

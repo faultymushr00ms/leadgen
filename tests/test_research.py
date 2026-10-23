@@ -45,7 +45,7 @@ class DataLoadTests(unittest.TestCase):
 
     def test_all_zones_keep_forge_fields_and_gain_research(self):
         zones = forge_app._load_zones()
-        self.assertEqual(len(zones), 393)
+        self.assertEqual(len(zones), 427)
         self.assertTrue(all(zone.get("research") and zone.get("original") for zone in zones))
         streetsboro = _zone("Streetsboro")
         self.assertEqual(streetsboro["supplier"], "Dynegy")
@@ -638,7 +638,7 @@ class HistoryTests(unittest.TestCase):
                     if item.get("_history_key") == "Akron" and item.get("_source_file") == region
                 ]
                 self.assertEqual(len(loaded), 1)
-                self.assertEqual(len(forge_app._load_zones()), 393)
+                self.assertEqual(len(forge_app._load_zones()), 427)
                 self.assertTrue(loaded[0]["superseded"])
                 self.assertTrue(loaded[0]["superseded_at"])
                 self.assertEqual(loaded[0]["notes"], "second-note")
@@ -735,7 +735,7 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertIn("not proof", body["disclaimer"])
         self.assertEqual(self.client.get("/hotspots").status_code, 200)
         weekly = self.client.get("/weekly").get_data(as_text=True)
-        self.assertIn("Streetsboro — Dynegy at 9.999", weekly)
+        self.assertIn("Streetsboro is Dynegy at 9.999", weekly)
         self.assertNotIn("still on the NOPEC program", weekly)
 
     def test_battlecard_shows_residential_ptc_gap(self):
@@ -833,7 +833,8 @@ class AppBehaviorTests(unittest.TestCase):
         self.assertEqual(westlake["research"]["historical"]["rate_raw"], "4.77")
         self.assertNotIn("supersededResearch", westlake["research"])
         card = westlake["card"]
-        self.assertIn("11.24", westlake["research"]["hook"])
+        self.assertIn("8.38", westlake["research"]["hook"])
+        self.assertNotIn("11.24", westlake["research"]["hook"])
         self.assertEqual(
             card["hook"],
             "Program ended June 2026, businesses now on CEI default 9.45¢, up 12.8% from Dynegy 8.38¢",
@@ -1171,7 +1172,7 @@ class PucoOverlayTests(unittest.TestCase):
         self.assertIn("possible prospects to research", prospects_page)
 
     def test_merged_research_lifecycle_hot_leads_and_unverified(self):
-        self.assertEqual(len(forge_app._load_zones()), 393)
+        self.assertEqual(len(forge_app._load_zones()), 427)
         kettering = _zone("Kettering")
         self.assertEqual(kettering["supplier"], "Constellation")
         self.assertEqual(kettering["currentRate"], 9.049)

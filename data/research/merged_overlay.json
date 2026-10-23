@@ -19,7 +19,7 @@
       "STATUS_verification": "escalate-call"
     },
     "cleveland_cuyahoga.json|Cleveland": {
-      "STATUS_verification": "conflict"
+      "STATUS_verification": "likely"
     },
     "columbus_aep.json|Columbus": {
       "STATUS_verification": "conflict"
@@ -51,7 +51,7 @@
       "FUTURE_source": "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Kettering"
     },
     "nopec_lorain_summit_portage.json|Madison Township": {
-      "STATUS_verification": "conflict"
+      "STATUS_verification": "likely"
     },
     "youngstown_warren.json|Mahoning County": {
       "CURRENT_rate": "",
@@ -4346,13 +4346,13 @@
     },
     "nopec_lorain_summit_portage.json|Amherst": {
       "question": "Unresolved question. supplier: City utility / AMP. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "cincinnati_duke_suburbs.json|Anderson Township": {},
     "ne_ohio_firstenergy.json|Andover": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "ohio_municipal_utilities.json|Archbold": {},
@@ -4458,7 +4458,7 @@
     "youngstown_warren.json|Campbell": {},
     "ne_ohio_firstenergy.json|Canfield": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "ne_ohio_firstenergy.json|Canton": {},
@@ -4551,9 +4551,9 @@
         "confidence": "confirmed",
         "raw": "active"
       },
-      "question": "Unresolved question. term_end: 2027-08. Other claims kept: 2026-08 [news_council_sweep; https://citizenportal.ai/articles/10593443/ohio/cuyahoga-county/cleveland/committee-approves-ordinance-to-join-sopec-energy-aggregation-program-with-one-year-initial-term] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
-      "verification": "conflict"
+      "question": "",
+      "unresolved": false,
+      "verification": "likely"
     },
     "nopec_cuyahoga_suburbs.json|Cleveland Heights": {},
     "ohio_municipal_utilities.json|Cleveland Public Power": {},
@@ -4797,7 +4797,7 @@
     "cincinnati_duke_suburbs.json|Goshen Township": {},
     "nopec_lorain_summit_portage.json|Grafton": {
       "question": "Unresolved question. supplier: NOPEC/NextEra. Other claims kept: Village utility / AMP [gov_records_sweep; PUCO ArcGIS] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "sopec_columbus_suburbs.json|Grandview Heights": {},
@@ -5036,14 +5036,14 @@
     },
     "nopec_lorain_summit_portage.json|Madison Township": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [baseline,supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] rate: 10.399. Other claims kept: 9.47 [gov_records_sweep; PUCO ArcGIS] term_end: 2026-12. Other claims kept: 2027-06 [baseline,supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "merged_confirmed.json|Madison Township (Richland)": {},
     "cincinnati_duke_suburbs.json|Madison Township (Butler Co)": {},
     "youngstown_warren.json|Mahoning County": {
       "question": "Unresolved question. No county-wide aggregation rate is on file. Confirm whether the county certificate is active, or whether supply is only through the townships. Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "escalate-call"
     },
     "ne_ohio_firstenergy.json|Mansfield": {},
@@ -5262,8 +5262,8 @@
         "raw": "active"
       },
       "question": "Unresolved question. rate: 10.399. Other claims kept: 9.999 [news_council_sweep; http://northcantonohio.gov/m/newsflash/Home/Detail/516] term_end: 2026-08. Other claims kept: 2027-06 [baseline,supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
-      "verification": "conflict"
+      "unresolved": false,
+      "verification": "likely"
     },
     "ohio_electric_cooperatives.json|North Central Electric": {},
     "nopec_cuyahoga_suburbs.json|North Olmsted": {},
@@ -5335,13 +5335,13 @@
     "cincinnati_duke_suburbs.json|Oxford Township (Butler Co)": {},
     "nopec_lorain_summit_portage.json|Painesville": {
       "question": "Unresolved question. supplier: City utility. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] utility: CEI. Other claims kept: Ohio Edison [gov_records_sweep; PUCO ArcGIS] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "ne_ohio_firstenergy.json|Paris Township (Stark)": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] rate: 10.131. Other claims kept: 10.399 [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] term_end: 2027-06. Other claims kept: 2027-12 [gov_records_sweep; PUCO ArcGIS] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
-      "verification": "conflict"
+      "unresolved": false,
+      "verification": "likely"
     },
     "cleveland_cuyahoga.json|Parma": {},
     "nopec_cuyahoga_suburbs.json|Parma Heights": {},
@@ -5386,12 +5386,12 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed",
+        "detail": "Village page, May 2026, says eligible accounts enrolled in NOPEC's standard program and quotes 9.999¢ through September. The page does not post the price after that. NOPEC's May 14, 2026 notice names the village and does not state the cents. The community map lists electric and gas. No rate is stored.",
         "endedDate": "",
         "reason": "",
         "sources": "https://www.plaincityohio.gov/residents/gaselectricaggregation.php https://www.nopec.org/communities/community-map",
         "confidence": "likely",
-        "raw": "rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed)"
+        "raw": "rate pending (village page quotes a price through September; later price not posted)"
       },
       "question": "Unresolved question. rate: unconfirmed (NOPEC AEP Standard 10.499 if enrolled). RE-RESEARCHED 2026-10-15.  | Other claims kept: 10.499 [supplier_sweep] lifecycle: rate pending (voters approved Nov 2025; NOPEC member on map; enrollment/launch not confirmed). RE-RESEARCHED 2026-10-15. Being a NOPEC member does not prove an active program. The 10.499 figure is NOPEC's generic AEP Standard price, not a Plain City contract. | Other claims kept: active [supplier_sweep]; certified Phone: NOPEC 855-667-3201; Plain City village office (number not in sources)",
       "unresolved": true,
@@ -5409,8 +5409,8 @@
         "raw": "active (NOPEC member since 2026; prior Dynegy program ended May 2026)"
       },
       "question": "Unresolved question. rate: 10.399 (NOPEC OE Standard, Sep 2026-Jun 2027) for OE accounts; AEP-area rate unverified. RE-RESEARCHED 2026-10-15.  | Other claims kept: 10.399 [supplier_sweep] Phone: NOPEC 855-667-3201 (the township asks people not to call Township Hall about accounts) The township page lists both AEP Ohio and Ohio Edison. The AEP-area NOPEC price is unverified. Phone: NOPEC 855-667-3201.",
-      "unresolved": true,
-      "verification": "escalate-call"
+      "unresolved": false,
+      "verification": "likely"
     },
     "remaining_ohio_markets.json|Poland Township": {},
     "nw_central_ohio.json|Port Clinton": {},
@@ -5419,12 +5419,12 @@
       "lifecycle": {
         "status": "rate_pending",
         "label": "Rate pending",
-        "detail": "NOPEC selected Jun 2026; plan of operation not finalized",
+        "detail": "City page posts 9.99¢ fixed from September 2026 through November 2026, then the NOPEC standard price. That price is not stored. The Delaware Gazette on June 3, 2026, the Delaware Source on June 17, 2026, and Ordinance 2026-12 do not state 9.99¢. The price after November 2026 is not on the city page.",
         "endedDate": "",
         "reason": "",
-        "sources": "https://www.delgazette.com/2026/06/03/powell-selects-aggregation-partner/ https://www.nopec.org/communities/community-map",
+        "sources": "https://www.cityofpowell.us/Residents/Electric-Aggregation https://www.delgazette.com/2026/06/03/powell-selects-aggregation-partner/ https://www.nopec.org/communities/community-map",
         "confidence": "likely",
-        "raw": "rate pending (NOPEC selected Jun 2026; plan of operation not finalized)"
+        "raw": "rate pending (city page posts a three-month price; not stored)"
       },
       "question": "Unresolved question. rate: unconfirmed (baseline 9.99 unsourced). RE-RESEARCHED 2026-10-15.  | Other claims kept: 9.99 [baseline,supplier_sweep] Phone: NOPEC 855-667-3201; City of Powell (number not in sources)",
       "unresolved": true,
@@ -5468,7 +5468,7 @@
     },
     "nopec_lorain_summit_portage.json|Ravenna": {
       "question": "Unresolved question. supplier: Dynegy. Other claims kept: NOPEC/NextEra [supplier_sweep; https://www.nopec.org/communities/community-map | https://www.nopec.org/residents/pricingrates/electric-pricing] Phone number not in sources (community clerk / fiscal officer).",
-      "unresolved": true,
+      "unresolved": false,
       "verification": "conflict"
     },
     "cincinnati_duke.json|Reading": {},
@@ -5678,7 +5678,7 @@
       "lifecycle": {
         "status": "certified_not_launched",
         "label": "Certified but not launched",
-        "detail": "activity unverified",
+        "detail": "Unity Township is listed for natural gas. No electric aggregation rate is on file.",
         "endedDate": "",
         "reason": "",
         "sources": "",
@@ -5791,12 +5791,12 @@
       "lifecycle": {
         "status": "ended",
         "label": "Ended",
-        "detail": "2026-06; city rejected 10.11¢ long-term offer; certificate 03-099E still open",
+        "detail": "2026-06; aggregation ended with the June 2026 billing cycle; last price Dynegy 8.38¢/kWh; city rejected a 10.11¢ renewal",
         "endedDate": "2026-06",
-        "reason": "city rejected 10.11¢ long-term offer; certificate 03-099E still open",
+        "reason": "aggregation ended with the June 2026 billing cycle. Last price was Dynegy at 8.38¢/kWh. The city rejected a 10.11¢ renewal",
         "sources": "https://www.cleveland.com/community/2026/06/westlake-ends-electric-aggregation-program-as-supplier-rates-rise.html https://www.westlifenews.com/news/westlake-aggregation-program-suspended/article_e8aad050-6d7e-4243-83c4-606d9af1cac8.html https://www.cityofwestlake.org/page/electric-gas-aggregation https://dis.puc.state.oh.us/CaseRecord.aspx?CaseNo=03-0514-EL-GAG",
         "confidence": "confirmed",
-        "raw": "ended (2026-06; city rejected 10.11¢ long-term offer; certificate 03-099E still open)"
+        "raw": "ended (2026-06; aggregation ended with the June 2026 billing cycle; last price Dynegy 8.38¢/kWh; city rejected a 10.11¢ renewal)"
       }
     },
     "toledo_lucas_noac.json|Whitehouse": {

@@ -407,3 +407,7 @@
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "city electric page opened this date still names an older supplier and an ended term; it does not state the price on the supplier community page"}
+{"zone": "Dayton", "field": "takeaway", "note": "removed incorrect value", "date": "2026-10-30", "reason": "claim that the aggregation expired and accounts are on standard supply contradicted by the April 2026 news report of a continuing program"}
+{"zone": "Dayton", "field": "hook", "note": "removed incorrect value", "date": "2026-10-30", "reason": "claim of an expired aggregation with no contract contradicted by the April 2026 news report"}
+{"zone": "Dayton", "field": "status", "note": "removed incorrect value", "date": "2026-10-30", "reason": "rollover classification contradicted by a program running to June 2027"}
+{"zone": "Dayton", "field": "termEnd", "note": "removed incorrect value", "date": "2026-10-30", "reason": "June 2026 end date applied to the current term, contradicted by the April 2026 news report"}

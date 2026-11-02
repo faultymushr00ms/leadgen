@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# FORGE Nightly Scan — NE Ohio zones
-# Runs run_monitor.py and run_refresh.py --fetch --region ne_ohio
+# FORGE Nightly Scan
+# 1. Aggregation monitor
+# 2. NE Ohio rate refresh
+# 3. Scan markdown
+# 4. Statewide read-only data audit (scripts/daily_audit.py)
+# 5. Publish data/reports to the origin reports branch (scripts/publish_reports.py)
 # Logs to logs/scan_YYYY-MM-DD.log
-# Non-zero exits are logged as ACTION NEEDED, not crashes.
-# Schedule: launchd at 6:30 AM daily (see ~/Library/LaunchAgents/com.forge.nightlyscan.plist)
+# Non-zero step exits are logged. This script always exits 0.
+# Schedule: launchd at 6:30 AM daily (scripts/com.forge.nightlyscan.plist)
 
 set -euo pipefail
 
@@ -107,20 +111,44 @@ else:
 
 lines.append("")
 lines.append(f"Log: logs/scan_{today}.log")
+lines.append(f"Audit: data/reports/audit_{today}.md")
 
 with open(report_file, "w") as f:
     f.write("\n".join(lines) + "\n")
 print(f"[report] Written: {report_file}")
 PYEOF
 
+# ── Step 4: Statewide data audit ──────────────────────────────────────────────
+echo ""
+echo "[audit] Running statewide data audit..."
+if "$PYTHON" "$PROJECT_DIR/scripts/daily_audit.py" --as-of "$DATE"; then
+    echo "[audit] OK — $REPORT_DIR/audit_${DATE}.md"
+else
+    EXIT_CODE=$?
+    echo "[audit] FAILED (exit $EXIT_CODE)"
+    ACTION_NEEDED=1
+fi
+
+# ── Step 5: Publish reports (scan + audit) to the reports branch ──────────────
+echo ""
+echo "[publish] Publishing data/reports to origin reports branch..."
+if "$PYTHON" "$PROJECT_DIR/scripts/publish_reports.py" --date "$DATE"; then
+    echo "[publish] OK"
+else
+    EXIT_CODE=$?
+    echo "[publish] FAILED (exit $EXIT_CODE) — local reports were kept. This does not stop the scan."
+fi
+
 # ── Summary ───────────────────────────────────────────────────────────────────
 echo ""
 if [ "$ACTION_NEEDED" -eq 1 ]; then
     echo "SCAN COMPLETE — ACTION NEEDED. Review log: $LOG_FILE"
     echo "Report: $REPORT_FILE"
+    echo "Audit: $REPORT_DIR/audit_${DATE}.md"
 else
     echo "SCAN COMPLETE — no action needed."
     echo "Report: $REPORT_FILE"
+    echo "Audit: $REPORT_DIR/audit_${DATE}.md"
 fi
 
 # Always exit 0 so launchd doesn't treat this as a crash

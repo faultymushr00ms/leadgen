@@ -203,7 +203,9 @@ PUCO Government Aggregation polygons are fetched into the gitignored cache `data
 
 ## Nightly Scan
 
-Runs the aggregation monitor and rate refresh against NE Ohio zones daily at 6:30 AM.
+One daily run does three things: the aggregation monitor, the NE Ohio rate refresh, and a statewide read-only audit of `data/regions`. Reports are published to the `reports` branch on origin so they can be read when this Mac is offline. They are not committed to main.
+
+The repo root is the directory that contains `app.py` and `scripts/`. On this Mac that path is `/Users/sky/leadgen/leadgen`.
 
 ### Run by hand
 ```bash
@@ -212,6 +214,8 @@ bash scripts/nightly_scan.sh
 
 ### Check last report
 ```bash
+cat data/reports/latest.md
+cat data/reports/audit-$(date +%F).md
 cat data/reports/scan-$(date +%F).md
 ```
 
@@ -222,27 +226,23 @@ tail -f logs/scan-$(date +%F).log
 
 ### Schedule with launchd (macOS)
 
-1. Copy `com.forge.nightlyscan.plist` to `~/Library/LaunchAgents/`
-2. Open it and replace all three `REPLACE_WITH_FULL_PATH` with your actual project path (e.g. `/Users/sky/leadgen`)
-3. Load it:
 ```bash
-launchctl load ~/Library/LaunchAgents/com.forge.nightlyscan.plist
+bash scripts/install_schedule.sh
 ```
 
-4. Check status:
-```bash
-launchctl list | grep forge
-```
+That copies `scripts/com.forge.nightlyscan.plist` to `~/Library/LaunchAgents/`, bootstraps it (`launchctl load` if bootstrap is unavailable), and verifies the job is loaded. The job runs at 6:30 AM local time. PATH includes `/opt/homebrew/bin` and `/usr/local/bin`.
 
-5. Unload:
-```bash
-launchctl unload ~/Library/LaunchAgents/com.forge.nightlyscan.plist
-```
+If the Mac is asleep at 6:30, launchd runs the missed `StartCalendarInterval` job once on wake. A long sleep does not replay one run per missed day.
 
-`StartCalendarInterval` catches up missed runs if the Mac was asleep at 6:30 AM.
+Unload:
+```bash
+launchctl bootout gui/$(id -u)/com.forge.nightlyscan
+```
 
 ### What it does
-- Scans for new Ohio aggregation communities (exits 1 + logs ACTION NEEDED if found)
+- Scans for new Ohio aggregation communities (logs ACTION NEEDED if found)
 - Refreshes stored source URLs for NE Ohio zones — flags rate/supplier disagreements
-- Writes `data/reports/scan_YYYY-MM-DD.md` every run
-- Never writes to `data/regions/*.json` — all findings go to the investigation queue
+- Audits every zone in `data/regions` and writes `data/reports/audit_YYYY-MM-DD.md` plus `.json`
+- Publishes `data/reports` (scan, audit, and `latest.md`) to the `reports` branch via a clone in `~/.forge-reports`
+- Uses the Mac's existing git credentials. A failed push is logged; the scan still exits 0
+- Never writes to `data/regions/*.json`

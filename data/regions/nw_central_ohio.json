@@ -328,5 +328,27 @@
     "sourceUrl": null,
     "utilityParent": "FirstEnergy",
     "utilityConfidence": "medium"
+  },
+  {
+    "name": "Green Springs",
+    "region": "NW Ohio / Sandusky County",
+    "utility": "Ohio Edison or Toledo Edison (unverified)",
+    "utilityParent": "FirstEnergy",
+    "utilityConfidence": "low",
+    "aggregationStatus": "address_dependent",
+    "currentRate": null,
+    "previousRate": null,
+    "rateChange": null,
+    "supplier": null,
+    "termStart": null,
+    "termEnd": null,
+    "status": "verify",
+    "confidence": "low",
+    "takeaway": null,
+    "hook": null,
+    "futureUse": "price_to_compare_analysis",
+    "notes": "Small village (~1,200 residents) in Sandusky County on the Seneca County line. FirstEnergy territory confirmed but Ohio Edison vs. Toledo Edison split for this township is unverified \u2014 check PUCO service territory map. Gas: likely Dominion Energy Ohio. No confirmed aggregation program. May participate in a county or regional program \u2014 needs PUCO aggregation list check and direct call.",
+    "lastVerified": "2026-11-04",
+    "sourceUrl": null
   }
 ]

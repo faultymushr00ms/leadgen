@@ -1,4 +1,4 @@
-# FORGE Daily Audit — 2026-11-05
+# FORGE Daily Audit — 2026-11-06
 
 **346 findings** | HIGH: 44  MEDIUM: 234  LOW: 68
 Zones checked: 456 | Elapsed: 0.01s
@@ -7,9 +7,9 @@ Electric records in `data/regions`: 427 across 20 JSON files. Gas records in `da
 
 Audit code: `scripts/daily_audit.py` at commit `89fc067` (the script that wrote the 2026-10-23 and 2026-10-27 reports). Run read-only against current `main` (`534104d`). Zone files were not modified.
 
-## Comparison with 2026-11-04
+## Comparison with 2026-11-05
 
-| | 2026-11-04 | 2026-11-05 |
+| | 2026-11-05 | 2026-11-06 |
 | --- | ---: | ---: |
 | Zones checked | 456 | 456 |
 | Findings | 346 | 346 |
@@ -24,9 +24,9 @@ Audit code: `scripts/daily_audit.py` at commit `89fc067` (the script that wrote 
 - Shared finding ids whose severity set changed: **0**
 - Shared finding ids whose detail text changed: **162** (each day count +1; severity unchanged)
 
-A finding id is `source_file::zone::check`. Unchanged means that id is in both reports. The day count inside the detail can move without making the finding new. `COPY_RATE_MISMATCH` on takeaway and hook shares one id. 162 shared ids changed detail text, and every one of those changes is the day count only. 154 shared ids have the same detail text as 2026-11-04.
+A finding id is `source_file::zone::check`. Unchanged means that id is in both reports. The day count inside the detail can move without making the finding new. `COPY_RATE_MISMATCH` on takeaway and hook shares one id. 162 shared ids changed detail text, and every one of those changes is the day count only. 154 shared ids have the same detail text as 2026-11-05.
 
-`main` is still `534104d`, the same commit scanned on 2026-11-03 and 2026-11-04. Zone files match that tree. Counts by check match the 2026-11-04 report.
+`main` is still `534104d`, the same commit scanned on 2026-11-03, 2026-11-04, and 2026-11-05. Zone files match that tree. Counts by check match the 2026-11-05 report.
 
 ### Findings by check
 
@@ -48,9 +48,9 @@ A finding id is `source_file::zone::check`. Unchanged means that id is in both r
 
 ## HIGH findings (44)
 
-All 44 HIGH ids are the same ids as 2026-11-04, at the same severity. 29 are `AGG_NO_RATE` with identical detail. 15 moved a day count and stayed HIGH: 14 `STALE_60` rows (`lastVerified` 2026-05-01, 187 → 188 days) and Seven Mile `STALE_RENEWAL` (400 → 401 days).
+All 44 HIGH ids are the same ids as 2026-11-05, at the same severity. 29 are `AGG_NO_RATE` with identical detail. 15 moved a day count and stayed HIGH: 14 `STALE_60` rows (`lastVerified` 2026-05-01, 188 → 189 days) and Seven Mile `STALE_RENEWAL` (401 → 402 days).
 
-HIGH count: 44 on 2026-11-04, plus 0 new, minus 0 resolved, plus 0 severity changes, equals 44.
+HIGH count: 44 on 2026-11-05, plus 0 new, minus 0 resolved, plus 0 severity changes, equals 44.
 
 ### Unchanged HIGH
 
@@ -67,53 +67,53 @@ HIGH count: 44 on 2026-11-04, plus 0 new, minus 0 resolved, plus 0 severity chan
 
 ### Day count only, still HIGH
 
-These 14 ids were already HIGH `STALE_60` on 2026-11-04 (`lastVerified` 2026-05-01, 187 days). They are 188 days today. `STALE_60` is HIGH above 180 days.
+These 14 ids were already HIGH `STALE_60` on 2026-11-05 (`lastVerified` 2026-05-01, 188 days). They are 189 days today. `STALE_60` is HIGH above 180 days.
 
-- **Stark County (Unincorporated / Remaining)** (`akron_summit_medina`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Cleveland Public Power** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Columbus Division of Power** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Hamilton** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Licking County / Pataskala** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Athens County (Rural AEP)** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Guernsey / Noble / Morgan Counties** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Dublin** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Hilliard** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Bexley** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Grandview Heights** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Pickerington** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Heath / Newark** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
-- **Marysville** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (187d ago) on 2026-11-04; lastVerified=2026-05-01 (188d ago) now
+- **Stark County (Unincorporated / Remaining)** (`akron_summit_medina`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Cleveland Public Power** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Columbus Division of Power** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Hamilton** (`ohio_municipal_utilities`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Licking County / Pataskala** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Athens County (Rural AEP)** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Guernsey / Noble / Morgan Counties** (`remaining_ohio_markets`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Dublin** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Hilliard** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Bexley** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Grandview Heights** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Pickerington** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Heath / Newark** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
+- **Marysville** (`sopec_columbus_suburbs`) — `STALE_60`: lastVerified=2026-05-01 (188d ago) on 2026-11-05; lastVerified=2026-05-01 (189d ago) now
 
-- **Seven Mile** (`cincinnati_duke_suburbs`) — `STALE_RENEWAL`: rollover termEnd=2025-09-30 expired 400d ago on 2026-11-04; 401d ago now. The id was already HIGH (above 365 days). Its `AGG_NO_RATE` detail is unchanged.
+- **Seven Mile** (`cincinnati_duke_suburbs`) — `STALE_RENEWAL`: rollover termEnd=2025-09-30 expired 401d ago on 2026-11-05; 402d ago now. The id was already HIGH (above 365 days). Its `AGG_NO_RATE` detail is unchanged.
 
 ### Thresholds this scan sits between
 
-`STALE_60` fires above 60 days (LOW), above 90 (MEDIUM), and above 180 (HIGH). Today's rows sit at 78 days (19 LOW, `lastVerified` 2026-08-19), 154, 155, or 157 days (98 MEDIUM), and 188 days (14 HIGH). `STALE_RENEWAL` fires above 90 days (MEDIUM) and above 365 (HIGH). Today's rows sit at 97, 128, 158, or 309 days (30 MEDIUM) and 401 days (Seven Mile, HIGH).
+`STALE_60` fires above 60 days (LOW), above 90 (MEDIUM), and above 180 (HIGH). Today's rows sit at 79 days (19 LOW, `lastVerified` 2026-08-19), 155, 156, or 158 days (98 MEDIUM), and 189 days (14 HIGH). `STALE_RENEWAL` fires above 90 days (MEDIUM) and above 365 (HIGH). Today's rows sit at 98, 129, 159, or 310 days (30 MEDIUM) and 402 days (Seven Mile, HIGH).
 
-Deer Park, Hamilton Township (Warren Co), and Liberty Township (Butler Co) stay MEDIUM `STALE_RENEWAL`: `termEnd` 2026-07-31 was 96 days on 2026-11-04 and is 97 days today. Springdale, Mariemont, and Harrison stay off `STALE_RENEWAL`: `termEnd` 2026-08-31 passed 66 days ago, and that check fires only after more than 90 days. They remain `status` `rollover` from `534104d`, so `EXPIRED_ACTIVE` does not fire, and this scan does not bring those ids back.
+Deer Park, Hamilton Township (Warren Co), and Liberty Township (Butler Co) stay MEDIUM `STALE_RENEWAL`: `termEnd` 2026-07-31 was 97 days on 2026-11-05 and is 98 days today. Springdale, Mariemont, and Harrison stay off `STALE_RENEWAL`: `termEnd` 2026-08-31 passed 67 days ago, and that check fires only after more than 90 days. They remain `status` `rollover` from `534104d`, so `EXPIRED_ACTIVE` does not fire, and this scan does not bring those ids back.
 
-## 🆕 New since 2026-11-04 (0)
-
-None.
-
-## ✅ Resolved since 2026-11-04 (0)
+## 🆕 New since 2026-11-05 (0)
 
 None.
 
-## Changed detail since 2026-11-04 (162)
+## ✅ Resolved since 2026-11-05 (0)
+
+None.
+
+## Changed detail since 2026-11-05 (162)
 
 | Check | Severity | Ids | Day count | Stored date |
 | --- | --- | ---: | --- | --- |
-| `STALE_60` | HIGH | 14 | 187 → 188 | lastVerified 2026-05-01 |
-| `STALE_60` | MEDIUM | 65 | 156 → 157 | lastVerified 2026-06-01 |
-| `STALE_60` | MEDIUM | 24 | 154 → 155 | lastVerified 2026-06-03 |
-| `STALE_60` | MEDIUM | 9 | 153 → 154 | lastVerified 2026-06-04 |
-| `STALE_60` | LOW | 19 | 77 → 78 | lastVerified 2026-08-19 |
-| `STALE_RENEWAL` | HIGH | 1 | 400 → 401 | termEnd 2025-09-30 (Seven Mile) |
-| `STALE_RENEWAL` | MEDIUM | 1 | 308 → 309 | termEnd 2025-12-31 (Girard) |
-| `STALE_RENEWAL` | MEDIUM | 18 | 157 → 158 | termEnd 2026-05-31 |
-| `STALE_RENEWAL` | MEDIUM | 8 | 127 → 128 | termEnd 2026-06-30 |
-| `STALE_RENEWAL` | MEDIUM | 3 | 96 → 97 | termEnd 2026-07-31 (Deer Park, Hamilton Township (Warren Co), Liberty Township (Butler Co)) |
+| `STALE_60` | HIGH | 14 | 188 → 189 | lastVerified 2026-05-01 |
+| `STALE_60` | MEDIUM | 65 | 157 → 158 | lastVerified 2026-06-01 |
+| `STALE_60` | MEDIUM | 24 | 155 → 156 | lastVerified 2026-06-03 |
+| `STALE_60` | MEDIUM | 9 | 154 → 155 | lastVerified 2026-06-04 |
+| `STALE_60` | LOW | 19 | 78 → 79 | lastVerified 2026-08-19 |
+| `STALE_RENEWAL` | HIGH | 1 | 401 → 402 | termEnd 2025-09-30 (Seven Mile) |
+| `STALE_RENEWAL` | MEDIUM | 1 | 309 → 310 | termEnd 2025-12-31 (Girard) |
+| `STALE_RENEWAL` | MEDIUM | 18 | 158 → 159 | termEnd 2026-05-31 |
+| `STALE_RENEWAL` | MEDIUM | 8 | 128 → 129 | termEnd 2026-06-30 |
+| `STALE_RENEWAL` | MEDIUM | 3 | 97 → 98 | termEnd 2026-07-31 (Deer Park, Hamilton Township (Warren Co), Liberty Township (Butler Co)) |
 
 154 shared ids are identical in detail, severity, and current value (184 findings). Those are the findings outside `STALE_60` and `STALE_RENEWAL`.
 
@@ -153,19 +153,19 @@ None.
   hook mentions 9.399¢ but currentRate=10.399, previousRate=9.999
   *current:* `9.399`
 - `MEDIUM` **Niles** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Girard** `STALE_RENEWAL`  
-  rollover termEnd=2025-12-31 expired 309d ago — any new contract?
+  rollover termEnd=2025-12-31 expired 310d ago — any new contract?
   *current:* `2025-12-31`
 - `MEDIUM` **Girard** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Boardman Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Canfield** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Canfield** `COPY_RATE_MISMATCH`  
   takeaway mentions 9.98¢ but currentRate=8.66, previousRate=None
@@ -180,25 +180,25 @@ None.
   hook mentions 10.39¢ but currentRate=8.66, previousRate=None
   *current:* `10.39`
 - `MEDIUM` **Salem** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Alliance** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Mansfield** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Coshocton** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Massillon** `COPY_RATE_MISMATCH`  
   takeaway mentions 8.5¢ but currentRate=10.399, previousRate=8.999
   *current:* `8.5`
 - `MEDIUM` **Perry Township (Stark)** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Andover** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Westlake** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.11¢ but currentRate=None, previousRate=8.38
@@ -261,7 +261,7 @@ None.
   non-muni zone but notes contain muni/coop keywords: ['municipal utility']
   *current:* `['municipal utility']`
 - `LOW` **Jackson Township (Stark)** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Perry Township (Stark)** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.99 but sourceUrl=null
@@ -366,10 +366,10 @@ None.
 ## Akron / Canton (HIGH:1 MED:10 LOW:2)
 
 - `HIGH` **Stark County (Unincorporated / Remaining)** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `MEDIUM` **Akron** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Akron** `COPY_RATE_MISMATCH`  
   takeaway mentions 9.95¢ but currentRate=9.24, previousRate=None
@@ -378,7 +378,7 @@ None.
   hook mentions 9.95¢ but currentRate=9.24, previousRate=None
   *current:* `9.95`
 - `MEDIUM` **Green** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Green** `COPY_RATE_MISMATCH`  
   takeaway mentions 9.48¢ but currentRate=9.24, previousRate=None
@@ -393,7 +393,7 @@ None.
   hook mentions 9.48¢ but currentRate=9.24, previousRate=None
   *current:* `9.48`
 - `MEDIUM` **Medina County** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Stark County (Unincorporated / Remaining)** `TERM_NO_PROGRAM`  
   has term dates but supplier=null and agg='no_aggregation_verified'
@@ -408,7 +408,7 @@ None.
 ## Youngstown / Warren (HIGH:0 MED:17 LOW:6)
 
 - `MEDIUM` **Youngstown** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Youngstown** `COPY_RATE_MISMATCH`  
   takeaway mentions 9.97¢ but currentRate=7.99, previousRate=None
@@ -426,37 +426,37 @@ None.
   hook mentions 9.97¢ but currentRate=7.99, previousRate=None
   *current:* `9.97`
 - `MEDIUM` **Trumbull County** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Mahoning County** `TERM_NO_PROGRAM`  
   has term dates but supplier=null and agg='unresolved'
   *current:* `2026-06-01 → 2027-12-01`
 - `MEDIUM` **Mahoning County** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Warren City** `COPY_RATE_MISMATCH`  
   takeaway mentions 9.999¢ but currentRate=10.399, previousRate=None
   *current:* `9.999`
 - `MEDIUM` **Howland Township** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Brookfield Township (Trumbull)** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Weathersfield Township** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Vienna Township** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Champion Township** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Bazetta Township** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `MEDIUM` **Campbell** `STALE_60`  
-  lastVerified=2026-06-04 (154d ago)
+  lastVerified=2026-06-04 (155d ago)
   *current:* `2026-06-04`
 - `LOW` **Howland Township** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=10.14 but sourceUrl=null
@@ -480,37 +480,37 @@ None.
 ## Columbus / Central Ohio (HIGH:7 MED:4 LOW:8)
 
 - `HIGH` **Dublin** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Hilliard** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Bexley** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Grandview Heights** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Pickerington** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Heath / Newark** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Marysville** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `MEDIUM` **Columbus** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Gahanna** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Gahanna** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.927¢ but currentRate=11.162, previousRate=9.756
   *current:* `10.927`
 - `MEDIUM` **Grove City** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `LOW` **Columbus** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=10.01 but sourceUrl=null
@@ -540,10 +540,10 @@ None.
 ## Dayton / Miami Valley (HIGH:0 MED:22 LOW:4)
 
 - `MEDIUM` **Beavercreek** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Huber Heights** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Miamisburg** `COPY_RATE_MISMATCH`  
   takeaway mentions 11.53¢ but currentRate=9.049, previousRate=8.71
@@ -558,7 +558,7 @@ None.
   takeaway mentions 11.73¢ but currentRate=None, previousRate=8.71
   *current:* `11.73`
 - `MEDIUM` **Urbana** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Centerville** `COPY_RATE_MISMATCH`  
   takeaway mentions 11.53¢ but currentRate=9.049, previousRate=8.71
@@ -573,7 +573,7 @@ None.
   takeaway mentions 11.73¢ but currentRate=9.049, previousRate=8.71
   *current:* `11.73`
 - `MEDIUM` **Dayton** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Dayton** `RATE_CHANGE_NO_PREV`  
   rateChange=22.7% set but previousRate=null
@@ -585,7 +585,7 @@ None.
   hook mentions 10.69¢ but currentRate=8.71, previousRate=None
   *current:* `10.69`
 - `MEDIUM` **Riverside** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Fairborn** `COPY_RATE_MISMATCH`  
   takeaway mentions 11.53¢ but currentRate=9.049, previousRate=None
@@ -609,13 +609,13 @@ None.
   confirmed agg with currentRate=8.71 but sourceUrl=null
   *current:* `8.71`
 - `LOW` **Dayton** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Riverside** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.333 but sourceUrl=null
   *current:* `9.333`
 - `LOW` **Riverside** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 
 ## Cincinnati / SW Ohio (HIGH:12 MED:73 LOW:9)
@@ -636,7 +636,7 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `HIGH` **Seven Mile** `STALE_RENEWAL`  
-  rollover termEnd=2025-09-30 expired 401d ago — any new contract?
+  rollover termEnd=2025-09-30 expired 402d ago — any new contract?
   *current:* `2025-09-30`
 - `HIGH` **Seven Mile** `AGG_NO_RATE`  
   confirmed_active_aggregation but currentRate=null
@@ -657,40 +657,40 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `MEDIUM` **Sharonville** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Sharonville** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.276¢ but currentRate=None, previousRate=9.39
   *current:* `10.276`
 - `MEDIUM` **Reading** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Norwood** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Norwood** `COPY_RATE_MISMATCH`  
   takeaway mentions 7.03¢ but currentRate=10.39, previousRate=6.67
   *current:* `7.03`
 - `MEDIUM` **Cincinnati** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **West Chester Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Mason** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Blue Ash** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Montgomery** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Anderson Township** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Anderson Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Anderson Township** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.7¢ but currentRate=9.86, previousRate=None
@@ -699,28 +699,28 @@ None.
   hook mentions 10.7¢ but currentRate=9.86, previousRate=None
   *current:* `10.7`
 - `MEDIUM` **Fairfield** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Fairfield** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Fairfield** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.7¢ but currentRate=9.39, previousRate=None
   *current:* `10.7`
 - `MEDIUM` **Milford** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Springdale** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Kenwood / Symmes Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Colerain Township** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Colerain Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Colerain Township** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.7¢ but currentRate=9.36, previousRate=None
@@ -729,106 +729,106 @@ None.
   hook mentions 10.7¢ but currentRate=9.36, previousRate=None
   *current:* `10.7`
 - `MEDIUM` **Delhi Township** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Delhi Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Delhi Township** `COPY_RATE_MISMATCH`  
   hook mentions 10.7¢ but currentRate=9.32, previousRate=None
   *current:* `10.7`
 - `MEDIUM` **Forest Park** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Forest Park** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Silverton** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Silverton** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Clearcreek Township** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Clearcreek Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Deer Park** `STALE_RENEWAL`  
-  rollover termEnd=2026-07-31 expired 97d ago — any new contract?
+  rollover termEnd=2026-07-31 expired 98d ago — any new contract?
   *current:* `2026-07-31`
 - `MEDIUM` **Hamilton Township (Warren Co)** `STALE_RENEWAL`  
-  rollover termEnd=2026-07-31 expired 97d ago — any new contract?
+  rollover termEnd=2026-07-31 expired 98d ago — any new contract?
   *current:* `2026-07-31`
 - `MEDIUM` **Hamilton Township (Warren Co)** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.7¢ but currentRate=9.2, previousRate=None
   *current:* `10.7`
 - `MEDIUM` **Liberty Township (Butler Co)** `STALE_RENEWAL`  
-  rollover termEnd=2026-07-31 expired 97d ago — any new contract?
+  rollover termEnd=2026-07-31 expired 98d ago — any new contract?
   *current:* `2026-07-31`
 - `MEDIUM` **Mariemont** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Sycamore Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Sycamore Township** `COPY_RATE_MISMATCH`  
   hook mentions 10.7¢ but currentRate=10.21, previousRate=9.23
   *current:* `10.7`
 - `MEDIUM` **Springfield Township (Hamilton Co)** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Springfield Township (Hamilton Co)** `COPY_RATE_MISMATCH`  
   hook mentions 10.7¢ but currentRate=10.29, previousRate=9.45
   *current:* `10.7`
 - `MEDIUM` **Green Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Lockland** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Union Township (Clermont Co)** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Miami Township (Clermont Co)** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Golf Manor** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **South Lebanon** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Turtlecreek Township** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Wayne Township (Warren Co)** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Morrow** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Batavia Township** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Williamsburg** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Tate Township** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Goshen Township** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **New Richmond** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Oxford** `STALE_RENEWAL`  
-  rollover termEnd=2026-06-30 expired 128d ago — any new contract?
+  rollover termEnd=2026-06-30 expired 129d ago — any new contract?
   *current:* `2026-06-30`
 - `MEDIUM` **Oxford** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Seven Mile** `COPY_RATE_MISMATCH`  
   takeaway mentions 10.7¢ but currentRate=None, previousRate=6.23
@@ -837,43 +837,43 @@ None.
   hook mentions 10.7¢ but currentRate=None, previousRate=6.23
   *current:* `10.7`
 - `MEDIUM` **Harrison** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Monroe** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Oxford Township (Butler Co)** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Madison Township (Butler Co)** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Lemon Township** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Trenton** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Wyoming** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Cheviot** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Madeira** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Mount Healthy** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Miami Township (Hamilton Co)** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **St. Bernard** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `MEDIUM` **Morgan Township (Butler Co)** `STALE_60`  
-  lastVerified=2026-06-03 (155d ago)
+  lastVerified=2026-06-03 (156d ago)
   *current:* `2026-06-03`
 - `LOW` **Reading** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=10.29 but sourceUrl=null
@@ -885,22 +885,22 @@ None.
   confirmed agg with currentRate=10.44 but sourceUrl=null
   *current:* `10.44`
 - `LOW` **Deer Park** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Hamilton Township (Warren Co)** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.2 but sourceUrl=null
   *current:* `9.2`
 - `LOW` **Hamilton Township (Warren Co)** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Liberty Township (Butler Co)** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Tate Township** `IOU_MUNI_NOTES`  
   non-muni zone but notes contain muni/coop keywords: ['municipal utility']
   *current:* `['municipal utility']`
 - `LOW` **Seven Mile** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 
 ## Greater Toledo (HIGH:1 MED:12 LOW:22)
@@ -909,37 +909,37 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `MEDIUM` **Toledo** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Perrysburg** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Maumee** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Sylvania** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Oregon** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Lucas County Unincorporated** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Rossford** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Northwood** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Waterville** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Whitehouse** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Holland** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Washington Township (Wood)** `COPY_RATE_MISMATCH`  
   takeaway mentions 11.09¢ but currentRate=None, previousRate=8.63
@@ -948,67 +948,67 @@ None.
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Toledo** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Perrysburg** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Perrysburg** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Maumee** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Maumee** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Sylvania** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Sylvania** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Oregon** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Oregon** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Lucas County Unincorporated** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Rossford** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Rossford** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Northwood** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Northwood** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Waterville** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Waterville** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Whitehouse** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Whitehouse** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Holland** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.75 but sourceUrl=null
   *current:* `9.75`
 - `LOW` **Holland** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 - `LOW` **Washington Township (Wood)** `STALE_60`  
-  lastVerified=2026-08-19 (78d ago)
+  lastVerified=2026-08-19 (79d ago)
   *current:* `2026-08-19`
 
 ## NW & Central Ohio (HIGH:1 MED:8 LOW:1)
@@ -1017,28 +1017,28 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `MEDIUM` **Lima** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Fremont** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Defiance** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Sandusky** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Port Clinton** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Kenton** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Wilmington** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Ashland** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `LOW` **Bucyrus** `IOU_MUNI_NOTES`  
   non-muni zone but notes contain muni/coop keywords: ['municipal utility']
@@ -1050,43 +1050,43 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `MEDIUM` **Zanesville** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Cambridge** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Athens / Ohio University Area** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Chillicothe** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Circleville** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Logan** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Gallipolis** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Portsmouth** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Ironton** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Jackson** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 
 ## Municipal Utilities (HIGH:13 MED:1 LOW:1)
 
 - `HIGH` **Cleveland Public Power** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Columbus Division of Power** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Wellsville** `AGG_NO_RATE`  
   confirmed_active_aggregation but currentRate=null
@@ -1116,7 +1116,7 @@ None.
   confirmed_active_aggregation but currentRate=null
   *current:* `null`
 - `HIGH` **Hamilton** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Ada** `AGG_NO_RATE`  
   confirmed_active_aggregation but currentRate=null
@@ -1146,34 +1146,34 @@ None.
 ## Other Ohio Markets (HIGH:3 MED:7 LOW:4)
 
 - `HIGH` **Licking County / Pataskala** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Athens County (Rural AEP)** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `HIGH` **Guernsey / Noble / Morgan Counties** `STALE_60`  
-  lastVerified=2026-05-01 (188d ago)
+  lastVerified=2026-05-01 (189d ago)
   *current:* `2026-05-01`
 - `MEDIUM` **Medina City** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Struthers** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Poland Township** `STALE_RENEWAL`  
-  rollover termEnd=2026-05-31 expired 158d ago — any new contract?
+  rollover termEnd=2026-05-31 expired 159d ago — any new contract?
   *current:* `2026-05-31`
 - `MEDIUM` **Poland Township** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Steubenville** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **Marietta** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `MEDIUM` **McConnelsville / Morgan County** `STALE_60`  
-  lastVerified=2026-06-01 (157d ago)
+  lastVerified=2026-06-01 (158d ago)
   *current:* `2026-06-01`
 - `LOW` **Crosby Township** `RATE_NO_SOURCE`  
   confirmed agg with currentRate=9.88 but sourceUrl=null
@@ -1198,4 +1198,4 @@ None.
   *current:* `claimed=18 actual=20`
 
 ---
-*Generated by scripts/daily_audit.py — 2026-11-05*
+*Generated by scripts/daily_audit.py — 2026-11-06*

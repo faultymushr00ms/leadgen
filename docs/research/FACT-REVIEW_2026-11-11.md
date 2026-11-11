@@ -28,3 +28,10 @@ Scope: all 20 files in `data/regions/` (427 records). Each record was checked ag
 6. **Cincinnati.** The fixed window ended 2026-11-01, but the status is still "stable". The contract continues as variable pricing, so the hook should change.
 7. **Dayton.** The takeaway says accounts "are now on AES standard supply". This is not sourced, and sourceUrl is null.
 8. **51 records marked confidence "high" have no sourceUrl** (for example Columbus, Cincinnati, Dayton, Sharonville).
+
+## Wording corrected after a live page check (2026-11-11)
+
+The table above is the first pass. These three rows were corrected against the live pages. Stored rates were not changed.
+
+- **Licking County / Pataskala** and **Heath / Newark** stay on Dynegy at 10.29¢ through December 2026. The no-renewal wording and the Heath conflict note are removed. The county page lists Heath in Group 1, and the Dynegy Heath page lists Heath as eligible. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028) on the Pataskala, Newark, and Heath pages; the county page does not. That rate is not stored. Confirm on the county page before quoting.
+- **Beavercreek** stays on Constellation at 8.699¢ through December 2026. The city is pausing aggregation after that term because it could not get a rate under 10.699¢. Accounts return to AES Ohio default service at 10.86¢ through May 31, 2027. The takeaway and hook do not imply a successor contract.

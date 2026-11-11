@@ -248,7 +248,7 @@
     "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": null,
     "previousRate": 8.63,
-    "rateChange": 13.0,
+    "rateChange": null,
     "supplier": "Dynegy",
     "termStart": null,
     "termEnd": "2026-05-31",

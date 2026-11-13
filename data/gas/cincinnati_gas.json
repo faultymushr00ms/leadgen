@@ -192,11 +192,11 @@
     "termEnd": null,
     "status": "verify",
     "confidence": "medium",
-    "takeaway": "Oxford gas is Duke Energy Ohio. Electric (SOPEC/AEP) rolled over June 2026. Gas utility is Duke — separate from AEP electric territory. University corridor commercial accounts.",
-    "hook": "Oxford's electric rolled over in June. Gas is Duke here — different from the electric side. Any campus-adjacent commercial accounts without a gas supplier?",
+    "takeaway": "Oxford gas is Duke Energy Ohio, the same utility that delivers electric. Electric supply was the SOPEC aggregation (AEP Energy 9.114¢), whose term ended June 30, 2026. Gas aggregation unconfirmed.",
+    "hook": "Oxford's SOPEC electric term ended in June. Duke delivers both gas and electric here. Any campus-adjacent commercial accounts without a gas supplier?",
     "futureUse": "aggregation",
-    "notes": "Oxford, Butler County. Duke Energy Ohio gas. Electric is AEP/SOPEC territory (note: different utility than gas). Electric aggregation (AEP Energy SOPEC 9.114¢) expired June 30 2026. Miami University corridor. Gas aggregation unconfirmed.",
-    "lastVerified": "2026-10-20",
+    "notes": "Oxford, Butler County. Duke Energy Ohio gas and electric delivery. Electric supply via SOPEC with AEP Energy as supplier (term ended June 30, 2026; successor not confirmed). Miami University corridor. Gas aggregation unconfirmed.",
+    "lastVerified": "2026-11-13",
     "sourceUrl": null
   }
 ]

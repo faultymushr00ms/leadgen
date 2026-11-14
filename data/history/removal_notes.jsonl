@@ -407,3 +407,14 @@
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "city electric page opened this date still names an older supplier and an ended term; it does not state the price on the supplier community page"}
+{"zone": "Firelands Electric", "field": "notes", "note": "removed incorrect value", "date": "2026-11-14", "reason": "headquarters town contradicted by co-op directory listings"}
+{"zone": "The Frontier Power Company", "field": "region", "note": "removed incorrect value", "date": "2026-11-14", "reason": "region label contradicted by the co-op headquarters and service-area listings"}
+{"zone": "The Frontier Power Company", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-14", "reason": "service counties contradicted by co-op directory listings"}
+{"zone": "The Frontier Power Company", "field": "notes", "note": "removed incorrect value", "date": "2026-11-14", "reason": "headquarters town and service counties contradicted by co-op directory listings"}
+{"zone": "Lorain-Medina Rural Electric (LMRE)", "field": "notes", "note": "removed incorrect value", "date": "2026-11-14", "reason": "headquarters town contradicted by co-op directory listings"}
+{"zone": "Tri-County Rural Electric", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-14", "reason": "service counties contradicted by co-op directory listings"}
+{"zone": "Tri-County Rural Electric", "field": "notes", "note": "removed incorrect value", "date": "2026-11-14", "reason": "headquarters town and service counties contradicted by co-op directory listings"}
+{"zone": "Sharonville", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-14", "reason": "stored percent has no current rate behind it and does not match the WGL price in the record"}
+{"zone": "Washington Township (Wood)", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-14", "reason": "stored percent has no verified current rate behind it; the record says the rate in effect was not found"}
+{"zone": "Stark County (Unincorporated / Remaining)", "field": "termStart", "note": "removed incorrect value", "date": "2026-11-14", "reason": "term dates on a record whose own takeaway says there is no county-wide program"}
+{"zone": "Stark County (Unincorporated / Remaining)", "field": "termEnd", "note": "removed incorrect value", "date": "2026-11-14", "reason": "term dates on a record whose own takeaway says there is no county-wide program"}

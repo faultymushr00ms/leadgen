@@ -1,0 +1,1129 @@
+{
+  "date": "2026-11-17",
+  "base": "main@534104d",
+  "status_values": [
+    "pending",
+    "approved",
+    "rejected",
+    "applied"
+  ],
+  "proposals": [
+    {
+      "id": "P01",
+      "title": "Dayton: aggregation renewed, did not expire",
+      "file": "data/regions/dayton_sw_ohio.json",
+      "take_from_branch": "claude/friendly-feynman-y3ofg2",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "http://www.energychoicematters.com/stories/20260409i.html",
+        "https://www.sopec-oh.gov/rates/dayton"
+      ],
+      "notes": "Same values on PR #15, claude/friendly-feynman-u3wdxu and claude/friendly-feynman-qxqch9.",
+      "changes": [
+        {
+          "zone": "Dayton",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 8.71,
+              "to": 10.691
+            },
+            "hook": {
+              "from": "Dayton's aggregation expired June 30 — those accounts jumped from 8.71 to 10.69 cents with no contract. That's a 23% hit. Have they looked at anything?",
+              "to": "Dayton's city program went from 8.71 to 10.69 cents in June — almost 23% more. Have you compared a fixed commercial contract?"
+            },
+            "notes": {
+              "from": "SOPEC (Sustainable Ohio Public Energy Council) contract: 8.71¢/kWh through June 2026, repricing to 10.691¢/kWh. AES Ohio (formerly Dayton Power & Light) territory. Highest near-term rate pain in the state.",
+              "to": "SOPEC aggregation, AEP Energy supply. Prior term 8.71¢/kWh through June 2026. Current term 10.691¢/kWh, 100% renewable, through the June 2027 meter read (EnergyChoiceMatters, 2026-04-09). AES Ohio (formerly Dayton Power & Light) territory. AES Ohio residential Price to Compare is 10.86¢ (June 2026–May 2027)."
+            },
+            "previousRate": {
+              "from": null,
+              "to": 8.71
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "http://www.energychoicematters.com/stories/20260409i.html"
+            },
+            "status": {
+              "from": "rollover",
+              "to": "pain_hit"
+            },
+            "supplier": {
+              "from": "SOPEC",
+              "to": "SOPEC / AEP Energy"
+            },
+            "takeaway": {
+              "from": "Dayton's AES Ohio aggregation at 8.71¢ expired June 30, 2026. Accounts are now on AES Ohio standard supply (~10.691¢) — the biggest rate shock in the state.",
+              "to": "Dayton's SOPEC aggregation renewed at 10.691¢/kWh (100% renewable, AEP Energy supply) from June 2026 through the June 2027 meter read, up from 8.71¢ — a 22.7% increase."
+            },
+            "termEnd": {
+              "from": "2026-06-30",
+              "to": "2027-06"
+            },
+            "termStart": {
+              "from": null,
+              "to": "2026-06"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P02",
+      "title": "Riverside: same SOPEC renewal as Dayton",
+      "file": "data/regions/dayton_sw_ohio.json",
+      "take_from_branch": "claude/friendly-feynman-y3ofg2",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "http://www.energychoicematters.com/stories/20260409i.html"
+      ],
+      "notes": "Only this branch has it. The source names Riverside, but the city page was not opened.",
+      "changes": [
+        {
+          "zone": "Riverside",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 9.333,
+              "to": 10.691
+            },
+            "hook": {
+              "from": "Riverside's city program ran out in June — accounts there flipped to AES Ohio default. Worth a rate comparison.",
+              "to": "Riverside's city program went up about 15% in June, to 10.69 cents. Has anyone compared a fixed commercial rate?"
+            },
+            "notes": {
+              "from": "SOPEC rate 9.333¢/kWh through June 2026. AES Ohio territory. Adjacent to Dayton; same repricing exposure window.",
+              "to": "SOPEC aggregation, AEP Energy supply. Prior term 9.333¢/kWh through June 2026. EnergyChoiceMatters (2026-04-09) states the 10.691¢/kWh Dayton rate also applies to the City of Riverside, through June 2027. AES Ohio territory."
+            },
+            "previousRate": {
+              "from": null,
+              "to": 9.333
+            },
+            "rateChange": {
+              "from": null,
+              "to": 14.6
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "http://www.energychoicematters.com/stories/20260409i.html"
+            },
+            "status": {
+              "from": "rollover",
+              "to": "pain_hit"
+            },
+            "supplier": {
+              "from": "SOPEC",
+              "to": "SOPEC / AEP Energy"
+            },
+            "takeaway": {
+              "from": "Riverside aggregation at 9.33¢ expired June 30, 2026. Accounts are now on AES Ohio standard supply.",
+              "to": "Riverside's SOPEC aggregation moved from 9.333¢ to 10.691¢/kWh in June 2026, running through the June 2027 meter read."
+            },
+            "termEnd": {
+              "from": "2026-06-30",
+              "to": "2027-06"
+            },
+            "termStart": {
+              "from": null,
+              "to": "2026-06"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P03",
+      "title": "Beavercreek: city aggregation (Constellation 8.699¢ to Dec 2026), then AES default",
+      "file": "data/regions/dayton_aes_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [
+        "https://www.beavercreekohio.gov/608/Aggregation-Programs"
+      ],
+      "notes": "CONFLICT: the 4yq6dp and u3wdxu branches call it no-aggregation at the AES 10.86¢ default. PR #16 (9m8r0v) was checked against the live city page on 11-11. The city is pausing aggregation after December.",
+      "changes": [
+        {
+          "zone": "Beavercreek",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "no_aggregation_verified",
+              "to": "confirmed_active_aggregation"
+            },
+            "confidence": {
+              "from": "medium",
+              "to": "high"
+            },
+            "currentRate": {
+              "from": 10.691,
+              "to": 8.699
+            },
+            "futureUse": {
+              "from": "price_to_compare_analysis",
+              "to": "aggregation"
+            },
+            "hook": {
+              "from": "Beavercreek commercial accounts on AES — AES just jumped their standard rate 22.7% to over 10 cents in June. Are those accounts locked into a supplier, or are they eating that increase right now?",
+              "to": "Beavercreek customers lose the 8.699¢ aggregation rate after December 2026 and roll to AES Ohio default service at 10.86¢ through May 31, 2027. That is an opening for a fixed-rate quote."
+            },
+            "lastVerified": {
+              "from": "2026-06-01",
+              "to": "2026-11-11"
+            },
+            "notes": {
+              "from": "AES Ohio (Dayton Power & Light) territory. Greene County. Major retail (Fairfield Commons) and commercial/professional presence along I-675 and Route 35 corridors. No confirmed aggregation.",
+              "to": "AES Ohio territory. Greene County. Constellation 8.699¢/kWh through the December 2026 meter read. The city is pausing the aggregation program after that term because it could not get a rate under 10.699¢. Enrolled accounts return to AES Ohio default service at 10.86¢ through May 31, 2027. Source: city aggregation page, verified 2026-11-11."
+            },
+            "previousRate": {
+              "from": 8.71,
+              "to": null
+            },
+            "rateChange": {
+              "from": 22.7,
+              "to": null
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://www.beavercreekohio.gov/608/Aggregation-Programs"
+            },
+            "supplier": {
+              "from": null,
+              "to": "Constellation"
+            },
+            "takeaway": {
+              "from": "Beavercreek commercial accounts on AES Ohio — AES standard rate hit 10.691¢ June 2026 (+22.7%). Fairfield Commons corridor and I-675 business parks are prime targets if they have no supplier deal in place.",
+              "to": "Beavercreek is on Constellation at 8.699¢/kWh through the December 2026 meter read. The city is pausing aggregation after that term because it could not get a rate under 10.699¢. Accounts return to AES Ohio default service at 10.86¢ through May 31, 2027."
+            },
+            "termEnd": {
+              "from": null,
+              "to": "2026-12"
+            },
+            "termStart": {
+              "from": null,
+              "to": "2025-08"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P04",
+      "title": "Huber Heights: remove false 'AES 10.691¢ +22.7%' and mark for verification",
+      "file": "data/regions/dayton_aes_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-y3ofg2",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://www.energychoicematters.com/stories/20260415c.html"
+      ],
+      "notes": "CONFLICT: branch 4yq6dp sets it to the AES default (10.86¢, prior 9.45¢, +14.9%, pain_hit). A 2025 SOPEC opt-out letter on hhoh.org suggests a city program, so leave it unresolved until someone calls.",
+      "changes": [
+        {
+          "zone": "Huber Heights",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "no_aggregation_verified",
+              "to": "unresolved"
+            },
+            "confidence": {
+              "from": "medium",
+              "to": "low"
+            },
+            "currentRate": {
+              "from": 10.691,
+              "to": null
+            },
+            "hook": {
+              "from": "Huber Heights commercial and warehouse accounts on AES — that 22.7% AES rate hike just went into effect in June. Are those accounts on a supply contract or did they just get hit?",
+              "to": "AES raised its standard supply rate about 15% in June. Are your accounts on a supplier contract or on the AES default?"
+            },
+            "notes": {
+              "from": "AES Ohio territory. Montgomery County. Significant warehouse and distribution presence along I-70 and Wagner Ford Road. No confirmed aggregation.",
+              "to": "AES Ohio territory. Montgomery County. Significant warehouse and distribution presence along I-70 and Wagner Ford Road. A SOPEC rates page lists Huber Heights at 11.19¢/kWh through June 2027 (baseline only, not confirmed). Confirm before quoting."
+            },
+            "previousRate": {
+              "from": 8.71,
+              "to": null
+            },
+            "rateChange": {
+              "from": 22.7,
+              "to": null
+            },
+            "status": {
+              "from": "pain_coming",
+              "to": "verify"
+            },
+            "takeaway": {
+              "from": "Huber Heights warehouse and commercial accounts on AES Ohio — AES standard rate hit 10.691¢ June 2026 (+22.7%). Accounts without a supplier deal are absorbing that increase right now.",
+              "to": "AES Ohio standard offer is about 10.86¢/kWh for June 2026–May 2027, about 15% above the prior year's energy rate. Whether the city has an aggregation is unresolved."
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P05",
+      "title": "Urbana: remove false 'AES 10.691¢ +22.7%' and mark for verification",
+      "file": "data/regions/dayton_aes_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-y3ofg2",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://www.energychoicematters.com/stories/20260415c.html",
+        "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Urbana"
+      ],
+      "notes": "CONFLICT: same as P04. The Dynegy page lists 9.08¢ Dec 2025 to May 2028 from a single source.",
+      "changes": [
+        {
+          "zone": "Urbana",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "no_aggregation_verified",
+              "to": "unresolved"
+            },
+            "currentRate": {
+              "from": 10.691,
+              "to": null
+            },
+            "hook": {
+              "from": "Urbana commercial on AES — the standard rate jumped 22.7% in June. Small market, but if they have no supplier, they're feeling it. Worth a quick check.",
+              "to": "AES raised its standard supply rate about 15% in June. Are your accounts on a supplier contract or on the AES default?"
+            },
+            "notes": {
+              "from": "AES Ohio territory. Champaign County seat. Small commercial base. No confirmed aggregation. Low priority relative to larger Dayton suburbs.",
+              "to": "AES Ohio territory. Champaign County seat. Small commercial base. Low priority relative to larger Dayton suburbs. A Dynegy page lists Urbana at 9.08¢/kWh through May 2028 (baseline only, not confirmed). Confirm before quoting."
+            },
+            "previousRate": {
+              "from": 8.71,
+              "to": null
+            },
+            "rateChange": {
+              "from": 22.7,
+              "to": null
+            },
+            "status": {
+              "from": "pain_coming",
+              "to": "verify"
+            },
+            "takeaway": {
+              "from": "Urbana commercial accounts on AES Ohio — AES standard rate hit 10.691¢ June 2026 (+22.7%). Small market, low priority, but accounts without supplier deals are taking the full hit.",
+              "to": "AES Ohio standard offer is about 10.86¢/kWh for June 2026–May 2027, about 15% above the prior year's energy rate. Whether the city has an aggregation is unresolved."
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P06",
+      "title": "Sharonville: WGL Energy 10.276¢ from Nov 2026 (replaces impossible 42.9%)",
+      "file": "data/regions/cincinnati_duke.json",
+      "take_from_branch": "claude/friendly-feynman-u3wdxu",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://www.sharonville.org/m/newsflash"
+      ],
+      "notes": "The other branches only clear rateChange. This one adds the sourced new term.",
+      "changes": [
+        {
+          "zone": "Sharonville",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": null,
+              "to": 10.276
+            },
+            "hook": {
+              "from": "",
+              "to": "Sharonville's city program just reset from 9.39 to 10.28 cents with WGL. Have your accounts looked at a fixed commercial deal?"
+            },
+            "lastVerified": {
+              "from": "2026-06-01",
+              "to": "2026-10-14"
+            },
+            "notes": {
+              "from": "The Dynegy page no longer shows a rate. The city selected WGL Energy at 10.276¢/kWh beginning November 2026. Call the City of Sharonville and confirm WGL Energy 10.276¢/kWh starts with the November 2026 meter read.",
+              "to": "Dynegy term 9.39¢ ran Nov 2025 to Nov 2026. City selected WGL Energy at 10.276¢/kWh beginning November 2026. Confirm with the City of Sharonville that WGL started with the November meter read."
+            },
+            "rateChange": {
+              "from": 42.9,
+              "to": 9.4
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://www.sharonville.org/m/newsflash"
+            },
+            "status": {
+              "from": "verify",
+              "to": "pain_hit"
+            },
+            "takeaway": {
+              "from": "The Dynegy page no longer shows a rate. The city selected WGL Energy at 10.276¢/kWh beginning November 2026.",
+              "to": "Sharonville moved from Dynegy at 9.39¢ to WGL Energy at 10.276¢/kWh starting November 2026 (+9.4%)."
+            },
+            "termEnd": {
+              "from": null,
+              "to": "2027-11"
+            },
+            "termStart": {
+              "from": null,
+              "to": "2026-11"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P07",
+      "title": "Washington Township (Wood): clear impossible rateChange 13.0",
+      "file": "data/regions/toledo_lucas_noac.json",
+      "take_from_branch": "claude/friendly-feynman-14m79j",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [],
+      "notes": "Same change on PR #16 and y3ofg2.",
+      "changes": [
+        {
+          "zone": "Washington Township (Wood)",
+          "action": "update",
+          "fields": {
+            "rateChange": {
+              "from": 13.0,
+              "to": null
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P08",
+      "title": "Stark County (Unincorporated): remove term dates on a no-program record",
+      "file": "data/regions/akron_summit_medina.json",
+      "take_from_branch": "claude/friendly-feynman-14m79j",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [],
+      "notes": "Same change on PR #16 and u3wdxu.",
+      "changes": [
+        {
+          "zone": "Stark County (Unincorporated / Remaining)",
+          "action": "update",
+          "fields": {
+            "termEnd": {
+              "from": "2026-08-31",
+              "to": null
+            },
+            "termStart": {
+              "from": "2025-08-01",
+              "to": null
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P09",
+      "title": "Cincinnati: fixed term ended 2026-11-01, so stable becomes verify",
+      "file": "data/regions/cincinnati_duke.json",
+      "take_from_branch": "claude/friendly-feynman-u3wdxu",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [],
+      "notes": "The next term is variable. The city and Dynegy give different end dates.",
+      "changes": [
+        {
+          "zone": "Cincinnati",
+          "action": "update",
+          "fields": {
+            "notes": {
+              "from": "Short fixed window before later variable structure.",
+              "to": "Short fixed window before later variable structure. Fixed term ended 2026-11-01; successor rate not on file as of 2026-11-15."
+            },
+            "status": {
+              "from": "stable",
+              "to": "verify"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P10",
+      "title": "Co-op roster: delete fake 'Ohio Valley Electric Cooperative'; add Hancock-Wood and Midwest Electric",
+      "file": "data/regions/ohio_electric_cooperatives.json",
+      "take_from_branch": "claude/friendly-feynman-u3wdxu",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://midwestrec.com/whopowersyouohio",
+        "https://ohioec.org/ohios-cooperatives"
+      ],
+      "notes": "North Western Electric (Bryan) is still missing and stays a placeholder. ohioec.org is blocked from these sessions.",
+      "changes": [
+        {
+          "zone": "Ohio Valley Electric Cooperative",
+          "action": "delete"
+        },
+        {
+          "zone": "Ohio Electric Co-ops — 2 Unconfirmed",
+          "action": "delete"
+        },
+        {
+          "zone": "Hancock-Wood Electric",
+          "action": "add",
+          "record": {
+            "name": "Hancock-Wood Electric",
+            "region": "Toledo / NW Ohio",
+            "utility": "Hancock-Wood Electric Cooperative",
+            "aggregationStatus": "electric_cooperative",
+            "currentRate": null,
+            "previousRate": null,
+            "rateChange": null,
+            "termStart": null,
+            "termEnd": null,
+            "supplier": "Buckeye Power Inc.",
+            "status": "stable",
+            "confidence": "medium",
+            "takeaway": "REC serving more than 11,000 members in parts of 10 northwest Ohio counties around Findlay. Cannot sell competitive electric supply to co-op members.",
+            "hook": "Is your electric through Hancock-Wood or a regular utility?",
+            "futureUse": "municipal_blacklist",
+            "notes": "Territory roughly centered on Findlay. County list not yet captured; verify utility from the bill.",
+            "lastVerified": "2026-11-15",
+            "sourceUrl": "https://ohioec.org/ohios-cooperatives",
+            "utilityParent": "Buckeye Power",
+            "utilityConfidence": "high"
+          }
+        },
+        {
+          "zone": "Midwest Electric",
+          "action": "add",
+          "record": {
+            "name": "Midwest Electric",
+            "region": "Dayton / SW Ohio",
+            "utility": "Midwest Electric, Inc.",
+            "aggregationStatus": "electric_cooperative",
+            "currentRate": null,
+            "previousRate": null,
+            "rateChange": null,
+            "termStart": null,
+            "termEnd": null,
+            "supplier": "Buckeye Power Inc.",
+            "status": "stable",
+            "confidence": "high",
+            "takeaway": "REC serving rural Allen, Auglaize, Darke, Mercer, Putnam, Shelby, and Van Wert counties. Cannot sell competitive electric supply to co-op members.",
+            "hook": "Is your electric through Midwest Electric or a regular utility?",
+            "futureUse": "municipal_blacklist",
+            "notes": "HQ: St. Marys, OH. About 11,000 accounts. Power supplier is Buckeye Power. Do not confuse with Midwest Energy & Communications (Michigan).",
+            "lastVerified": "2026-11-15",
+            "sourceUrl": "https://midwestrec.com/whopowersyouohio",
+            "utilityParent": "Buckeye Power",
+            "utilityConfidence": "high"
+          }
+        },
+        {
+          "zone": "Ohio Electric Co-ops — 1 Unconfirmed",
+          "action": "add",
+          "record": {
+            "name": "Ohio Electric Co-ops — 1 Unconfirmed",
+            "region": "Central Ohio",
+            "utility": "Unknown — Buckeye Power member",
+            "aggregationStatus": "electric_cooperative",
+            "currentRate": null,
+            "previousRate": null,
+            "rateChange": null,
+            "supplier": "Buckeye Power Inc.",
+            "termStart": null,
+            "termEnd": null,
+            "status": "verify",
+            "confidence": "low",
+            "takeaway": "Buckeye Power serves 24 Ohio-based distribution co-ops plus Michigan-based Midwest Energy & Communications. 23 Ohio co-ops are in this database. North Western Electric Cooperative (Bryan) is the remaining name to verify.",
+            "hook": null,
+            "futureUse": "municipal_blacklist",
+            "notes": "Placeholder until the last Ohio co-op is confirmed against the ohioec.org roster.",
+            "lastVerified": "2026-11-15",
+            "sourceUrl": "https://ohioec.org/",
+            "utilityParent": null,
+            "utilityConfidence": "medium"
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P11",
+      "title": "Co-op HQ/territory: Frontier Power (Coshocton), Tri-County (Malinta), LMRE (Wellington), Firelands (New London)",
+      "file": "data/regions/ohio_electric_cooperatives.json",
+      "take_from_branch": "claude/friendly-feynman-14m79j",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://ohiocoopliving.com/co-op-spotlight-frontier-power-company"
+      ],
+      "notes": "u3wdxu agrees on Frontier and LMRE.",
+      "changes": [
+        {
+          "zone": "The Frontier Power Company",
+          "action": "update",
+          "fields": {
+            "notes": {
+              "from": "Small REC in Wood/Sandusky/Hancock rural areas. HQ: Weston, OH area. Address verification especially important in this region.",
+              "to": "HQ: 770 South Second Street, Coshocton, OH. Serves rural Coshocton and southern Tuscarawas counties. Address verification important where co-op lines meet IOU territory."
+            },
+            "region": {
+              "from": "Toledo / NW Ohio",
+              "to": "Central Ohio"
+            },
+            "takeaway": {
+              "from": "Small NW Ohio cooperative serving Wood, Sandusky, Hancock county rural pockets. Toledo Edison territory overlaps here — verify from bill.",
+              "to": "Small east-central Ohio cooperative serving rural Coshocton and southern Tuscarawas counties. Verify the utility from the bill. Cannot sell competitive electric."
+            }
+          }
+        },
+        {
+          "zone": "Tri-County Rural Electric",
+          "action": "update",
+          "fields": {
+            "notes": {
+              "from": "HQ: Defiance, OH. Serves Defiance, Williams, Fulton, Henry county rural portions. Explicitly confirms: co-op members are NOT affected by township aggregation ballots.",
+              "to": "HQ: Malinta, OH (Henry County). Serves rural parts of Fulton, Henry, Lucas, Putnam, and Wood counties. Explicitly confirms: co-op members are NOT affected by township aggregation ballots."
+            },
+            "takeaway": {
+              "from": "NW Ohio REC in Defiance, Williams, Fulton, Henry county rural areas. Toledo Edison territory borders this co-op. Cannot sell competitive electric.",
+              "to": "NW Ohio REC serving rural parts of Fulton, Henry, Lucas, Putnam, and Wood counties. Toledo Edison territory borders this co-op. Cannot sell competitive electric."
+            }
+          }
+        },
+        {
+          "zone": "Lorain-Medina Rural Electric (LMRE)",
+          "action": "update",
+          "fields": {
+            "notes": {
+              "from": "Shares management federation with North Central Electric. Serves Lorain, Medina, Ashland, Wayne county rural portions. HQ: Oberlin area. NOPEC does NOT cover LMRE customers.",
+              "to": "Shares management federation with North Central Electric. Serves Lorain, Medina, Ashland, Wayne county rural portions. HQ: Wellington, OH. NOPEC does NOT cover LMRE customers."
+            }
+          }
+        },
+        {
+          "zone": "Firelands Electric",
+          "action": "update",
+          "fields": {
+            "notes": {
+              "from": "995 miles of distribution lines. Serves rural portions of Ashland, Erie, Huron, Lorain, Richland, Sandusky counties. HQ: Norwalk, OH.",
+              "to": "995 miles of distribution lines. Serves rural portions of Ashland, Erie, Huron, Lorain, Richland, Sandusky counties. HQ: New London, OH."
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P12",
+      "title": "Licking County/Pataskala and Heath/Newark: Dynegy 10.29¢ Dec 2025 to Dec 2026 (not the copied Columbus AEP 10.01¢)",
+      "file": "data/regions/remaining_ohio_markets.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [
+        "https://lickingcounty.gov/depts/commissioners/aggregation.htm"
+      ],
+      "notes": "Heath / Newark (sopec_columbus_suburbs.json) gets the same fix on PR #16. Dynegy lists an 11.87¢ successor that is not stored.",
+      "changes": [
+        {
+          "zone": "Licking County / Pataskala",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 10.01,
+              "to": 10.29
+            },
+            "hook": {
+              "from": "Pataskala and the eastern Licking County corridor — AEP territory going up to 10¢ in June. Lot of new commercial build-out that hasn't set up supply contracts.",
+              "to": "Pataskala's county program with Dynegy is 10.29¢ through the December 2026 meter read. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); confirm on the county page before quoting."
+            },
+            "lastVerified": {
+              "from": "2026-05-01",
+              "to": "2026-11-11"
+            },
+            "notes": {
+              "from": "AEP Ohio territory. Licking County. Fast-growing Columbus exurb east of Columbus. Commercial development along Route 40 and I-70. Aggregation rate exposure June 2026.",
+              "to": "AEP Ohio territory. Licking County. County page: Group 2, Dynegy $0.1029/kWh, term 12/2025–12/2026. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); the county page does not, so confirm there before quoting. That later rate is not stored. Sources: county aggregation page and the Dynegy Licking-County-Pataskala page. Licking County Commissioners (740) 670-5110."
+            },
+            "previousRate": {
+              "from": 9.08,
+              "to": null
+            },
+            "rateChange": {
+              "from": 10.2,
+              "to": null
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://lickingcounty.gov/depts/commissioners/aggregation.htm"
+            },
+            "supplier": {
+              "from": "AEP Energy",
+              "to": "Dynegy"
+            },
+            "takeaway": {
+              "from": "Pataskala and Licking County eastern Columbus suburbs on AEP Ohio — rate moving from 9.08¢ to 10.01¢ in June 2026. Fast-growing exurb with commercial development.",
+              "to": "Licking County Group 2 (Pataskala, Hebron, Kirkersville, Utica, Hartford, Buckeye Lake) is on Dynegy at 10.29¢/kWh through the December 2026 meter read. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); confirm on county page before quoting."
+            },
+            "termEnd": {
+              "from": "2027-06-01",
+              "to": "2026-12"
+            },
+            "termStart": {
+              "from": "2026-06-01",
+              "to": "2025-12"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P12b",
+      "title": "Heath / Newark: same as P12",
+      "file": "data/regions/sopec_columbus_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [
+        "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Licking-County-Newark"
+      ],
+      "notes": "",
+      "changes": [
+        {
+          "zone": "Heath / Newark",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 10.01,
+              "to": 10.29
+            },
+            "hook": {
+              "from": "",
+              "to": "Newark and Heath are on Dynegy at 10.29¢ through the December 2026 meter read. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); confirm on the county page before quoting."
+            },
+            "lastVerified": {
+              "from": "2026-05-01",
+              "to": "2026-11-11"
+            },
+            "notes": {
+              "from": "Newark's sourced supplier is Dynegy. Whether Heath is in that group conflicts between the county page and the Dynegy page.",
+              "to": "AEP Ohio territory. County page lists Newark and Heath in Group 1 at Dynegy $0.1029/kWh, term 12/2025–12/2026. Dynegy lists Heath as eligible (Licking-County-Heath) and Newark as eligible (Licking-County-Newark). Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); the county page does not, so confirm there before quoting. That later rate is not stored. Licking County Commissioners (740) 670-5110; Dynegy 888-682-2170."
+            },
+            "previousRate": {
+              "from": 9.08,
+              "to": null
+            },
+            "rateChange": {
+              "from": 10.2,
+              "to": null
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Licking-County-Newark"
+            },
+            "takeaway": {
+              "from": "Newark's sourced supplier is Dynegy. Whether Heath is in that group conflicts between the county page and the Dynegy page.",
+              "to": "Newark and Heath are on the Licking County Dynegy program at 10.29¢/kWh through the December 2026 meter read. Dynegy lists a successor term at 11.87¢ (Dec 2026–May 2028); confirm on county page before quoting."
+            },
+            "termEnd": {
+              "from": "2027-06-01",
+              "to": "2026-12"
+            },
+            "termStart": {
+              "from": "2026-06-01",
+              "to": "2025-12"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P13",
+      "title": "Pickerington, Marysville: remove copied Columbus AEP 9.08→10.01¢ program",
+      "file": "data/regions/sopec_columbus_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [],
+      "notes": "Not on the SOPEC, Dynegy or Energy Alliances lists.",
+      "changes": [
+        {
+          "zone": "Pickerington",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 10.01,
+              "to": null
+            },
+            "previousRate": {
+              "from": 9.08,
+              "to": null
+            },
+            "rateChange": {
+              "from": 10.2,
+              "to": null
+            },
+            "supplier": {
+              "from": "AEP Energy",
+              "to": null
+            },
+            "takeaway": {
+              "from": "Pickerington AEP aggregation rate moves from 9.08¢ to 10.01¢ in June 2026. Fast-growing Columbus suburb with strong commercial corridor.",
+              "to": "No community electric aggregation program was found for Pickerington on the SOPEC member list, Dynegy, or Energy Alliances (research pass 2026-10-14). Territory is mixed: South Central Power cooperative and AEP Ohio."
+            },
+            "termEnd": {
+              "from": "2027-06-01",
+              "to": null
+            },
+            "termStart": {
+              "from": "2026-06-01",
+              "to": null
+            }
+          }
+        },
+        {
+          "zone": "Marysville",
+          "action": "update",
+          "fields": {
+            "currentRate": {
+              "from": 10.01,
+              "to": null
+            },
+            "previousRate": {
+              "from": 9.08,
+              "to": null
+            },
+            "rateChange": {
+              "from": 10.2,
+              "to": null
+            },
+            "supplier": {
+              "from": "AEP Energy",
+              "to": null
+            },
+            "takeaway": {
+              "from": "Marysville AEP aggregation rate moves from 9.08¢ to 10.01¢ in June 2026. Union County seat with Honda manufacturing cluster nearby — industrial accounts worth reviewing.",
+              "to": "No community electric aggregation program was found for Marysville on the SOPEC member list, Dynegy, or Energy Alliances (research pass 2026-10-14). Territory is mixed: AES Ohio and Union Rural Electric."
+            },
+            "termEnd": {
+              "from": "2027-06-01",
+              "to": null
+            },
+            "termStart": {
+              "from": "2026-06-01",
+              "to": null
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P14",
+      "title": "Dublin: not on SOPEC member list, so unresolved/verify (removes 11.162¢)",
+      "file": "data/regions/sopec_columbus_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://www.sopec-oh.gov/members-of-sopec/"
+      ],
+      "notes": "",
+      "changes": [
+        {
+          "zone": "Dublin",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "confirmed_active_aggregation",
+              "to": "unresolved"
+            },
+            "confidence": {
+              "from": "high",
+              "to": "low"
+            },
+            "currentRate": {
+              "from": 11.162,
+              "to": null
+            },
+            "hook": {
+              "from": "Dublin is on SOPEC — that green rate is going over 11¢ in June. A lot of the tech companies and office parks haven't locked in alternatives.",
+              "to": ""
+            },
+            "notes": {
+              "from": "AEP Ohio territory. SOPEC member. Green rate 9.756¢ → 11.162¢ June 2026. Dense commercial and tech office presence along Sawmill, Brand, and Perimeter corridors. High RCE potential.",
+              "to": "AEP Ohio territory. Open question: does Dublin hold a PUCO governmental-aggregation certificate and is a program active? Call the City of Dublin clerk and PUCO 1-800-686-7826."
+            },
+            "previousRate": {
+              "from": 9.756,
+              "to": null
+            },
+            "rateChange": {
+              "from": 14.4,
+              "to": null
+            },
+            "status": {
+              "from": "pain_coming",
+              "to": "verify"
+            },
+            "supplier": {
+              "from": "AEP Energy / SOPEC",
+              "to": null
+            },
+            "takeaway": {
+              "from": "SOPEC green rate jumps to 11.162¢ in June 2026 — Dublin's tech corridor and office parks along Sawmill Road are heavily exposed.",
+              "to": "Dublin is not on the SOPEC member list and no Dynegy or Energy Alliances program was found (research pass 2026-10-14). Whether Dublin has an active electric aggregation is unconfirmed."
+            },
+            "termEnd": {
+              "from": "2027-05-31",
+              "to": null
+            },
+            "termStart": {
+              "from": "2026-06-01",
+              "to": null
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P15",
+      "title": "Niles: municipal electric utility (AMP member), not Ohio Edison",
+      "file": "data/regions/ne_ohio_firstenergy.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [
+        "https://thecityofniles.com/services/utilities/electric/"
+      ],
+      "notes": "Adds Niles to the do-not-sell list.",
+      "changes": [
+        {
+          "zone": "Niles",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "no_aggregation_verified",
+              "to": "municipal_utility"
+            },
+            "futureUse": {
+              "from": "price_to_compare_analysis",
+              "to": "municipal_blacklist"
+            },
+            "hook": {
+              "from": "Niles has no aggregation on file. Ask who the supplier is on the Ohio Edison bill.",
+              "to": "Is your electric bill from the City of Niles or from Ohio Edison?"
+            },
+            "lastVerified": {
+              "from": "2026-06-01",
+              "to": "2026-10-14"
+            },
+            "notes": {
+              "from": "Ohio Edison territory. Trumbull County. Industrial heritage, commercial corridor along Youngstown-Warren Road. No confirmed aggregation.",
+              "to": "Trumbull County. City electric page and AMP member list (research pass 2026-10-14). Addresses outside the city system may be Ohio Edison; confirm the bill before quoting."
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://thecityofniles.com/services/utilities/electric/"
+            },
+            "takeaway": {
+              "from": "Niles has no aggregation program on file. Commercial accounts are on Ohio Edison default service or a supply contract the customer signed.",
+              "to": "Niles runs its own municipal electric utility (AMP member). City-served accounts are exempt from retail electric choice."
+            },
+            "utility": {
+              "from": "Ohio Edison",
+              "to": "City of Niles (municipal electric)"
+            },
+            "utilityConfidence": {
+              "from": "medium",
+              "to": "high"
+            },
+            "utilityParent": {
+              "from": "FirstEnergy",
+              "to": null
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P16",
+      "title": "Mansfield: joined NOPEC 2026 (10.399¢ standard)",
+      "file": "data/regions/ne_ohio_firstenergy.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "likely",
+      "sources": [
+        "https://www.nopec.org/residents/pricingrates/electric-pricing"
+      ],
+      "notes": "",
+      "changes": [
+        {
+          "zone": "Mansfield",
+          "action": "update",
+          "fields": {
+            "aggregationStatus": {
+              "from": "no_aggregation_verified",
+              "to": "confirmed_active_aggregation"
+            },
+            "futureUse": {
+              "from": "price_to_compare_analysis",
+              "to": "aggregation"
+            },
+            "hook": {
+              "from": "Mansfield — Richland County, Ohio Edison territory — are commercial and industrial accounts there on a supplier deal? Manufacturing base out there has significant usage.",
+              "to": "Mansfield is new to NOPEC this year at 10.399¢ on the standard program. Are your business accounts in it, or on their own contract?"
+            },
+            "lastVerified": {
+              "from": "2026-06-01",
+              "to": "2026-10-14"
+            },
+            "notes": {
+              "from": "Ohio Edison territory. Richland County seat. Industrial manufacturing base. Commercial corridor on Lexington Avenue and Route 30. No confirmed aggregation.",
+              "to": "Ohio Edison territory. Richland County seat. Sources (research pass 2026-10-14): NOPEC community map (member since 2026), Richland Source 2026-03-18 and 2026-06-05, NOPEC newsroom, NOPEC electric pricing page."
+            },
+            "sourceUrl": {
+              "from": null,
+              "to": "https://www.nopec.org/residents/pricingrates/electric-pricing"
+            },
+            "supplier": {
+              "from": null,
+              "to": "NOPEC / NextEra Energy Services"
+            },
+            "takeaway": {
+              "from": "Mansfield (Richland County seat) on Ohio Edison — mid-size industrial city with manufacturing base and commercial accounts on Lexington Avenue. No confirmed active aggregation.",
+              "to": "Mansfield joined NOPEC electric aggregation in 2026; enrollment letters went out in June. The NOPEC Standard price is 10.399¢/kWh from the September 2026 to June 2027 meter reads."
+            },
+            "termEnd": {
+              "from": null,
+              "to": "2027-06"
+            },
+            "termStart": {
+              "from": null,
+              "to": "2026-09"
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P17",
+      "title": "Delhi Twp, Colerain Twp, Oxford: 'expires this month' wording from June",
+      "file": "data/regions/cincinnati_duke_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-9m8r0v",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [],
+      "notes": "Colerain and Oxford are fixed on l8i9hm (see P17b).",
+      "changes": [
+        {
+          "zone": "Delhi Township",
+          "action": "update",
+          "fields": {
+            "hook": {
+              "from": "Delhi Township is rolling off their Dynegy deal at 9.32¢ this month. That renewal is going into a 10.70¢ market. Are those accounts going back to Duke or finding a supplier?",
+              "to": "Delhi Township's Dynegy deal at 9.32¢ was due to end around June. Do you know what your accounts are on now?"
+            },
+            "takeaway": {
+              "from": "Delhi Township's Dynegy contract at 9.32¢ is expiring this month — same renewal window as Colerain. Western Hamilton County commercial accounts hitting renewal pain right now.",
+              "to": "Delhi Township's Dynegy contract at 9.32¢ had an estimated end of June 2026 (term end not verified). What the township is on now is unconfirmed."
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P17b",
+      "title": "Colerain Twp, Oxford wording (electric)",
+      "file": "data/regions/cincinnati_duke_suburbs.json",
+      "take_from_branch": "claude/friendly-feynman-l8i9hm",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [],
+      "notes": "The Oxford Duke default becomes the sourced 10.49¢ October Price to Compare.",
+      "changes": [
+        {
+          "zone": "Colerain Township",
+          "action": "update",
+          "fields": {
+            "hook": {
+              "from": "Colerain Township's aggregation contract expires this month at 9.36¢. When it renews, it's going into a 10.70¢ market. Are any of your accounts there locked in or shopping right now?",
+              "to": "Colerain's aggregation term at 9.36¢ ended in June. Do you know what your accounts are paying now: a new aggregation rate, Duke default, or a supplier?"
+            },
+            "notes": {
+              "from": "Dynegy aggregation (Energy Alliances broker) expires June 2026 meter read. Hamilton County. Traditional 9.36¢, 100% renewable 9.61¢. Northwest Hamilton County — significant commercial presence. Largest unincorporated township in Hamilton County by population. Contract expiry June 2026 is the single most urgent renewal in the Cincinnati market.",
+              "to": "Dynegy aggregation (Energy Alliances broker) expires June 2026 meter read. Hamilton County. Traditional 9.36¢, 100% renewable 9.61¢. Northwest Hamilton County — significant commercial presence. Largest unincorporated township in Hamilton County by population. Term ended June 2026; successor not confirmed."
+            },
+            "takeaway": {
+              "from": "Colerain Township's Dynegy contract at 9.36¢ expires this month — renewal into Duke's 10.70¢ market is happening right now. Single most urgent Cincinnati-area target as of June 2026.",
+              "to": "Colerain Township's Dynegy term at 9.36¢ ended with the June 2026 meter read. A renewal is not confirmed in this record. Accounts not on a new term are on Duke default or a supplier."
+            }
+          }
+        },
+        {
+          "zone": "Oxford",
+          "action": "update",
+          "fields": {
+            "hook": {
+              "from": "Oxford is a SOPEC member even though Duke delivers — that 9.114¢ deal is up in June. Any commercial accounts there above the SOPEC threshold are already on Duke default. Worth a call.",
+              "to": "Oxford is a SOPEC member even though Duke delivers. The 9.114¢ term ended in June. Any commercial accounts above the SOPEC threshold were never in it. Worth a call."
+            },
+            "notes": {
+              "from": "Unusual configuration: Oxford city is Duke Energy Ohio delivery territory but joined SOPEC for supply (AEP Energy as supplier). Contract through June 2026 meter read — renewal underway. Commercial accounts over 700,000 kWh/yr are INELIGIBLE for SOPEC aggregation and are on Duke default 10.7016¢ — those are direct sales targets. Miami University commercial buildings likely above threshold. Butler County.",
+              "to": "Unusual configuration: Oxford city is Duke Energy Ohio delivery territory but joined SOPEC for supply (AEP Energy as supplier). Term ended with the June 2026 meter read; successor not confirmed. Commercial accounts over 700,000 kWh/yr are INELIGIBLE for SOPEC aggregation and are on Duke default (10.49¢ price to compare as of October 2026) or a supplier — those are direct sales targets. Miami University commercial buildings likely above threshold. Butler County."
+            },
+            "takeaway": {
+              "from": "Oxford's SOPEC/AEP Energy contract at 9.114¢ is expiring this month. Unusual Duke-territory SOPEC member — SOPEC is actively renegotiating. Commercial accounts over 700,000 kWh/yr are ineligible for the program and are on Duke default right now.",
+              "to": "Oxford's SOPEC/AEP Energy term at 9.114¢ ended June 30, 2026. A successor term is not confirmed in this record. Duke delivers here. Commercial accounts over 700,000 kWh/yr are outside the program."
+            }
+          }
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P18",
+      "title": "Gas layer (not shown in app yet): Toledo gas is Columbia Gas, not Dominion; Dominion was renamed Enbridge Gas Ohio; fixes electric claims in 22 gas zones plus the Settings dropdown",
+      "files": [
+        "data/gas/toledo_gas.json",
+        "data/gas/ne_ohio_gas.json",
+        "data/gas/cincinnati_gas.json",
+        "templates/settings.html"
+      ],
+      "take_from_branch": "claude/friendly-feynman-l8i9hm",
+      "recommendation": "approve",
+      "confidence": "confirmed",
+      "sources": [
+        "https://www.columbiagasohio.com/docs/librariesprovider5/rates-and-tariffs/ford-street-application-and-attachment-a.pdf",
+        "https://www.dominionenergy.com/ohio/enbridge-update",
+        "https://www.hollandohio.com/wp-content/uploads/2024/05/NOAC-Gas-Agg-Program-Restart-FAQs-5-1-24-final.pdf"
+      ],
+      "notes": "Whole-file change. See data/research/factual_review_2026-11-13.md on that branch.",
+      "changes": "whole-file (see branch diff)",
+      "status": "pending"
+    }
+  ]
+}

@@ -18,7 +18,9 @@ Removal notes for each field are in `data/history/removal_notes.jsonl`. Correcti
 
 The 10.691¢ figure is the Dayton SOPEC aggregation rate. It had been copied onto non-aggregation AES suburbs as the "AES standard rate". The research dataset's `PRIOR_rate` of 10.691 on those three zones is cleared by the new correction events.
 
-The genuine prior Dayton and Riverside terms (8.71¢ and 9.333¢, ending June 2026) are kept as `previousRate` and logged in `data/history/journal.jsonl`.
+The genuine prior Dayton and Riverside terms (8.71¢ and 9.333¢, ending June 2026) are kept as `previousRate` and in `rate_ledger.csv`. The journal has two `superseded_term` events for these terms. Those events replay as edits, so two later `update` events reapply the corrected values. The journal is append-only, so the earlier events stay in it.
+
+`tests/test_rate_change.py` expected Dayton's old record shape (no prior rate, stored Δ%). It now expects prior 8.71 and a computed Δ% of 22.7.
 
 ## Flagged, not changed (need a source or a decision)
 

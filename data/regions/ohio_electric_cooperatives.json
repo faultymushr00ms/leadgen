@@ -462,28 +462,6 @@
     "utilityConfidence": "high"
   },
   {
-    "name": "Ohio Valley Electric Cooperative",
-    "region": "Southern Ohio",
-    "utility": "Ohio Valley Electric Cooperative",
-    "aggregationStatus": "electric_cooperative",
-    "currentRate": null,
-    "previousRate": null,
-    "rateChange": null,
-    "supplier": "Buckeye Power Inc.",
-    "termStart": null,
-    "termEnd": null,
-    "status": "stable",
-    "confidence": "medium",
-    "takeaway": "SE/S Ohio REC serving Jackson, Gallia, Vinton, Ross, Pike, Scioto county rural areas. Cannot sell competitive electric.",
-    "hook": "Is your electric through the co-op or AEP out here?",
-    "futureUse": "municipal_blacklist",
-    "notes": "Note: distinct from Ohio Valley Electric Corporation (OVEC), which is a wholesale generator. HQ: Jackson, OH area.",
-    "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/",
-    "utilityParent": "Buckeye Power",
-    "utilityConfidence": "high"
-  },
-  {
     "name": "Midwest Energy & Communications",
     "region": "Toledo / NW Ohio",
     "utility": "Midwest Energy & Communications (Michigan REC)",
@@ -504,27 +482,5 @@
     "sourceUrl": "https://ohioec.org/",
     "utilityParent": null,
     "utilityConfidence": "high"
-  },
-  {
-    "name": "Ohio Electric Co-ops — 2 Unconfirmed",
-    "region": "Central Ohio",
-    "utility": "Unknown — Buckeye Power member",
-    "aggregationStatus": "electric_cooperative",
-    "currentRate": null,
-    "previousRate": null,
-    "rateChange": null,
-    "supplier": "Buckeye Power Inc.",
-    "termStart": null,
-    "termEnd": null,
-    "status": "verify",
-    "confidence": "low",
-    "takeaway": "Ohio has 25 electric cooperatives total. 23 are identified in this database. 2 additional co-ops or reorganized entities may exist — verify against current OREC/ohioec.org roster.",
-    "hook": null,
-    "futureUse": "municipal_blacklist",
-    "notes": "Placeholder for any Ohio RECs not yet confirmed in this database. Review ohioec.org for the current complete list of Buckeye Power members.",
-    "lastVerified": "2026-05-29",
-    "sourceUrl": "https://ohioec.org/",
-    "utilityParent": null,
-    "utilityConfidence": "medium"
   }
 ]

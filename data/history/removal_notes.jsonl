@@ -407,3 +407,23 @@
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "city electric page opened this date still names an older supplier and an ended term; it does not state the price on the supplier community page"}
+{"zone": "Dayton", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-19", "reason": "claim that the SOPEC program expired and accounts went to AES standard supply is contradicted by the City of Dayton and SOPEC pages showing a June 2026 to May 2027 renewal"}
+{"zone": "Dayton", "field": "hook", "note": "removed incorrect value", "date": "2026-11-19", "reason": "claim that the SOPEC program expired and accounts went to AES standard supply is contradicted by the City of Dayton and SOPEC pages showing a June 2026 to May 2027 renewal"}
+{"zone": "Beavercreek", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "SOPEC Dayton aggregation price stored as the AES Ohio default; the PUCO Price to Compare for AES Ohio is a different figure"}
+{"zone": "Beavercreek", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "Dayton SOPEC prior-term price stored as the AES Ohio prior default"}
+{"zone": "Beavercreek", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-19", "reason": "derived from the two removed values"}
+{"zone": "Beavercreek", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Beavercreek", "field": "hook", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Huber Heights", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "SOPEC Dayton aggregation price stored as the AES Ohio default; the PUCO Price to Compare for AES Ohio is a different figure"}
+{"zone": "Huber Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "Dayton SOPEC prior-term price stored as the AES Ohio prior default"}
+{"zone": "Huber Heights", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-19", "reason": "derived from the two removed values"}
+{"zone": "Huber Heights", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Huber Heights", "field": "hook", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Urbana", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "SOPEC Dayton aggregation price stored as the AES Ohio default; the PUCO Price to Compare for AES Ohio is a different figure"}
+{"zone": "Urbana", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-19", "reason": "Dayton SOPEC prior-term price stored as the AES Ohio prior default"}
+{"zone": "Urbana", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-19", "reason": "derived from the two removed values"}
+{"zone": "Urbana", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Urbana", "field": "hook", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stated the SOPEC Dayton price and change as the AES Ohio standard rate"}
+{"zone": "Sharonville", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-19", "reason": "stored change does not match the prior rate and the announced WGL price in the zone notes"}
+{"zone": "Ohio Valley Electric Cooperative", "field": "zone", "note": "removed incorrect value", "date": "2026-11-19", "reason": "no cooperative of this name exists; Buckeye Power serves 24 Ohio co-ops plus Midwest Energy & Communications, and the Ohio Valley Electric name belongs to the OVEC generating company"}
+{"zone": "Ohio Electric Co-ops \u2014 2 Unconfirmed", "field": "zone", "note": "removed incorrect value", "date": "2026-11-19", "reason": "placeholder record, not a cooperative or a place"}

@@ -6,7 +6,7 @@
     "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": null,
     "previousRate": 9.39,
-    "rateChange": 42.9,
+    "rateChange": null,
     "supplier": "WGL Energy",
     "termStart": null,
     "termEnd": null,

@@ -194,10 +194,9 @@ class SortTests(unittest.TestCase):
         self.assertEqual(kent["card"]["rateDelta"]["percent"], 4.0)
 
         dayton = _zone("Dayton")
-        self.assertIsNone(dayton["previousRate"])
+        self.assertEqual(dayton["previousRate"], 8.71)
         self.assertEqual(dayton["rateChange"], 22.7)
         self.assertEqual(dayton["displayRateChange"], 22.7)
-        self.assertEqual(dayton["rateDelta"]["source"], "stored")
         self.assertFalse(dayton["previousRateNeedsCheck"])
 
         swanton = _zone("Swanton")

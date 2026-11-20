@@ -51,6 +51,88 @@ else
     ACTION_NEEDED=1
 fi
 
+# ── Step 0b: Watchlist-driven targeted search ────────────────────────────────
+# Reads data/research/watchlist.json (written by daily_audit.py).
+# For each HIGH priority zone (APPROACHING_END or DROPPED_NO_SUCCESSOR),
+# logs the search terms that need to be run. Future: wire to news API or
+# Google Custom Search to auto-detect new supplier announcements.
+echo ""
+echo "[watchlist] Reading active watch targets..."
+"$PYTHON" - <<PYEOF
+import json, os, sys
+from datetime import date
+
+wl_path = os.path.join("$PROJECT_DIR", "data", "research", "watchlist.json")
+if not os.path.exists(wl_path):
+    print("[watchlist] No watchlist found — run daily_audit.py first")
+    sys.exit(0)
+
+with open(wl_path) as f:
+    wl = json.load(f)
+
+items = wl.get("watch", [])
+high = [x for x in items if x.get("priority") == "HIGH"]
+med = [x for x in items if x.get("priority") == "MEDIUM"]
+
+print(f"[watchlist] {len(items)} zones on watch (HIGH={len(high)} MED={len(med)})")
+if not high:
+    print("[watchlist] No HIGH priority targets today.")
+else:
+    print("[watchlist] HIGH PRIORITY — search daily:")
+    for item in high:
+        last = item.get("last_checked") or "never"
+        print(f"  [{item.get('reason','?')}] {item['zone']} ({item.get('region','')}) — last checked: {last}")
+        for term in item.get("search_terms", []):
+            print(f"    search: {term!r}")
+        print()
+
+# Update last_checked for HIGH items to today
+today = date.today().isoformat()
+for item in high:
+    item["last_checked"] = today
+wl["generated"] = today
+
+with open(wl_path, "w") as f:
+    json.dump(wl, f, indent=2)
+print(f"[watchlist] last_checked updated for {len(high)} HIGH targets")
+PYEOF
+
+# ── Step 0c: New-town sweep — broad aggregation announcement detection ─────────
+# Checks for Ohio towns NOT in our dataset that may have voted on or announced
+# a new aggregation program. "Every town is a suspect."
+# Today: logs search terms. Future: wire to news search API + auto-add verify zones.
+echo ""
+echo "[new_towns] New aggregation opportunity sweep (search terms)..."
+"$PYTHON" - <<PYEOF
+import json, os
+
+regions_dir = os.path.join("$PROJECT_DIR", "data", "regions")
+known_towns = set()
+for fname in os.listdir(regions_dir):
+    if not fname.endswith(".json"):
+        continue
+    try:
+        zones = json.load(open(os.path.join(regions_dir, fname)))
+        for z in zones:
+            known_towns.add(z.get("name","").lower())
+    except Exception:
+        pass
+
+print(f"[new_towns] {len(known_towns)} towns currently tracked.")
+print("[new_towns] Broad sweep search terms to run for new program detection:")
+broad_terms = [
+    "Ohio electric aggregation 2026 new",
+    "Ohio municipality aggregation vote 2026",
+    "Ohio township aggregation opt-out 2026",
+    "Ohio PUCO aggregation registration new",
+    "\"electric aggregation\" Ohio site:municipalcode.com OR site:morpc.org OR site:ohio.gov",
+    "\"natural gas aggregation\" Ohio 2026 new announcement",
+]
+for t in broad_terms:
+    print(f"  search: {t!r}")
+print("[new_towns] Any new towns found → add as verify zones in appropriate region file.")
+PYEOF
+
 # ── Step 1: Aggregation monitor ───────────────────────────────────────────────
 echo ""
 echo "[monitor] Running aggregation monitor..."

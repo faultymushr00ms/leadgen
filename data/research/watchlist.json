@@ -1,0 +1,2042 @@
+{
+  "generated": "2026-11-20",
+  "count": 107,
+  "high": 37,
+  "medium": 70,
+  "watch": [
+    {
+      "zone": "Akron",
+      "source_file": "akron_summit_medina",
+      "commodity": "electric",
+      "region": "Akron / Canton",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Akron Ohio electric aggregation",
+        "Akron Ohio electric supplier",
+        "Akron Ohio Edison electric",
+        "Akron Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Green",
+      "source_file": "akron_summit_medina",
+      "commodity": "electric",
+      "region": "Akron / Canton",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Green Ohio electric aggregation",
+        "Green Ohio electric supplier",
+        "Green Ohio Edison electric",
+        "Green Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Anderson Township",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Anderson Township Ohio electric aggregation",
+        "Anderson Township Ohio electric supplier",
+        "Anderson Township Duke Energy Ohio electric",
+        "Anderson Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Fairfield",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Fairfield Ohio electric aggregation",
+        "Fairfield Ohio electric supplier",
+        "Fairfield Duke Energy Ohio electric",
+        "Fairfield Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Loveland",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Loveland Ohio electric aggregation",
+        "Loveland Ohio electric supplier",
+        "Loveland Duke Energy Ohio electric",
+        "Loveland Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Springdale",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 81d ago (2026-08-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-08-31",
+      "search_terms": [
+        "Springdale Ohio electric aggregation",
+        "Springdale Ohio electric supplier",
+        "Springdale Duke Energy Ohio electric",
+        "Springdale Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Colerain Township",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Colerain Township Ohio electric aggregation",
+        "Colerain Township Ohio electric supplier",
+        "Colerain Township Duke Energy Ohio electric",
+        "Colerain Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Delhi Township",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Delhi Township Ohio electric aggregation",
+        "Delhi Township Ohio electric supplier",
+        "Delhi Township Duke Energy Ohio electric",
+        "Delhi Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Forest Park",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Forest Park Ohio electric aggregation",
+        "Forest Park Ohio electric supplier",
+        "Forest Park Duke Energy Ohio electric",
+        "Forest Park Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Silverton",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Silverton Ohio electric aggregation",
+        "Silverton Ohio electric supplier",
+        "Silverton Duke Energy Ohio electric",
+        "Silverton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Clearcreek Township",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Clearcreek Township Ohio electric aggregation",
+        "Clearcreek Township Ohio electric supplier",
+        "Clearcreek Township Duke Energy Ohio electric",
+        "Clearcreek Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Deer Park",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 112d ago (2026-07-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-07-31",
+      "search_terms": [
+        "Deer Park Ohio electric aggregation",
+        "Deer Park Ohio electric supplier",
+        "Deer Park Duke Energy Ohio electric",
+        "Deer Park Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Hamilton Township (Warren Co)",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 112d ago (2026-07-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-07-31",
+      "search_terms": [
+        "Hamilton Township (Warren Co) Ohio electric aggregation",
+        "Hamilton Township (Warren Co) Ohio electric supplier",
+        "Hamilton Township (Warren Co) Duke Energy Ohio electric",
+        "Hamilton Township (Warren Co) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Liberty Township (Butler Co)",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 112d ago (2026-07-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-07-31",
+      "search_terms": [
+        "Liberty Township (Butler Co) Ohio electric aggregation",
+        "Liberty Township (Butler Co) Ohio electric supplier",
+        "Liberty Township (Butler Co) Duke Energy Ohio electric",
+        "Liberty Township (Butler Co) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Mariemont",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 81d ago (2026-08-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-08-31",
+      "search_terms": [
+        "Mariemont Ohio electric aggregation",
+        "Mariemont Ohio electric supplier",
+        "Mariemont Duke Energy Ohio electric",
+        "Mariemont Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Waynesville",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Waynesville Ohio electric aggregation",
+        "Waynesville Ohio electric supplier",
+        "Waynesville Duke Energy Ohio electric",
+        "Waynesville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Oxford",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Oxford Ohio electric aggregation",
+        "Oxford Ohio electric supplier",
+        "Oxford Duke Energy Ohio electric",
+        "Oxford Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Harrison",
+      "source_file": "cincinnati_duke_suburbs",
+      "commodity": "electric",
+      "region": "Cincinnati / SW Ohio",
+      "utility": "Duke Energy Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 81d ago (2026-08-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-08-31",
+      "search_terms": [
+        "Harrison Ohio electric aggregation",
+        "Harrison Ohio electric supplier",
+        "Harrison Duke Energy Ohio electric",
+        "Harrison Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Cleveland",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 112d ago (2026-07-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-07-31",
+      "search_terms": [
+        "Cleveland Ohio electric aggregation",
+        "Cleveland Ohio electric supplier",
+        "Cleveland The Illuminating Company electric",
+        "Cleveland Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Dayton",
+      "source_file": "dayton_sw_ohio",
+      "commodity": "electric",
+      "region": "Dayton / Miami Valley",
+      "utility": "AES Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Dayton Ohio electric aggregation",
+        "Dayton Ohio electric supplier",
+        "Dayton AES Ohio electric",
+        "Dayton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Riverside",
+      "source_file": "dayton_sw_ohio",
+      "commodity": "electric",
+      "region": "Dayton / Miami Valley",
+      "utility": "AES Ohio",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Riverside Ohio electric aggregation",
+        "Riverside Ohio electric supplier",
+        "Riverside AES Ohio electric",
+        "Riverside Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Canfield",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Canfield Ohio electric aggregation",
+        "Canfield Ohio electric supplier",
+        "Canfield Ohio Edison electric",
+        "Canfield Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Jackson Township (Stark)",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 111d ago (2026-08-01), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-08-01",
+      "search_terms": [
+        "Jackson Township (Stark) Ohio electric aggregation",
+        "Jackson Township (Stark) Ohio electric supplier",
+        "Jackson Township (Stark) Ohio Edison electric",
+        "Jackson Township (Stark) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Poland Township",
+      "source_file": "remaining_ohio_markets",
+      "commodity": "electric",
+      "region": "Other Ohio Markets",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Poland Township Ohio electric aggregation",
+        "Poland Township Ohio electric supplier",
+        "Poland Township Ohio Edison electric",
+        "Poland Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Toledo",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Toledo Ohio electric aggregation",
+        "Toledo Ohio electric supplier",
+        "Toledo Toledo Edison electric",
+        "Toledo Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Perrysburg",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Perrysburg Ohio electric aggregation",
+        "Perrysburg Ohio electric supplier",
+        "Perrysburg Toledo Edison electric",
+        "Perrysburg Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Maumee",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Maumee Ohio electric aggregation",
+        "Maumee Ohio electric supplier",
+        "Maumee Toledo Edison electric",
+        "Maumee Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Sylvania",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Sylvania Ohio electric aggregation",
+        "Sylvania Ohio electric supplier",
+        "Sylvania Toledo Edison electric",
+        "Sylvania Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Oregon",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Oregon Ohio electric aggregation",
+        "Oregon Ohio electric supplier",
+        "Oregon Toledo Edison electric",
+        "Oregon Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Rossford",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Rossford Ohio electric aggregation",
+        "Rossford Ohio electric supplier",
+        "Rossford Toledo Edison electric",
+        "Rossford Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Northwood",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Northwood Ohio electric aggregation",
+        "Northwood Ohio electric supplier",
+        "Northwood Toledo Edison electric",
+        "Northwood Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Waterville",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Waterville Ohio electric aggregation",
+        "Waterville Ohio electric supplier",
+        "Waterville Toledo Edison electric",
+        "Waterville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Whitehouse",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Whitehouse Ohio electric aggregation",
+        "Whitehouse Ohio electric supplier",
+        "Whitehouse Toledo Edison electric",
+        "Whitehouse Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Holland",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Holland Ohio electric aggregation",
+        "Holland Ohio electric supplier",
+        "Holland Toledo Edison electric",
+        "Holland Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Jerusalem Township",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Jerusalem Township Ohio electric aggregation",
+        "Jerusalem Township Ohio electric supplier",
+        "Jerusalem Township Toledo Edison electric",
+        "Jerusalem Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Washington Township (Wood)",
+      "source_file": "toledo_lucas_noac",
+      "commodity": "electric",
+      "region": "Greater Toledo",
+      "utility": "Toledo Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 173d ago (2026-05-31), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-05-31",
+      "search_terms": [
+        "Washington Township (Wood) Ohio electric aggregation",
+        "Washington Township (Wood) Ohio electric supplier",
+        "Washington Township (Wood) Toledo Edison electric",
+        "Washington Township (Wood) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Youngstown",
+      "source_file": "youngstown_warren",
+      "commodity": "electric",
+      "region": "Youngstown / Warren",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 143d ago (2026-06-30), no successor confirmed \u2014 daily watch target",
+      "priority": "HIGH",
+      "term_end": "2026-06-30",
+      "search_terms": [
+        "Youngstown Ohio electric aggregation",
+        "Youngstown Ohio electric supplier",
+        "Youngstown Ohio Edison electric",
+        "Youngstown Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Kent / Portage County",
+      "source_file": "akron_summit_medina",
+      "commodity": "electric",
+      "region": "Akron / Canton",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Kent / Portage County Ohio electric aggregation",
+        "Kent / Portage County Ohio electric supplier",
+        "Kent / Portage County Ohio Edison electric",
+        "Kent / Portage County Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Parma",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Parma Ohio electric aggregation",
+        "Parma Ohio electric supplier",
+        "Parma The Illuminating Company electric",
+        "Parma Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Strongsville",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Strongsville Ohio electric aggregation",
+        "Strongsville Ohio electric supplier",
+        "Strongsville The Illuminating Company electric",
+        "Strongsville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Euclid",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Euclid Ohio electric aggregation",
+        "Euclid Ohio electric supplier",
+        "Euclid The Illuminating Company electric",
+        "Euclid Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Solon",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Solon Ohio electric aggregation",
+        "Solon Ohio electric supplier",
+        "Solon The Illuminating Company electric",
+        "Solon Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "North Royalton",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "North Royalton Ohio electric aggregation",
+        "North Royalton Ohio electric supplier",
+        "North Royalton The Illuminating Company electric",
+        "North Royalton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Berea",
+      "source_file": "cleveland_cuyahoga",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Berea Ohio electric aggregation",
+        "Berea Ohio electric supplier",
+        "Berea The Illuminating Company electric",
+        "Berea Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Mentor",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Mentor Ohio electric aggregation",
+        "Mentor Ohio electric supplier",
+        "Mentor Ohio Edison electric",
+        "Mentor Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Willoughby",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Willoughby Ohio electric aggregation",
+        "Willoughby Ohio electric supplier",
+        "Willoughby The Illuminating Company electric",
+        "Willoughby Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Eastlake",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Eastlake Ohio electric aggregation",
+        "Eastlake Ohio electric supplier",
+        "Eastlake Ohio Edison electric",
+        "Eastlake Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Wickliffe",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Wickliffe Ohio electric aggregation",
+        "Wickliffe Ohio electric supplier",
+        "Wickliffe The Illuminating Company electric",
+        "Wickliffe Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Lake County (NOPEC Group)",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Lake County (NOPEC Group) Ohio electric aggregation",
+        "Lake County (NOPEC Group) Ohio electric supplier",
+        "Lake County (NOPEC Group) Ohio Edison electric",
+        "Lake County (NOPEC Group) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Chardon / Geauga County",
+      "source_file": "lake_geauga_nopec",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Chardon / Geauga County Ohio electric aggregation",
+        "Chardon / Geauga County Ohio electric supplier",
+        "Chardon / Geauga County Ohio Edison electric",
+        "Chardon / Geauga County Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Girard",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "DROPPED_NO_SUCCESSOR",
+      "detail": "Aggregation ended 324d ago (2025-12-31), no successor confirmed \u2014 daily watch target",
+      "priority": "MEDIUM",
+      "term_end": "2025-12-31",
+      "search_terms": [
+        "Girard Ohio electric aggregation",
+        "Girard Ohio electric supplier",
+        "Girard Ohio Edison electric",
+        "Girard Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Ashtabula",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "Ashtabula County",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Ashtabula Ohio electric aggregation",
+        "Ashtabula Ohio electric supplier",
+        "Ashtabula Ohio Edison electric",
+        "Ashtabula Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Geneva",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "Ashtabula County",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Geneva Ohio electric aggregation",
+        "Geneva Ohio electric supplier",
+        "Geneva Ohio Edison electric",
+        "Geneva Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Conneaut",
+      "source_file": "ne_ohio_firstenergy",
+      "commodity": "electric",
+      "region": "Ashtabula County",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Conneaut Ohio electric aggregation",
+        "Conneaut Ohio electric supplier",
+        "Conneaut Ohio Edison electric",
+        "Conneaut Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Westlake",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Westlake Ohio electric aggregation",
+        "Westlake Ohio electric supplier",
+        "Westlake Ohio Edison electric",
+        "Westlake Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "North Olmsted",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "North Olmsted Ohio electric aggregation",
+        "North Olmsted Ohio electric supplier",
+        "North Olmsted Ohio Edison electric",
+        "North Olmsted Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Middleburg Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Middleburg Heights Ohio electric aggregation",
+        "Middleburg Heights Ohio electric supplier",
+        "Middleburg Heights Ohio Edison electric",
+        "Middleburg Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Brook Park",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Brook Park Ohio electric aggregation",
+        "Brook Park Ohio electric supplier",
+        "Brook Park Ohio Edison electric",
+        "Brook Park Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Broadview Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Broadview Heights Ohio electric aggregation",
+        "Broadview Heights Ohio electric supplier",
+        "Broadview Heights Ohio Edison electric",
+        "Broadview Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Seven Hills",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Seven Hills Ohio electric aggregation",
+        "Seven Hills Ohio electric supplier",
+        "Seven Hills Ohio Edison electric",
+        "Seven Hills Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Garfield Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Garfield Heights Ohio electric aggregation",
+        "Garfield Heights Ohio electric supplier",
+        "Garfield Heights The Illuminating Company electric",
+        "Garfield Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Maple Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Maple Heights Ohio electric aggregation",
+        "Maple Heights Ohio electric supplier",
+        "Maple Heights The Illuminating Company electric",
+        "Maple Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Mayfield Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Mayfield Heights Ohio electric aggregation",
+        "Mayfield Heights Ohio electric supplier",
+        "Mayfield Heights The Illuminating Company electric",
+        "Mayfield Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Highland Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Highland Heights Ohio electric aggregation",
+        "Highland Heights Ohio electric supplier",
+        "Highland Heights The Illuminating Company electric",
+        "Highland Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Richmond Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Richmond Heights Ohio electric aggregation",
+        "Richmond Heights Ohio electric supplier",
+        "Richmond Heights The Illuminating Company electric",
+        "Richmond Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Lyndhurst",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Lyndhurst Ohio electric aggregation",
+        "Lyndhurst Ohio electric supplier",
+        "Lyndhurst The Illuminating Company electric",
+        "Lyndhurst Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "South Euclid",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "South Euclid Ohio electric aggregation",
+        "South Euclid Ohio electric supplier",
+        "South Euclid The Illuminating Company electric",
+        "South Euclid Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "University Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "University Heights Ohio electric aggregation",
+        "University Heights Ohio electric supplier",
+        "University Heights The Illuminating Company electric",
+        "University Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Cleveland Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Cleveland Heights Ohio electric aggregation",
+        "Cleveland Heights Ohio electric supplier",
+        "Cleveland Heights The Illuminating Company electric",
+        "Cleveland Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Shaker Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Shaker Heights Ohio electric aggregation",
+        "Shaker Heights Ohio electric supplier",
+        "Shaker Heights The Illuminating Company electric",
+        "Shaker Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Rocky River",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Rocky River Ohio electric aggregation",
+        "Rocky River Ohio electric supplier",
+        "Rocky River Ohio Edison electric",
+        "Rocky River Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Bay Village",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Bay Village Ohio electric aggregation",
+        "Bay Village Ohio electric supplier",
+        "Bay Village Ohio Edison electric",
+        "Bay Village Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Fairview Park",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Fairview Park Ohio electric aggregation",
+        "Fairview Park Ohio electric supplier",
+        "Fairview Park Ohio Edison electric",
+        "Fairview Park Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Olmsted Falls",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Olmsted Falls Ohio electric aggregation",
+        "Olmsted Falls Ohio electric supplier",
+        "Olmsted Falls Ohio Edison electric",
+        "Olmsted Falls Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Bedford Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Bedford Heights Ohio electric aggregation",
+        "Bedford Heights Ohio electric supplier",
+        "Bedford Heights The Illuminating Company electric",
+        "Bedford Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Warrensville Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Warrensville Heights Ohio electric aggregation",
+        "Warrensville Heights Ohio electric supplier",
+        "Warrensville Heights The Illuminating Company electric",
+        "Warrensville Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Twinsburg",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Twinsburg Ohio electric aggregation",
+        "Twinsburg Ohio electric supplier",
+        "Twinsburg Ohio Edison electric",
+        "Twinsburg Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Parma Heights",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Parma Heights Ohio electric aggregation",
+        "Parma Heights Ohio electric supplier",
+        "Parma Heights The Illuminating Company electric",
+        "Parma Heights Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Beachwood",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Beachwood Ohio electric aggregation",
+        "Beachwood Ohio electric supplier",
+        "Beachwood The Illuminating Company electric",
+        "Beachwood Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Independence",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Independence Ohio electric aggregation",
+        "Independence Ohio electric supplier",
+        "Independence Ohio Edison electric",
+        "Independence Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Bedford",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Bedford Ohio electric aggregation",
+        "Bedford Ohio electric supplier",
+        "Bedford Ohio Edison electric",
+        "Bedford Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Brecksville",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Brecksville Ohio electric aggregation",
+        "Brecksville Ohio electric supplier",
+        "Brecksville Ohio Edison electric",
+        "Brecksville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Pepper Pike",
+      "source_file": "nopec_cuyahoga_suburbs",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Pepper Pike Ohio electric aggregation",
+        "Pepper Pike Ohio electric supplier",
+        "Pepper Pike The Illuminating Company electric",
+        "Pepper Pike Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Avon",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Avon Ohio electric aggregation",
+        "Avon Ohio electric supplier",
+        "Avon Ohio Edison electric",
+        "Avon Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Avon Lake",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Avon Lake Ohio electric aggregation",
+        "Avon Lake Ohio electric supplier",
+        "Avon Lake Ohio Edison electric",
+        "Avon Lake Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "North Ridgeville",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "North Ridgeville Ohio electric aggregation",
+        "North Ridgeville Ohio electric supplier",
+        "North Ridgeville The Illuminating Company electric",
+        "North Ridgeville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Amherst",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Amherst Ohio electric aggregation",
+        "Amherst Ohio electric supplier",
+        "Amherst Ohio Edison electric",
+        "Amherst Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Sheffield Lake",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Sheffield Lake Ohio electric aggregation",
+        "Sheffield Lake Ohio electric supplier",
+        "Sheffield Lake Ohio Edison electric",
+        "Sheffield Lake Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Sheffield Village",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Sheffield Village Ohio electric aggregation",
+        "Sheffield Village Ohio electric supplier",
+        "Sheffield Village Ohio Edison electric",
+        "Sheffield Village Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Grafton",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Grafton Ohio electric aggregation",
+        "Grafton Ohio electric supplier",
+        "Grafton Ohio Edison electric",
+        "Grafton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Stow",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Stow Ohio electric aggregation",
+        "Stow Ohio electric supplier",
+        "Stow Ohio Edison electric",
+        "Stow Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Tallmadge",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Tallmadge Ohio electric aggregation",
+        "Tallmadge Ohio electric supplier",
+        "Tallmadge Ohio Edison electric",
+        "Tallmadge Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Barberton",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Barberton Ohio electric aggregation",
+        "Barberton Ohio electric supplier",
+        "Barberton Ohio Edison electric",
+        "Barberton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Norton",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Norton Ohio electric aggregation",
+        "Norton Ohio electric supplier",
+        "Norton Ohio Edison electric",
+        "Norton Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Copley Township",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Copley Township Ohio electric aggregation",
+        "Copley Township Ohio electric supplier",
+        "Copley Township Ohio Edison electric",
+        "Copley Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Aurora",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Aurora Ohio electric aggregation",
+        "Aurora Ohio electric supplier",
+        "Aurora Ohio Edison electric",
+        "Aurora Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Streetsboro",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Streetsboro Ohio electric aggregation",
+        "Streetsboro Ohio electric supplier",
+        "Streetsboro Ohio Edison electric",
+        "Streetsboro Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Ravenna",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Ravenna Ohio electric aggregation",
+        "Ravenna Ohio electric supplier",
+        "Ravenna Ohio Edison electric",
+        "Ravenna Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Painesville",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Painesville Ohio electric aggregation",
+        "Painesville Ohio electric supplier",
+        "Painesville Ohio Edison electric",
+        "Painesville Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Willoughby Hills",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "The Illuminating Company",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Willoughby Hills Ohio electric aggregation",
+        "Willoughby Hills Ohio electric supplier",
+        "Willoughby Hills The Illuminating Company electric",
+        "Willoughby Hills Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Mentor-on-the-Lake",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Mentor-on-the-Lake Ohio electric aggregation",
+        "Mentor-on-the-Lake Ohio electric supplier",
+        "Mentor-on-the-Lake Ohio Edison electric",
+        "Mentor-on-the-Lake Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Madison Township",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Madison Township Ohio electric aggregation",
+        "Madison Township Ohio electric supplier",
+        "Madison Township Ohio Edison electric",
+        "Madison Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Bainbridge Township",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Bainbridge Township Ohio electric aggregation",
+        "Bainbridge Township Ohio electric supplier",
+        "Bainbridge Township Ohio Edison electric",
+        "Bainbridge Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Newbury Township",
+      "source_file": "nopec_lorain_summit_portage",
+      "commodity": "electric",
+      "region": "NE Ohio / Cleveland / NOPEC",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Newbury Township Ohio electric aggregation",
+        "Newbury Township Ohio electric supplier",
+        "Newbury Township Ohio Edison electric",
+        "Newbury Township Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Brunswick",
+      "source_file": "remaining_ohio_markets",
+      "commodity": "electric",
+      "region": "Other Ohio Markets",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Brunswick Ohio electric aggregation",
+        "Brunswick Ohio electric supplier",
+        "Brunswick Ohio Edison electric",
+        "Brunswick Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Elyria",
+      "source_file": "remaining_ohio_markets",
+      "commodity": "electric",
+      "region": "Other Ohio Markets",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Elyria Ohio electric aggregation",
+        "Elyria Ohio electric supplier",
+        "Elyria Ohio Edison electric",
+        "Elyria Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    },
+    {
+      "zone": "Lorain (City)",
+      "source_file": "remaining_ohio_markets",
+      "commodity": "electric",
+      "region": "Other Ohio Markets",
+      "utility": "Ohio Edison",
+      "reason": "APPROACHING_END",
+      "detail": "termEnd=2026-12-31 in 41d \u2014 watch for renewal/new supplier",
+      "priority": "MEDIUM",
+      "term_end": "2026-12-31",
+      "search_terms": [
+        "Lorain (City) Ohio electric aggregation",
+        "Lorain (City) Ohio electric supplier",
+        "Lorain (City) Ohio Edison electric",
+        "Lorain (City) Ohio electric aggregation program"
+      ],
+      "added": "2026-11-20",
+      "last_checked": null
+    }
+  ],
+  "_note": "Auto-generated by daily_audit.py. HIGH = check daily for news. MEDIUM = check weekly. search_terms used by nightly_scan.sh for targeted news search. last_checked updated by nightly_scan.sh after each search."
+}

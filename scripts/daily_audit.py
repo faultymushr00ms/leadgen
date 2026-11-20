@@ -27,8 +27,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
 REGIONS_DIR = os.path.join(ROOT, "data", "regions")
-GAS_DIR = os.path.join(ROOT, "data", "gas")
+GAS_DIR = os.path.join(ROOT, "data", "gas")          # legacy path, skipped if absent
 REPORTS_DIR = os.path.join(ROOT, "data", "reports")
+RESEARCH_DIR = os.path.join(ROOT, "data", "research")
+WATCHLIST_PATH = os.path.join(RESEARCH_DIR, "watchlist.json")
 CLAUDE_MD = os.path.join(ROOT, "CLAUDE.md")
 
 TODAY = date.today()
@@ -60,6 +62,11 @@ REGION_MAP: dict[str, str] = {
     "ne_ohio_gas":                 "NE Ohio / Cleveland / NOPEC",
     "cincinnati_gas":              "Cincinnati / SW Ohio",
     "toledo_gas":                  "Greater Toledo",
+    # Gas files in data/regions/ — all roll up to "Gas" section in audit report
+    "columbia_gas_ohio_gas":       "Gas",
+    "dominion_ohio_gas":           "Gas",
+    "centerpoint_ohio_gas":        "Gas",
+    "duke_ohio_gas":               "Gas",
 }
 
 REGION_ORDER = [
@@ -100,10 +107,10 @@ def _assign_region(zone: dict) -> str:
     region_field = (zone.get("region") or "").lower()
     if "ashtabula" in region_field:
         return "Ashtabula County"
-    commodity = zone.get("commodity", "electric")
     src = zone.get("_source_file", "")
-    if commodity == "gas" and src not in REGION_MAP:
-        return "Gas"
+    # Gas zones: always route to the "Gas" audit section
+    if zone.get("commodity") == "gas":
+        return REGION_MAP.get(src, "Gas")
     return REGION_MAP.get(src, "Other Ohio Markets")
 
 
@@ -252,6 +259,34 @@ def _check_zone(zone: dict) -> list[dict]:
             if rc is not None and abs(v - float(rc)) > 1.5:
                 flag("COPY_RATE_MISMATCH", "LOW",
                      f"{copy_field} mentions +{v}% but rateChange={rc}%", str(v))
+
+    # ── 13 (was 13). DOC checks are separate — no zone-level doc check here ───
+
+    # ── 14. APPROACHING_END ──────────────────────────────────────────────────
+    # Warn when a live program's termEnd is coming up — watch for renewal/successor news.
+    if te and status not in {"rollover", "rollover_dissolved", "stable", "verify"}:
+        try:
+            days_remaining = (date.fromisoformat(te) - TODAY).days
+            if 0 < days_remaining <= 90:
+                sev = "HIGH" if days_remaining <= 30 else "MEDIUM" if days_remaining <= 60 else "LOW"
+                flag("APPROACHING_END", sev,
+                     f"termEnd={te} in {days_remaining}d — watch for renewal/new supplier", te)
+        except ValueError:
+            pass
+
+    # ── 15. DROPPED_NO_SUCCESSOR ─────────────────────────────────────────────
+    # Aggregation ended and rolled to month-to-month / bare utility default.
+    # No confirmed successor supplier → highest-priority active sales target.
+    if status in {"rollover", "rollover_dissolved"} and agg == "confirmed_active_aggregation" and te:
+        try:
+            days_since = (TODAY - date.fromisoformat(te)).days
+            if 0 < days_since <= 365:
+                sev = "HIGH" if days_since <= 180 else "MEDIUM"
+                flag("DROPPED_NO_SUCCESSOR", sev,
+                     f"Aggregation ended {days_since}d ago ({te}), no successor confirmed — daily watch target",
+                     te)
+        except ValueError:
+            pass
 
     return findings
 
@@ -457,6 +492,110 @@ def _render_md(report: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+# ── Watchlist writer ───────────────────────────────────────────────────────────
+
+WATCH_CHECKS = frozenset({"APPROACHING_END", "DROPPED_NO_SUCCESSOR"})
+
+
+def _write_watchlist(report: dict, zones: list[dict]) -> None:
+    """
+    Writes data/research/watchlist.json — the nightly scan reads this to know
+    which zones need active news monitoring each day.
+
+    Includes:
+      - APPROACHING_END: program expiring soon, watch for renewal/successor
+      - DROPPED_NO_SUCCESSOR: program ended, no replacement confirmed
+
+    Each entry includes auto-generated search_terms for the nightly scan to use.
+    """
+    zone_lookup = {
+        (z.get("_source_file", ""), z.get("name", "")): z
+        for z in zones
+    }
+
+    # Load previous watchlist to preserve last_checked timestamps
+    prev_checked: dict[str, Optional[str]] = {}
+    if os.path.exists(WATCHLIST_PATH):
+        try:
+            with open(WATCHLIST_PATH) as wf:
+                prev = json.load(wf)
+            for item in prev.get("watch", []):
+                k = f"{item.get('source_file','')}::{item.get('zone','')}::{item.get('reason','')}"
+                prev_checked[k] = item.get("last_checked")
+        except Exception:
+            pass
+
+    seen: set[str] = set()
+    watch_items: list[dict] = []
+
+    priority_order = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
+    findings_sorted = sorted(report["findings"], key=lambda f: priority_order.get(f.get("severity", "LOW"), 9))
+
+    for f in findings_sorted:
+        if f.get("check") not in WATCH_CHECKS:
+            continue
+        if f.get("severity") not in ("HIGH", "MEDIUM"):
+            continue
+
+        key = f"{f['source_file']}::{f['zone']}::{f['check']}"
+        if key in seen:
+            continue
+        seen.add(key)
+
+        zone = zone_lookup.get((f["source_file"], f["zone"]), {})
+        utility = zone.get("utility", "")
+        commodity = f.get("commodity", "electric")
+        town = f["zone"]
+
+        search_terms = [
+            f"{town} Ohio {commodity} aggregation",
+            f"{town} Ohio {commodity} supplier",
+        ]
+        if utility and utility not in ("Municipal (exempt from retail choice)",):
+            search_terms.append(f"{town} {utility} {commodity}")
+        if commodity == "electric":
+            search_terms.append(f"{town} Ohio electric aggregation program")
+
+        item = {
+            "zone": town,
+            "source_file": f["source_file"],
+            "commodity": commodity,
+            "region": f.get("region", ""),
+            "utility": utility,
+            "reason": f["check"],
+            "detail": f["detail"],
+            "priority": f["severity"],
+            "term_end": zone.get("termEnd"),
+            "search_terms": search_terms,
+            "added": TODAY_STR,
+            "last_checked": prev_checked.get(key),
+        }
+        watch_items.append(item)
+
+    high_count = sum(1 for x in watch_items if x["priority"] == "HIGH")
+    med_count = sum(1 for x in watch_items if x["priority"] == "MEDIUM")
+
+    os.makedirs(RESEARCH_DIR, exist_ok=True)
+    output = {
+        "generated": TODAY_STR,
+        "count": len(watch_items),
+        "high": high_count,
+        "medium": med_count,
+        "watch": watch_items,
+        "_note": (
+            "Auto-generated by daily_audit.py. "
+            "HIGH = check daily for news. MEDIUM = check weekly. "
+            "search_terms used by nightly_scan.sh for targeted news search. "
+            "last_checked updated by nightly_scan.sh after each search."
+        ),
+    }
+
+    with open(WATCHLIST_PATH, "w") as wf:
+        json.dump(output, wf, indent=2)
+
+    print(f"[audit] Watchlist: {len(watch_items)} zones (HIGH={high_count} MED={med_count}) → {WATCHLIST_PATH}")
+
+
 # ── Output writers ─────────────────────────────────────────────────────────────
 
 def _write_outputs(report: dict) -> tuple[str, str]:
@@ -496,6 +635,7 @@ def run_audit(verbose: bool = False) -> dict:
     prev_findings = _load_prev_findings()
     report = _generate_report(all_findings, prev_findings, len(zones), time.time() - t0)
     md_path, json_path = _write_outputs(report)
+    _write_watchlist(report, zones)
 
     t = report["totals"]
     print(

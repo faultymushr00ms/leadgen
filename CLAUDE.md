@@ -86,7 +86,7 @@ Every zone JSON record:
   "utility": "Utility Name (electric IOU or gas utility)",
   "utilityParent": "FirstEnergy | AEP | AES | Duke Energy | NiSource | Equitable/BHE | CenterPoint Energy | Buckeye Power | null",
   "utilityConfidence": "high | medium | low",
-  "aggregationStatus": "confirmed_active_aggregation | municipal_utility | electric_cooperative | no_aggregation_verified | address_dependent",
+  "aggregationStatus": "confirmed_active_aggregation | municipal_utility | partial_municipal | electric_cooperative | no_aggregation_verified | address_dependent",
   "currentRate": 10.01,
   "previousRate": 9.08,
   "rateChange": 10.2,
@@ -142,6 +142,7 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 - **SOPEC**: ~14 central Ohio/AEP communities. Green rate: 9.756¢ → 11.162¢ June 2026 (+14.4%). Extreme pain story.
 - **NOAC**: 13 Toledo-area communities (Toledo Edison). Rate: 9.75¢ through ~June 2027. Stable.
 - **Dayton/AES Ohio**: 8.71¢ → 10.691¢ June 2026 (+22.7%). EXTREME pain story, highest urgency.
+- **`partial_municipal`**: Municipality has its own electric utility but it does NOT cover all addresses — some accounts are on the IOU and CAN choose competitive supply. Every account needs a call to determine eligibility. Examples: Shiloh (Municipal + Ohio Edison mixed), Cleveland (CPP + Illuminating Co mixed). `futureUse: "address_check"`. Never blacklist; always verify.
 - **Electric co-ops**: All 25 Ohio co-ops are served by Buckeye Power Inc. All are exempt from retail choice. Use `futureUse: "municipal_blacklist"`.
 - **Sales minimum**: 5 RCE (residential customer equivalents) per account. Quota: 100 RCE/month baseline, 600 RCE per 4-month period for bonus.
 - **LMRE critical note**: Lorain-Medina Rural Electric (LMRE) co-op territory does NOT participate in NOPEC, even though LMRE overlaps with NOPEC's geographic footprint.

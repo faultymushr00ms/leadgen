@@ -407,3 +407,28 @@
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "city electric page opened this date still names an older supplier and an ended term; it does not state the price on the supplier community page"}
+{"zone": "Beavercreek", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Beavercreek", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced prior was the Dayton SOPEC price, not this zone or the AES standard offer"}
+{"zone": "Beavercreek", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced change computed from the removed rates"}
+{"zone": "Beavercreek", "field": "aggregationStatus", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation classification contradicted by the city or supplier aggregation page"}
+{"zone": "Beavercreek", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Beavercreek", "field": "hook", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Beavercreek", "field": "notes", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation statement contradicted by the aggregation page"}
+{"zone": "Huber Heights", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Huber Heights", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced prior was the Dayton SOPEC price, not this zone or the AES standard offer"}
+{"zone": "Huber Heights", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced change computed from the removed rates"}
+{"zone": "Huber Heights", "field": "aggregationStatus", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation classification contradicted by the city or supplier aggregation page"}
+{"zone": "Huber Heights", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Huber Heights", "field": "hook", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Huber Heights", "field": "notes", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation statement contradicted by the aggregation page"}
+{"zone": "Urbana", "field": "currentRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Urbana", "field": "previousRate", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced prior was the Dayton SOPEC price, not this zone or the AES standard offer"}
+{"zone": "Urbana", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-23", "reason": "unsourced change computed from the removed rates"}
+{"zone": "Urbana", "field": "aggregationStatus", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation classification contradicted by the city or supplier aggregation page"}
+{"zone": "Urbana", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Urbana", "field": "hook", "note": "removed incorrect value", "date": "2026-11-23", "reason": "AES standard-offer figure contradicted by the AES Ohio standard offer sources and by the city aggregation page"}
+{"zone": "Urbana", "field": "notes", "note": "removed incorrect value", "date": "2026-11-23", "reason": "no-aggregation statement contradicted by the aggregation page"}
+{"zone": "Dayton", "field": "takeaway", "note": "removed incorrect value", "date": "2026-11-23", "reason": "lapse to standard supply contradicted by the city and SOPEC pages for the June 2026 term"}
+{"zone": "Dayton", "field": "hook", "note": "removed incorrect value", "date": "2026-11-23", "reason": "lapse to standard supply contradicted by the city and SOPEC pages for the June 2026 term"}
+{"zone": "Dayton", "field": "notes", "note": "removed incorrect value", "date": "2026-11-23", "reason": "repricing described as standard supply contradicted by the city aggregation page"}
+{"zone": "Dayton", "field": "termEnd", "note": "removed incorrect value", "date": "2026-11-23", "reason": "term end contradicted by the city and SOPEC pages for the June 2026 term"}

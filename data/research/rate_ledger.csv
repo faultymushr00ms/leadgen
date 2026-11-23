@@ -42,7 +42,6 @@ date,date_type,zone,region,supplier,rate_c_kWh,previous_rate_field,term_start,te
 2026-05-29,repo commit (FORGE recorded),Beach City,ohio_municipal_utilities,Municipal (exempt from retail choice),,,,,stable,"git 423a287: Add 3 new region JSON files, municipal utilities blacklist, API CRUD routes, and",,FORGE (unsourced)
 2026-10-14,research accessed (current term),Beachwood,nopec_cuyahoga_suburbs,NOPEC / NextEra Energy Services,10.399,,2026-09,2027-06,variable_rate,v2 research (likely),https://www.nopec.org/communities/community-map,aggregation program
 2026-05-29,repo commit (FORGE recorded),Beavercreek,dayton_aes_suburbs,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
-2026-06-01,repo commit (FORGE recorded),Beavercreek,dayton_aes_suburbs,,10.691,8.71,,,pain_coming,git cddc3cb: Resolve 62 verify zones — rate data and status upgrades,,FORGE (unsourced)
 2026-10-14,research accessed (current term),Beavercreek,dayton_aes_suburbs,Constellation,8.699,,2025-08,2026-12,expiring_within_6_months,v2 research (confirmed),https://www.beavercreekohio.gov/608/Aggregation-Programs,aggregation program
 2026-10-14,research accessed (current term),Bedford,nopec_cuyahoga_suburbs,NOPEC / NextEra Energy Services,10.399,,2026-09,2027-06,variable_rate,v2 research (likely),https://www.nopec.org/communities/community-map,aggregation program
 2026-05-29,repo commit (FORGE recorded),Bedford Heights,nopec_cuyahoga_suburbs,NOPEC,8.999,7.0,2026-01-01,2026-12-31,pain_coming,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
@@ -232,7 +231,6 @@ date,date_type,zone,region,supplier,rate_c_kWh,previous_rate_field,term_start,te
 2026-10-14,research accessed (current term),Howland Township,youngstown_warren,Dynegy,10.14,,2026-05,2027-12,current,v2 research (escalate-call),https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Trumbull-County-OE,aggregation program
 2026-05-29,repo commit (FORGE recorded),Hubbard,remaining_ohio_markets,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
 2026-05-29,repo commit (FORGE recorded),Huber Heights,dayton_aes_suburbs,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
-2026-06-01,repo commit (FORGE recorded),Huber Heights,dayton_aes_suburbs,,10.691,8.71,,,pain_coming,git cddc3cb: Resolve 62 verify zones — rate data and status upgrades,,FORGE (unsourced)
 2026-10-14,research accessed (current term),Huber Heights,dayton_aes_suburbs,AEP Energy,11.19,,,2027-06,current,v2 research (escalate-call),https://www.sopec-oh.gov/rates/city-of-huber-heights/,aggregation program
 2026-10-14,research accessed (current term),Independence,nopec_cuyahoga_suburbs,NOPEC / NextEra Energy Services,10.399,,2026-09,2027-06,variable_rate,v2 research (likely),https://www.nopec.org/communities/community-map,aggregation program
 2026-05-29,repo commit (FORGE recorded),Ironton,eastern_ohio_aep,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
@@ -538,7 +536,6 @@ date,date_type,zone,region,supplier,rate_c_kWh,previous_rate_field,term_start,te
 2026-05-29,repo commit (FORGE recorded),University Heights,nopec_cuyahoga_suburbs,NOPEC,8.999,7.0,2026-01-01,2026-12-31,pain_coming,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
 2026-10-14,research accessed (current term),University Heights,nopec_cuyahoga_suburbs,NOPEC / NextEra Energy Services,10.399,,2026-09,2027-06,variable_rate,v2 research (likely),https://www.nopec.org/communities/community-map,aggregation program
 2026-05-29,repo commit (FORGE recorded),Urbana,dayton_aes_suburbs,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
-2026-06-01,repo commit (FORGE recorded),Urbana,dayton_aes_suburbs,,10.691,8.71,,,pain_coming,git cddc3cb: Resolve 62 verify zones — rate data and status upgrades,,FORGE (unsourced)
 2026-10-14,research accessed (current term),Urbana,dayton_aes_suburbs,Dynegy,9.08,,2025-12,2028-05,current,v2 research (escalate-call),https://www.dynegy.com/municipal-aggregation/communities-we-serve/ohio/Urbana,aggregation program
 2026-05-29,repo commit (FORGE recorded),Vandalia,dayton_aes_suburbs,,,,,,verify,git e0f612b: Expand Ohio zone coverage to 251 zones across 18 region files,,FORGE (unsourced)
 2026-06-01,repo commit (FORGE recorded),Vandalia,dayton_aes_suburbs,,10.691,8.71,,,pain_coming,git cddc3cb: Resolve 62 verify zones — rate data and status upgrades,,FORGE (unsourced)

@@ -73,14 +73,14 @@
     "supplier": "Dynegy Energy Services",
     "termStart": "2026-05-01",
     "termEnd": "2026-11-01",
-    "status": "stable",
-    "confidence": "high",
-    "takeaway": "Slight decrease from 10.73¢ to 10.44¢, but still high Duke-area pricing.",
-    "hook": "Even with a slight decrease, the city program is still in the high 10¢ range.",
+    "status": "verify",
+    "confidence": "medium",
+    "takeaway": "Cincinnati's Dynegy price of 10.44¢/kWh covered May through November 2026. Dynegy lists a new 100% renewable term from November 2026 to June 2028 without a posted price, so the current price is unknown.",
+    "hook": "Cincinnati's 10.44¢ city price ended with the November 2026 meter read. The new Dynegy term doesn't show a posted price.",
     "futureUse": "aggregation",
-    "notes": "Short fixed window before later variable structure.",
+    "notes": "Duke Energy Ohio. City page: 10.44¢ in effect May to November 2026. Dynegy page: new term November 2026 to June 2028, 100% renewable, price not posted (search summary, reliability 0.48). The city page lists a contract end of May 2029, which conflicts with Dynegy's June 2028. Duke June 2026 price to compare 10.70¢.",
     "utilityParent": "Duke Energy",
     "utilityConfidence": "high",
-    "lastVerified": "2026-06-01"
+    "lastVerified": "2026-11-23"
   }
 ]

@@ -126,7 +126,8 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 - **NOPEC**: Serves 235+ NE Ohio communities. Rate: 8.999¢ → 9.999¢ June 1, 2026 (+11%). Critical pain story right now.
 - **SOPEC**: ~14 central Ohio/AEP communities. Green rate: 9.756¢ → 11.162¢ June 2026 (+14.4%). Extreme pain story.
 - **NOAC**: 13 Toledo-area communities (Toledo Edison). Rate: 9.75¢ through ~June 2027. Stable.
-- **Dayton/AES Ohio**: 8.71¢ → 10.691¢ June 2026 (+22.7%). EXTREME pain story, highest urgency.
+- **Dayton (SOPEC/AEP Energy aggregation)**: 8.71¢ → 10.691¢ green (10.576¢ brown) June 2026 through June 2027 (+22.7%).
+- **AES Ohio standard offer**: about 9.45¢ → 10.856¢ June 2026 through May 2027 (+15%). This is the default for AES accounts with no aggregation or supplier.
 - **Electric co-ops**: All 25 Ohio co-ops are served by Buckeye Power Inc. All are exempt from retail choice. Use `futureUse: "municipal_blacklist"`.
 - **Sales minimum**: 5 RCE (residential customer equivalents) per account. Quota: 100 RCE/month baseline, 600 RCE per 4-month period for bonus.
 - **LMRE critical note**: Lorain-Medina Rural Electric (LMRE) co-op territory does NOT participate in NOPEC, even though LMRE overlaps with NOPEC's geographic footprint.
@@ -138,6 +139,19 @@ DELETE /api/zones/<region_file>/<zone_name>  # Delete zone
 3. **NEVER include** DNC (do-not-call) records anywhere in the codebase or output
 4. **NEVER store or use** third-party service credentials (Salesforce, LinkedIn, etc.)
 5. **data/regions/*.json** files ARE safe to commit — they contain publicly sourced market intelligence only
+
+## Source Reliability (data reviews)
+
+When a primary source can't be opened (blocked host, dead page, paywall), don't stop. Find secondary sources and score every claim with a reliability quotient (RQ) from 0 to 1 before you write it to a zone.
+
+- **Source score** = publisher tier × access mode.
+  - Publisher tier: official city, village, township, county, PUCO, or program page (NOPEC/SOPEC/NOAC) = 1.0. Utility tariff = 1.0. Supplier community page = 0.8. Local news or trade press (e.g., EnergyChoiceMatters) = 0.7. Rate-comparison or aggregator site = 0.4. Unknown = 0.2.
+  - Access mode: page opened and read = 1.0. Search-engine summary of the page = 0.6. Prior research pass already in the repo = 0.8.
+- **Corroboration**: RQ = 1 − Π(1 − score) across independent publishers, capped at 0.95. Two pages from the same publisher count once.
+- **Contradiction**: if a source of equal or higher score contradicts the claim, don't apply it. Record the conflict instead.
+- **Thresholds**: RQ ≥ 0.75 → apply, confidence high. RQ 0.5–0.75 → apply, confidence medium. RQ 0.3–0.5 → apply only to fill an empty field or as a dated note, confidence low, status `verify`. RQ < 0.3 → don't apply; queue it.
+- A claim with no source at all has RQ 0. If it's in sales copy (takeaway/hook), remove it.
+- Log every scored claim in `data/research/source_reliability.jsonl` (append-only): date, zone, source_file, claim, sources (publisher, url, tier, access), reliability, action.
 
 ## History (permanent)
 

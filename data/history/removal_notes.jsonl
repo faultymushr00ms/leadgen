@@ -407,3 +407,7 @@
 {"zone": "Cleveland", "field": "supplier", "note": "removed incorrect value", "date": "2026-10-22", "reason": "supplier name contradicted by the city and SOPEC program pages"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "township price in the city note contradicted by the township page, the community map, and the annual report"}
 {"zone": "Canfield", "field": "notes", "note": "removed incorrect value", "date": "2026-10-22", "reason": "city electric page opened this date still names an older supplier and an ended term; it does not state the price on the supplier community page"}
+{"zone": "Sharonville", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-24", "reason": "stored percent change does not match any stored rate pair and the current rate is not stored"}
+{"zone": "Powell", "field": "aggregationStatus", "note": "removed incorrect value", "date": "2026-11-24", "reason": "classification contradicted by the city page and council approval stored on the record"}
+{"zone": "Plain City", "field": "aggregationStatus", "note": "removed incorrect value", "date": "2026-11-24", "reason": "classification contradicted by the village page and NOPEC enrollment notice stored on the record"}
+{"zone": "Washington Township (Wood)", "field": "rateChange", "note": "removed incorrect value", "date": "2026-11-24", "reason": "stored percent change does not match the stored prior rate and the stored future rate, and the current rate is not stored"}

@@ -621,7 +621,7 @@
     "utility": "AEP Ohio",
     "utilityParent": "AEP",
     "utilityConfidence": "medium",
-    "aggregationStatus": "no_aggregation_verified",
+    "aggregationStatus": "confirmed_active_aggregation",
     "currentRate": null,
     "previousRate": null,
     "rateChange": null,

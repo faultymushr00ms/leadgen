@@ -50,7 +50,7 @@ data/
     ohio_municipal_utilities.json     # 102 municipal utilities (aggregationStatus: municipal_utility)
     # ── Gas zones (commodity: "gas") ────────────────────────────────────────
     columbia_gas_ohio_gas.json        # 43 zones — Columbia Gas of Ohio (NiSource); central/NW Ohio
-    dominion_ohio_gas.json            # 30 zones — Dominion Energy Ohio; NE Ohio / Cleveland / Akron / Canton / Youngstown
+    dominion_ohio_gas.json            # 31+ zones — Enbridge Gas Ohio (formerly Dominion/East Ohio Gas); NE Ohio / Cleveland / Akron / Canton / Youngstown
     centerpoint_ohio_gas.json         # 11 zones — CenterPoint Energy Ohio (Dayton / Miami Valley)
     duke_ohio_gas.json                # 9 zones  — Duke Energy Ohio (Cincinnati / SW Ohio)
     cleveland_cuyahoga.json           # NOPEC/Illuminating Co zones
@@ -84,7 +84,7 @@ Every zone JSON record:
   "region": "Region Label",
   "commodity": "electric | gas",
   "utility": "Utility Name (electric IOU or gas utility)",
-  "utilityParent": "FirstEnergy | AEP | AES | Duke Energy | NiSource | Equitable/BHE | CenterPoint Energy | Buckeye Power | null",
+  "utilityParent": "FirstEnergy | AEP | AES | Duke Energy | NiSource | Enbridge | CenterPoint Energy | Buckeye Power | null",
   "utilityConfidence": "high | medium | low",
   "aggregationStatus": "confirmed_active_aggregation | municipal_utility | partial_municipal | electric_cooperative | no_aggregation_verified | address_dependent",
   "currentRate": 10.01,
@@ -110,7 +110,7 @@ Every zone JSON record:
 
 Aggregation data (NOPEC/SOPEC/NOAC rosters) is city-level and reliable. Utility assignment is address-level and varies in reliability:
 
-- `utilityParent`: The IOU parent brand — always determinable from the aggregation program (e.g., NOPEC → "FirstEnergy"). For gas zones: NiSource (Columbia Gas), Equitable/BHE (Dominion Energy Ohio), CenterPoint Energy, Duke Energy. Null for municipal utilities, co-ops, and genuinely mixed-territory zones.
+- `utilityParent`: The IOU parent brand — always determinable from the aggregation program (e.g., NOPEC → "FirstEnergy"). For gas zones: NiSource (Columbia Gas), Enbridge (Enbridge Gas Ohio, formerly Dominion Energy Ohio / East Ohio Gas — acquired 2022), CenterPoint Energy, Duke Energy. Null for municipal utilities, co-ops, and genuinely mixed-territory zones.
 - `utilityConfidence: "high"` — unambiguous: AEP Ohio, AES Ohio, Duke Energy Ohio, Toledo Edison, municipal utilities, co-ops. For gas: Columbia Gas, Dominion Energy Ohio, CenterPoint, Duke clearly identified by county.
 - `utilityConfidence: "medium"` — reasonable geographic assignment, not verified against PUCO service territory maps.
 - `utilityConfidence: "low"` — flagged as likely wrong or address-dependent. These are the queue for the address-check module.
